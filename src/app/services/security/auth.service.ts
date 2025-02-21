@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { environment } from '../../environments/environment';
+import { API_URLS } from '../constants/api.urls';
 
 interface AuthResponse {
   success: boolean;
@@ -14,13 +14,12 @@ interface AuthResponse {
   providedIn: 'root',
 })
 export class AuthService {
-  private authUrl = `${environment.baseUrl}authenticate/token`;
   private isLoggedInSubject = new BehaviorSubject<boolean>(this.hasToken());
 
   constructor(private http: HttpClient) {}
 
   login(username: string, password: string): Observable<boolean> {
-    return this.http.post<AuthResponse>(this.authUrl, { username, password }).pipe(
+    return this.http.post<AuthResponse>(API_URLS.AUTHENTICATE, { username, password }).pipe(
       map(response => {
         if (response.success && response.obj?.token) {
           localStorage.setItem('token', response.obj.token);

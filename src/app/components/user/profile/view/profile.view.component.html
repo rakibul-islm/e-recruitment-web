@@ -1,0 +1,20 @@
+<div class="max-w-md mx-auto bg-white shadow-lg rounded-2xl overflow-hidden flex items-center justify-center mt-20">
+    <div class="relative w-48 h-48">
+        <img [src]="profile.imageBase64" alt="Profile Picture" class="w-full h-auto object-cover">
+    </div>
+    <div class="p-4">
+      <h2 class="text-xl font-semibold text-gray-900">{{ profile.fullName }}</h2>
+      <p class="text-gray-600">{{ profile.email }}</p>
+      <p class="text-gray-500 mt-2">{{ profile.address }}</p>
+      
+      <div class="mt-4 flex flex-col space-y-2">
+        <div class="flex items-center text-gray-700">
+          📞 <span class="ml-2">{{ profile.phone || 'N/A' }}</span>
+        </div>
+        <div class="flex items-center text-gray-700">
+          📱 <span class="ml-2">{{ profile.mobile || 'N/A' }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  
