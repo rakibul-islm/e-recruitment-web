@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../../services/security/auth.service';
 import { UserService } from '../../services/user/user.service';
 import { Profile } from '../../services/user/domain/user.domain';
 import { BaseComponent } from '../base.component';
+import { AuthService } from 'src/app/services/utility/security/auth.service';
 
 @Component({
   selector: 'app-header',

@@ -12,9 +12,10 @@ export class NotificationService {
   }
 
   sendErrorMsg(message: string, title: string = 'Error') {
-    this.toastr.error(message, title); 
+    const formattedMessage = message.replace(/\n/g, '<br>');
+    this.toastr.error(formattedMessage, title, { enableHtml: true });
   }
-
+  
   sendWarningMsg(message: string, title: string = 'Warning') {
     this.toastr.warning(message, title);
   }

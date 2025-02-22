@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { API_URLS } from '../utility/constants/api.urls';
-import { Profile } from '../user/domain/user.domain';
+import { Profile } from '../../user/domain/user.domain';
+import { API_URLS } from '../constants/api.urls';
 
 interface AuthResponse {
   success: boolean;

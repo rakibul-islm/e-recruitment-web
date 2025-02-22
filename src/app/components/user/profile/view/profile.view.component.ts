@@ -1,7 +1,7 @@
-import { Component, forwardRef, Inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Profile } from '../../../../services/user/domain/user.domain';
 import { BaseComponent } from '../../../../components/base.component';
-import { AuthService } from '../../../../services/security/auth.service';
+import { AuthService } from '../../../../services/utility/security/auth.service';
 
 @Component({
   selector: 'profile-view',

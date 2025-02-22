@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpErrorResponse } from '@angular/common/http';
-import { Observable, catchError, throwError } from 'rxjs';
+import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { Observable, catchError, throwError, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { NotificationService } from '../utility/notification.service';
+import { NotificationService } from '../notification.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -22,6 +22,12 @@ export class AuthInterceptor implements HttpInterceptor {
     });
 
     return next.handle(clonedRequest).pipe(
+      tap((event) => {
+        if (event instanceof HttpResponse && event.body && event.body.success === false) {
+          this.notificationService.sendErrorMsg(event.body.message || 'An error occurred', 'Error');
+          throw new Error(event.body.message);
+        }
+      }),
       catchError((error) => {
         if (error instanceof HttpErrorResponse) {
           this.handleError(error);
