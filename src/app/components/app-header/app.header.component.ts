@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { UserService } from '../../services/user/user.service';
 import { Profile } from '../../services/user/domain/user.domain';
 import { BaseComponent } from '../base.component';
-import { AuthService } from 'src/app/services/utility/security/auth.service';
+import { AuthService } from '../../services/utility/security/auth.service';
 
 @Component({
   selector: 'app-header',
