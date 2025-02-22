@@ -1,0 +1,96 @@
+<div class="flex justify-center items-center font-[sans-serif] h-full min-h-screen p-4"
+  style="background-image: url(../../assets/images/background-image.webp); background-repeat: no-repeat; background-size: cover;">
+  <div class="max-w-md w-full mx-auto">
+    <form [formGroup]="registerForm" (ngSubmit)="submit()"
+      class="bg-opacity-60 bg-white rounded p-6 shadow-[0_2px_16px_-3px_rgba(125,126,131,0.3)]">
+      <div class="mb-6">
+        <h3 class="text-gray-800 text-3xl font-bold text-center">Sign Up</h3>
+      </div>
+
+      <div class="space-y-4">
+        <!-- Full Name -->
+        <input type="text" formControlName="fullName" placeholder="Full Name"
+          class="bg-transparent w-full text-sm text-gray-800 border-b border-gray-400 focus:border-gray-800 px-2 py-3 outline-none placeholder:text-gray-800" />
+        <div *ngIf="registerForm.controls['fullName'].touched && registerForm.controls['fullName'].errors?.['required']" class="text-red-500 text-xs mt-1">
+          Full name is required.</div>
+
+        <!-- Username -->
+        <input type="text" formControlName="username" placeholder="Username"
+          class="bg-transparent w-full text-sm text-gray-800 border-b border-gray-400 focus:border-gray-800 px-2 py-3 outline-none placeholder:text-gray-800" />
+        <div *ngIf="registerForm.controls['username'].touched && registerForm.controls['username'].errors?.['required']" class="text-red-500 text-xs mt-1">
+          Username is required.</div>
+
+        <!-- Email -->
+        <input type="email" formControlName="email" placeholder="Email"
+          class="bg-transparent w-full text-sm text-gray-800 border-b border-gray-400 focus:border-gray-800 px-2 py-3 outline-none placeholder:text-gray-800" />
+        <div *ngIf="registerForm.controls['email'].touched">
+          <div *ngIf="registerForm.controls['email'].errors?.['required']" class="text-red-500 text-xs mt-1">
+            Email is required.</div>
+          <div *ngIf="registerForm.controls['email'].errors?.['email']" class="text-red-500 text-xs mt-1">
+            Enter a valid email.</div>
+        </div>
+
+        <!-- Address -->
+        <input type="text" formControlName="address" placeholder="Address"
+          class="bg-transparent w-full text-sm text-gray-800 border-b border-gray-400 focus:border-gray-800 px-2 py-3 outline-none placeholder:text-gray-800" />
+        <div *ngIf="registerForm.controls['address'].touched && registerForm.controls['address'].errors?.['required']" class="text-red-500 text-xs mt-1">
+          Address is required.</div>
+
+        <!-- Mobile -->
+        <input type="text" formControlName="mobile" placeholder="Mobile Number"
+          class="bg-transparent w-full text-sm text-gray-800 border-b border-gray-400 focus:border-gray-800 px-2 py-3 outline-none placeholder:text-gray-800" />
+        <div *ngIf="registerForm.controls['mobile'].touched">
+          <div *ngIf="registerForm.controls['mobile'].errors?.['required']" class="text-red-500 text-xs mt-1">
+            Mobile number is required.</div>
+          <div *ngIf="registerForm.controls['mobile'].errors?.['pattern']" class="text-red-500 text-xs mt-1">
+            Enter a valid mobile number.</div>
+          <div *ngIf="registerForm.controls['mobile'].errors?.['minlength']" class="text-red-500 text-xs mt-1">
+            Mobile number must be 11 digits.</div>
+          <div *ngIf="registerForm.controls['mobile'].errors?.['maxlength']" class="text-red-500 text-xs mt-1">
+            Mobile number must be 11 digits.</div>
+        </div>
+
+        <!-- Password -->
+        <div class="relative flex items-center">
+          <input [type]="passwordFieldType" formControlName="password" placeholder="Password"
+            class="bg-transparent w-full text-sm text-gray-800 border-b border-gray-400 focus:border-gray-800 px-2 py-3 outline-none placeholder:text-gray-800" />
+          <svg *ngIf="passwordFieldType === 'password'" (click)="togglePasswordVisibility()" xmlns="http://www.w3.org/2000/svg"
+            class="w-5 h-5 absolute right-2 cursor-pointer" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M1 12s3-9 11-9c6 0 11 9 11 9s-5 9-11 9c-8 0-11-9-11-9z" />
+            <path d="M12 9c2.7 0 4.7 3 4.7 3s-2 3-4.7 3c-2.7 0-4.7-3-4.7-3s2-3 4.7-3z" />
+          </svg>
+        </div>
+        <div *ngIf="registerForm.controls['password'].touched">
+          <div *ngIf="registerForm.controls['password'].errors?.['required']" class="text-red-500 text-xs mt-1">
+            Password is required.</div>
+          <div *ngIf="registerForm.controls['password'].errors?.['minlength']" class="text-red-500 text-xs mt-1">
+            Password must be at least 6 characters.</div>
+        </div>
+
+        <!-- Confirm Password -->
+        <input [type]="passwordFieldType" formControlName="confirmPassword" placeholder="Confirm Password"
+          class="bg-transparent w-full text-sm text-gray-800 border-b border-gray-400 focus:border-gray-800 px-2 py-3 outline-none placeholder:text-gray-800" />
+        <div *ngIf="registerForm.controls['confirmPassword'].touched">
+          <div *ngIf="registerForm.controls['confirmPassword'].errors?.['required']" class="text-red-500 text-xs mt-1">
+            Confirm password is required.</div>
+          <div *ngIf="registerForm.hasError('passwordMismatch')" class="text-red-500 text-xs mt-1">
+            Passwords do not match.</div>
+        </div>
+      </div>
+
+      <div class="mt-6">
+        <button type="submit"
+          class="w-full py-2.5 px-4 text-sm font-semibold tracking-wider rounded text-white bg-gray-800 hover:bg-[#222] focus:outline-none">
+          Sign Up
+        </button>
+      </div>
+
+      <p class="text-gray-800 text-sm text-center mt-6">
+        Already have an account?
+        <a routerLink="/login" class="text-blue-600 font-semibold hover:underline ml-1 whitespace-nowrap">
+          Sign in
+        </a>
+      </p>
+    </form>
+  </div>
+</div>

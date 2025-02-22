@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app.routing.module';
 import { AppComponent } from './app.component';
@@ -11,6 +12,10 @@ import { AppHeaderComponent } from './components/app-header/app.header.component
 import { AuthService } from './services/security/auth.service';
 import { AuthInterceptor } from './services/security/auth.interceptor';
 import { ProfileViewComponent } from './components/user/profile/view/profile.view.component';
+import { ToastrModule } from 'ngx-toastr';
+import { RegistrationFormComponent } from './components/user/registration/registration.form.component';
+import { ConfirmationDialogComponent } from './components/utility/confirmation-dialog/confirmation.dialog.component';
+import { ConfirmationService } from './services/utility/confirmation.service';
 
 @NgModule({
   declarations: [
@@ -18,14 +23,24 @@ import { ProfileViewComponent } from './components/user/profile/view/profile.vie
     LoginComponent,
     DashboardComponent,
     AppHeaderComponent,
-    ProfileViewComponent
+    ProfileViewComponent,
+    RegistrationFormComponent,
+    ConfirmationDialogComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule, 
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot({
+      timeOut: 5000,
+      progressBar: true,
+      closeButton: true,
+      positionClass: 'toast-top-right',
+      preventDuplicates: true
+    }),
   ],
   providers: [
     AuthService,
@@ -34,6 +49,7 @@ import { ProfileViewComponent } from './components/user/profile/view/profile.vie
       useClass: AuthInterceptor,
       multi: true
     },
+    ConfirmationService,
   
   ],
   bootstrap: [AppComponent]
