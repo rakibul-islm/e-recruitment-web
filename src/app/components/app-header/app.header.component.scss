@@ -1,8 +1,9 @@
 ::ng-deep .app-header.p-menubar {
-  background-color: var(--deep-sea-blue);
+  background: linear-gradient(to right, #032967, #145dae 50%, #002152);
   border-radius: 0;
 
   a {
     color: #ffffff;
+    text-decoration-color: rgba(255, 255, 255, 0.35);
   }
 }

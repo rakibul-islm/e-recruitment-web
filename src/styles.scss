@@ -1,12 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
 
-:root {
-  --deep-sea-blue: #016593;
-}
-
 html, body {
   height: 100%;
   margin: 0;
+}
+
+a {
+  text-decoration-color: rgba(59, 130, 246, 0.35);
 }
 
 /* Outlined-style floating label: sits on top of the input's border line, like a Material "outlined" field */
