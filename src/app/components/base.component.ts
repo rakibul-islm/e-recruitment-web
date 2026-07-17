@@ -1,5 +1,5 @@
 import { Directive, OnDestroy } from '@angular/core';
-import { FormGroup, FormArray } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormArray } from '@angular/forms';
 import { Location } from '@angular/common';
 
 @Directive()
@@ -58,19 +58,19 @@ export abstract class BaseComponent implements OnDestroy {
     return new Blob([view]);
   }
 
-  protected markFormGroupAsTouched(group: FormGroup | FormArray): void {
-    if (group instanceof FormGroup) {
+  protected markFormGroupAsTouched(group: UntypedFormGroup | UntypedFormArray): void {
+    if (group instanceof UntypedFormGroup) {
       Object.values(group.controls).forEach(control => control.markAsTouched());
-    } else if (group instanceof FormArray) {
-      group.controls.forEach(control => this.markFormGroupAsTouched(control as FormGroup));
+    } else if (group instanceof UntypedFormArray) {
+      group.controls.forEach(control => this.markFormGroupAsTouched(control as UntypedFormGroup));
     }
   }
 
-  protected markFormGroupAsUnTouched(formGroup: FormGroup): void {
+  protected markFormGroupAsUnTouched(formGroup: UntypedFormGroup): void {
     Object.values(formGroup.controls).forEach(control => control.markAsUntouched());
   }
 
-  protected checkIfFormDataChanged(formGroup: FormGroup): void {
+  protected checkIfFormDataChanged(formGroup: UntypedFormGroup): void {
     // Check if form data has changed
     this.isFormDataChanged = formGroup.dirty;
   }

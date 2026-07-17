@@ -5,7 +5,8 @@ import { AuthService } from '../../../../services/utility/security/auth.service'
 
 @Component({
   selector: 'profile-view',
-  templateUrl: './profile.view.component.html'
+  templateUrl: './profile.view.component.html',
+  styleUrls: ['./profile.view.component.scss']
 })
 export class ProfileViewComponent extends BaseComponent implements OnInit {
   profile: Profile = new Profile();

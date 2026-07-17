@@ -1,39 +1,17 @@
-<!-- <header class="bg-deepSeaBlue text-white p-3 flex justify-between items-center shadow-md">
-    <div class="flex items-center space-x-2">
-      <img src="../../assets/images/app-logo.png" alt="e-recruitment logo" class="w-8 h-8" />
-      <span class="text-white text-lg font-semibold">E-RECRUITMENT</span>
+<p-menubar styleClass="app-header">
+  <ng-template pTemplate="start">
+    <div class="flex align-items-center">
+      <img src="/assets/images/app-logo.png" alt="e-recruitment logo" class="w-2rem h-2rem mr-2" />
+      <span class="font-semibold text-lg text-white line-height-3">E-RECRUITMENT</span>
     </div>
-    <nav class="space-x-4 flex items-center">
-      <a routerLink="/dashboard" class="hover:underline">Dashboard</a>
-      <button (click)="logout()" class="bg-red-500 hover:bg-red-600 px-4 py-2 rounded-md text-white">
-        Logout
-      </button>
-    </nav>
-  </header>
-   -->
-   <header class="bg-deepSeaBlue text-white p-3 flex justify-between items-center shadow-md">
-    <div class="flex items-center space-x-2">
-      <img src="../../assets/images/app-logo.png" alt="e-recruitment logo" class="w-8 h-8" />
-      <span class="text-white text-lg font-semibold">E-RECRUITMENT</span>
+  </ng-template>
+
+  <ng-template pTemplate="end">
+    <div class="flex align-items-center gap-3">
+      <a routerLink="/dashboard" class="line-height-3">Dashboard</a>
+      <p-avatar [image]="profile.imageBase64" shape="circle" (click)="menu.toggle($event)"
+        styleClass="cursor-pointer"></p-avatar>
+      <p-menu #menu [model]="menuItems" [popup]="true"></p-menu>
     </div>
-    
-    <nav class="space-x-4 flex items-center relative">
-      <a routerLink="/dashboard" class="hover:underline">Dashboard</a>
-  
-      <!-- Profile Dropdown -->
-      <div class="relative group">
-        <button class="flex items-center space-x-2 focus:outline-none">
-          <img [src]="profile.imageBase64" alt="Profile" class="w-8 h-8 rounded-full border-2 border-white" />
-        </button>
-  
-        <!-- Dropdown Menu -->
-        <div class="absolute right-0 mt-2 w-48 bg-white text-gray-700 rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-          <a routerLink="/profile" class="block px-4 py-2 hover:bg-gray-100">Profile</a>
-          <a routerLink="/view-cv" class="block px-4 py-2 hover:bg-gray-100">My CV</a>
-          <a *ngIf="!isAuthenticated" routerLink="/login" class="block px-4 py-2 hover:bg-gray-100">Sign In</a>
-          <button *ngIf="isAuthenticated" (click)="logout()" class="block w-full text-left px-4 py-2 hover:bg-gray-100">Sign Out</button>
-        </div>
-      </div>
-    </nav>
-  </header>
-  
+  </ng-template>
+</p-menubar>

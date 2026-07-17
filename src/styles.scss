@@ -1,6 +1,26 @@
 /* You can add global styles to this file, and also import other style files */
 
-/* Import Tailwind CSS */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+:root {
+  --deep-sea-blue: #016593;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+/* Outlined-style floating label: sits on top of the input's border line, like a Material "outlined" field */
+.p-float-label input:focus ~ label,
+.p-float-label input.p-filled ~ label,
+.p-float-label textarea:focus ~ label,
+.p-float-label textarea.p-filled ~ label,
+.p-float-label .p-inputwrapper-focus ~ label,
+.p-float-label .p-inputwrapper-filled ~ label {
+  top: -0.95rem;
+  margin-top: 0;
+  left: 0.01rem;
+  padding: 0 0.375rem;
+  background-color: transparent;
+  border-radius: 3px;
+  color: #474242;
+}

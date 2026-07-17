@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MenuItem } from 'primeng/api';
 import { UserService } from '../../services/user/user.service';
 import { Profile } from '../../services/user/domain/user.domain';
 import { BaseComponent } from '../base.component';
@@ -7,14 +8,16 @@ import { AuthService } from '../../services/utility/security/auth.service';
 
 @Component({
   selector: 'app-header',
-  templateUrl: './app.header.component.html'
+  templateUrl: './app.header.component.html',
+  styleUrls: ['./app.header.component.scss']
 })
 export class AppHeaderComponent extends BaseComponent implements OnInit {
   isAuthenticated: boolean = false;
   profile: Profile = new Profile();
+  menuItems: MenuItem[] = [];
 
   constructor(
-    private authService: AuthService, 
+    private authService: AuthService,
     protected userService: UserService,
     private router: Router) {
     super();
@@ -24,7 +27,18 @@ export class AppHeaderComponent extends BaseComponent implements OnInit {
     this.authService.isLoggedIn().subscribe(authenticated => {
       this.isAuthenticated = authenticated;
       this.fetchProfileData();
+      this.buildMenuItems();
     });
+  }
+
+  buildMenuItems(): void {
+    this.menuItems = [
+      { label: 'Profile', icon: 'pi pi-user', routerLink: '/profile' },
+      { label: 'My CV', icon: 'pi pi-file', routerLink: '/view-cv' },
+      ...(this.isAuthenticated
+        ? [{ label: 'Sign Out', icon: 'pi pi-sign-out', command: () => this.logout() }]
+        : [{ label: 'Sign In', icon: 'pi pi-sign-in', routerLink: '/login' }])
+    ];
   }
 
   fetchProfileData() {
