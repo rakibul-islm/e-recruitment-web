@@ -1,18 +1,17 @@
 export class Profile {
+    id!: number;
     fullName!: string;
     email!: string;
     address!: string;
     phone!: string;
     mobile!: string;
     imageBase64!: string;
-    roles!: string;
+    roles!: { name: string; description: string }[];
 }
 
 export class Register {
     fullName!: string;
-    username!: string;
     password!: string;
     email!: string;
-    address!: string;
     mobile!: string;
 }

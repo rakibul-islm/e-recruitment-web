@@ -2,25 +2,32 @@
   <p-card class="login-card" styleClass="login-card-surface">
     <ng-template pTemplate="title">Sign in</ng-template>
 
-    <form (submit)="login()">
+    <form [formGroup]="loginForm" (ngSubmit)="login()">
       <div class="flex flex-column gap-4 mt-3">
-        <p-floatLabel>
-          <input id="username" name="username" type="text" pInputText [(ngModel)]="username" required
-            class="w-full" />
-          <label for="username">Username</label>
-        </p-floatLabel>
+        <div>
+          <p-floatLabel>
+            <input id="email" type="email" formControlName="email" pInputText class="w-full" />
+            <label for="email">Email</label>
+          </p-floatLabel>
+          <ng-container *ngIf="loginForm.controls['email'].touched">
+            <small class="p-error" *ngIf="loginForm.controls['email'].errors?.['required']">Email is required.</small>
+            <small class="p-error" *ngIf="loginForm.controls['email'].errors?.['email']">Enter a valid email.</small>
+          </ng-container>
+        </div>
 
-        <p-floatLabel>
-          <p-password id="password" name="password" [(ngModel)]="password" required
-            [toggleMask]="true" [feedback]="false" styleClass="w-full"
-            inputStyleClass="w-full">
-          </p-password>
-          <label for="password">Password</label>
-        </p-floatLabel>
+        <div>
+          <p-floatLabel>
+            <p-password id="password" formControlName="password" [toggleMask]="true" [feedback]="false"
+              styleClass="w-full" inputStyleClass="w-full"></p-password>
+            <label for="password">Password</label>
+          </p-floatLabel>
+          <small class="p-error" *ngIf="loginForm.controls['password'].touched && loginForm.controls['password'].errors?.['required']">
+            Password is required.</small>
+        </div>
 
         <div class="flex flex-wrap align-items-center justify-content-between gap-3">
           <div class="flex align-items-center gap-2">
-            <p-checkbox inputId="remember-me" [binary]="true"></p-checkbox>
+            <p-checkbox inputId="remember-me" formControlName="rememberMe" [binary]="true"></p-checkbox>
             <label for="remember-me">Remember me</label>
           </div>
           <a href="javascript:void(0);" class="text-primary text-sm font-semibold">

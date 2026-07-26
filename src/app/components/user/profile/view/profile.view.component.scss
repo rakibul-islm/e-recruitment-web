@@ -11,3 +11,44 @@
     object-fit: cover;
   }
 }
+
+.profile-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  td {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  tr:last-child td {
+    border-bottom: none;
+  }
+
+  .profile-label {
+    width: 40%;
+    color: #6b7280;
+    font-weight: 600;
+  }
+
+  .profile-value {
+    color: #1f2937;
+  }
+
+  .profile-role {
+    &:not(:last-child) {
+      margin-bottom: 0.5rem;
+    }
+  }
+
+  .profile-role-name {
+    display: block;
+    font-weight: 600;
+  }
+
+  .profile-role-description {
+    display: block;
+    font-size: 0.85rem;
+    color: #6b7280;
+  }
+}

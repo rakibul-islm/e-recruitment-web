@@ -16,16 +16,6 @@
             Full name is required.</small>
         </div>
 
-        <!-- Username -->
-        <div>
-          <p-floatLabel>
-            <input id="username" type="text" formControlName="username" pInputText class="w-full" />
-            <label for="username">Username</label>
-          </p-floatLabel>
-          <small class="p-error" *ngIf="registerForm.controls['username'].touched && registerForm.controls['username'].errors?.['required']">
-            Username is required.</small>
-        </div>
-
         <!-- Email -->
         <div>
           <p-floatLabel>
@@ -38,16 +28,6 @@
           </ng-container>
         </div>
 
-        <!-- Address -->
-        <div>
-          <p-floatLabel>
-            <input id="address" type="text" formControlName="address" pInputText class="w-full" />
-            <label for="address">Address</label>
-          </p-floatLabel>
-          <small class="p-error" *ngIf="registerForm.controls['address'].touched && registerForm.controls['address'].errors?.['required']">
-            Address is required.</small>
-        </div>
-
         <!-- Mobile -->
         <div>
           <p-floatLabel>
@@ -56,9 +36,7 @@
           </p-floatLabel>
           <ng-container *ngIf="registerForm.controls['mobile'].touched">
             <small class="p-error" *ngIf="registerForm.controls['mobile'].errors?.['required']">Mobile number is required.</small>
-            <small class="p-error" *ngIf="registerForm.controls['mobile'].errors?.['pattern']">Enter a valid mobile number.</small>
-            <small class="p-error" *ngIf="registerForm.controls['mobile'].errors?.['minlength']">Mobile number must be 11 digits.</small>
-            <small class="p-error" *ngIf="registerForm.controls['mobile'].errors?.['maxlength']">Mobile number must be 11 digits.</small>
+            <small class="p-error" *ngIf="registerForm.controls['mobile'].errors?.['pattern']">Mobile number must be 11 digits.</small>
           </ng-container>
         </div>
 

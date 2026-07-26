@@ -1,0 +1,19 @@
+.page-header {
+  position: sticky;
+  top: 3.5rem;
+  z-index: 100;
+  background: #eef3fb;
+  padding: 0.5rem 1.5rem;
+  line-height: 1;
+}
+
+.page-header-title {
+  color: #032967;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+// Action button styling lives in src/styles.scss (global) — the buttons are
+// ng-content-projected from each consuming page, not part of this component's
+// own template, so a scoped/::ng-deep rule here can't reliably reach them.

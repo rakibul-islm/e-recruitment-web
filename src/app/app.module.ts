@@ -10,6 +10,8 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AppHeaderComponent } from './components/app-header/app.header.component';
 import { ProfileViewComponent } from './components/user/profile/view/profile.view.component';
+import { ProfileEditComponent } from './components/user/profile/edit/profile.edit.component';
+import { PageHeaderComponent } from './components/shared/page-header/page-header.component';
 import { ToastrModule } from 'ngx-toastr';
 import { RegistrationFormComponent } from './components/user/registration/registration.form.component';
 import { AuthService } from './services/utility/security/auth.service';
@@ -34,7 +36,9 @@ import { FloatLabelModule } from 'primeng/floatlabel';
     DashboardComponent,
     AppHeaderComponent,
     ProfileViewComponent,
-    RegistrationFormComponent
+    ProfileEditComponent,
+    RegistrationFormComponent,
+    PageHeaderComponent
   ],
   imports: [
     BrowserModule,

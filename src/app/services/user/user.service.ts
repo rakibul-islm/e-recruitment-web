@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BaseService, PathParameters } from '../base.service';
+import { BaseService } from '../base.service';
 import { Observable } from 'rxjs';
 import { API_URLS } from '../utility/constants/api.urls';
 import { HttpClient } from '@angular/common/http';
@@ -22,21 +22,12 @@ export class UserService extends BaseService {
     return super.post(API_URLS.CREATE_REGISTER_USER, body);
   }
 
-  // public fetchProfileById(pathParams: PathParameters): Observable<any> {
-  //   const url = this.createUrl(API_URLS.FETCH_PROFILE, pathParams);
-  //   return super.get(url);
-  // }
+  public findUserById(id: number): Observable<any> {
+    const url = this.createUrl(API_URLS.FIND_USER_BY_ID, { id });
+    return super.get(url);
+  }
 
-  // public updateProfile(pathParams: PathParameters, body: any): Observable<any> {
-  //   const url = this.createUrl(API_URLS.FETCH_PROFILE, pathParams);
-  //   return super.put(url, body);
-  // }
-
-  // public deleteProfileById(pathParams: PathParameters): Observable<any> {
-  //   return super.deleteById(API_URLS.FETCH_PROFILE, pathParams);
-  // }
-
-  // public deleteProfileByObject(body: any): Observable<any> {
-  //   return super.deleteByObject(API_URLS.FETCH_PROFILE, body);
-  // }
+  public updateUser(body: any): Observable<any> {
+    return super.put(API_URLS.UPDATE_USER, body);
+  }
 }

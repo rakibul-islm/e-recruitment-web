@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NotificationService } from '../../../services/utility/notification.service';
 import { BaseComponent } from '../../base.component';
@@ -13,10 +13,10 @@ import { CommonConfirmDialogService } from '../../../services/utility/common.con
   styleUrls: ['./registration.form.component.scss']
 })
 export class RegistrationFormComponent extends BaseComponent implements OnInit {
-  registerForm!: UntypedFormGroup;
+  registerForm!: FormGroup;
 
   constructor(
-    private formBuilder: UntypedFormBuilder,
+    private formBuilder: FormBuilder,
     private router: Router,
     private userService: UserService,
     private commonConfirmDialogService: CommonConfirmDialogService,
@@ -25,24 +25,22 @@ export class RegistrationFormComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.prepareRegisterForm();
+    this.prepareForm();
   }
 
-  prepareRegisterForm(formData?: Register) {
+  prepareForm(formData?: Register) {
     formData = formData || new Register();
 
     this.registerForm = this.formBuilder.group({
       fullName: [formData.fullName, Validators.required],
-      username: [formData.username, Validators.required],
       email: [formData.email, [Validators.required, Validators.email]],
-      address: [formData.address, Validators.required],
-      mobile: [formData.mobile, [Validators.required, Validators.pattern('^[0-9]{10,15}$'), Validators.minLength(11), Validators.maxLength(11)]],
+      mobile: [formData.mobile, [Validators.required, Validators.pattern('^[0-9]{11}$')]],
       password: [formData.password, [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', Validators.required]
     }, { validators: this.passwordMatchValidator });
   }
 
-  passwordMatchValidator(form: UntypedFormGroup) {
+  passwordMatchValidator(form: FormGroup) {
     return form.get('password')!.value === form.get('confirmPassword')!.value
       ? null
       : { passwordMismatch: true };

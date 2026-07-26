@@ -15,16 +15,18 @@ interface AuthResponse {
   providedIn: 'root',
 })
 export class AuthService {
+  private readonly TOKEN_KEY = 'token';
+
   private isLoggedInSubject = new BehaviorSubject<boolean>(this.hasToken());
   private profileSubject = new BehaviorSubject<Profile>(new Profile);
 
   constructor(private http: HttpClient) {}
 
-  login(username: string, password: string): Observable<boolean> {
-    return this.http.post<AuthResponse>(API_URLS.AUTHENTICATE, { username, password }).pipe(
+  login(email: string, password: string, rememberMe: boolean = false): Observable<boolean> {
+    return this.http.post<AuthResponse>(API_URLS.AUTHENTICATE, { email, password }).pipe(
       map(response => {
         if (response.success && response.obj?.token) {
-          localStorage.setItem('token', response.obj.token);
+          this.setToken(response.obj.token, rememberMe);
           this.isLoggedInSubject.next(true);
           return true;
         }
@@ -34,7 +36,8 @@ export class AuthService {
   }
 
   logout(): void {
-    localStorage.removeItem('token');
+    localStorage.removeItem(this.TOKEN_KEY);
+    sessionStorage.removeItem(this.TOKEN_KEY);
     this.isLoggedInSubject.next(false);
   }
 
@@ -42,8 +45,20 @@ export class AuthService {
     return this.isLoggedInSubject.asObservable();
   }
 
+  getToken(): string | null {
+    return localStorage.getItem(this.TOKEN_KEY) || sessionStorage.getItem(this.TOKEN_KEY);
+  }
+
+  private setToken(token: string, rememberMe: boolean): void {
+    if (rememberMe) {
+      localStorage.setItem(this.TOKEN_KEY, token);
+    } else {
+      sessionStorage.setItem(this.TOKEN_KEY, token);
+    }
+  }
+
   private hasToken(): boolean {
-    return !!localStorage.getItem('token');
+    return !!this.getToken();
   }
 
   setProfileData(profile: Profile) {

@@ -2,5 +2,7 @@ export const API_URLS = {
     AUTHENTICATE: 'authenticate/token',
     FETCH_PROFILE: 'user/profile',
     CREATE_REGISTER_USER: 'user/signup',
+    FIND_USER_BY_ID: 'user/:id',
+    UPDATE_USER: 'user',
 
 };

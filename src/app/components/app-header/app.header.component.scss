@@ -1,6 +1,10 @@
 ::ng-deep .app-header.p-menubar {
   background: linear-gradient(to right, #032967, #145dae 50%, #002152);
   border-radius: 0;
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  height: 3.5rem;
 
   a {
     color: #ffffff;

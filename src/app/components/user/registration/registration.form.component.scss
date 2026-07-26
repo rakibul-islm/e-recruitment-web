@@ -14,10 +14,91 @@
 
 ::ng-deep .register-card-surface {
   width: 100%;
-  background: rgba(255, 255, 255, 0.55);
-  backdrop-filter: blur(16px) saturate(180%);
-  -webkit-backdrop-filter: blur(16px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  background: linear-gradient(160deg, rgba(96, 165, 250, 0.35), rgba(59, 130, 246, 0.22));
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(147, 197, 253, 0.25);
   border-radius: 16px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.55);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35), 0 0 48px rgba(59, 130, 246, 0.12);
+
+  .p-card-title {
+    color: #ffffff;
+    text-align: center;
+  }
+
+  .p-card-body,
+  .p-card-content {
+    color: #f1f5fb;
+  }
+
+  // PrimeNG's theme sets `.p-float-label > label { color: #6b7280 }` (and a
+  // red variant for invalid+dirty controls), which is more specific than a
+  // plain `label` selector and wins over it — hence !important here.
+  label,
+  .p-float-label > label {
+    color: #ffffff !important;
+  }
+
+  .p-inputtext {
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: #f1f5fb;
+
+    &:enabled:focus {
+      border-color: #60a5fa;
+      box-shadow: 0 0 0 1px #60a5fa;
+    }
+
+    &::placeholder {
+      color: rgba(226, 232, 255, 0.4);
+    }
+
+    // Chrome's forced yellow autofill paint sits beneath box-shadow, so a
+    // translucent inset color (matching the normal glass input) still lets
+    // it bleed through — only an opaque color fully masks it. This is a
+    // solid approximation of the same input tone against this card's blue.
+    &:-webkit-autofill,
+    &:-webkit-autofill:hover,
+    &:-webkit-autofill:focus {
+      -webkit-text-fill-color: #f1f5fb !important;
+      -webkit-box-shadow: 0 0 0 1000px #2d5390 inset !important;
+      caret-color: #f1f5fb;
+      transition: background-color 9999s ease-in-out 0s;
+    }
+  }
+
+  // PrimeNG's own theme targets `.input:-webkit-autofill` (a literal class that
+  // no element has) instead of the `input` element, so the float label never
+  // shifts up when the browser autofills a field without it being focused.
+  // `:has()` also reaches inputs nested inside p-password, where the label
+  // is a sibling of <p-password>, not of the native <input> itself.
+  // Position is fully self-contained (not relying on the base rule's inherited
+  // margin-top) so it can't drift from the focused/filled state's spacing.
+  .p-float-label:has(input:-webkit-autofill) > label,
+  .p-float-label:has(input:autofill) > label {
+    top: -1.25rem !important;
+    margin-top: 0 !important;
+    font-size: 12px;
+  }
+
+  .p-password-toggle-icon,
+  .p-password .p-icon {
+    color: rgba(226, 232, 255, 0.6);
+  }
+
+  .p-error {
+    color: #fca5a5;
+  }
+
+  a.text-primary {
+    color: #93c5fd;
+
+    &:hover {
+      color: #bfdbfe;
+    }
+  }
+
+  hr {
+    border-color: rgba(255, 255, 255, 0.15);
+  }
 }

@@ -9,6 +9,27 @@ a {
   text-decoration-color: rgba(59, 130, 246, 0.35);
 }
 
+/* app-page-header action buttons are ng-content-projected from each page's own
+   component, so they're scoped to that component, not app-page-header — a
+   ::ng-deep rule inside page-header.component.scss can't reliably reach them.
+   Defined globally here instead, matching the header title's color. */
+.page-header-actions .p-button {
+  background: #032967 !important;
+  border-color: #032967 !important;
+  padding: 0.35rem 0.75rem !important;
+  font-size: 0.85rem !important;
+  box-shadow: 0 2px 4px rgba(3, 41, 103, 0.35) !important;
+}
+
+.page-header-actions .p-button:hover {
+  background: #021c47 !important;
+  border-color: #021c47 !important;
+}
+
+.page-header-actions .p-button:focus {
+  box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #032967 !important;
+}
+
 /* Outlined-style floating label: sits on top of the input's border line, like a Material "outlined" field */
 .p-float-label input:focus ~ label,
 .p-float-label input.p-filled ~ label,
