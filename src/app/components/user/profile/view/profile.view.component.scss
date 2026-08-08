@@ -1,11 +1,24 @@
 .profile-card {
-  max-width: 28rem;
   width: 100%;
 }
 
+.profile-avatar-col {
+  flex: 0 0 auto;
+  width: 100%;
+
+  @media (min-width: 768px) {
+    width: 20rem;
+  }
+}
+
 ::ng-deep .profile-avatar {
-  width: 6rem;
-  height: 6rem;
+  width: 10rem;
+  height: 10rem;
+  border: 2px solid #c8d8f3;
+
+  .p-avatar-icon {
+    font-size: 3rem;
+  }
 
   img {
     object-fit: cover;

@@ -18,6 +18,10 @@ export class UserService extends BaseService {
     return super.get(API_URLS.FETCH_PROFILE, urlSearchParams);
   }
 
+  public updateProfile(body: any): Observable<any> {
+    return super.put(API_URLS.UPDATE_PROFILE, body);
+  }
+
   public createRegisterUser(body: any): Observable<any> {
     return super.post(API_URLS.CREATE_REGISTER_USER, body);
   }
@@ -29,5 +33,17 @@ export class UserService extends BaseService {
 
   public updateUser(body: any): Observable<any> {
     return super.put(API_URLS.UPDATE_USER, body);
+  }
+
+  public searchUsers(paramsMap: Map<any, any>): Observable<any> {
+    return super.get(API_URLS.FILTER_USER, paramsMap);
+  }
+
+  public createUser(body: any): Observable<any> {
+    return super.post(API_URLS.CREATE_USER, body);
+  }
+
+  public deleteUser(id: number): Observable<any> {
+    return this.deleteById(API_URLS.DELETE_USER, { id });
   }
 }

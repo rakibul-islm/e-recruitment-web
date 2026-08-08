@@ -1,4 +1,51 @@
 .profile-edit-card {
-  max-width: 28rem;
   width: 100%;
+}
+
+.profile-avatar-col {
+  flex: 0 0 auto;
+  width: 100%;
+
+  @media (min-width: 768px) {
+    width: 20rem;
+  }
+}
+
+.profile-avatar-wrapper {
+  position: relative;
+  width: 10rem;
+  height: 10rem;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+.profile-avatar-overlay {
+  position: absolute;
+  right: 0.1rem;
+  bottom: 0.1rem;
+  width: 2.25rem;
+  height: 2.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #032967;
+  color: #ffffff;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  font-size: 0.9rem;
+  pointer-events: none;
+}
+
+::ng-deep .profile-avatar {
+  width: 10rem;
+  height: 10rem;
+  border: 3px solid #032967;
+
+  .p-avatar-icon {
+    font-size: 3rem;
+  }
+
+  img {
+    object-fit: cover;
+  }
 }

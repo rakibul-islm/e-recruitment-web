@@ -1,0 +1,56 @@
+<app-page-header [title]="roleId ? 'Update Role' : 'Create Role'">
+  <p-button label="Save" icon="pi pi-check" (onClick)="submit()"></p-button>
+  <p-button label="Back" icon="pi pi-arrow-left" styleClass="p-button-secondary" (onClick)="navigateToSearch()"></p-button>
+</app-page-header>
+
+<div class="flex justify-content-center mt-3 px-3">
+  <p-card class="page-card">
+    <form *ngIf="roleForm" [formGroup]="roleForm" (ngSubmit)="submit()">
+      <div class="flex flex-column gap-4 mt-3">
+        <h3 class="form-section-title">Basic Info</h3>
+
+        <div class="grid">
+          <div class="col-12 md:col-4">
+            <p-floatLabel>
+              <input id="roleName" type="text" formControlName="name" pInputText class="w-full" />
+              <label for="roleName">Role Name</label>
+            </p-floatLabel>
+            <small class="p-error" *ngIf="roleForm.controls['name'].touched && roleForm.controls['name'].errors?.['required']">
+              Role name is required.</small>
+          </div>
+
+          <div class="col-12 md:col-4">
+            <p-floatLabel>
+              <input id="roleCode" type="text" formControlName="code" pInputText class="w-full" />
+              <label for="roleCode">Role Code</label>
+            </p-floatLabel>
+            <small class="p-error" *ngIf="roleForm.controls['code'].touched && roleForm.controls['code'].errors?.['required']">
+              Role code is required.</small>
+          </div>
+
+          <div class="col-12 md:col-4">
+            <p-floatLabel>
+              <input id="roleDescription" type="text" formControlName="description" pInputText class="w-full" />
+              <label for="roleDescription">Description</label>
+            </p-floatLabel>
+          </div>
+        </div>
+
+        <h3 class="form-section-title">Permissions</h3>
+
+        <div class="flex flex-column gap-2">
+          <label>Permissions</label>
+          <p-pickList [source]="availablePermissions" [target]="assignedPermissions" sourceHeader="Available Permissions" targetHeader="Assigned Permissions"
+            [dragdrop]="true" [responsive]="true" filterBy="name" sourceFilterPlaceholder="Search permissions" targetFilterPlaceholder="Search permissions"
+            [showSourceControls]="false" [showTargetControls]="false" styleClass="role-permissions-picklist"
+            (onMoveToTarget)="onPermissionAssignmentChanged()" (onMoveToSource)="onPermissionAssignmentChanged()"
+            (onMoveAllToTarget)="onPermissionAssignmentChanged()" (onMoveAllToSource)="onPermissionAssignmentChanged()">
+            <ng-template let-permission pTemplate="item">
+              <div>{{ permission.name }}</div>
+            </ng-template>
+          </p-pickList>
+        </div>
+      </div>
+    </form>
+  </p-card>
+</div>

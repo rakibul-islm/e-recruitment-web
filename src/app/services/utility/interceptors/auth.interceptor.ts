@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { Observable, catchError, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { NotificationService } from '../notification.service';
@@ -7,7 +8,11 @@ import { AuthService } from '../security/auth.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  constructor(private notificationService: NotificationService, private authService: AuthService) {}
+  constructor(
+    private notificationService: NotificationService,
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const token = this.authService.getToken();
@@ -39,6 +44,8 @@ export class AuthInterceptor implements HttpInterceptor {
       errorMessage = error?.error?.message ||  'Network Error: Please check your internet connection.';
     } else if (error.status === 401) {
       errorMessage = error?.error?.message ||  'Unauthorized: Please log in again.';
+      this.authService.logout();
+      this.router.navigate(['/login']);
     } else if (error.status === 403) {
       errorMessage = error?.error?.message ||  'Forbidden: You do not have permission.';
     } else if (error.status === 404) {

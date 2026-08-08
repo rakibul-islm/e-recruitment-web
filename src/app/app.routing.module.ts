@@ -6,6 +6,21 @@ import { ProfileViewComponent } from './components/user/profile/view/profile.vie
 import { ProfileEditComponent } from './components/user/profile/edit/profile.edit.component';
 import { RegistrationFormComponent } from './components/user/registration/registration.form.component';
 import { AuthGuard } from './services/utility/security/auth.guard';
+import { RoleSearchComponent } from './components/role/search/role.search.component';
+import { RoleFormComponent } from './components/role/form/role.form.component';
+import { RoleViewComponent } from './components/role/view/role.view.component';
+import { UserSearchComponent } from './components/user/management/search/user.search.component';
+import { UserFormComponent } from './components/user/management/form/user.form.component';
+import { UserViewComponent } from './components/user/management/view/user.view.component';
+import { UserGroupSearchComponent } from './components/user-group/search/user-group.search.component';
+import { UserGroupFormComponent } from './components/user-group/form/user-group.form.component';
+import { UserGroupViewComponent } from './components/user-group/view/user-group.view.component';
+import { PermissionSearchComponent } from './components/permission/search/permission.search.component';
+import { PermissionFormComponent } from './components/permission/form/permission.form.component';
+import { PermissionViewComponent } from './components/permission/view/permission.view.component';
+import { SystemConfigSearchComponent } from './components/system-config/search/system-config.search.component';
+import { SystemConfigFormComponent } from './components/system-config/form/system-config.form.component';
+import { SystemConfigViewComponent } from './components/system-config/view/system-config.view.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -18,6 +33,82 @@ const routes: Routes = [
   },
   { path: 'profile/edit',
     component: ProfileEditComponent,
+    canActivate: [AuthGuard]
+  },
+  { path: 'roles',
+    component: RoleSearchComponent,
+    canActivate: [AuthGuard]
+  },
+  { path: 'roles/create',
+    component: RoleFormComponent,
+    canActivate: [AuthGuard]
+  },
+  { path: 'roles/:id/edit',
+    component: RoleFormComponent,
+    canActivate: [AuthGuard]
+  },
+  { path: 'roles/:id',
+    component: RoleViewComponent,
+    canActivate: [AuthGuard]
+  },
+  { path: 'users',
+    component: UserSearchComponent,
+    canActivate: [AuthGuard]
+  },
+  { path: 'users/create',
+    component: UserFormComponent,
+    canActivate: [AuthGuard]
+  },
+  { path: 'users/:id/edit',
+    component: UserFormComponent,
+    canActivate: [AuthGuard]
+  },
+  { path: 'users/:id',
+    component: UserViewComponent,
+    canActivate: [AuthGuard]
+  },
+  { path: 'user-groups',
+    component: UserGroupSearchComponent,
+    canActivate: [AuthGuard]
+  },
+  { path: 'user-groups/create',
+    component: UserGroupFormComponent,
+    canActivate: [AuthGuard]
+  },
+  { path: 'user-groups/:id/edit',
+    component: UserGroupFormComponent,
+    canActivate: [AuthGuard]
+  },
+  { path: 'user-groups/:id',
+    component: UserGroupViewComponent,
+    canActivate: [AuthGuard]
+  },
+  { path: 'permissions',
+    component: PermissionSearchComponent,
+    canActivate: [AuthGuard]
+  },
+  { path: 'permissions/create',
+    component: PermissionFormComponent,
+    canActivate: [AuthGuard]
+  },
+  { path: 'permissions/:id/edit',
+    component: PermissionFormComponent,
+    canActivate: [AuthGuard]
+  },
+  { path: 'permissions/:id',
+    component: PermissionViewComponent,
+    canActivate: [AuthGuard]
+  },
+  { path: 'system-configs',
+    component: SystemConfigSearchComponent,
+    canActivate: [AuthGuard]
+  },
+  { path: 'system-configs/:id/edit',
+    component: SystemConfigFormComponent,
+    canActivate: [AuthGuard]
+  },
+  { path: 'system-configs/:id',
+    component: SystemConfigViewComponent,
     canActivate: [AuthGuard]
   },
 

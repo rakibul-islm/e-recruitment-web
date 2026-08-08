@@ -1,0 +1,62 @@
+<app-page-header title="Looking for Permission? Search here!">
+  <p-button label="Create Permission" icon="pi pi-plus" (onClick)="createPermission()"></p-button>
+</app-page-header>
+
+<div class="p-3">
+  <p-accordion [(activeIndex)]="activeTabIndex">
+    <p-accordionTab header="Search">
+      <div [formGroup]="filterForm">
+        <div class="grid">
+          <div class="col-12 md:col-4 flex flex-column gap-2">
+            <label for="filterName">Name</label>
+            <input id="filterName" type="text" pInputText formControlName="name"
+              placeholder="Search by name" (keyup.enter)="search(dt)" />
+          </div>
+          <div class="col-12 md:col-4 flex flex-column gap-2">
+            <label for="filterAuthority">Authority</label>
+            <input id="filterAuthority" type="text" pInputText formControlName="authority"
+              placeholder="Search by authority" (keyup.enter)="search(dt)" />
+          </div>
+          <div class="col-12 md:col-4 flex flex-column gap-2">
+            <label for="filterModule">Module</label>
+            <input id="filterModule" type="text" pInputText formControlName="module"
+              placeholder="Search by module" (keyup.enter)="search(dt)" />
+          </div>
+        </div>
+        <div class="search-actions">
+          <p-button label="Search" icon="pi pi-search" (onClick)="search(dt)"></p-button>
+          <p-button label="Clear" icon="pi pi-times" styleClass="p-button-outlined p-button-secondary" (onClick)="clearFilters()"></p-button>
+        </div>
+      </div>
+    </p-accordionTab>
+
+    <p-accordionTab header="Permissions">
+      <p-table #dt [value]="permissions" [lazy]="true" (onLazyLoad)="fetchPermissions($event)" [paginator]="true"
+        [rows]="rows" [totalRecords]="totalRecords" [loading]="loading" [rowsPerPageOptions]="[10, 20, 50]"
+        responsiveLayout="scroll" dataKey="id" selectionMode="single" [(selection)]="selectedPermission"
+        (onRowSelect)="viewPermission($event.data)">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Name</th>
+            <th>Authority</th>
+            <th>Module</th>
+            <th>Route Name</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-permission>
+          <tr class="selectable-row" [pSelectableRow]="permission">
+            <td>{{ permission.name }}</td>
+            <td>{{ permission.authority }}</td>
+            <td>{{ permission.module || 'N/A' }}</td>
+            <td>{{ permission.routeName || 'N/A' }}</td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="4" class="text-center">No permissions found.</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </p-accordionTab>
+  </p-accordion>
+</div>

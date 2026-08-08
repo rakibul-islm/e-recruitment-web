@@ -1,48 +1,50 @@
-<app-page-header title="User Profile">
+<app-page-header title="{{ profile.fullName || 'User' }} Profile">
   <p-button label="Edit" icon="pi pi-pencil" routerLink="/profile/edit"></p-button>
 </app-page-header>
 
 <div class="flex justify-content-center mt-6 px-3">
   <p-card class="profile-card">
-    <div class="flex justify-content-center mb-4">
-      <p-avatar [image]="profile.imageBase64" size="xlarge" shape="circle" styleClass="profile-avatar"></p-avatar>
-    </div>
+    <div class="flex flex-column md:flex-row gap-4 md:gap-6">
+      <div class="flex justify-content-center mb-4 md:mb-0 profile-avatar-col">
+        <p-avatar [image]="profile.imageBase64" size="xlarge" shape="circle" styleClass="profile-avatar"></p-avatar>
+      </div>
 
-    <table class="profile-table">
-      <tbody>
-        <tr>
-          <td class="profile-label">Full Name</td>
-          <td class="profile-value">{{ profile.fullName || 'N/A' }}</td>
-        </tr>
-        <tr>
-          <td class="profile-label">Email</td>
-          <td class="profile-value">{{ profile.email || 'N/A' }}</td>
-        </tr>
-        <tr>
-          <td class="profile-label">Address</td>
-          <td class="profile-value">{{ profile.address || 'N/A' }}</td>
-        </tr>
-        <tr>
-          <td class="profile-label">Phone</td>
-          <td class="profile-value">{{ profile.phone || 'N/A' }}</td>
-        </tr>
-        <tr>
-          <td class="profile-label">Mobile</td>
-          <td class="profile-value">{{ profile.mobile || 'N/A' }}</td>
-        </tr>
-        <tr>
-          <td class="profile-label">Roles</td>
-          <td class="profile-value">
-            <ng-container *ngIf="profile.roles?.length; else noRoles">
-              <div class="profile-role" *ngFor="let role of profile.roles">
-                <span class="profile-role-name">{{ role.name }}</span>
-                <span class="profile-role-description" *ngIf="role.description">{{ role.description }}</span>
-              </div>
-            </ng-container>
-            <ng-template #noRoles>N/A</ng-template>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+      <table class="profile-table flex-1">
+        <tbody>
+          <tr>
+            <td class="profile-label">Full Name</td>
+            <td class="profile-value">{{ profile.fullName || 'N/A' }}</td>
+          </tr>
+          <tr>
+            <td class="profile-label">Email</td>
+            <td class="profile-value">{{ profile.email || 'N/A' }}</td>
+          </tr>
+          <tr>
+            <td class="profile-label">Mobile Number (Primary)</td>
+            <td class="profile-value">{{ profile.mobile || 'N/A' }}</td>
+          </tr>
+          <tr>
+            <td class="profile-label">Mobile Number (Secondary)</td>
+            <td class="profile-value">{{ profile.phone || 'N/A' }}</td>
+          </tr>
+          <tr>
+            <td class="profile-label">Address</td>
+            <td class="profile-value">{{ profile.address || 'N/A' }}</td>
+          </tr>
+          <tr>
+            <td class="profile-label">Roles</td>
+            <td class="profile-value">
+              <ng-container *ngIf="profile.roles?.length; else noRoles">
+                <div class="profile-role" *ngFor="let role of profile.roles">
+                  <span class="profile-role-name">{{ role.name }}</span>
+                  <span class="profile-role-description" *ngIf="role.description">{{ role.description }}</span>
+                </div>
+              </ng-container>
+              <ng-template #noRoles>N/A</ng-template>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </p-card>
 </div>

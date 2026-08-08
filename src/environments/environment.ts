@@ -4,7 +4,11 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'http://localhost:8041/e-recruitment/'
+  baseUrl: 'http://localhost:8041/e-recruitment/',
+  // Must match the backend's `google.client-id` (GOOGLE_CLIENT_ID env var) and have this
+  // app's origin (e.g. http://localhost:4200) registered as an Authorized JavaScript origin
+  // for this OAuth client in Google Cloud Console.
+  googleClientId: '79115464279-kffbqr7i3voeuhd10t550q209ai1omeb.apps.googleusercontent.com'
 };
 
 /*

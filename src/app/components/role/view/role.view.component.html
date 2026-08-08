@@ -1,0 +1,52 @@
+<app-page-header title="Role Details">
+  <p-button label="Edit" icon="pi pi-pencil" [routerLink]="['/roles', roleId, 'edit']"></p-button>
+  <p-button label="Delete" icon="pi pi-trash" styleClass="p-button-danger" (onClick)="deleteRole()"></p-button>
+  <p-button label="Back" icon="pi pi-arrow-left" styleClass="p-button-secondary" (onClick)="navigateToSearch()"></p-button>
+</app-page-header>
+
+<div class="flex justify-content-center mt-3 px-3">
+  <p-card class="page-card">
+    <h3 class="form-section-title">Basic Info</h3>
+    <table class="detail-table">
+      <tbody>
+        <tr>
+          <td class="detail-label">Name</td>
+          <td class="detail-value">{{ role.name || 'N/A' }}</td>
+        </tr>
+        <tr>
+          <td class="detail-label">Code</td>
+          <td class="detail-value">{{ role.code || 'N/A' }}</td>
+        </tr>
+        <tr>
+          <td class="detail-label">Description</td>
+          <td class="detail-value">{{ role.description || 'N/A' }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 class="form-section-title">Permissions</h3>
+    <p-table [value]="role.permissions || []" responsiveLayout="scroll">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Name</th>
+          <th>Authority</th>
+          <th>Module</th>
+          <th>Description</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-permission>
+        <tr>
+          <td>{{ permission.name }}</td>
+          <td>{{ permission.authority }}</td>
+          <td>{{ permission.module }}</td>
+          <td>{{ permission.description || 'N/A' }}</td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="4" class="text-center">No permissions assigned.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-card>
+</div>

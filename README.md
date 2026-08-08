@@ -7,7 +7,6 @@ A web client for the e-recruitment platform, built with [Angular](https://angula
 - **Angular 17** (NgModule-based, `@angular-devkit/build-angular:browser` builder)
 - **PrimeNG 17** for UI components, themed with **Lara Light Blue**
 - **PrimeFlex** for layout/spacing utility classes and **PrimeIcons** for icons
-- **ngx-toastr** for toast notifications
 - **RxJS** / **TypeScript 5.4**
 
 Styling is a mix of PrimeNG components, PrimeFlex utility classes, and small component-scoped `.scss` files for anything the two don't cover (background images, brand colors, the glassmorphism auth cards, avatar sizing, etc.). There is no Tailwind/PostCSS in this project.
@@ -62,7 +61,7 @@ src/app/
 │   └── utility/
 │       ├── security/         AuthService (login/session state) + AuthGuard
 │       ├── interceptors/     HTTP auth interceptor
-│       ├── notification.service.ts       ngx-toastr wrapper
+│       ├── notification.service.ts       Wrapper around PrimeNG's MessageService (<p-toast>)
 │       └── common.confirm.dialog.service.ts   Wrapper around PrimeNG's ConfirmationService
 ├── app.routing.module.ts     Route definitions
 └── app.module.ts             Root NgModule (PrimeNG modules imported here)

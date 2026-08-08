@@ -1,0 +1,55 @@
+<app-page-header [title]="permissionId ? 'Update Permission' : 'Create Permission'">
+  <p-button label="Save" icon="pi pi-check" (onClick)="submit()"></p-button>
+  <p-button label="Back" icon="pi pi-arrow-left" styleClass="p-button-secondary" (onClick)="navigateToSearch()"></p-button>
+</app-page-header>
+
+<div class="flex justify-content-center mt-3 px-3">
+  <p-card class="page-card">
+    <form *ngIf="permissionForm" [formGroup]="permissionForm" (ngSubmit)="submit()">
+      <div class="flex flex-column gap-4 mt-3">
+        <h3 class="form-section-title">Basic Info</h3>
+
+        <div class="grid">
+          <div class="col-12 md:col-4">
+            <p-floatLabel>
+              <input id="permissionName" type="text" formControlName="name" pInputText class="w-full" />
+              <label for="permissionName">Name</label>
+            </p-floatLabel>
+            <small class="p-error" *ngIf="permissionForm.controls['name'].touched && permissionForm.controls['name'].errors?.['required']">
+              Name is required.</small>
+          </div>
+
+          <div class="col-12 md:col-4">
+            <p-floatLabel>
+              <input id="permissionAuthority" type="text" formControlName="authority" pInputText class="w-full" />
+              <label for="permissionAuthority">Authority</label>
+            </p-floatLabel>
+            <small class="p-error" *ngIf="permissionForm.controls['authority'].touched && permissionForm.controls['authority'].errors?.['required']">
+              Authority is required.</small>
+          </div>
+
+          <div class="col-12 md:col-4">
+            <p-floatLabel>
+              <input id="permissionModule" type="text" formControlName="module" pInputText class="w-full" />
+              <label for="permissionModule">Module</label>
+            </p-floatLabel>
+          </div>
+
+          <div class="col-12 md:col-4">
+            <p-floatLabel>
+              <input id="permissionRouteName" type="text" formControlName="routeName" pInputText class="w-full" />
+              <label for="permissionRouteName">Route Name</label>
+            </p-floatLabel>
+          </div>
+
+          <div class="col-12 md:col-4">
+            <p-floatLabel>
+              <input id="permissionDescription" type="text" formControlName="description" pInputText class="w-full" />
+              <label for="permissionDescription">Description</label>
+            </p-floatLabel>
+          </div>
+        </div>
+      </div>
+    </form>
+  </p-card>
+</div>

@@ -1,0 +1,176 @@
+::ng-deep .app-header.p-menubar {
+  background: linear-gradient(to right, #032967, #145dae 50%, #002152);
+  border: none;
+  border-radius: 0;
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  min-height: 3.5rem;
+  padding: 0 1.5rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+
+  .p-menubar-button {
+    color: #ffffff;
+  }
+
+  .p-menubar-root-list {
+    gap: 0.25rem;
+    margin-left: 1.5rem;
+
+    > .p-menuitem > .p-menuitem-content {
+      background: transparent !important;
+
+      > .p-menuitem-link {
+        color: rgba(255, 255, 255, 0.85);
+        padding: 0.65rem 0.85rem;
+        transition: color 0.15s, font-weight 0.15s;
+
+        .p-menuitem-text,
+        .p-menuitem-icon,
+        .p-submenu-icon {
+          color: inherit;
+        }
+      }
+
+      &:hover > .p-menuitem-link {
+        color: #ffffff;
+        font-weight: 600;
+      }
+    }
+
+    > .p-menuitem > .p-menuitem-content > .p-menuitem-link.p-menuitem-link-active {
+      color: #ffffff;
+      font-weight: 700;
+    }
+
+    > .p-menuitem:has(.p-menuitem-link-active) > .p-menuitem-content > .p-menuitem-link {
+      color: #ffffff;
+      font-weight: 700;
+    }
+
+    .p-submenu-list .p-menuitem-link {
+      transition: color 0.15s, font-weight 0.15s;
+
+      &:hover,
+      &.p-menuitem-link-active {
+        color: #032967;
+        font-weight: 700;
+      }
+
+      &.p-menuitem-link-active .p-menuitem-text {
+        font-weight: 700;
+      }
+    }
+  }
+}
+
+::ng-deep .app-header-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+
+  .app-header-logo {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .app-header-title {
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 1.05rem;
+    letter-spacing: 0.02em;
+    line-height: 1;
+  }
+}
+
+.app-header-account {
+  position: relative;
+}
+
+.app-header-account-trigger {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  padding: 0.3rem 0.75rem 0.3rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.15s;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.16);
+  }
+
+  &:focus-visible {
+    outline: 2px solid #ffffff;
+    outline-offset: 2px;
+  }
+}
+
+.app-header-account-name {
+  color: #ffffff;
+  font-weight: 500;
+  font-size: 0.9rem;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.app-header-account-caret {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.75rem;
+}
+
+::ng-deep .header-avatar {
+  border: 2px solid #ffffff;
+}
+
+.app-header-signin {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: #ffffff;
+  font-weight: 500;
+  font-size: 0.9rem;
+  text-decoration: none;
+  padding: 0.4rem 0.9rem;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 999px;
+  transition: background-color 0.15s;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.12);
+  }
+}
+
+@media screen and (max-width: 960px) {
+  ::ng-deep .app-header.p-menubar .p-menubar-root-list {
+    margin-left: 0;
+
+    > .p-menuitem > .p-menuitem-content {
+      > .p-menuitem-link {
+        color: #1f2937;
+      }
+
+      &:hover > .p-menuitem-link {
+        color: #032967;
+        font-weight: 600;
+      }
+    }
+
+    > .p-menuitem > .p-menuitem-content > .p-menuitem-link.p-menuitem-link-active {
+      color: #032967;
+      font-weight: 700;
+    }
+
+    > .p-menuitem:has(.p-menuitem-link-active) > .p-menuitem-content > .p-menuitem-link {
+      color: #032967;
+      font-weight: 700;
+    }
+  }
+
+  .app-header-account-name {
+    display: none;
+  }
+}

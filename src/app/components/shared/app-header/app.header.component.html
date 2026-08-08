@@ -1,0 +1,25 @@
+<p-menubar [model]="menuItems" styleClass="app-header">
+  <ng-template pTemplate="start">
+    <a routerLink="/dashboard" class="app-header-brand">
+      <img src="/assets/images/app-logo.png" alt="e-recruitment logo" class="app-header-logo" />
+      <span class="app-header-title">E-RECRUITMENT</span>
+    </a>
+  </ng-template>
+
+  <ng-template pTemplate="end">
+    <div class="app-header-account" *ngIf="isAuthenticated; else guestAction">
+      <button type="button" class="app-header-account-trigger" (click)="accountMenu.toggle($event)">
+        <span class="app-header-account-name">{{ profile.fullName }}</span>
+        <p-avatar [image]="profile.imageBase64" shape="circle" styleClass="header-avatar"></p-avatar>
+        <i class="pi pi-angle-down app-header-account-caret"></i>
+      </button>
+      <p-menu #accountMenu [model]="accountMenuItems" [popup]="true" appendTo="body"></p-menu>
+    </div>
+    <ng-template #guestAction>
+      <a routerLink="/login" class="app-header-signin">
+        <i class="pi pi-sign-in"></i>
+        <span>Sign In</span>
+      </a>
+    </ng-template>
+  </ng-template>
+</p-menubar>

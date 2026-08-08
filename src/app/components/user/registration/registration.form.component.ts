@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { NotificationService } from '../../../services/utility/notification.service';
 import { BaseComponent } from '../../base.component';
 import { Register } from '../../../services/user/domain/user.domain';
 import { UserService } from '../../../services/user/user.service';
@@ -19,8 +18,7 @@ export class RegistrationFormComponent extends BaseComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private userService: UserService,
-    private commonConfirmDialogService: CommonConfirmDialogService,
-    private notificationService: NotificationService) {
+    private commonConfirmDialogService: CommonConfirmDialogService) {
     super();
   }
 
@@ -47,8 +45,7 @@ export class RegistrationFormComponent extends BaseComponent implements OnInit {
   }
 
   submit() {
-    this.markFormGroupAsTouched(this.registerForm);
-    if (this.registerForm.invalid) { return; }
+    if (this.isFormInvalid(this.registerForm)) { return; }
 
     const register: Register = this.registerForm.getRawValue();
     this.commonConfirmDialogService.confirm(() => this.createRegistration(register));

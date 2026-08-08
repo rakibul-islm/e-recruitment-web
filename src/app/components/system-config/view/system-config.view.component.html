@@ -1,0 +1,30 @@
+<app-page-header title="Config Details">
+  <p-button label="Edit" icon="pi pi-pencil" [routerLink]="['/system-configs', systemConfigId, 'edit']"></p-button>
+  <p-button label="Back" icon="pi pi-arrow-left" styleClass="p-button-secondary" (onClick)="navigateToSearch()"></p-button>
+</app-page-header>
+
+<div class="flex justify-content-center mt-3 px-3">
+  <p-card class="page-card">
+    <h3 class="form-section-title">Basic Info</h3>
+    <table class="detail-table">
+      <tbody>
+        <tr>
+          <td class="detail-label">Config Key</td>
+          <td class="detail-value">{{ systemConfig.configKey || 'N/A' }}</td>
+        </tr>
+        <tr>
+          <td class="detail-label">Config Value</td>
+          <td class="detail-value">{{ systemConfig.configValue || 'N/A' }}</td>
+        </tr>
+        <tr>
+          <td class="detail-label">Expected Values</td>
+          <td class="detail-value">{{ systemConfig.expectedValues || 'N/A' }}</td>
+        </tr>
+        <tr>
+          <td class="detail-label">Description</td>
+          <td class="detail-value">{{ systemConfig.description || 'N/A' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </p-card>
+</div>

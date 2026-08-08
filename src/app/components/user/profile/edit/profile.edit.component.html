@@ -1,4 +1,4 @@
-<app-page-header title="Edit Profile">
+<app-page-header title="Update Profile">
   <p-button label="Update" icon="pi pi-sync" (onClick)="save()"></p-button>
   <p-button label="Back" icon="pi pi-arrow-left" (onClick)="navigateToProfile()"></p-button>
 </app-page-header>
@@ -6,50 +6,57 @@
 <div class="flex justify-content-center mt-6 px-3">
   <p-card class="profile-edit-card">
     <form *ngIf="editForm" [formGroup]="editForm" (ngSubmit)="save()">
-      <div class="flex flex-column gap-4 mt-3">
-        <div>
-          <p-floatLabel>
-            <input id="editFullName" type="text" formControlName="fullName" pInputText class="w-full" />
-            <label for="editFullName">Full Name</label>
-          </p-floatLabel>
-          <small class="p-error" *ngIf="editForm.controls['fullName'].touched && editForm.controls['fullName'].errors?.['required']">
-            Full name is required.</small>
+      <div class="flex flex-column md:flex-row gap-4 md:gap-6">
+        <div class="flex flex-column align-items-center gap-2 mb-4 md:mb-0 profile-avatar-col">
+          <div class="profile-avatar-wrapper" (click)="fileInput.click()">
+            <p-avatar [image]="imageBase64" size="xlarge" shape="circle" styleClass="profile-avatar"></p-avatar>
+            <span class="profile-avatar-overlay"><i class="pi pi-camera"></i></span>
+          </div>
+          <input #fileInput type="file" accept="image/*" class="hidden" (change)="onFileChange($event)" />
+          <p-button *ngIf="imageBase64" label="Remove Photo" icon="pi pi-trash" styleClass="p-button-text p-button-sm p-button-danger" (onClick)="removeImage()"></p-button>
         </div>
 
-        <div>
-          <p-floatLabel>
-            <input id="editEmail" type="email" formControlName="email" pInputText class="w-full" />
-            <label for="editEmail">Email</label>
-          </p-floatLabel>
-          <ng-container *ngIf="editForm.controls['email'].touched">
-            <small class="p-error" *ngIf="editForm.controls['email'].errors?.['required']">Email is required.</small>
-            <small class="p-error" *ngIf="editForm.controls['email'].errors?.['email']">Enter a valid email.</small>
-          </ng-container>
-        </div>
+        <div class="flex flex-column gap-4 flex-1">
+          <div>
+            <p-floatLabel>
+              <input id="editFullName" type="text" formControlName="fullName" pInputText class="w-full" />
+              <label for="editFullName">Full Name</label>
+            </p-floatLabel>
+            <small class="p-error" *ngIf="editForm.controls['fullName'].touched && editForm.controls['fullName'].errors?.['required']">
+              Full name is required.</small>
+          </div>
 
-        <div>
-          <p-floatLabel>
-            <input id="editAddress" type="text" formControlName="address" pInputText class="w-full" />
-            <label for="editAddress">Address</label>
-          </p-floatLabel>
-        </div>
+          <div>
+            <p-floatLabel>
+              <input id="editEmail" type="email" formControlName="email" pInputText class="w-full" />
+              <label for="editEmail">Email</label>
+            </p-floatLabel>
+          </div>
 
-        <div>
-          <p-floatLabel>
-            <input id="editPhone" type="text" formControlName="phone" pInputText class="w-full" />
-            <label for="editPhone">Phone</label>
-          </p-floatLabel>
-        </div>
+          <div>
+            <p-floatLabel>
+              <input id="editMobile" type="text" formControlName="mobile" pInputText class="w-full" />
+              <label for="editMobile">Mobile Number (Primary)</label>
+            </p-floatLabel>
+            <ng-container *ngIf="editForm.controls['mobile'].touched">
+              <small class="p-error" *ngIf="editForm.controls['mobile'].errors?.['required']">Mobile number is required.</small>
+              <small class="p-error" *ngIf="editForm.controls['mobile'].errors?.['pattern']">Mobile number must be 11 digits.</small>
+            </ng-container>
+          </div>
 
-        <div>
-          <p-floatLabel>
-            <input id="editMobile" type="text" formControlName="mobile" pInputText class="w-full" />
-            <label for="editMobile">Mobile Number</label>
-          </p-floatLabel>
-          <ng-container *ngIf="editForm.controls['mobile'].touched">
-            <small class="p-error" *ngIf="editForm.controls['mobile'].errors?.['required']">Mobile number is required.</small>
-            <small class="p-error" *ngIf="editForm.controls['mobile'].errors?.['pattern']">Mobile number must be 11 digits.</small>
-          </ng-container>
+          <div>
+            <p-floatLabel>
+              <input id="editPhone" type="text" formControlName="phone" pInputText class="w-full" />
+              <label for="editPhone">Mobile Number (Secondary)</label>
+            </p-floatLabel>
+          </div>
+
+          <div>
+            <p-floatLabel>
+              <input id="editAddress" type="text" formControlName="address" pInputText class="w-full" />
+              <label for="editAddress">Address</label>
+            </p-floatLabel>
+          </div>
         </div>
       </div>
     </form>
