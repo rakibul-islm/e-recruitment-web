@@ -49,6 +49,22 @@ export class AuthService {
     );
   }
 
+  forgotPassword(email: string): Observable<any> {
+    return this.http.post(API_URLS.FORGOT_PASSWORD, { email });
+  }
+
+  verifyOtp(payload: { email: string; otp: string }): Observable<any> {
+    return this.http.post(API_URLS.VERIFY_OTP, payload);
+  }
+
+  resetPassword(payload: { email: string; otp: string; newPassword: string; confirmPassword: string }): Observable<any> {
+    return this.http.post(API_URLS.RESET_PASSWORD, payload);
+  }
+
+  setPassword(payload: { token: string; newPassword: string; confirmPassword: string }): Observable<any> {
+    return this.http.post(API_URLS.SET_PASSWORD, payload);
+  }
+
   logout(): void {
     localStorage.removeItem(this.TOKEN_KEY);
     sessionStorage.removeItem(this.TOKEN_KEY);

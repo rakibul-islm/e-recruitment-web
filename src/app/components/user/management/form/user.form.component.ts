@@ -50,7 +50,6 @@ export class UserFormComponent extends BaseComponent implements OnInit {
     this.userForm = this.formBuilder.group({
       fullName: [formData.fullName, Validators.required],
       email: [formData.email, [Validators.required, Validators.email]],
-      password: ['', this.userId ? [] : [Validators.required]],
       address: [formData.address],
       phone: [formData.phone],
       mobile: [formData.mobile, [Validators.required, Validators.pattern('^[0-9]{11}$')]],
@@ -121,7 +120,6 @@ export class UserFormComponent extends BaseComponent implements OnInit {
     if (this.isFormInvalid(this.userForm)) { return; }
 
     const payload: any = { ...this.userForm.getRawValue() };
-    if (!payload.password) { delete payload.password; }
 
     this.commonConfirmDialogService.confirm(() => {
       this.userId ? this.updateUser({ ...payload, id: this.userId }) : this.createUser(payload);
@@ -130,7 +128,7 @@ export class UserFormComponent extends BaseComponent implements OnInit {
 
   createUser(payload: any): void {
     this.subscribers.createUserSub = this.userService.createUser(payload).subscribe(() => {
-      this.notificationService.sendSuccessMsg('User created successfully!');
+      this.notificationService.sendSuccessMsg('User created — an account setup email has been sent.');
       this.navigateToSearch();
     });
   }

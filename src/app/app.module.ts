@@ -11,8 +11,11 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AppHeaderComponent } from './components/shared/app-header/app.header.component';
 import { ProfileViewComponent } from './components/user/profile/view/profile.view.component';
 import { ProfileEditComponent } from './components/user/profile/edit/profile.edit.component';
+import { ChangePasswordComponent } from './components/user/password/change-password/change-password.component';
 import { PageHeaderComponent } from './components/shared/page-header/page-header.component';
 import { RegistrationFormComponent } from './components/user/registration/registration.form.component';
+import { ForgotPasswordComponent } from './components/user/password/forgot-password/forgot-password.component';
+import { SetPasswordComponent } from './components/user/password/set-password/set-password.component';
 import { AuthService } from './services/utility/security/auth.service';
 import { AuthInterceptor } from './services/utility/interceptors/auth.interceptor';
 import { LoadingInterceptor } from './services/utility/interceptors/loading.interceptor';
@@ -31,6 +34,8 @@ import { PermissionViewComponent } from './components/permission/view/permission
 import { SystemConfigSearchComponent } from './components/system-config/search/system-config.search.component';
 import { SystemConfigFormComponent } from './components/system-config/form/system-config.form.component';
 import { SystemConfigViewComponent } from './components/system-config/view/system-config.view.component';
+import { PasswordPolicyFormComponent } from './components/password-policy/form/password-policy.form.component';
+import { PasswordPolicyViewComponent } from './components/password-policy/view/password-policy.view.component';
 import { RequiredFieldDirective } from './directives/required-field.directive';
 
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -38,6 +43,7 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { PasswordModule } from 'primeng/password';
+import { InputOtpModule } from 'primeng/inputotp';
 import { CheckboxModule } from 'primeng/checkbox';
 import { CardModule } from 'primeng/card';
 import { MenubarModule } from 'primeng/menubar';
@@ -62,7 +68,10 @@ import { ToastModule } from 'primeng/toast';
     AppHeaderComponent,
     ProfileViewComponent,
     ProfileEditComponent,
+    ChangePasswordComponent,
     RegistrationFormComponent,
+    ForgotPasswordComponent,
+    SetPasswordComponent,
     PageHeaderComponent,
     RoleSearchComponent,
     RoleFormComponent,
@@ -79,6 +88,8 @@ import { ToastModule } from 'primeng/toast';
     SystemConfigSearchComponent,
     SystemConfigFormComponent,
     SystemConfigViewComponent,
+    PasswordPolicyFormComponent,
+    PasswordPolicyViewComponent,
     RequiredFieldDirective
   ],
   imports: [
@@ -93,6 +104,7 @@ import { ToastModule } from 'primeng/toast';
     InputTextModule,
     InputTextareaModule,
     PasswordModule,
+    InputOtpModule,
     CheckboxModule,
     CardModule,
     MenubarModule,

@@ -31,25 +31,19 @@
     color: #f1f5fb;
   }
 
-  // PrimeNG's theme sets `.p-float-label > label { color: #6b7280 }` (and a
-  // red variant for invalid+dirty controls), which is more specific than a
-  // plain `label` selector and wins over it — hence !important here.
+  // PrimeNG's `.p-float-label > label` selector is more specific than plain `label` — hence !important.
   label {
     color: #ffffff !important;
     font-size: 1rem;
   }
 
-  // Resting-state floating label sits on top of the (now white) input as its
-  // placeholder text, so it needs a dark color to stay legible there — unlike
-  // other plain labels on this card (e.g. "Remember me") which stay white.
+  // Resting-state label sits on the now-white input as placeholder text, so needs a dark color.
   .p-float-label > label {
     color: #6b7280 !important;
     font-size: 1rem;
   }
 
-  // Once focused/filled the label floats up onto the card's blue border line,
-  // so it switches back to white there; also sizes it up from the theme's
-  // 12px caption size, which read too small against this card.
+  // Focused/filled label floats onto the card's blue border, so switches back to white and sizes up.
   .p-float-label input:focus ~ label,
   .p-float-label input.p-filled ~ label,
   .p-float-label .p-inputwrapper-focus ~ label,
@@ -73,9 +67,7 @@
       color: #9ca3af;
     }
 
-    // Chrome's forced yellow autofill paint sits beneath box-shadow, so an
-    // opaque inset color matching the input's own white background is needed
-    // to fully mask it.
+    // Opaque inset shadow masks Chrome's forced yellow autofill paint.
     &:-webkit-autofill,
     &:-webkit-autofill:hover,
     &:-webkit-autofill:focus {
@@ -86,13 +78,7 @@
     }
   }
 
-  // PrimeNG's own theme targets `.input:-webkit-autofill` (a literal class that
-  // no element has) instead of the `input` element, so the float label never
-  // shifts up when the browser autofills a field without it being focused.
-  // `:has()` also reaches inputs nested inside p-password, where the label
-  // is a sibling of <p-password>, not of the native <input> itself.
-  // Position is fully self-contained (not relying on the base rule's inherited
-  // margin-top) so it can't drift from the focused/filled state's spacing.
+  // :has() targets the real input (PrimeNG's own rule targets an unused class) so autofill still floats the label.
   .p-float-label:has(input:-webkit-autofill) > label,
   .p-float-label:has(input:autofill) > label {
     top: -1rem !important;
@@ -100,8 +86,7 @@
     font-size: 0.95rem !important;
   }
 
-  // Sits inside the now-white input, so it needs a dark color to stay visible
-  // (previously light/translucent, meant for the input's old dark glass look).
+  // Sits inside the now-white input, so needs a dark color to stay visible.
   .p-password-toggle-icon,
   .p-password .p-icon {
     color: #6b7280;

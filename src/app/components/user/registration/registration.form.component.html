@@ -4,9 +4,30 @@
       <div class="text-center">Sign Up</div>
     </ng-template>
 
-    <form [formGroup]="registerForm" (ngSubmit)="submit()">
+    <ng-container *ngIf="step === 'otp'">
+      <p class="text-center mb-0">We've sent a 6-digit OTP to your email. Enter it below to verify your account.</p>
+
+      <form [formGroup]="otpForm" (ngSubmit)="submitOtp()">
+        <div class="flex flex-column gap-4 mt-3">
+          <div class="flex flex-column align-items-center gap-2">
+            <p-inputOtp formControlName="otp" [length]="6" [integerOnly]="true"
+              [invalid]="otpForm.controls['otp'].touched && otpForm.controls['otp'].invalid"></p-inputOtp>
+            <small class="p-error" *ngIf="otpForm.controls['otp'].touched && otpForm.controls['otp'].errors?.['required']">OTP is required.</small>
+            <small class="p-error" *ngIf="otpForm.controls['otp'].touched && otpForm.controls['otp'].errors?.['pattern']">Enter the 6-digit OTP.</small>
+          </div>
+
+          <p-button type="submit" label="Verify OTP" styleClass="w-full"></p-button>
+
+          <p class="text-sm text-center m-0">
+            Didn't get the OTP?
+            <a (click)="resendOtp()" class="text-primary font-semibold ml-1 cursor-pointer">Resend OTP</a>
+          </p>
+        </div>
+      </form>
+    </ng-container>
+
+    <form *ngIf="step === 'form'" [formGroup]="registerForm" (ngSubmit)="submit()">
       <div class="flex flex-column gap-4 mt-3">
-        <!-- Full Name -->
         <div>
           <p-floatLabel>
             <input id="fullName" type="text" formControlName="fullName" pInputText class="w-full" />
@@ -16,7 +37,6 @@
             Full name is required.</small>
         </div>
 
-        <!-- Email -->
         <div>
           <p-floatLabel>
             <input id="email" type="email" formControlName="email" pInputText class="w-full" />
@@ -28,7 +48,6 @@
           </ng-container>
         </div>
 
-        <!-- Mobile -->
         <div>
           <p-floatLabel>
             <input id="mobile" type="text" formControlName="mobile" pInputText class="w-full" />
@@ -40,20 +59,23 @@
           </ng-container>
         </div>
 
-        <!-- Password -->
         <div>
           <p-floatLabel>
             <p-password id="password" formControlName="password" [toggleMask]="true" [feedback]="false"
               styleClass="w-full" inputStyleClass="w-full"></p-password>
             <label for="password">Password</label>
           </p-floatLabel>
-          <ng-container *ngIf="registerForm.controls['password'].touched">
-            <small class="p-error" *ngIf="registerForm.controls['password'].errors?.['required']">Password is required.</small>
-            <small class="p-error" *ngIf="registerForm.controls['password'].errors?.['minlength']">Password must be at least 6 characters.</small>
-          </ng-container>
+          <small class="p-error" *ngIf="registerForm.controls['password'].touched && registerForm.controls['password'].errors?.['required']">
+            Password is required.</small>
+
+          <div class="strength-meter" *ngIf="passwordValue">
+            <div class="strength-meter-track">
+              <div class="strength-meter-fill" [ngClass]="strengthClass()" [style.width.%]="requirementsMet()"></div>
+            </div>
+            <span class="strength-label" [ngClass]="strengthClass()">{{ strengthLabel() }}</span>
+          </div>
         </div>
 
-        <!-- Confirm Password -->
         <div>
           <p-floatLabel>
             <p-password id="confirmPassword" formControlName="confirmPassword" [toggleMask]="true" [feedback]="false"
@@ -64,6 +86,34 @@
             <small class="p-error" *ngIf="registerForm.controls['confirmPassword'].errors?.['required']">Confirm password is required.</small>
             <small class="p-error" *ngIf="registerForm.hasError('passwordMismatch')">Passwords do not match.</small>
           </ng-container>
+        </div>
+
+        <div class="requirement-checklist">
+          <span class="requirement-checklist-title">Password requirements</span>
+          <span class="requirement-item" [class.met]="hasMinLength()">
+            <i class="pi" [ngClass]="hasMinLength() ? 'pi-check-circle' : 'pi-circle'"></i>
+            At least {{ policy.minLength }} characters
+          </span>
+          <span class="requirement-item" *ngIf="policy.requireUppercase" [class.met]="hasUppercase()">
+            <i class="pi" [ngClass]="hasUppercase() ? 'pi-check-circle' : 'pi-circle'"></i>
+            One uppercase letter
+          </span>
+          <span class="requirement-item" *ngIf="policy.requireLowercase" [class.met]="hasLowercase()">
+            <i class="pi" [ngClass]="hasLowercase() ? 'pi-check-circle' : 'pi-circle'"></i>
+            One lowercase letter
+          </span>
+          <span class="requirement-item" *ngIf="policy.requireDigit" [class.met]="hasDigit()">
+            <i class="pi" [ngClass]="hasDigit() ? 'pi-check-circle' : 'pi-circle'"></i>
+            One digit
+          </span>
+          <span class="requirement-item" *ngIf="policy.requireSpecialChar" [class.met]="hasSpecialChar()">
+            <i class="pi" [ngClass]="hasSpecialChar() ? 'pi-check-circle' : 'pi-circle'"></i>
+            One special character
+          </span>
+          <span class="requirement-item" *ngIf="policy.disallowUserInfoInPassword">
+            <i class="pi pi-info-circle"></i>
+            Must not contain your name or email
+          </span>
         </div>
 
         <p-button type="submit" label="Sign Up" styleClass="w-full"></p-button>

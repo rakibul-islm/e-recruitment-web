@@ -16,12 +16,13 @@ export const MENU_ITEMS: AppMenuItem[] = [
       { label: 'User Group', icon: 'pi pi-sitemap', routerLink: '/user-groups', routeName: 'user-group-list' },
       { label: 'Role', icon: 'pi pi-shield', routerLink: '/roles', routeName: 'role-list' },
       { label: 'Permission', icon: 'pi pi-key', routerLink: '/permissions', routeName: 'permission-list' },
-      { label: 'System Config', icon: 'pi pi-sliders-h', routerLink: '/system-configs', routeName: 'system-config-list' }
+      { label: 'System Config', icon: 'pi pi-sliders-h', routerLink: '/system-configs', routeName: 'system-config-list' },
+      { label: 'Password Policy', icon: 'pi pi-lock', routerLink: '/password-policy', routeName: 'password-policy-list' }
     ]
   }
 ];
 
 export const ACCOUNT_MENU_ITEMS: AppMenuItem[] = [
   { label: 'My Profile', icon: 'pi pi-user', routerLink: '/profile' },
-  { label: 'My CV', icon: 'pi pi-file', routerLink: '/view-cv' }
+  { label: 'Change Password', icon: 'pi pi-lock', routerLink: '/profile/change-password' }
 ];

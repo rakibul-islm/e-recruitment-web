@@ -23,9 +23,7 @@ export abstract class BaseComponent implements OnDestroy {
     this.hasOwnProperty = (v: string | number | symbol) => Object.prototype.hasOwnProperty.call(this, v);
   }
 
-  // Lifecycle Hook - Cleanup
   ngOnDestroy(): void {
-    // Clean up the subscribers or any other resources
     Object.values(this.subscribers).forEach((subscription: any) => subscription.unsubscribe());
     this.subscribers = {};
 
@@ -81,7 +79,6 @@ export abstract class BaseComponent implements OnDestroy {
     return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
   }
 
-  // Utility Methods
   isFunction(value: any): boolean {
     return typeof value === 'function';
   }
@@ -102,14 +99,12 @@ export abstract class BaseComponent implements OnDestroy {
     return value && typeof value === 'object' && Object.keys(value).length === 0;
   }
 
-  // Path Utilities
   currentPath(location: Location, stripParmms: boolean = false): string {
     const path = location.path();
     return stripParmms ? path.split('?')[0] : path;
   }
 
   makeblob(dataURL: any): Blob {
-    // Convert dataURL to a Blob
     const binary = atob(dataURL.split(',')[1]);
     const len = binary.length;
     const buffer = new ArrayBuffer(len);
@@ -128,8 +123,7 @@ export abstract class BaseComponent implements OnDestroy {
     }
   }
 
-  // Marks all controls touched (so validation messages appear) and, if the
-  // form is invalid, surfaces a toast so the user knows why nothing happened.
+  // Marks controls touched and surfaces a toast if the form is invalid.
   protected isFormInvalid(form: FormGroup, message: string = 'Please fill in all required fields correctly.'): boolean {
     this.markFormGroupAsTouched(form);
     if (form.invalid) {
@@ -144,11 +138,9 @@ export abstract class BaseComponent implements OnDestroy {
   }
 
   protected checkIfFormDataChanged(formGroup: FormGroup): void {
-    // Check if form data has changed
     this.isFormDataChanged = formGroup.dirty;
   }
 
-  // Binary String to Blob Conversion
   protected binaryStringToBlob(binaryString: string): Blob {
     const byteCharacters = atob(binaryString);
     const byteArrays = [];
@@ -163,13 +155,11 @@ export abstract class BaseComponent implements OnDestroy {
     return new Blob(byteArrays);
   }
 
-  // Helper Methods
   isEmpty(obj: any): boolean {
     return obj == null || Object.keys(obj).length === 0;
   }
 
   numberOnly(event: any): boolean {
-    // Allow only numeric input
     const regex = /^[0-9]*$/;
     if (!regex.test(event.target.value)) {
       event.target.value = event.target.value.replace(/[^0-9]/g, '');

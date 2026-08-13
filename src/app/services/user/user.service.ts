@@ -22,8 +22,28 @@ export class UserService extends BaseService {
     return super.put(API_URLS.UPDATE_PROFILE, body);
   }
 
+  public requestChangePasswordOtp(body: { oldPassword: string }): Observable<any> {
+    return super.post(API_URLS.REQUEST_CHANGE_PASSWORD_OTP, body);
+  }
+
+  public verifyChangePasswordOtp(body: { otp: string }): Observable<any> {
+    return super.post(API_URLS.VERIFY_CHANGE_PASSWORD_OTP, body);
+  }
+
+  public changePassword(body: any): Observable<any> {
+    return super.put(API_URLS.CHANGE_PASSWORD, body);
+  }
+
   public createRegisterUser(body: any): Observable<any> {
     return super.post(API_URLS.CREATE_REGISTER_USER, body);
+  }
+
+  public verifySignupOtp(body: { email: string; otp: string }): Observable<any> {
+    return super.post(API_URLS.VERIFY_SIGNUP_OTP, body);
+  }
+
+  public resendSignupOtp(email: string): Observable<any> {
+    return super.post(API_URLS.RESEND_SIGNUP_OTP, { email });
   }
 
   public findUserById(id: number): Observable<any> {

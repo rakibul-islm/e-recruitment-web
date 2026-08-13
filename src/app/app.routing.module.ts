@@ -4,7 +4,10 @@ import { LoginComponent } from './components/user/login/login.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ProfileViewComponent } from './components/user/profile/view/profile.view.component';
 import { ProfileEditComponent } from './components/user/profile/edit/profile.edit.component';
+import { ChangePasswordComponent } from './components/user/password/change-password/change-password.component';
 import { RegistrationFormComponent } from './components/user/registration/registration.form.component';
+import { ForgotPasswordComponent } from './components/user/password/forgot-password/forgot-password.component';
+import { SetPasswordComponent } from './components/user/password/set-password/set-password.component';
 import { AuthGuard } from './services/utility/security/auth.guard';
 import { RoleSearchComponent } from './components/role/search/role.search.component';
 import { RoleFormComponent } from './components/role/form/role.form.component';
@@ -21,11 +24,15 @@ import { PermissionViewComponent } from './components/permission/view/permission
 import { SystemConfigSearchComponent } from './components/system-config/search/system-config.search.component';
 import { SystemConfigFormComponent } from './components/system-config/form/system-config.form.component';
 import { SystemConfigViewComponent } from './components/system-config/view/system-config.view.component';
+import { PasswordPolicyFormComponent } from './components/password-policy/form/password-policy.form.component';
+import { PasswordPolicyViewComponent } from './components/password-policy/view/password-policy.view.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: RegistrationFormComponent },
+  { path: 'forgot-password', component: ForgotPasswordComponent },
+  { path: 'set-password', component: SetPasswordComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'profile',
     component: ProfileViewComponent,
@@ -33,6 +40,10 @@ const routes: Routes = [
   },
   { path: 'profile/edit',
     component: ProfileEditComponent,
+    canActivate: [AuthGuard]
+  },
+  { path: 'profile/change-password',
+    component: ChangePasswordComponent,
     canActivate: [AuthGuard]
   },
   { path: 'roles',
@@ -109,6 +120,14 @@ const routes: Routes = [
   },
   { path: 'system-configs/:id',
     component: SystemConfigViewComponent,
+    canActivate: [AuthGuard]
+  },
+  { path: 'password-policy',
+    component: PasswordPolicyViewComponent,
+    canActivate: [AuthGuard]
+  },
+  { path: 'password-policy/edit',
+    component: PasswordPolicyFormComponent,
     canActivate: [AuthGuard]
   },
 

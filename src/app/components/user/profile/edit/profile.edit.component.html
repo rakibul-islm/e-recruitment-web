@@ -4,9 +4,9 @@
 </app-page-header>
 
 <div class="flex justify-content-center mt-6 px-3">
-  <p-card class="profile-edit-card">
+  <p-card class="profile-edit-card page-card">
     <form *ngIf="editForm" [formGroup]="editForm" (ngSubmit)="save()">
-      <div class="flex flex-column md:flex-row gap-4 md:gap-6">
+      <div class="flex flex-column md:flex-row md:align-items-center gap-4 md:gap-6">
         <div class="flex flex-column align-items-center gap-2 mb-4 md:mb-0 profile-avatar-col">
           <div class="profile-avatar-wrapper" (click)="fileInput.click()">
             <p-avatar [image]="imageBase64" size="xlarge" shape="circle" styleClass="profile-avatar"></p-avatar>

@@ -1,9 +1,18 @@
 export const API_URLS = {
     AUTHENTICATE: 'authenticate/token',
     GOOGLE_AUTHENTICATE: 'authenticate/google',
+    FORGOT_PASSWORD: 'authenticate/forgot-password',
+    VERIFY_OTP: 'authenticate/verify-otp',
+    RESET_PASSWORD: 'authenticate/reset-password',
+    SET_PASSWORD: 'authenticate/set-password',
     FETCH_PROFILE: 'profile',
     UPDATE_PROFILE: 'profile',
+    REQUEST_CHANGE_PASSWORD_OTP: 'profile/change-password/request-otp',
+    VERIFY_CHANGE_PASSWORD_OTP: 'profile/change-password/verify-otp',
+    CHANGE_PASSWORD: 'profile/change-password',
     CREATE_REGISTER_USER: 'user/signup',
+    VERIFY_SIGNUP_OTP: 'user/verify-signup-otp',
+    RESEND_SIGNUP_OTP: 'user/resend-signup-otp',
     FIND_USER_BY_ID: 'user/:id',
     UPDATE_USER: 'user',
 
@@ -32,5 +41,8 @@ export const API_URLS = {
     FILTER_SYSTEM_CONFIG: 'system-config/filter',
     UPDATE_SYSTEM_CONFIG: 'system-config',
     FIND_SYSTEM_CONFIG_BY_ID: 'system-config/:id',
+
+    FIND_PASSWORD_POLICY: 'password-policy',
+    UPDATE_PASSWORD_POLICY: 'password-policy',
 
 };

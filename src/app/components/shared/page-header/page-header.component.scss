@@ -14,6 +14,4 @@
   line-height: 1;
 }
 
-// Action button styling lives in src/styles.scss (global) — the buttons are
-// ng-content-projected from each consuming page, not part of this component's
-// own template, so a scoped/::ng-deep rule here can't reliably reach them.
+// Action button styling lives in src/styles.scss (global) — buttons are ng-content-projected, so a scoped rule here can't reach them.

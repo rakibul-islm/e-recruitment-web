@@ -14,38 +14,72 @@ a {
    ::ng-deep rule inside page-header.component.scss can't reliably reach them.
    Defined globally here instead, matching the header title's color. */
 .page-header-actions .p-button {
-  background: #032967 !important;
-  border-color: #032967 !important;
-  padding: 0.35rem 0.75rem !important;
+  background: #1e4d8f !important;
+  border-color: #1e4d8f !important;
+  padding: 0.45rem 1rem !important;
   font-size: 0.85rem !important;
-  box-shadow: 0 2px 4px rgba(3, 41, 103, 0.35) !important;
-}
+  font-weight: 600 !important;
+  letter-spacing: 0.01em;
+  border-radius: 7px !important;
+  box-shadow: 0 2px 5px rgba(30, 77, 143, 0.25) !important;
+  transition: background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease, transform 0.1s ease;
 
-.page-header-actions .p-button:hover {
-  background: #021c47 !important;
-  border-color: #021c47 !important;
-}
+  &:hover {
+    background: #163a6b !important;
+    border-color: #163a6b !important;
+    box-shadow: 0 3px 8px rgba(30, 77, 143, 0.35) !important;
+  }
 
-.page-header-actions .p-button:focus {
-  box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #032967 !important;
+  &:active {
+    transform: translateY(1px);
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px rgba(30, 77, 143, 0.45) !important;
+  }
 }
 
 /* Shared layout for the form/view/search pages of User, Role and User Group management
    (page-header + centered p-card with grid fields, or accordion search + p-table). */
 .page-card {
   width: 100%;
+  border-radius: 12px !important;
+  border: 1px solid #e5e7eb !important;
+  box-shadow: 0 1px 2px rgba(3, 41, 103, 0.04), 0 8px 24px rgba(3, 41, 103, 0.07) !important;
+  overflow: hidden;
+
+  .p-card-body {
+    padding: 1.75rem !important;
+  }
+
+  .p-card-content {
+    padding: 0 !important;
+  }
 }
 
 .form-section-title {
-  margin: 0 0 0.5rem;
-  padding-bottom: 0.5rem;
+  position: relative;
+  margin: 0 0 0.9rem;
+  padding: 0 0 0.6rem 0.75rem;
   border-bottom: 1px solid #e5e7eb;
   color: #032967;
   font-size: 1rem;
   font-weight: 700;
+  letter-spacing: 0.01em;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.1rem;
+    bottom: 0.7rem;
+    width: 4px;
+    border-radius: 2px;
+    background: #032967;
+  }
 
   &:not(:first-child) {
-    margin-top: 1.5rem;
+    margin-top: 2rem;
   }
 }
 
@@ -56,10 +90,16 @@ form .form-section-title:not(:first-child) {
 .detail-table {
   width: 100%;
   border-collapse: collapse;
+  border-radius: 8px;
+  overflow: hidden;
+
+  tr:nth-child(even) {
+    background: #f8fafc;
+  }
 
   td {
-    padding: 0.75rem 0;
-    border-bottom: 1px solid #e5e7eb;
+    padding: 0.85rem 1rem;
+    border-bottom: 1px solid #f1f5f9;
   }
 
   tr:last-child td {
@@ -70,21 +110,33 @@ form .form-section-title:not(:first-child) {
     width: 30%;
     color: #6b7280;
     font-weight: 600;
+    font-size: 0.9rem;
   }
 
   .detail-value {
     color: #1f2937;
+    font-weight: 500;
   }
 }
 
 .status-badge {
-  display: inline-block;
-  padding: 0.15rem 0.6rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.25rem 0.75rem;
   border-radius: 1rem;
   font-size: 0.8rem;
   font-weight: 600;
   background: #f3f4f6;
   color: #6b7280;
+
+  &::before {
+    content: '';
+    width: 0.45rem;
+    height: 0.45rem;
+    border-radius: 50%;
+    background: currentColor;
+  }
 
   &.active {
     background: #dcfce7;
@@ -94,6 +146,34 @@ form .form-section-title:not(:first-child) {
   &.locked {
     background: #fee2e2;
     color: #dc2626;
+  }
+}
+
+/* Embedded read-only tables inside view pages (e.g. a role's permissions, a
+   user's roles) — branded header to match page-header-actions buttons. */
+.view-table {
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+
+  .p-datatable-thead > tr > th {
+    background: #eef3fb;
+    color: #032967;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.01em;
+    border-bottom: 2px solid #032967;
+  }
+
+  .p-datatable-tbody > tr {
+    &:nth-child(even) {
+      background: #f8fafc;
+    }
+
+    > td {
+      border-color: #f1f5f9;
+      color: #1f2937;
+    }
   }
 }
 
