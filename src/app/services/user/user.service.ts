@@ -64,6 +64,6 @@ export class UserService extends BaseService {
   }
 
   public deleteUser(id: number): Observable<any> {
-    return this.deleteById(API_URLS.DELETE_USER, { id });
+    return this.removeById(API_URLS.REMOVE_USER, { id });
   }
 }

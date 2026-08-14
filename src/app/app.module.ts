@@ -36,7 +36,13 @@ import { SystemConfigFormComponent } from './components/system-config/form/syste
 import { SystemConfigViewComponent } from './components/system-config/view/system-config.view.component';
 import { PasswordPolicyFormComponent } from './components/password-policy/form/password-policy.form.component';
 import { PasswordPolicyViewComponent } from './components/password-policy/view/password-policy.view.component';
+import { ExceptionLogSearchComponent } from './components/exception-log/search/exception-log.search.component';
+import { ExceptionLogViewComponent } from './components/exception-log/view/exception-log.view.component';
 import { RequiredFieldDirective } from './directives/required-field.directive';
+
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { HttpClient } from '@angular/common/http';
 
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -59,6 +65,10 @@ import { CalendarModule } from 'primeng/calendar';
 import { TooltipModule } from 'primeng/tooltip';
 import { AccordionModule } from 'primeng/accordion';
 import { ToastModule } from 'primeng/toast';
+
+export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
+  return new TranslateHttpLoader(http, '/assets/i18n/', '.json');
+}
 
 @NgModule({
   declarations: [
@@ -90,6 +100,8 @@ import { ToastModule } from 'primeng/toast';
     SystemConfigViewComponent,
     PasswordPolicyFormComponent,
     PasswordPolicyViewComponent,
+    ExceptionLogSearchComponent,
+    ExceptionLogViewComponent,
     RequiredFieldDirective
   ],
   imports: [
@@ -119,6 +131,13 @@ import { ToastModule } from 'primeng/toast';
     CalendarModule,
     TooltipModule,
     AccordionModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    }),
   ],
   providers: [
     AuthService,

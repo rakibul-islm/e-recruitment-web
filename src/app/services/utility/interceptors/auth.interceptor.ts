@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable, catchError, throwError } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 import { environment } from 'src/environments/environment';
 import { NotificationService } from '../notification.service';
 import { AuthService } from '../security/auth.service';
@@ -11,6 +12,7 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor(
     private notificationService: NotificationService,
     private authService: AuthService,
+    private translate: TranslateService,
     private router: Router
   ) {}
 
@@ -18,7 +20,7 @@ export class AuthInterceptor implements HttpInterceptor {
     const token = this.authService.getToken();
 
     let modifiedUrl = req.url;
-    if (!req.url.startsWith('http')) {
+    if (!req.url.startsWith('http') && !req.url.startsWith('/assets/')) {
       modifiedUrl = `${environment.baseUrl}${req.url}`;
     }
 
@@ -38,22 +40,22 @@ export class AuthInterceptor implements HttpInterceptor {
   }
 
   private handleError(error: HttpErrorResponse) {
-    let errorMessage = error?.error?.message || 'An unexpected error occurred!';
+    let errorMessage = error?.error?.message || this.translate.instant('errors.unexpected');
 
     if (error.status === 0) {
-      errorMessage = error?.error?.message ||  'Network Error: Please check your internet connection.';
+      errorMessage = error?.error?.message || this.translate.instant('errors.network');
     } else if (error.status === 401) {
-      errorMessage = error?.error?.message ||  'Unauthorized: Please log in again.';
+      errorMessage = error?.error?.message || this.translate.instant('errors.unauthorized');
       this.authService.logout();
       this.router.navigate(['/login']);
     } else if (error.status === 403) {
-      errorMessage = error?.error?.message ||  'Forbidden: You do not have permission.';
+      errorMessage = error?.error?.message || this.translate.instant('errors.forbidden');
     } else if (error.status === 404) {
-      errorMessage = error?.error?.message ||  'Resource not found.';
+      errorMessage = error?.error?.message || this.translate.instant('errors.notFound');
     } else if (error.status >= 500) {
-      errorMessage = error?.error?.message ||  'Server Error: Please try again later.';
+      errorMessage = error?.error?.message || this.translate.instant('errors.server');
     }
 
-    this.notificationService.sendErrorMsg(errorMessage, `Error ${error.status}`);
+    this.notificationService.sendErrorMsg(errorMessage, this.translate.instant('errors.title', { status: error.status }));
   }
 }

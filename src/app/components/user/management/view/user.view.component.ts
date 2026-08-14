@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { BaseComponent } from '../../../base.component';
 import { UserService } from '../../../../services/user/user.service';
 import { CommonConfirmDialogService } from '../../../../services/utility/common.confirm.dialog.service';
@@ -17,7 +18,8 @@ export class UserViewComponent extends BaseComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private userService: UserService,
-    private commonConfirmDialogService: CommonConfirmDialogService
+    private commonConfirmDialogService: CommonConfirmDialogService,
+    private translate: TranslateService
   ) {
     super();
   }
@@ -37,12 +39,12 @@ export class UserViewComponent extends BaseComponent implements OnInit {
     this.commonConfirmDialogService.confirm(
       () => {
         this.subscribers.deleteUserSub = this.userService.deleteUser(this.userId).subscribe(() => {
-          this.notificationService.sendSuccessMsg('User deleted successfully!');
+          this.notificationService.sendSuccessMsg(this.translate.instant('user.deleteSuccess'));
           this.navigateToSearch();
         });
       },
       null,
-      `Are you sure you want to delete user "${this.user.fullName}"?`
+      this.translate.instant('user.deleteConfirm', { name: this.user.fullName })
     );
   }
 

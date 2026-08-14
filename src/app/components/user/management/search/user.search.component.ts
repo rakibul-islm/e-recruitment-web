@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { Table, TableLazyLoadEvent } from 'primeng/table';
 import { BaseComponent } from '../../../base.component';
 import { UserService } from '../../../../services/user/user.service';
@@ -16,24 +17,30 @@ export class UserSearchComponent extends BaseComponent implements OnInit {
 
   filterForm!: FormGroup;
 
-  activeOptions = [
-    { label: 'All', value: null },
-    { label: 'Active', value: true },
-    { label: 'Inactive', value: false }
-  ];
-
-  lockedOptions = [
-    { label: 'All', value: null },
-    { label: 'Locked', value: true },
-    { label: 'Unlocked', value: false }
-  ];
+  activeOptions: { label: string; value: boolean | null }[] = [];
+  lockedOptions: { label: string; value: boolean | null }[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
     private userService: UserService,
+    private translate: TranslateService,
     private router: Router
   ) {
     super();
+  }
+
+  prepareOptions(): void {
+    this.activeOptions = [
+      { label: this.translate.instant('user.all'), value: null },
+      { label: this.translate.instant('common.active'), value: true },
+      { label: this.translate.instant('common.inactive'), value: false }
+    ];
+
+    this.lockedOptions = [
+      { label: this.translate.instant('user.all'), value: null },
+      { label: this.translate.instant('user.locked'), value: true },
+      { label: this.translate.instant('user.unlocked'), value: false }
+    ];
   }
 
   prepareForm(): void {
@@ -48,6 +55,7 @@ export class UserSearchComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.prepareOptions();
     this.prepareForm();
     this.registerFilterForm('user-search-filters', this.filterForm);
   }

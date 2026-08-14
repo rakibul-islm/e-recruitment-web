@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { BaseComponent } from '../../base.component';
 import { Register } from '../../../services/user/domain/user.domain';
 import { UserService } from '../../../services/user/user.service';
@@ -34,7 +35,8 @@ export class RegistrationFormComponent extends BaseComponent implements OnInit {
     private router: Router,
     private userService: UserService,
     private commonConfirmDialogService: CommonConfirmDialogService,
-    private passwordPolicyService: PasswordPolicyService) {
+    private passwordPolicyService: PasswordPolicyService,
+    private translate: TranslateService) {
     super();
   }
 
@@ -103,12 +105,12 @@ export class RegistrationFormComponent extends BaseComponent implements OnInit {
     return Math.round((met / total) * 100);
   }
 
-  strengthLabel(): string {
+  strengthLabelKey(): string {
     const score = this.requirementsMet();
     if (!this.passwordValue) { return ''; }
-    if (score < 50) { return 'Weak'; }
-    if (score < 100) { return 'Fair'; }
-    return 'Strong';
+    if (score < 50) { return 'auth.register.strengthWeak'; }
+    if (score < 100) { return 'auth.register.strengthFair'; }
+    return 'auth.register.strengthStrong';
   }
 
   strengthClass(): string {
@@ -136,7 +138,7 @@ export class RegistrationFormComponent extends BaseComponent implements OnInit {
   resendOtp(): void {
     this.otpForm.reset();
     this.subscribers.resendOtpSub = this.userService.resendSignupOtp(this.email).subscribe(() => {
-      this.notificationService.sendSuccessMsg('A new OTP has been sent to your email.');
+      this.notificationService.sendSuccessMsg(this.translate.instant('auth.register.resendSuccess'));
     });
   }
 
@@ -145,7 +147,7 @@ export class RegistrationFormComponent extends BaseComponent implements OnInit {
 
     const { otp } = this.otpForm.getRawValue();
     this.subscribers.verifySignupOtpSub = this.userService.verifySignupOtp({ email: this.email, otp }).subscribe(() => {
-      this.notificationService.sendSuccessMsg('Account verified successfully! Please sign in.');
+      this.notificationService.sendSuccessMsg(this.translate.instant('auth.register.verifySuccess'));
       this.navigateToLogin();
     });
   }

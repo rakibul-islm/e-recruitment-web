@@ -1,26 +1,26 @@
 <div class="flex justify-content-center align-items-center min-h-screen p-4">
   <p-card class="register-card" styleClass="register-card-surface">
     <ng-template pTemplate="title">
-      <div class="text-center">Sign Up</div>
+      <div class="text-center">{{ 'auth.register.title' | translate }}</div>
     </ng-template>
 
     <ng-container *ngIf="step === 'otp'">
-      <p class="text-center mb-0">We've sent a 6-digit OTP to your email. Enter it below to verify your account.</p>
+      <p class="text-center mb-0">{{ 'auth.register.otpSentMessage' | translate }}</p>
 
       <form [formGroup]="otpForm" (ngSubmit)="submitOtp()">
         <div class="flex flex-column gap-4 mt-3">
           <div class="flex flex-column align-items-center gap-2">
             <p-inputOtp formControlName="otp" [length]="6" [integerOnly]="true"
               [invalid]="otpForm.controls['otp'].touched && otpForm.controls['otp'].invalid"></p-inputOtp>
-            <small class="p-error" *ngIf="otpForm.controls['otp'].touched && otpForm.controls['otp'].errors?.['required']">OTP is required.</small>
-            <small class="p-error" *ngIf="otpForm.controls['otp'].touched && otpForm.controls['otp'].errors?.['pattern']">Enter the 6-digit OTP.</small>
+            <small class="p-error" *ngIf="otpForm.controls['otp'].touched && otpForm.controls['otp'].errors?.['required']">{{ 'auth.register.otpRequired' | translate }}</small>
+            <small class="p-error" *ngIf="otpForm.controls['otp'].touched && otpForm.controls['otp'].errors?.['pattern']">{{ 'auth.register.otpPattern' | translate }}</small>
           </div>
 
-          <p-button type="submit" label="Verify OTP" styleClass="w-full"></p-button>
+          <p-button type="submit" [label]="'auth.register.verifyOtp' | translate" styleClass="w-full"></p-button>
 
           <p class="text-sm text-center m-0">
-            Didn't get the OTP?
-            <a (click)="resendOtp()" class="text-primary font-semibold ml-1 cursor-pointer">Resend OTP</a>
+            {{ 'auth.register.noOtp' | translate }}
+            <a (click)="resendOtp()" class="text-primary font-semibold ml-1 cursor-pointer">{{ 'auth.register.resendOtp' | translate }}</a>
           </p>
         </div>
       </form>
@@ -31,31 +31,31 @@
         <div>
           <p-floatLabel>
             <input id="fullName" type="text" formControlName="fullName" pInputText class="w-full" />
-            <label for="fullName">Full Name</label>
+            <label for="fullName">{{ 'auth.register.fullName' | translate }}</label>
           </p-floatLabel>
           <small class="p-error" *ngIf="registerForm.controls['fullName'].touched && registerForm.controls['fullName'].errors?.['required']">
-            Full name is required.</small>
+            {{ 'auth.register.fullNameRequired' | translate }}</small>
         </div>
 
         <div>
           <p-floatLabel>
             <input id="email" type="email" formControlName="email" pInputText class="w-full" />
-            <label for="email">Email</label>
+            <label for="email">{{ 'auth.register.email' | translate }}</label>
           </p-floatLabel>
           <ng-container *ngIf="registerForm.controls['email'].touched">
-            <small class="p-error" *ngIf="registerForm.controls['email'].errors?.['required']">Email is required.</small>
-            <small class="p-error" *ngIf="registerForm.controls['email'].errors?.['email']">Enter a valid email.</small>
+            <small class="p-error" *ngIf="registerForm.controls['email'].errors?.['required']">{{ 'auth.register.emailRequired' | translate }}</small>
+            <small class="p-error" *ngIf="registerForm.controls['email'].errors?.['email']">{{ 'auth.register.emailInvalid' | translate }}</small>
           </ng-container>
         </div>
 
         <div>
           <p-floatLabel>
             <input id="mobile" type="text" formControlName="mobile" pInputText class="w-full" />
-            <label for="mobile">Mobile Number</label>
+            <label for="mobile">{{ 'auth.register.mobile' | translate }}</label>
           </p-floatLabel>
           <ng-container *ngIf="registerForm.controls['mobile'].touched">
-            <small class="p-error" *ngIf="registerForm.controls['mobile'].errors?.['required']">Mobile number is required.</small>
-            <small class="p-error" *ngIf="registerForm.controls['mobile'].errors?.['pattern']">Mobile number must be 11 digits.</small>
+            <small class="p-error" *ngIf="registerForm.controls['mobile'].errors?.['required']">{{ 'auth.register.mobileRequired' | translate }}</small>
+            <small class="p-error" *ngIf="registerForm.controls['mobile'].errors?.['pattern']">{{ 'auth.register.mobilePattern' | translate }}</small>
           </ng-container>
         </div>
 
@@ -63,16 +63,16 @@
           <p-floatLabel>
             <p-password id="password" formControlName="password" [toggleMask]="true" [feedback]="false"
               styleClass="w-full" inputStyleClass="w-full"></p-password>
-            <label for="password">Password</label>
+            <label for="password">{{ 'auth.register.password' | translate }}</label>
           </p-floatLabel>
           <small class="p-error" *ngIf="registerForm.controls['password'].touched && registerForm.controls['password'].errors?.['required']">
-            Password is required.</small>
+            {{ 'auth.register.passwordRequired' | translate }}</small>
 
           <div class="strength-meter" *ngIf="passwordValue">
             <div class="strength-meter-track">
               <div class="strength-meter-fill" [ngClass]="strengthClass()" [style.width.%]="requirementsMet()"></div>
             </div>
-            <span class="strength-label" [ngClass]="strengthClass()">{{ strengthLabel() }}</span>
+            <span class="strength-label" [ngClass]="strengthClass()">{{ strengthLabelKey() | translate }}</span>
           </div>
         </div>
 
@@ -80,49 +80,49 @@
           <p-floatLabel>
             <p-password id="confirmPassword" formControlName="confirmPassword" [toggleMask]="true" [feedback]="false"
               styleClass="w-full" inputStyleClass="w-full"></p-password>
-            <label for="confirmPassword">Confirm Password</label>
+            <label for="confirmPassword">{{ 'auth.register.confirmPassword' | translate }}</label>
           </p-floatLabel>
           <ng-container *ngIf="registerForm.controls['confirmPassword'].touched">
-            <small class="p-error" *ngIf="registerForm.controls['confirmPassword'].errors?.['required']">Confirm password is required.</small>
-            <small class="p-error" *ngIf="registerForm.hasError('passwordMismatch')">Passwords do not match.</small>
+            <small class="p-error" *ngIf="registerForm.controls['confirmPassword'].errors?.['required']">{{ 'auth.register.confirmPasswordRequired' | translate }}</small>
+            <small class="p-error" *ngIf="registerForm.hasError('passwordMismatch')">{{ 'auth.register.passwordMismatch' | translate }}</small>
           </ng-container>
         </div>
 
         <div class="requirement-checklist">
-          <span class="requirement-checklist-title">Password requirements</span>
+          <span class="requirement-checklist-title">{{ 'auth.register.passwordRequirementsTitle' | translate }}</span>
           <span class="requirement-item" [class.met]="hasMinLength()">
             <i class="pi" [ngClass]="hasMinLength() ? 'pi-check-circle' : 'pi-circle'"></i>
-            At least {{ policy.minLength }} characters
+            {{ 'auth.register.minLength' | translate:{ count: policy.minLength } }}
           </span>
           <span class="requirement-item" *ngIf="policy.requireUppercase" [class.met]="hasUppercase()">
             <i class="pi" [ngClass]="hasUppercase() ? 'pi-check-circle' : 'pi-circle'"></i>
-            One uppercase letter
+            {{ 'auth.register.uppercase' | translate }}
           </span>
           <span class="requirement-item" *ngIf="policy.requireLowercase" [class.met]="hasLowercase()">
             <i class="pi" [ngClass]="hasLowercase() ? 'pi-check-circle' : 'pi-circle'"></i>
-            One lowercase letter
+            {{ 'auth.register.lowercase' | translate }}
           </span>
           <span class="requirement-item" *ngIf="policy.requireDigit" [class.met]="hasDigit()">
             <i class="pi" [ngClass]="hasDigit() ? 'pi-check-circle' : 'pi-circle'"></i>
-            One digit
+            {{ 'auth.register.digit' | translate }}
           </span>
           <span class="requirement-item" *ngIf="policy.requireSpecialChar" [class.met]="hasSpecialChar()">
             <i class="pi" [ngClass]="hasSpecialChar() ? 'pi-check-circle' : 'pi-circle'"></i>
-            One special character
+            {{ 'auth.register.specialChar' | translate }}
           </span>
           <span class="requirement-item" *ngIf="policy.disallowUserInfoInPassword">
             <i class="pi pi-info-circle"></i>
-            Must not contain your name or email
+            {{ 'auth.register.noUserInfo' | translate }}
           </span>
         </div>
 
-        <p-button type="submit" label="Sign Up" styleClass="w-full"></p-button>
+        <p-button type="submit" [label]="'auth.register.signUp' | translate" styleClass="w-full"></p-button>
       </div>
 
       <p class="text-sm text-center mt-4 mb-0">
-        Already have an account?
+        {{ 'auth.register.haveAccount' | translate }}
         <a routerLink="/login" class="text-primary font-semibold ml-1 white-space-nowrap">
-          Sign in
+          {{ 'auth.register.signIn' | translate }}
         </a>
       </p>
     </form>

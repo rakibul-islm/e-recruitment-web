@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { BaseComponent } from '../../base.component';
 import { PasswordPolicyService } from '../../../services/password-policy/password-policy.service';
 import { CommonConfirmDialogService } from '../../../services/utility/common.confirm.dialog.service';
@@ -17,7 +18,8 @@ export class PasswordPolicyFormComponent extends BaseComponent implements OnInit
     private formBuilder: FormBuilder,
     private router: Router,
     private passwordPolicyService: PasswordPolicyService,
-    private commonConfirmDialogService: CommonConfirmDialogService
+    private commonConfirmDialogService: CommonConfirmDialogService,
+    private translate: TranslateService
   ) {
     super();
   }
@@ -56,7 +58,7 @@ export class PasswordPolicyFormComponent extends BaseComponent implements OnInit
   updatePasswordPolicy(payload: PasswordPolicyRequest): void {
     this.subscribers.updatePasswordPolicySub = this.passwordPolicyService.updatePasswordPolicy(payload)
     .subscribe(() => {
-      this.notificationService.sendSuccessMsg('Password policy updated successfully!');
+      this.notificationService.sendSuccessMsg(this.translate.instant('passwordPolicy.updateSuccess'));
       this.navigateToView();
     });
   }

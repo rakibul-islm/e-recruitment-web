@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { BaseComponent } from '../../base.component';
 import { RoleService } from '../../../services/role/role.service';
 import { PermissionService } from '../../../services/permission/permission.service';
@@ -25,7 +26,8 @@ export class RoleFormComponent extends BaseComponent implements OnInit {
     private router: Router,
     private roleService: RoleService,
     private permissionService: PermissionService,
-    private commonConfirmDialogService: CommonConfirmDialogService
+    private commonConfirmDialogService: CommonConfirmDialogService,
+    private translate: TranslateService
   ) {
     super();
   }
@@ -95,7 +97,7 @@ export class RoleFormComponent extends BaseComponent implements OnInit {
   createRole(payload: RoleRequest): void {
     this.subscribers.createRoleSub = this.roleService.createRole(payload)
     .subscribe(() => {
-      this.notificationService.sendSuccessMsg('Role created successfully!');
+      this.notificationService.sendSuccessMsg(this.translate.instant('role.createSuccess'));
       this.navigateToSearch();
     });
   }
@@ -103,7 +105,7 @@ export class RoleFormComponent extends BaseComponent implements OnInit {
   updateRole(payload: RoleRequest): void {
     this.subscribers.updateRoleSub = this.roleService.updateRole(payload)
     .subscribe(() => {
-      this.notificationService.sendSuccessMsg('Role updated successfully!');
+      this.notificationService.sendSuccessMsg(this.translate.instant('role.updateSuccess'));
       this.navigateToSearch();
     });
   }
