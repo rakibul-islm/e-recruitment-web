@@ -44,7 +44,8 @@ export abstract class BaseService {
     return this.http.delete(finalUrl);
   }
 
-  public deleteByObject(url: string, body: any): Observable<any> {
-    return this.http.request('DELETE', url, { body });
+  public removeById(url: string, pathParams: PathParameters): Observable<any> {
+    const finalUrl = this.createUrl(url, pathParams);
+    return this.http.delete(finalUrl);
   }
 }

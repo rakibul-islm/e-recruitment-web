@@ -1,0 +1,81 @@
+<app-page-header title="Looking for an Exception? Search here!"></app-page-header>
+
+<div class="p-3">
+  <p-accordion [(activeIndex)]="activeTabIndex">
+    <p-accordionTab header="Search">
+      <div [formGroup]="filterForm">
+        <div class="grid">
+          <div class="col-12 md:col-4 flex flex-column gap-2">
+            <label for="filterMessage">Message</label>
+            <input id="filterMessage" type="text" pInputText formControlName="message"
+              placeholder="Search by message" (keyup.enter)="search(dt)" />
+          </div>
+          <div class="col-12 md:col-4 flex flex-column gap-2">
+            <label for="filterRequestUri">Request URI</label>
+            <input id="filterRequestUri" type="text" pInputText formControlName="requestUri"
+              placeholder="Search by request URI" (keyup.enter)="search(dt)" />
+          </div>
+          <div class="col-12 md:col-4 flex flex-column gap-2">
+            <label for="filterStatusCode">Status Code</label>
+            <input id="filterStatusCode" type="text" pInputText formControlName="statusCode"
+              placeholder="e.g. 500" (keyup.enter)="search(dt)" />
+          </div>
+          <div class="col-12 md:col-4 flex flex-column gap-2">
+            <label for="filterTraceId">Trace Id</label>
+            <input id="filterTraceId" type="text" pInputText formControlName="traceId"
+              placeholder="Search by trace id" (keyup.enter)="search(dt)" />
+          </div>
+          <div class="col-12 md:col-4 flex flex-column gap-2">
+            <label for="filterCreatedOnGte">Occurred From</label>
+            <p-calendar id="filterCreatedOnGte" formControlName="createdOn_gte"
+              dateFormat="dd-mm-yy" [showIcon]="true" [showButtonBar]="true" placeholder="Select date"
+              styleClass="w-full" inputStyleClass="w-full"></p-calendar>
+          </div>
+          <div class="col-12 md:col-4 flex flex-column gap-2">
+            <label for="filterCreatedOnLte">Occurred To</label>
+            <p-calendar id="filterCreatedOnLte" formControlName="createdOn_lte"
+              dateFormat="dd-mm-yy" [showIcon]="true" [showButtonBar]="true" placeholder="Select date"
+              styleClass="w-full" inputStyleClass="w-full"></p-calendar>
+          </div>
+        </div>
+        <div class="search-actions">
+          <p-button label="Search" icon="pi pi-search" (onClick)="search(dt)"></p-button>
+          <p-button label="Clear" icon="pi pi-times" styleClass="p-button-outlined p-button-secondary" (onClick)="clearFilters()"></p-button>
+        </div>
+      </div>
+    </p-accordionTab>
+
+    <p-accordionTab header="Exceptions">
+      <p-table #dt [value]="exceptionLogs" [lazy]="true" (onLazyLoad)="fetchExceptionLogs($event)" [paginator]="true"
+        [rows]="rows" [totalRecords]="totalRecords" [loading]="loading" [rowsPerPageOptions]="[10, 20, 50]"
+        responsiveLayout="scroll" dataKey="id" selectionMode="single" [(selection)]="selectedExceptionLog"
+        (onRowSelect)="viewExceptionLog($event.data)">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Occurred On</th>
+            <th>Status</th>
+            <th>Message</th>
+            <th>Request URI</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-exceptionLog>
+          <tr class="selectable-row" [pSelectableRow]="exceptionLog">
+            <td>{{ (exceptionLog.createdOn | date:'dd-MM-yyyy HH:mm:ss') || 'N/A' }}</td>
+            <td>
+              <span class="status-badge" [class.active]="exceptionLog.statusCode < 400" [class.locked]="exceptionLog.statusCode >= 400">
+                {{ exceptionLog.statusCode }}
+              </span>
+            </td>
+            <td>{{ exceptionLog.message || 'N/A' }}</td>
+            <td>{{ exceptionLog.requestUri || 'N/A' }}</td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="4" class="text-center">No exceptions found.</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </p-accordionTab>
+  </p-accordion>
+</div>

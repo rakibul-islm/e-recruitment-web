@@ -1,0 +1,45 @@
+<app-page-header title="Exception Log Details">
+  <p-button label="Delete" icon="pi pi-trash" styleClass="p-button-danger" (onClick)="deleteExceptionLog()"></p-button>
+  <p-button label="Back" icon="pi pi-arrow-left" styleClass="p-button-secondary" (onClick)="navigateToSearch()"></p-button>
+</app-page-header>
+
+<div class="flex justify-content-center mt-3 px-3">
+  <p-card class="page-card">
+    <h3 class="form-section-title">Basic Info</h3>
+    <table class="detail-table">
+      <tbody>
+        <tr>
+          <td class="detail-label">Occurred On</td>
+          <td class="detail-value">{{ (exceptionLog.createdOn | date:'dd-MM-yyyy HH:mm:ss') || 'N/A' }}</td>
+        </tr>
+        <tr>
+          <td class="detail-label">Status Code</td>
+          <td class="detail-value">
+            <span class="status-badge" [class.active]="exceptionLog.statusCode < 400" [class.locked]="exceptionLog.statusCode >= 400">
+              {{ exceptionLog.statusCode }}
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td class="detail-label">Exception Class</td>
+          <td class="detail-value">{{ exceptionLog.exceptionClass || 'N/A' }}</td>
+        </tr>
+        <tr>
+          <td class="detail-label">Request URI</td>
+          <td class="detail-value">{{ exceptionLog.requestUri || 'N/A' }}</td>
+        </tr>
+        <tr>
+          <td class="detail-label">Trace Id</td>
+          <td class="detail-value">{{ exceptionLog.traceId || 'N/A' }}</td>
+        </tr>
+        <tr>
+          <td class="detail-label">Message</td>
+          <td class="detail-value">{{ exceptionLog.message || 'N/A' }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 class="form-section-title">Stack Trace</h3>
+    <pre style="white-space: pre-wrap; word-break: break-word; margin: 0;">{{ exceptionLog.stackTrace || 'N/A' }}</pre>
+  </p-card>
+</div>

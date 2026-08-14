@@ -26,6 +26,8 @@ import { SystemConfigFormComponent } from './components/system-config/form/syste
 import { SystemConfigViewComponent } from './components/system-config/view/system-config.view.component';
 import { PasswordPolicyFormComponent } from './components/password-policy/form/password-policy.form.component';
 import { PasswordPolicyViewComponent } from './components/password-policy/view/password-policy.view.component';
+import { ExceptionLogSearchComponent } from './components/exception-log/search/exception-log.search.component';
+import { ExceptionLogViewComponent } from './components/exception-log/view/exception-log.view.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -128,6 +130,14 @@ const routes: Routes = [
   },
   { path: 'password-policy/edit',
     component: PasswordPolicyFormComponent,
+    canActivate: [AuthGuard]
+  },
+  { path: 'exception-logs',
+    component: ExceptionLogSearchComponent,
+    canActivate: [AuthGuard]
+  },
+  { path: 'exception-logs/:id',
+    component: ExceptionLogViewComponent,
     canActivate: [AuthGuard]
   },
 
