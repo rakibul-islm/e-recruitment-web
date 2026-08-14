@@ -1,81 +1,81 @@
-<app-page-header title="Looking for User? Search here!">
-  <p-button label="Create User" icon="pi pi-plus" (onClick)="createUser()"></p-button>
+<app-page-header [title]="'user.searchTitle' | translate">
+  <p-button [label]="'user.createButton' | translate" icon="pi pi-plus" (onClick)="createUser()"></p-button>
 </app-page-header>
 
 <div class="p-3">
   <p-accordion [(activeIndex)]="activeTabIndex">
-    <p-accordionTab header="Search">
+    <p-accordionTab [header]="'common.search' | translate">
       <div [formGroup]="filterForm">
         <div class="grid">
           <div class="col-12 md:col-4 flex flex-column gap-2">
-            <label for="filterFullName">Full Name</label>
+            <label for="filterFullName">{{ 'user.fullName' | translate }}</label>
             <input id="filterFullName" type="text" pInputText formControlName="fullName"
-              placeholder="Search by name" (keyup.enter)="search(dt)" />
+              [placeholder]="'user.fullNamePlaceholder' | translate" (keyup.enter)="search(dt)" />
           </div>
           <div class="col-12 md:col-4 flex flex-column gap-2">
-            <label for="filterEmail">Email</label>
+            <label for="filterEmail">{{ 'user.email' | translate }}</label>
             <input id="filterEmail" type="text" pInputText formControlName="email"
-              placeholder="Search by email" (keyup.enter)="search(dt)" />
+              [placeholder]="'user.emailPlaceholder' | translate" (keyup.enter)="search(dt)" />
           </div>
           <div class="col-12 md:col-4 flex flex-column gap-2">
-            <label for="filterMobile">Mobile</label>
+            <label for="filterMobile">{{ 'user.mobile' | translate }}</label>
             <input id="filterMobile" type="text" pInputText formControlName="mobile"
-              placeholder="Search by mobile" (keyup.enter)="search(dt)" />
+              [placeholder]="'user.mobilePlaceholder' | translate" (keyup.enter)="search(dt)" />
           </div>
           <div class="col-12 md:col-4 flex flex-column gap-2">
-            <label for="filterActive">Active</label>
+            <label for="filterActive">{{ 'common.active' | translate }}</label>
             <p-dropdown id="filterActive" [options]="activeOptions" formControlName="active"
               optionLabel="label" optionValue="value" styleClass="w-full"></p-dropdown>
           </div>
           <div class="col-12 md:col-4 flex flex-column gap-2">
-            <label for="filterLocked">Locked</label>
+            <label for="filterLocked">{{ 'user.locked' | translate }}</label>
             <p-dropdown id="filterLocked" [options]="lockedOptions" formControlName="locked"
               optionLabel="label" optionValue="value" styleClass="w-full"></p-dropdown>
           </div>
           <div class="col-12 md:col-4 flex flex-column gap-2">
-            <label for="filterExpiryDateLte">Expiry Date (On or Before)</label>
+            <label for="filterExpiryDateLte">{{ 'user.expiryDateOnOrBefore' | translate }}</label>
             <p-calendar id="filterExpiryDateLte" formControlName="expiryDate_lte"
-              dateFormat="dd-mm-yy" [showIcon]="true" [showButtonBar]="true" placeholder="Select date"
+              dateFormat="dd-mm-yy" [showIcon]="true" [showButtonBar]="true" [placeholder]="'exceptionLog.datePlaceholder' | translate"
               styleClass="w-full" inputStyleClass="w-full"></p-calendar>
           </div>
         </div>
         <div class="search-actions">
-          <p-button label="Search" icon="pi pi-search" (onClick)="search(dt)"></p-button>
-          <p-button label="Clear" icon="pi pi-times" styleClass="p-button-outlined p-button-secondary" (onClick)="clearFilters()"></p-button>
+          <p-button [label]="'common.search' | translate" icon="pi pi-search" (onClick)="search(dt)"></p-button>
+          <p-button [label]="'common.clear' | translate" icon="pi pi-times" styleClass="p-button-outlined p-button-secondary" (onClick)="clearFilters()"></p-button>
         </div>
       </div>
     </p-accordionTab>
 
-    <p-accordionTab header="Users">
+    <p-accordionTab [header]="'user.listTab' | translate">
       <p-table #dt [value]="users" [lazy]="true" (onLazyLoad)="fetchUsers($event)" [paginator]="true"
         [rows]="rows" [totalRecords]="totalRecords" [loading]="loading" [rowsPerPageOptions]="[10, 20, 50]"
         responsiveLayout="scroll" dataKey="id" selectionMode="single" [(selection)]="selectedUser"
         (onRowSelect)="viewUser($event.data)">
         <ng-template pTemplate="header">
           <tr>
-            <th>Full Name</th>
-            <th>Email</th>
-            <th>Mobile</th>
-            <th>Status</th>
-            <th>Expiry Date</th>
+            <th>{{ 'user.fullName' | translate }}</th>
+            <th>{{ 'user.email' | translate }}</th>
+            <th>{{ 'user.mobile' | translate }}</th>
+            <th>{{ 'common.status' | translate }}</th>
+            <th>{{ 'user.expiryDate' | translate }}</th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-user>
           <tr class="selectable-row" [pSelectableRow]="user">
             <td>{{ user.fullName }}</td>
             <td>{{ user.email }}</td>
-            <td>{{ user.mobile || 'N/A' }}</td>
+            <td>{{ user.mobile || ('common.notAvailable' | translate) }}</td>
             <td>
               <span class="status-badge" [class.active]="user.active" [class.locked]="user.locked">
-                {{ user.locked ? 'Locked' : (user.active ? 'Active' : 'Inactive') }}
+                {{ (user.locked ? 'user.locked' : (user.active ? 'common.active' : 'common.inactive')) | translate }}
               </span>
             </td>
-            <td>{{ (user.expiryDate | date:'dd-MM-yyyy') || 'N/A' }}</td>
+            <td>{{ (user.expiryDate | date:'dd-MM-yyyy') || ('common.notAvailable' | translate) }}</td>
           </tr>
         </ng-template>
         <ng-template pTemplate="emptymessage">
           <tr>
-            <td colspan="5" class="text-center">No users found.</td>
+            <td colspan="5" class="text-center">{{ 'user.noneFound' | translate }}</td>
           </tr>
         </ng-template>
       </p-table>

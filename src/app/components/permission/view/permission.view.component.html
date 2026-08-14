@@ -1,33 +1,33 @@
-<app-page-header title="Permission Details">
-  <p-button label="Edit" icon="pi pi-pencil" [routerLink]="['/permissions', permissionId, 'edit']"></p-button>
-  <p-button label="Delete" icon="pi pi-trash" styleClass="p-button-danger" (onClick)="deletePermission()"></p-button>
-  <p-button label="Back" icon="pi pi-arrow-left" styleClass="p-button-secondary" (onClick)="navigateToSearch()"></p-button>
+<app-page-header [title]="'permission.viewTitle' | translate">
+  <p-button [label]="'common.edit' | translate" icon="pi pi-pencil" [routerLink]="['/permissions', permissionId, 'edit']"></p-button>
+  <p-button [label]="'common.delete' | translate" icon="pi pi-trash" styleClass="p-button-danger" (onClick)="deletePermission()"></p-button>
+  <p-button [label]="'common.back' | translate" icon="pi pi-arrow-left" styleClass="p-button-secondary" (onClick)="navigateToSearch()"></p-button>
 </app-page-header>
 
 <div class="flex justify-content-center mt-3 px-3">
   <p-card class="page-card">
-    <h3 class="form-section-title">Basic Info</h3>
+    <h3 class="form-section-title">{{ 'common.basicInfo' | translate }}</h3>
     <table class="detail-table">
       <tbody>
         <tr>
-          <td class="detail-label">Name</td>
-          <td class="detail-value">{{ permission.name || 'N/A' }}</td>
+          <td class="detail-label">{{ 'common.name' | translate }}</td>
+          <td class="detail-value">{{ permission.name || ('common.notAvailable' | translate) }}</td>
         </tr>
         <tr>
-          <td class="detail-label">Authority</td>
-          <td class="detail-value">{{ permission.authority || 'N/A' }}</td>
+          <td class="detail-label">{{ 'common.authority' | translate }}</td>
+          <td class="detail-value">{{ permission.authority || ('common.notAvailable' | translate) }}</td>
         </tr>
         <tr>
-          <td class="detail-label">Module</td>
-          <td class="detail-value">{{ permission.module || 'N/A' }}</td>
+          <td class="detail-label">{{ 'common.module' | translate }}</td>
+          <td class="detail-value">{{ permission.module || ('common.notAvailable' | translate) }}</td>
         </tr>
         <tr>
-          <td class="detail-label">Route Name</td>
-          <td class="detail-value">{{ permission.routeName || 'N/A' }}</td>
+          <td class="detail-label">{{ 'permission.routeName' | translate }}</td>
+          <td class="detail-value">{{ permission.routeName || ('common.notAvailable' | translate) }}</td>
         </tr>
         <tr>
-          <td class="detail-label">Description</td>
-          <td class="detail-value">{{ permission.description || 'N/A' }}</td>
+          <td class="detail-label">{{ 'common.description' | translate }}</td>
+          <td class="detail-value">{{ permission.description || ('common.notAvailable' | translate) }}</td>
         </tr>
       </tbody>
     </table>

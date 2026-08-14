@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { UserService } from '../../../services/user/user.service';
 import { PermissionService } from '../../../services/permission/permission.service';
 import { Permission } from '../../../services/permission/domain/permission.domain';
 import { Profile } from '../../../services/user/domain/user.domain';
 import { BaseComponent } from '../../base.component';
 import { AuthService } from '../../../services/utility/security/auth.service';
+import { LanguageService } from '../../../services/utility/language.service';
 import { AppMenuItem, MENU_ITEMS, ACCOUNT_MENU_ITEMS } from '../../../services/utility/constants/app.menu.model';
 
 const BASE64_PREFIX = 'data:image/png;base64,';
@@ -20,11 +22,14 @@ export class AppHeaderComponent extends BaseComponent implements OnInit {
   profile: Profile = new Profile();
   menuItems: AppMenuItem[] = [];
   accountMenuItems: AppMenuItem[] = [];
+  private grantedRouteNames: Set<string> = new Set<string>();
 
   constructor(
     private authService: AuthService,
     protected userService: UserService,
     private permissionService: PermissionService,
+    private translate: TranslateService,
+    private languageService: LanguageService,
     private router: Router) {
     super();
   }
@@ -33,10 +38,12 @@ export class AppHeaderComponent extends BaseComponent implements OnInit {
     this.authService.isLoggedIn().subscribe(authenticated => {
       this.isAuthenticated = authenticated;
       this.fetchProfileData();
-      this.buildMenuItems();
+      this.loadMenuData();
     });
 
     this.subscribeToProfileData();
+
+    this.subscribers.langChangeSub = this.translate.onLangChange.subscribe(() => this.renderMenuItems());
   }
 
   fetchProfileData() {
@@ -58,23 +65,27 @@ export class AppHeaderComponent extends BaseComponent implements OnInit {
     });
   }
 
-  buildMenuItems(): void {
+  loadMenuData(): void {
     if (!this.isAuthenticated) {
-      this.menuItems = this.filterMenuItems(MENU_ITEMS, new Set<string>());
-      this.accountMenuItems = [];
+      this.grantedRouteNames = new Set<string>();
+      this.renderMenuItems();
       return;
     }
 
     this.subscribers.permissionsSub = this.permissionService.searchPermissions(new Map().set('isPageable', false))
       .subscribe(response => {
-        const grantedRouteNames = this.resolveGrantedRouteNames(response?.list || []);
-        this.menuItems = this.filterMenuItems(MENU_ITEMS, grantedRouteNames);
-        this.accountMenuItems = [
-          ...ACCOUNT_MENU_ITEMS,
-          { separator: true },
-          { label: 'Sign Out', icon: 'pi pi-sign-out', command: () => this.logout() }
-        ];
+        this.grantedRouteNames = this.resolveGrantedRouteNames(response?.list || []);
+        this.renderMenuItems();
       });
+  }
+
+  renderMenuItems(): void {
+    this.menuItems = [...this.translateMenuItems(this.filterMenuItems(MENU_ITEMS, this.grantedRouteNames)), this.languageService.buildLanguageMenuItem()];
+    this.accountMenuItems = !this.isAuthenticated ? [] : [
+      ...this.translateMenuItems(ACCOUNT_MENU_ITEMS),
+      { separator: true },
+      { label: this.translate.instant('account.signOut'), icon: 'pi pi-sign-out', command: () => this.logout() }
+    ];
   }
 
   resolveGrantedRouteNames(permissions: Permission[]): Set<string> {
@@ -89,6 +100,14 @@ export class AppHeaderComponent extends BaseComponent implements OnInit {
     return items
       .map(item => item.items ? { ...item, items: this.filterMenuItems(item.items, grantedRouteNames) } : item)
       .filter(item => item.items ? item.items.length > 0 : (!item.routeName || grantedRouteNames.has(item.routeName)));
+  }
+
+  translateMenuItems(items: AppMenuItem[]): AppMenuItem[] {
+    return items.map(item => ({
+      ...item,
+      label: item.label ? this.translate.instant(item.label) : item.label,
+      items: item.items ? this.translateMenuItems(item.items) : item.items
+    }));
   }
 
   logout(): void {

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { BaseComponent } from '../../../base.component';
 import { UserService } from '../../../../services/user/user.service';
 import { RoleService } from '../../../../services/role/role.service';
@@ -29,7 +30,8 @@ export class UserFormComponent extends BaseComponent implements OnInit {
     private userService: UserService,
     private roleService: RoleService,
     private userGroupService: UserGroupService,
-    private commonConfirmDialogService: CommonConfirmDialogService
+    private commonConfirmDialogService: CommonConfirmDialogService,
+    private translate: TranslateService
   ) {
     super();
   }
@@ -128,14 +130,14 @@ export class UserFormComponent extends BaseComponent implements OnInit {
 
   createUser(payload: any): void {
     this.subscribers.createUserSub = this.userService.createUser(payload).subscribe(() => {
-      this.notificationService.sendSuccessMsg('User created — an account setup email has been sent.');
+      this.notificationService.sendSuccessMsg(this.translate.instant('user.createSuccess'));
       this.navigateToSearch();
     });
   }
 
   updateUser(payload: any): void {
     this.subscribers.updateUserSub = this.userService.updateUser(payload).subscribe(() => {
-      this.notificationService.sendSuccessMsg('User updated successfully!');
+      this.notificationService.sendSuccessMsg(this.translate.instant('user.updateSuccess'));
       this.navigateToSearch();
     });
   }

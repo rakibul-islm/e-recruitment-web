@@ -1,45 +1,45 @@
-<app-page-header title="Looking for Config? Search here!"></app-page-header>
+<app-page-header [title]="'systemConfig.searchTitle' | translate"></app-page-header>
 
 <div class="p-3">
   <p-accordion [(activeIndex)]="activeTabIndex">
-    <p-accordionTab header="Search">
+    <p-accordionTab [header]="'common.search' | translate">
       <div [formGroup]="filterForm">
         <div class="grid">
           <div class="col-12 md:col-4 flex flex-column gap-2">
-            <label for="filterConfigKey">Config Key</label>
+            <label for="filterConfigKey">{{ 'systemConfig.configKey' | translate }}</label>
             <input id="filterConfigKey" type="text" pInputText formControlName="configKey"
-              placeholder="Search by config key" (keyup.enter)="search(dt)" />
+              [placeholder]="'systemConfig.configKeyPlaceholder' | translate" (keyup.enter)="search(dt)" />
           </div>
         </div>
         <div class="search-actions">
-          <p-button label="Search" icon="pi pi-search" (onClick)="search(dt)"></p-button>
-          <p-button label="Clear" icon="pi pi-times" styleClass="p-button-outlined p-button-secondary" (onClick)="clearFilters()"></p-button>
+          <p-button [label]="'common.search' | translate" icon="pi pi-search" (onClick)="search(dt)"></p-button>
+          <p-button [label]="'common.clear' | translate" icon="pi pi-times" styleClass="p-button-outlined p-button-secondary" (onClick)="clearFilters()"></p-button>
         </div>
       </div>
     </p-accordionTab>
 
-    <p-accordionTab header="Configs">
+    <p-accordionTab [header]="'systemConfig.listTab' | translate">
       <p-table #dt [value]="systemConfigs" [lazy]="true" (onLazyLoad)="fetchSystemConfigs($event)" [paginator]="true"
         [rows]="rows" [totalRecords]="totalRecords" [loading]="loading" [rowsPerPageOptions]="[10, 20, 50]"
         responsiveLayout="scroll" dataKey="id" selectionMode="single" [(selection)]="selectedSystemConfig"
         (onRowSelect)="viewSystemConfig($event.data)">
         <ng-template pTemplate="header">
           <tr>
-            <th>Config Key</th>
-            <th>Config Value</th>
-            <th>Description</th>
+            <th>{{ 'systemConfig.configKey' | translate }}</th>
+            <th>{{ 'systemConfig.configValue' | translate }}</th>
+            <th>{{ 'common.description' | translate }}</th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-systemConfig>
           <tr class="selectable-row" [pSelectableRow]="systemConfig">
             <td>{{ systemConfig.configKey }}</td>
             <td>{{ systemConfig.configValue }}</td>
-            <td>{{ systemConfig.description || 'N/A' }}</td>
+            <td>{{ systemConfig.description || ('common.notAvailable' | translate) }}</td>
           </tr>
         </ng-template>
         <ng-template pTemplate="emptymessage">
           <tr>
-            <td colspan="3" class="text-center">No configs found.</td>
+            <td colspan="3" class="text-center">{{ 'systemConfig.noneFound' | translate }}</td>
           </tr>
         </ng-template>
       </p-table>

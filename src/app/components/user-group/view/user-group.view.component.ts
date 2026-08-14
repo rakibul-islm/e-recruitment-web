@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { BaseComponent } from '../../base.component';
 import { UserGroupService } from '../../../services/user-group/user-group.service';
 import { CommonConfirmDialogService } from '../../../services/utility/common.confirm.dialog.service';
@@ -17,7 +18,8 @@ export class UserGroupViewComponent extends BaseComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private userGroupService: UserGroupService,
-    private commonConfirmDialogService: CommonConfirmDialogService
+    private commonConfirmDialogService: CommonConfirmDialogService,
+    private translate: TranslateService
   ) {
     super();
   }
@@ -37,12 +39,12 @@ export class UserGroupViewComponent extends BaseComponent implements OnInit {
     this.commonConfirmDialogService.confirm(
       () => {
         this.subscribers.deleteUserGroupSub = this.userGroupService.deleteUserGroup(this.userGroupId).subscribe(() => {
-          this.notificationService.sendSuccessMsg('User group deleted successfully!');
+          this.notificationService.sendSuccessMsg(this.translate.instant('userGroup.deleteSuccess'));
           this.navigateToSearch();
         });
       },
       null,
-      `Are you sure you want to delete user group "${this.userGroup.name}"?`
+      this.translate.instant('userGroup.deleteConfirm', { name: this.userGroup.name })
     );
   }
 

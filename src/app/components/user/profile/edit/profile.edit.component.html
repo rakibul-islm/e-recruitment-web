@@ -1,6 +1,6 @@
-<app-page-header title="Update Profile">
-  <p-button label="Update" icon="pi pi-sync" (onClick)="save()"></p-button>
-  <p-button label="Back" icon="pi pi-arrow-left" (onClick)="navigateToProfile()"></p-button>
+<app-page-header [title]="'profile.editTitle' | translate">
+  <p-button [label]="'profile.updateButton' | translate" icon="pi pi-sync" (onClick)="save()"></p-button>
+  <p-button [label]="'common.back' | translate" icon="pi pi-arrow-left" (onClick)="navigateToProfile()"></p-button>
 </app-page-header>
 
 <div class="flex justify-content-center mt-6 px-3">
@@ -13,48 +13,48 @@
             <span class="profile-avatar-overlay"><i class="pi pi-camera"></i></span>
           </div>
           <input #fileInput type="file" accept="image/*" class="hidden" (change)="onFileChange($event)" />
-          <p-button *ngIf="imageBase64" label="Remove Photo" icon="pi pi-trash" styleClass="p-button-text p-button-sm p-button-danger" (onClick)="removeImage()"></p-button>
+          <p-button *ngIf="imageBase64" [label]="'profile.removePhoto' | translate" icon="pi pi-trash" styleClass="p-button-text p-button-sm p-button-danger" (onClick)="removeImage()"></p-button>
         </div>
 
         <div class="flex flex-column gap-4 flex-1">
           <div>
             <p-floatLabel>
               <input id="editFullName" type="text" formControlName="fullName" pInputText class="w-full" />
-              <label for="editFullName">Full Name</label>
+              <label for="editFullName">{{ 'user.fullName' | translate }}</label>
             </p-floatLabel>
             <small class="p-error" *ngIf="editForm.controls['fullName'].touched && editForm.controls['fullName'].errors?.['required']">
-              Full name is required.</small>
+              {{ 'user.fullNameRequired' | translate }}</small>
           </div>
 
           <div>
             <p-floatLabel>
               <input id="editEmail" type="email" formControlName="email" pInputText class="w-full" />
-              <label for="editEmail">Email</label>
+              <label for="editEmail">{{ 'user.email' | translate }}</label>
             </p-floatLabel>
           </div>
 
           <div>
             <p-floatLabel>
               <input id="editMobile" type="text" formControlName="mobile" pInputText class="w-full" />
-              <label for="editMobile">Mobile Number (Primary)</label>
+              <label for="editMobile">{{ 'user.mobilePrimary' | translate }}</label>
             </p-floatLabel>
             <ng-container *ngIf="editForm.controls['mobile'].touched">
-              <small class="p-error" *ngIf="editForm.controls['mobile'].errors?.['required']">Mobile number is required.</small>
-              <small class="p-error" *ngIf="editForm.controls['mobile'].errors?.['pattern']">Mobile number must be 11 digits.</small>
+              <small class="p-error" *ngIf="editForm.controls['mobile'].errors?.['required']">{{ 'user.mobileRequired' | translate }}</small>
+              <small class="p-error" *ngIf="editForm.controls['mobile'].errors?.['pattern']">{{ 'user.mobilePattern' | translate }}</small>
             </ng-container>
           </div>
 
           <div>
             <p-floatLabel>
               <input id="editPhone" type="text" formControlName="phone" pInputText class="w-full" />
-              <label for="editPhone">Mobile Number (Secondary)</label>
+              <label for="editPhone">{{ 'user.mobileSecondary' | translate }}</label>
             </p-floatLabel>
           </div>
 
           <div>
             <p-floatLabel>
               <input id="editAddress" type="text" formControlName="address" pInputText class="w-full" />
-              <label for="editAddress">Address</label>
+              <label for="editAddress">{{ 'user.address' | translate }}</label>
             </p-floatLabel>
           </div>
         </div>

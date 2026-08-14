@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { BaseComponent } from '../../base.component';
 import { PermissionService } from '../../../services/permission/permission.service';
 import { CommonConfirmDialogService } from '../../../services/utility/common.confirm.dialog.service';
@@ -19,7 +20,8 @@ export class PermissionFormComponent extends BaseComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private permissionService: PermissionService,
-    private commonConfirmDialogService: CommonConfirmDialogService
+    private commonConfirmDialogService: CommonConfirmDialogService,
+    private translate: TranslateService
   ) {
     super();
   }
@@ -63,7 +65,7 @@ export class PermissionFormComponent extends BaseComponent implements OnInit {
   createPermission(payload: PermissionRequest): void {
     this.subscribers.createPermissionSub = this.permissionService.createPermission(payload)
     .subscribe(() => {
-      this.notificationService.sendSuccessMsg('Permission created successfully!');
+      this.notificationService.sendSuccessMsg(this.translate.instant('permission.createSuccess'));
       this.navigateToSearch();
     });
   }
@@ -71,7 +73,7 @@ export class PermissionFormComponent extends BaseComponent implements OnInit {
   updatePermission(payload: PermissionRequest): void {
     this.subscribers.updatePermissionSub = this.permissionService.updatePermission(payload)
     .subscribe(() => {
-      this.notificationService.sendSuccessMsg('Permission updated successfully!');
+      this.notificationService.sendSuccessMsg(this.translate.instant('permission.updateSuccess'));
       this.navigateToSearch();
     });
   }

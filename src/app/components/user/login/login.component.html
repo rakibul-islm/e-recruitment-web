@@ -1,17 +1,17 @@
 <div class="flex justify-content-center align-items-center min-h-screen p-4">
   <p-card class="login-card" styleClass="login-card-surface">
-    <ng-template pTemplate="title">Sign in</ng-template>
+    <ng-template pTemplate="title">{{ 'auth.login.title' | translate }}</ng-template>
 
     <form [formGroup]="loginForm" (ngSubmit)="login()">
       <div class="flex flex-column gap-4 mt-3">
         <div>
           <p-floatLabel>
             <input id="email" type="email" formControlName="email" pInputText class="w-full" />
-            <label for="email">Email</label>
+            <label for="email">{{ 'auth.login.email' | translate }}</label>
           </p-floatLabel>
           <ng-container *ngIf="loginForm.controls['email'].touched">
-            <small class="p-error" *ngIf="loginForm.controls['email'].errors?.['required']">Email is required.</small>
-            <small class="p-error" *ngIf="loginForm.controls['email'].errors?.['email']">Enter a valid email.</small>
+            <small class="p-error" *ngIf="loginForm.controls['email'].errors?.['required']">{{ 'auth.login.emailRequired' | translate }}</small>
+            <small class="p-error" *ngIf="loginForm.controls['email'].errors?.['email']">{{ 'auth.login.emailInvalid' | translate }}</small>
           </ng-container>
         </div>
 
@@ -19,28 +19,28 @@
           <p-floatLabel>
             <p-password id="password" formControlName="password" [toggleMask]="true" [feedback]="false"
               styleClass="w-full" inputStyleClass="w-full"></p-password>
-            <label for="password">Password</label>
+            <label for="password">{{ 'auth.login.password' | translate }}</label>
           </p-floatLabel>
           <small class="p-error" *ngIf="loginForm.controls['password'].touched && loginForm.controls['password'].errors?.['required']">
-            Password is required.</small>
+            {{ 'auth.login.passwordRequired' | translate }}</small>
         </div>
 
         <div class="flex flex-wrap align-items-center justify-content-between gap-3">
           <div class="flex align-items-center gap-2">
             <p-checkbox inputId="remember-me" formControlName="rememberMe" [binary]="true"></p-checkbox>
-            <label for="remember-me">Remember me</label>
+            <label for="remember-me">{{ 'auth.login.rememberMe' | translate }}</label>
           </div>
           <a routerLink="/forgot-password" class="text-primary text-sm font-semibold">
-            Forgot Password?
+            {{ 'auth.login.forgotPassword' | translate }}
           </a>
         </div>
 
-        <p-button type="submit" label="Sign in" styleClass="w-full"></p-button>
+        <p-button type="submit" [label]="'auth.login.signIn' | translate" styleClass="w-full"></p-button>
 
         <p class="text-sm text-center m-0">
-          Don't have an account
+          {{ 'auth.login.noAccount' | translate }}
           <a routerLink="/signup" class="text-primary font-semibold ml-1 white-space-nowrap">
-            Register here
+            {{ 'auth.login.registerHere' | translate }}
           </a>
         </p>
       </div>
@@ -48,7 +48,7 @@
 
     <div class="flex align-items-center gap-3 mt-2 mb-2">
       <hr class="flex-1 m-0" />
-      <span class="text-sm">or</span>
+      <span class="text-sm">{{ 'auth.login.or' | translate }}</span>
       <hr class="flex-1 m-0" />
     </div>
 
@@ -60,7 +60,7 @@
 
     <div class="flex justify-content-center align-items-center mt-4 gap-2">
       <img src="/assets/images/app-logo.png" alt="e-recruitment logo" class="w-2rem h-2rem" />
-      <span class="text-lg font-semibold">E-RECRUITMENT</span>
+      <span class="text-lg font-semibold">{{ 'app.name' | translate }}</span>
     </div>
   </p-card>
 </div>

@@ -1,51 +1,51 @@
-<app-page-header [title]="permissionId ? 'Update Permission' : 'Create Permission'">
-  <p-button label="Save" icon="pi pi-check" (onClick)="submit()"></p-button>
-  <p-button label="Back" icon="pi pi-arrow-left" styleClass="p-button-secondary" (onClick)="navigateToSearch()"></p-button>
+<app-page-header [title]="(permissionId ? 'permission.formTitleUpdate' : 'permission.formTitleCreate') | translate">
+  <p-button [label]="'common.save' | translate" icon="pi pi-check" (onClick)="submit()"></p-button>
+  <p-button [label]="'common.back' | translate" icon="pi pi-arrow-left" styleClass="p-button-secondary" (onClick)="navigateToSearch()"></p-button>
 </app-page-header>
 
 <div class="flex justify-content-center mt-3 px-3">
   <p-card class="page-card">
     <form *ngIf="permissionForm" [formGroup]="permissionForm" (ngSubmit)="submit()">
       <div class="flex flex-column gap-4 mt-3">
-        <h3 class="form-section-title">Basic Info</h3>
+        <h3 class="form-section-title">{{ 'common.basicInfo' | translate }}</h3>
 
         <div class="grid">
           <div class="col-12 md:col-4">
             <p-floatLabel>
               <input id="permissionName" type="text" formControlName="name" pInputText class="w-full" />
-              <label for="permissionName">Name</label>
+              <label for="permissionName">{{ 'common.name' | translate }}</label>
             </p-floatLabel>
             <small class="p-error" *ngIf="permissionForm.controls['name'].touched && permissionForm.controls['name'].errors?.['required']">
-              Name is required.</small>
+              {{ 'permission.nameRequired' | translate }}</small>
           </div>
 
           <div class="col-12 md:col-4">
             <p-floatLabel>
               <input id="permissionAuthority" type="text" formControlName="authority" pInputText class="w-full" />
-              <label for="permissionAuthority">Authority</label>
+              <label for="permissionAuthority">{{ 'common.authority' | translate }}</label>
             </p-floatLabel>
             <small class="p-error" *ngIf="permissionForm.controls['authority'].touched && permissionForm.controls['authority'].errors?.['required']">
-              Authority is required.</small>
+              {{ 'permission.authorityRequired' | translate }}</small>
           </div>
 
           <div class="col-12 md:col-4">
             <p-floatLabel>
               <input id="permissionModule" type="text" formControlName="module" pInputText class="w-full" />
-              <label for="permissionModule">Module</label>
+              <label for="permissionModule">{{ 'common.module' | translate }}</label>
             </p-floatLabel>
           </div>
 
           <div class="col-12 md:col-4">
             <p-floatLabel>
               <input id="permissionRouteName" type="text" formControlName="routeName" pInputText class="w-full" />
-              <label for="permissionRouteName">Route Name</label>
+              <label for="permissionRouteName">{{ 'permission.routeName' | translate }}</label>
             </p-floatLabel>
           </div>
 
           <div class="col-12 md:col-4">
             <p-floatLabel>
               <input id="permissionDescription" type="text" formControlName="description" pInputText class="w-full" />
-              <label for="permissionDescription">Description</label>
+              <label for="permissionDescription">{{ 'common.description' | translate }}</label>
             </p-floatLabel>
           </div>
         </div>
