@@ -1,5 +1,5 @@
-<app-page-header title="{{ profile.fullName || 'User' }} Profile">
-  <p-button label="Edit" icon="pi pi-pencil" routerLink="/profile/edit"></p-button>
+<app-page-header [title]="'profile.viewTitle' | translate:{ name: profile.fullName || ('profile.defaultName' | translate) }">
+  <p-button [label]="'common.edit' | translate" icon="pi pi-pencil" routerLink="/profile/edit"></p-button>
 </app-page-header>
 
 <div class="flex justify-content-center mt-6 px-3">
@@ -12,27 +12,27 @@
       <table class="profile-table flex-1">
         <tbody>
           <tr>
-            <td class="profile-label">Full Name</td>
-            <td class="profile-value">{{ profile.fullName || 'N/A' }}</td>
+            <td class="profile-label">{{ 'user.fullName' | translate }}</td>
+            <td class="profile-value">{{ profile.fullName || ('common.notAvailable' | translate) }}</td>
           </tr>
           <tr>
-            <td class="profile-label">Email</td>
-            <td class="profile-value">{{ profile.email || 'N/A' }}</td>
+            <td class="profile-label">{{ 'user.email' | translate }}</td>
+            <td class="profile-value">{{ profile.email || ('common.notAvailable' | translate) }}</td>
           </tr>
           <tr>
-            <td class="profile-label">Mobile Number (Primary)</td>
-            <td class="profile-value">{{ profile.mobile || 'N/A' }}</td>
+            <td class="profile-label">{{ 'user.mobilePrimary' | translate }}</td>
+            <td class="profile-value">{{ profile.mobile || ('common.notAvailable' | translate) }}</td>
           </tr>
           <tr>
-            <td class="profile-label">Mobile Number (Secondary)</td>
-            <td class="profile-value">{{ profile.phone || 'N/A' }}</td>
+            <td class="profile-label">{{ 'user.mobileSecondary' | translate }}</td>
+            <td class="profile-value">{{ profile.phone || ('common.notAvailable' | translate) }}</td>
           </tr>
           <tr>
-            <td class="profile-label">Address</td>
-            <td class="profile-value">{{ profile.address || 'N/A' }}</td>
+            <td class="profile-label">{{ 'user.address' | translate }}</td>
+            <td class="profile-value">{{ profile.address || ('common.notAvailable' | translate) }}</td>
           </tr>
           <tr>
-            <td class="profile-label">Roles</td>
+            <td class="profile-label">{{ 'user.roles' | translate }}</td>
             <td class="profile-value">
               <ng-container *ngIf="profile.roles?.length; else noRoles">
                 <div class="profile-role" *ngFor="let role of profile.roles">
@@ -40,7 +40,7 @@
                   <span class="profile-role-description" *ngIf="role.description">{{ role.description }}</span>
                 </div>
               </ng-container>
-              <ng-template #noRoles>N/A</ng-template>
+              <ng-template #noRoles>{{ 'common.notAvailable' | translate }}</ng-template>
             </td>
           </tr>
         </tbody>

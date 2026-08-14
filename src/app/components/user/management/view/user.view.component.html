@@ -1,78 +1,78 @@
-<app-page-header title="User Details">
-  <p-button label="Edit" icon="pi pi-pencil" [routerLink]="['/users', userId, 'edit']"></p-button>
-  <p-button label="Delete" icon="pi pi-trash" styleClass="p-button-danger" (onClick)="deleteUser()"></p-button>
-  <p-button label="Back" icon="pi pi-arrow-left" styleClass="p-button-secondary" routerLink="/users"></p-button>
+<app-page-header [title]="'user.viewTitle' | translate">
+  <p-button [label]="'common.edit' | translate" icon="pi pi-pencil" [routerLink]="['/users', userId, 'edit']"></p-button>
+  <p-button [label]="'common.delete' | translate" icon="pi pi-trash" styleClass="p-button-danger" (onClick)="deleteUser()"></p-button>
+  <p-button [label]="'common.back' | translate" icon="pi pi-arrow-left" styleClass="p-button-secondary" routerLink="/users"></p-button>
 </app-page-header>
 
 <div class="flex justify-content-center mt-3 px-3">
   <p-card class="page-card">
-    <h3 class="form-section-title">Basic Info</h3>
+    <h3 class="form-section-title">{{ 'common.basicInfo' | translate }}</h3>
     <table class="detail-table">
       <tbody>
         <tr>
-          <td class="detail-label">Full Name</td>
-          <td class="detail-value">{{ user.fullName || 'N/A' }}</td>
+          <td class="detail-label">{{ 'user.fullName' | translate }}</td>
+          <td class="detail-value">{{ user.fullName || ('common.notAvailable' | translate) }}</td>
         </tr>
         <tr>
-          <td class="detail-label">Email</td>
-          <td class="detail-value">{{ user.email || 'N/A' }}</td>
+          <td class="detail-label">{{ 'user.email' | translate }}</td>
+          <td class="detail-value">{{ user.email || ('common.notAvailable' | translate) }}</td>
         </tr>
         <tr>
-          <td class="detail-label">Mobile Number (Primary)</td>
-          <td class="detail-value">{{ user.mobile || 'N/A' }}</td>
+          <td class="detail-label">{{ 'user.mobilePrimary' | translate }}</td>
+          <td class="detail-value">{{ user.mobile || ('common.notAvailable' | translate) }}</td>
         </tr>
         <tr>
-          <td class="detail-label">Mobile Number (Secondary)</td>
-          <td class="detail-value">{{ user.phone || 'N/A' }}</td>
+          <td class="detail-label">{{ 'user.mobileSecondary' | translate }}</td>
+          <td class="detail-value">{{ user.phone || ('common.notAvailable' | translate) }}</td>
         </tr>
         <tr>
-          <td class="detail-label">Address</td>
-          <td class="detail-value">{{ user.address || 'N/A' }}</td>
+          <td class="detail-label">{{ 'user.address' | translate }}</td>
+          <td class="detail-value">{{ user.address || ('common.notAvailable' | translate) }}</td>
         </tr>
       </tbody>
     </table>
 
-    <h3 class="form-section-title">Account Settings</h3>
+    <h3 class="form-section-title">{{ 'user.accountSettings' | translate }}</h3>
     <table class="detail-table">
       <tbody>
         <tr>
-          <td class="detail-label">Status</td>
+          <td class="detail-label">{{ 'common.status' | translate }}</td>
           <td class="detail-value">
             <span class="status-badge" [class.active]="user.active" [class.locked]="user.locked">
-              {{ user.locked ? 'Locked' : (user.active ? 'Active' : 'Inactive') }}
+              {{ (user.locked ? 'user.locked' : (user.active ? 'common.active' : 'common.inactive')) | translate }}
             </span>
           </td>
         </tr>
         <tr>
-          <td class="detail-label">User Group</td>
-          <td class="detail-value">{{ user.userGroup?.name || 'N/A' }}</td>
+          <td class="detail-label">{{ 'user.userGroup' | translate }}</td>
+          <td class="detail-value">{{ user.userGroup?.name || ('common.notAvailable' | translate) }}</td>
         </tr>
         <tr>
-          <td class="detail-label">Expiry Date</td>
-          <td class="detail-value">{{ (user.expiryDate | date:'dd-MM-yyyy') || 'N/A' }}</td>
+          <td class="detail-label">{{ 'user.expiryDate' | translate }}</td>
+          <td class="detail-value">{{ (user.expiryDate | date:'dd-MM-yyyy') || ('common.notAvailable' | translate) }}</td>
         </tr>
       </tbody>
     </table>
 
-    <h3 class="form-section-title">Roles</h3>
+    <h3 class="form-section-title">{{ 'user.roles' | translate }}</h3>
     <p-table [value]="user.roles || []" responsiveLayout="scroll" styleClass="view-table">
       <ng-template pTemplate="header">
         <tr>
-          <th>Name</th>
-          <th>Code</th>
-          <th>Description</th>
+          <th>{{ 'common.name' | translate }}</th>
+          <th>{{ 'common.code' | translate }}</th>
+          <th>{{ 'common.description' | translate }}</th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-role>
         <tr>
           <td>{{ role.name }}</td>
           <td>{{ role.code }}</td>
-          <td>{{ role.description || 'N/A' }}</td>
+          <td>{{ role.description || ('common.notAvailable' | translate) }}</td>
         </tr>
       </ng-template>
       <ng-template pTemplate="emptymessage">
         <tr>
-          <td colspan="3" class="text-center">No roles assigned.</td>
+          <td colspan="3" class="text-center">{{ 'user.noRolesAssigned' | translate }}</td>
         </tr>
       </ng-template>
     </p-table>

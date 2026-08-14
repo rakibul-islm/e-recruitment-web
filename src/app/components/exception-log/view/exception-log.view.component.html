@@ -1,0 +1,45 @@
+<app-page-header [title]="'exceptionLog.viewTitle' | translate">
+  <p-button [label]="'common.delete' | translate" icon="pi pi-trash" styleClass="p-button-danger" (onClick)="deleteExceptionLog()"></p-button>
+  <p-button [label]="'common.back' | translate" icon="pi pi-arrow-left" styleClass="p-button-secondary" (onClick)="navigateToSearch()"></p-button>
+</app-page-header>
+
+<div class="flex justify-content-center mt-3 px-3">
+  <p-card class="page-card">
+    <h3 class="form-section-title">{{ 'common.basicInfo' | translate }}</h3>
+    <table class="detail-table">
+      <tbody>
+        <tr>
+          <td class="detail-label">{{ 'exceptionLog.occurredOn' | translate }}</td>
+          <td class="detail-value">{{ (exceptionLog.createdOn | date:'dd-MM-yyyy HH:mm:ss') || ('common.notAvailable' | translate) }}</td>
+        </tr>
+        <tr>
+          <td class="detail-label">{{ 'exceptionLog.statusCode' | translate }}</td>
+          <td class="detail-value">
+            <span class="status-badge" [class.active]="exceptionLog.statusCode < 400" [class.locked]="exceptionLog.statusCode >= 400">
+              {{ exceptionLog.statusCode }}
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td class="detail-label">{{ 'exceptionLog.exceptionClass' | translate }}</td>
+          <td class="detail-value">{{ exceptionLog.exceptionClass || ('common.notAvailable' | translate) }}</td>
+        </tr>
+        <tr>
+          <td class="detail-label">{{ 'exceptionLog.requestUri' | translate }}</td>
+          <td class="detail-value">{{ exceptionLog.requestUri || ('common.notAvailable' | translate) }}</td>
+        </tr>
+        <tr>
+          <td class="detail-label">{{ 'exceptionLog.traceId' | translate }}</td>
+          <td class="detail-value">{{ exceptionLog.traceId || ('common.notAvailable' | translate) }}</td>
+        </tr>
+        <tr>
+          <td class="detail-label">{{ 'exceptionLog.message' | translate }}</td>
+          <td class="detail-value">{{ exceptionLog.message || ('common.notAvailable' | translate) }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 class="form-section-title">{{ 'exceptionLog.stackTrace' | translate }}</h3>
+    <pre style="white-space: pre-wrap; word-break: break-word; margin: 0;">{{ exceptionLog.stackTrace || ('common.notAvailable' | translate) }}</pre>
+  </p-card>
+</div>

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { LoadingService } from './services/utility/loading.service';
+import { LanguageService } from './services/utility/language.service';
 
 @Component({
   selector: 'app-root',
@@ -9,5 +10,7 @@ import { LoadingService } from './services/utility/loading.service';
 export class AppComponent {
   title = 'e-recruitment';
 
-  constructor(public loadingService: LoadingService) {}
+  constructor(public loadingService: LoadingService, languageService: LanguageService) {
+    languageService.init();
+  }
 }

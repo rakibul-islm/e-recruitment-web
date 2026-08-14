@@ -1,19 +1,19 @@
-<app-page-header title="Update Config">
-  <p-button label="Save" icon="pi pi-check" (onClick)="submit()"></p-button>
-  <p-button label="Back" icon="pi pi-arrow-left" styleClass="p-button-secondary" (onClick)="navigateToSearch()"></p-button>
+<app-page-header [title]="'systemConfig.formTitle' | translate">
+  <p-button [label]="'common.save' | translate" icon="pi pi-check" (onClick)="submit()"></p-button>
+  <p-button [label]="'common.back' | translate" icon="pi pi-arrow-left" styleClass="p-button-secondary" (onClick)="navigateToSearch()"></p-button>
 </app-page-header>
 
 <div class="flex justify-content-center mt-3 px-3">
   <p-card class="page-card">
     <form *ngIf="systemConfigForm" [formGroup]="systemConfigForm" (ngSubmit)="submit()">
       <div class="flex flex-column gap-4 mt-3">
-        <h3 class="form-section-title">Basic Info</h3>
+        <h3 class="form-section-title">{{ 'common.basicInfo' | translate }}</h3>
 
         <div class="grid">
           <div class="col-12 md:col-4">
             <p-floatLabel>
               <input id="systemConfigKey" type="text" formControlName="configKey" pInputText class="w-full" />
-              <label for="systemConfigKey">Config Key</label>
+              <label for="systemConfigKey">{{ 'systemConfig.configKey' | translate }}</label>
             </p-floatLabel>
           </div>
 
@@ -22,23 +22,23 @@
               <p-floatLabel>
                 <p-dropdown id="systemConfigValue" [options]="configValueOptions" formControlName="configValue"
                   optionLabel="label" optionValue="value" styleClass="w-full"></p-dropdown>
-                <label for="systemConfigValue">Config Value</label>
+                <label for="systemConfigValue">{{ 'systemConfig.configValue' | translate }}</label>
               </p-floatLabel>
             </ng-container>
             <ng-template #configValueText>
               <p-floatLabel>
                 <input id="systemConfigValue" type="text" formControlName="configValue" pInputText class="w-full" />
-                <label for="systemConfigValue">Config Value</label>
+                <label for="systemConfigValue">{{ 'systemConfig.configValue' | translate }}</label>
               </p-floatLabel>
             </ng-template>
             <small class="p-error" *ngIf="systemConfigForm.controls['configValue'].touched && systemConfigForm.controls['configValue'].errors?.['required']">
-              Config value is required.</small>
+              {{ 'systemConfig.configValueRequired' | translate }}</small>
           </div>
 
           <div class="col-12 md:col-4">
             <p-floatLabel>
               <input id="systemConfigDescription" type="text" formControlName="description" pInputText class="w-full" />
-              <label for="systemConfigDescription">Description</label>
+              <label for="systemConfigDescription">{{ 'common.description' | translate }}</label>
             </p-floatLabel>
           </div>
         </div>

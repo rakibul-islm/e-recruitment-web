@@ -31,6 +31,6 @@ export class RoleService extends BaseService {
   }
 
   public deleteRole(id: number): Observable<any> {
-    return this.deleteById(API_URLS.DELETE_ROLE, { id });
+    return this.removeById(API_URLS.REMOVE_ROLE, { id });
   }
 }

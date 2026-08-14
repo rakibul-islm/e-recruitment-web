@@ -1,94 +1,94 @@
-<app-page-header [title]="userId ? 'Update User' : 'Create User'">
-  <p-button label="Save" icon="pi pi-check" (onClick)="submit()"></p-button>
-  <p-button label="Back" icon="pi pi-arrow-left" styleClass="p-button-secondary" (onClick)="navigateToSearch()"></p-button>
+<app-page-header [title]="(userId ? 'user.formTitleUpdate' : 'user.formTitleCreate') | translate">
+  <p-button [label]="'common.save' | translate" icon="pi pi-check" (onClick)="submit()"></p-button>
+  <p-button [label]="'common.back' | translate" icon="pi pi-arrow-left" styleClass="p-button-secondary" (onClick)="navigateToSearch()"></p-button>
 </app-page-header>
 
 <div class="flex justify-content-center mt-3 px-3">
   <p-card class="page-card">
     <form *ngIf="userForm" [formGroup]="userForm" (ngSubmit)="submit()">
       <div class="flex flex-column gap-4 mt-3">
-        <h3 class="form-section-title">Basic Info</h3>
+        <h3 class="form-section-title">{{ 'common.basicInfo' | translate }}</h3>
 
         <div class="grid row-gap-3">
           <div class="col-12 md:col-4">
             <p-floatLabel>
               <input id="userFullName" type="text" formControlName="fullName" pInputText class="w-full" />
-              <label for="userFullName">Full Name</label>
+              <label for="userFullName">{{ 'user.fullName' | translate }}</label>
             </p-floatLabel>
             <small class="p-error" *ngIf="userForm.controls['fullName'].touched && userForm.controls['fullName'].errors?.['required']">
-              Full name is required.</small>
+              {{ 'user.fullNameRequired' | translate }}</small>
           </div>
 
           <div class="col-12 md:col-4">
             <p-floatLabel>
               <input id="userEmail" type="email" formControlName="email" pInputText class="w-full" />
-              <label for="userEmail">Email</label>
+              <label for="userEmail">{{ 'user.email' | translate }}</label>
             </p-floatLabel>
             <ng-container *ngIf="userForm.controls['email'].touched">
-              <small class="p-error" *ngIf="userForm.controls['email'].errors?.['required']">Email is required.</small>
-              <small class="p-error" *ngIf="userForm.controls['email'].errors?.['email']">Enter a valid email.</small>
+              <small class="p-error" *ngIf="userForm.controls['email'].errors?.['required']">{{ 'user.emailRequired' | translate }}</small>
+              <small class="p-error" *ngIf="userForm.controls['email'].errors?.['email']">{{ 'user.emailInvalid' | translate }}</small>
             </ng-container>
           </div>
 
           <div class="col-12 md:col-4">
             <p-floatLabel>
               <input id="userMobile" type="text" formControlName="mobile" pInputText class="w-full" />
-              <label for="userMobile">Mobile Number (Primary)</label>
+              <label for="userMobile">{{ 'user.mobilePrimary' | translate }}</label>
             </p-floatLabel>
             <ng-container *ngIf="userForm.controls['mobile'].touched">
-              <small class="p-error" *ngIf="userForm.controls['mobile'].errors?.['required']">Mobile number is required.</small>
-              <small class="p-error" *ngIf="userForm.controls['mobile'].errors?.['pattern']">Mobile number must be 11 digits.</small>
+              <small class="p-error" *ngIf="userForm.controls['mobile'].errors?.['required']">{{ 'user.mobileRequired' | translate }}</small>
+              <small class="p-error" *ngIf="userForm.controls['mobile'].errors?.['pattern']">{{ 'user.mobilePattern' | translate }}</small>
             </ng-container>
           </div>
 
           <div class="col-12 md:col-4">
             <p-floatLabel>
               <input id="userPhone" type="text" formControlName="phone" pInputText class="w-full" />
-              <label for="userPhone">Mobile Number (Secondary)</label>
+              <label for="userPhone">{{ 'user.mobileSecondary' | translate }}</label>
             </p-floatLabel>
           </div>
 
           <div class="col-12 md:col-8">
             <p-floatLabel>
               <input id="userAddress" type="text" formControlName="address" pInputText class="w-full" />
-              <label for="userAddress">Address</label>
+              <label for="userAddress">{{ 'user.address' | translate }}</label>
             </p-floatLabel>
           </div>
         </div>
 
-        <h3 class="form-section-title">Account Settings</h3>
+        <h3 class="form-section-title">{{ 'user.accountSettings' | translate }}</h3>
 
         <div class="grid align-items-center">
           <div class="col-6 md:col-2 flex align-items-center gap-2" *ngIf="userId">
             <p-checkbox inputId="userActive" formControlName="active" [binary]="true"></p-checkbox>
-            <label for="userActive">Active</label>
+            <label for="userActive">{{ 'common.active' | translate }}</label>
           </div>
           <div class="col-6 md:col-2 flex align-items-center gap-2">
             <p-checkbox inputId="userLocked" formControlName="locked" [binary]="true"></p-checkbox>
-            <label for="userLocked">Locked</label>
+            <label for="userLocked">{{ 'user.locked' | translate }}</label>
           </div>
           <div class="col-12 md:col-4">
             <p-floatLabel>
               <p-dropdown id="userGroup" [options]="userGroups" formControlName="userGroupId"
                 optionLabel="name" optionValue="id" styleClass="w-full" [filter]="true" [showClear]="true"></p-dropdown>
-              <label for="userGroup">User Group</label>
+              <label for="userGroup">{{ 'user.userGroup' | translate }}</label>
             </p-floatLabel>
           </div>
           <div class="col-12 md:col-4">
             <p-floatLabel>
               <p-calendar id="userExpiryDate" formControlName="expiryDate" dateFormat="dd-mm-yy"
                 [showIcon]="true" [showButtonBar]="true" styleClass="w-full" inputStyleClass="w-full"></p-calendar>
-              <label for="userExpiryDate">Expiry Date</label>
+              <label for="userExpiryDate">{{ 'user.expiryDate' | translate }}</label>
             </p-floatLabel>
             <small class="p-error" *ngIf="userForm.controls['expiryDate'].touched && userForm.controls['expiryDate'].errors?.['required']">
-              Expiry date is required.</small>
+              {{ 'user.expiryDateRequired' | translate }}</small>
           </div>
         </div>
 
         <div class="flex flex-column gap-2">
-          <label>Roles</label>
-          <p-pickList [source]="availableRoles" [target]="assignedRoles" sourceHeader="Available Roles" targetHeader="Assigned Roles"
-            [dragdrop]="true" [responsive]="true" filterBy="name" sourceFilterPlaceholder="Search roles" targetFilterPlaceholder="Search roles"
+          <label>{{ 'user.roles' | translate }}</label>
+          <p-pickList [source]="availableRoles" [target]="assignedRoles" [sourceHeader]="'user.availableRoles' | translate" [targetHeader]="'user.assignedRoles' | translate"
+            [dragdrop]="true" [responsive]="true" filterBy="name" [sourceFilterPlaceholder]="'user.searchRoles' | translate" [targetFilterPlaceholder]="'user.searchRoles' | translate"
             [showSourceControls]="false" [showTargetControls]="false" styleClass="user-roles-picklist"
             (onMoveToTarget)="onRoleAssignmentChanged()" (onMoveToSource)="onRoleAssignmentChanged()"
             (onMoveAllToTarget)="onRoleAssignmentChanged()" (onMoveAllToSource)="onRoleAssignmentChanged()">

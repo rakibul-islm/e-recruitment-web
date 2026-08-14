@@ -18,25 +18,25 @@ export const API_URLS = {
 
     FILTER_USER: 'user/filter',
     CREATE_USER: 'user',
-    DELETE_USER: 'user/:id',
+    REMOVE_USER: 'user/:id',
 
     FILTER_ROLE: 'role/filter',
     CREATE_ROLE: 'role',
     UPDATE_ROLE: 'role',
     FIND_ROLE_BY_ID: 'role/:id',
-    DELETE_ROLE: 'role/:id',
+    REMOVE_ROLE: 'role/:id',
 
     FILTER_PERMISSION: 'permission/filter',
     CREATE_PERMISSION: 'permission',
     UPDATE_PERMISSION: 'permission',
     FIND_PERMISSION_BY_ID: 'permission/:id',
-    DELETE_PERMISSION: 'permission/:id',
+    REMOVE_PERMISSION: 'permission/:id',
 
     FILTER_USER_GROUP: 'user-group/filter',
     CREATE_USER_GROUP: 'user-group',
     UPDATE_USER_GROUP: 'user-group',
     FIND_USER_GROUP_BY_ID: 'user-group/:id',
-    DELETE_USER_GROUP: 'user-group/:id',
+    REMOVE_USER_GROUP: 'user-group/:id',
 
     FILTER_SYSTEM_CONFIG: 'system-config/filter',
     UPDATE_SYSTEM_CONFIG: 'system-config',
@@ -44,5 +44,9 @@ export const API_URLS = {
 
     FIND_PASSWORD_POLICY: 'password-policy',
     UPDATE_PASSWORD_POLICY: 'password-policy',
+
+    FILTER_EXCEPTION_LOG: 'exception-log/filter',
+    FIND_EXCEPTION_LOG_BY_ID: 'exception-log/:id',
+    REMOVE_EXCEPTION_LOG: 'exception-log/:id',
 
 };

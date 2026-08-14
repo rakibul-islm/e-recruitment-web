@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { BaseComponent } from '../../base.component';
 import { PermissionService } from '../../../services/permission/permission.service';
 import { CommonConfirmDialogService } from '../../../services/utility/common.confirm.dialog.service';
@@ -17,7 +18,8 @@ export class PermissionViewComponent extends BaseComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private permissionService: PermissionService,
-    private commonConfirmDialogService: CommonConfirmDialogService
+    private commonConfirmDialogService: CommonConfirmDialogService,
+    private translate: TranslateService
   ) {
     super();
   }
@@ -37,12 +39,12 @@ export class PermissionViewComponent extends BaseComponent implements OnInit {
     this.commonConfirmDialogService.confirm(
       () => {
         this.subscribers.deletePermissionSub = this.permissionService.deletePermission(this.permissionId).subscribe(() => {
-          this.notificationService.sendSuccessMsg('Permission deleted successfully!');
+          this.notificationService.sendSuccessMsg(this.translate.instant('permission.deleteSuccess'));
           this.navigateToSearch();
         });
       },
       null,
-      `Are you sure you want to delete permission "${this.permission.name}"?`
+      this.translate.instant('permission.deleteConfirm', { name: this.permission.name })
     );
   }
 

@@ -1,47 +1,47 @@
-<app-page-header [title]="roleId ? 'Update Role' : 'Create Role'">
-  <p-button label="Save" icon="pi pi-check" (onClick)="submit()"></p-button>
-  <p-button label="Back" icon="pi pi-arrow-left" styleClass="p-button-secondary" (onClick)="navigateToSearch()"></p-button>
+<app-page-header [title]="(roleId ? 'role.formTitleUpdate' : 'role.formTitleCreate') | translate">
+  <p-button [label]="'common.save' | translate" icon="pi pi-check" (onClick)="submit()"></p-button>
+  <p-button [label]="'common.back' | translate" icon="pi pi-arrow-left" styleClass="p-button-secondary" (onClick)="navigateToSearch()"></p-button>
 </app-page-header>
 
 <div class="flex justify-content-center mt-3 px-3">
   <p-card class="page-card">
     <form *ngIf="roleForm" [formGroup]="roleForm" (ngSubmit)="submit()">
       <div class="flex flex-column gap-4 mt-3">
-        <h3 class="form-section-title">Basic Info</h3>
+        <h3 class="form-section-title">{{ 'common.basicInfo' | translate }}</h3>
 
         <div class="grid">
           <div class="col-12 md:col-4">
             <p-floatLabel>
               <input id="roleName" type="text" formControlName="name" pInputText class="w-full" />
-              <label for="roleName">Role Name</label>
+              <label for="roleName">{{ 'role.roleName' | translate }}</label>
             </p-floatLabel>
             <small class="p-error" *ngIf="roleForm.controls['name'].touched && roleForm.controls['name'].errors?.['required']">
-              Role name is required.</small>
+              {{ 'role.roleNameRequired' | translate }}</small>
           </div>
 
           <div class="col-12 md:col-4">
             <p-floatLabel>
               <input id="roleCode" type="text" formControlName="code" pInputText class="w-full" />
-              <label for="roleCode">Role Code</label>
+              <label for="roleCode">{{ 'role.roleCode' | translate }}</label>
             </p-floatLabel>
             <small class="p-error" *ngIf="roleForm.controls['code'].touched && roleForm.controls['code'].errors?.['required']">
-              Role code is required.</small>
+              {{ 'role.roleCodeRequired' | translate }}</small>
           </div>
 
           <div class="col-12 md:col-4">
             <p-floatLabel>
               <input id="roleDescription" type="text" formControlName="description" pInputText class="w-full" />
-              <label for="roleDescription">Description</label>
+              <label for="roleDescription">{{ 'common.description' | translate }}</label>
             </p-floatLabel>
           </div>
         </div>
 
-        <h3 class="form-section-title">Permissions</h3>
+        <h3 class="form-section-title">{{ 'role.permissions' | translate }}</h3>
 
         <div class="flex flex-column gap-2">
-          <label>Permissions</label>
-          <p-pickList [source]="availablePermissions" [target]="assignedPermissions" sourceHeader="Available Permissions" targetHeader="Assigned Permissions"
-            [dragdrop]="true" [responsive]="true" filterBy="name" sourceFilterPlaceholder="Search permissions" targetFilterPlaceholder="Search permissions"
+          <label>{{ 'role.permissions' | translate }}</label>
+          <p-pickList [source]="availablePermissions" [target]="assignedPermissions" [sourceHeader]="'role.availablePermissions' | translate" [targetHeader]="'role.assignedPermissions' | translate"
+            [dragdrop]="true" [responsive]="true" filterBy="name" [sourceFilterPlaceholder]="'role.searchPermissions' | translate" [targetFilterPlaceholder]="'role.searchPermissions' | translate"
             [showSourceControls]="false" [showTargetControls]="false" styleClass="role-permissions-picklist"
             (onMoveToTarget)="onPermissionAssignmentChanged()" (onMoveToSource)="onPermissionAssignmentChanged()"
             (onMoveAllToTarget)="onPermissionAssignmentChanged()" (onMoveAllToSource)="onPermissionAssignmentChanged()">

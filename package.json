@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:prod": "sed -i \"s#__API_BASE_URL__#$API_BASE_URL#g; s#__GOOGLE_CLIENT_ID__#$GOOGLE_CLIENT_ID#g\" src/environments/environment.prod.ts && ng build --configuration production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
@@ -19,6 +20,8 @@
     "@angular/platform-browser": "^17.3.12",
     "@angular/platform-browser-dynamic": "^17.3.12",
     "@angular/router": "^17.3.12",
+    "@ngx-translate/core": "^15.0.0",
+    "@ngx-translate/http-loader": "^8.0.0",
     "primeflex": "^4.0.0",
     "primeicons": "^8.0.0",
     "primeng": "^17.18.15",

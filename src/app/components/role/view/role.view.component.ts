@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { BaseComponent } from '../../base.component';
 import { RoleService } from '../../../services/role/role.service';
 import { CommonConfirmDialogService } from '../../../services/utility/common.confirm.dialog.service';
@@ -17,7 +18,8 @@ export class RoleViewComponent extends BaseComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private roleService: RoleService,
-    private commonConfirmDialogService: CommonConfirmDialogService
+    private commonConfirmDialogService: CommonConfirmDialogService,
+    private translate: TranslateService
   ) {
     super();
   }
@@ -37,12 +39,12 @@ export class RoleViewComponent extends BaseComponent implements OnInit {
     this.commonConfirmDialogService.confirm(
       () => {
         this.subscribers.deleteRoleSub = this.roleService.deleteRole(this.roleId).subscribe(() => {
-          this.notificationService.sendSuccessMsg('Role deleted successfully!');
+          this.notificationService.sendSuccessMsg(this.translate.instant('role.deleteSuccess'));
           this.navigateToSearch();
         });
       },
       null,
-      `Are you sure you want to delete role "${this.role.name}"?`
+      this.translate.instant('role.deleteConfirm', { name: this.role.name })
     );
   }
 

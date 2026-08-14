@@ -1,38 +1,38 @@
-<app-page-header [title]="userGroupId ? 'Update User Group' : 'Create User Group'">
-  <p-button label="Save" icon="pi pi-check" (onClick)="submit()"></p-button>
-  <p-button label="Back" icon="pi pi-arrow-left" styleClass="p-button-secondary" (onClick)="navigateToSearch()"></p-button>
+<app-page-header [title]="(userGroupId ? 'userGroup.formTitleUpdate' : 'userGroup.formTitleCreate') | translate">
+  <p-button [label]="'common.save' | translate" icon="pi pi-check" (onClick)="submit()"></p-button>
+  <p-button [label]="'common.back' | translate" icon="pi pi-arrow-left" styleClass="p-button-secondary" (onClick)="navigateToSearch()"></p-button>
 </app-page-header>
 
 <div class="flex justify-content-center mt-3 px-3">
   <p-card class="page-card">
     <form *ngIf="userGroupForm" [formGroup]="userGroupForm" (ngSubmit)="submit()">
       <div class="flex flex-column gap-4 mt-3">
-        <h3 class="form-section-title">Basic Info</h3>
+        <h3 class="form-section-title">{{ 'common.basicInfo' | translate }}</h3>
 
         <div class="grid">
           <div class="col-12 md:col-4">
             <p-floatLabel>
               <input id="userGroupName" type="text" formControlName="name" pInputText class="w-full" />
-              <label for="userGroupName">Group Name</label>
+              <label for="userGroupName">{{ 'userGroup.groupName' | translate }}</label>
             </p-floatLabel>
             <small class="p-error" *ngIf="userGroupForm.controls['name'].touched && userGroupForm.controls['name'].errors?.['required']">
-              Group name is required.</small>
+              {{ 'userGroup.groupNameRequired' | translate }}</small>
           </div>
 
           <div class="col-12 md:col-8">
             <p-floatLabel>
               <input id="userGroupDescription" type="text" formControlName="description" pInputText class="w-full" />
-              <label for="userGroupDescription">Description</label>
+              <label for="userGroupDescription">{{ 'common.description' | translate }}</label>
             </p-floatLabel>
           </div>
         </div>
 
-        <h3 class="form-section-title">Roles</h3>
+        <h3 class="form-section-title">{{ 'user.roles' | translate }}</h3>
 
         <div class="flex flex-column gap-2">
-          <label>Roles</label>
-          <p-pickList [source]="availableRoles" [target]="assignedRoles" sourceHeader="Available Roles" targetHeader="Assigned Roles"
-            [dragdrop]="true" [responsive]="true" filterBy="name" sourceFilterPlaceholder="Search roles" targetFilterPlaceholder="Search roles"
+          <label>{{ 'user.roles' | translate }}</label>
+          <p-pickList [source]="availableRoles" [target]="assignedRoles" [sourceHeader]="'user.availableRoles' | translate" [targetHeader]="'user.assignedRoles' | translate"
+            [dragdrop]="true" [responsive]="true" filterBy="name" [sourceFilterPlaceholder]="'user.searchRoles' | translate" [targetFilterPlaceholder]="'user.searchRoles' | translate"
             [showSourceControls]="false" [showTargetControls]="false" styleClass="user-group-roles-picklist"
             (onMoveToTarget)="onRoleAssignmentChanged()" (onMoveToSource)="onRoleAssignmentChanged()"
             (onMoveAllToTarget)="onRoleAssignmentChanged()" (onMoveAllToSource)="onRoleAssignmentChanged()">

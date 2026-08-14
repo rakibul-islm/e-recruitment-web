@@ -31,6 +31,6 @@ export class UserGroupService extends BaseService {
   }
 
   public deleteUserGroup(id: number): Observable<any> {
-    return this.deleteById(API_URLS.DELETE_USER_GROUP, { id });
+    return this.removeById(API_URLS.REMOVE_USER_GROUP, { id });
   }
 }

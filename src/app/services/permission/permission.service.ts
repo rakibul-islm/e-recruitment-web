@@ -31,6 +31,6 @@ export class PermissionService extends BaseService {
   }
 
   public deletePermission(id: number): Observable<any> {
-    return this.deleteById(API_URLS.DELETE_PERMISSION, { id });
+    return this.removeById(API_URLS.REMOVE_PERMISSION, { id });
   }
 }

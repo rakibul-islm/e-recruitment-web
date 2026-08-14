@@ -2,7 +2,7 @@
   <ng-template pTemplate="start">
     <a routerLink="/dashboard" class="app-header-brand">
       <img src="/assets/images/app-logo.png" alt="e-recruitment logo" class="app-header-logo" />
-      <span class="app-header-title">E-RECRUITMENT</span>
+      <span class="app-header-title">{{ 'app.name' | translate }}</span>
     </a>
   </ng-template>
 
@@ -18,7 +18,7 @@
     <ng-template #guestAction>
       <a routerLink="/login" class="app-header-signin">
         <i class="pi pi-sign-in"></i>
-        <span>Sign In</span>
+        <span>{{ 'header.signIn' | translate }}</span>
       </a>
     </ng-template>
   </ng-template>
