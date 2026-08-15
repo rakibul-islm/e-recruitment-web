@@ -39,7 +39,7 @@ import { PasswordPolicyViewComponent } from './components/password-policy/view/p
 import { ExceptionLogSearchComponent } from './components/exception-log/search/exception-log.search.component';
 import { ExceptionLogViewComponent } from './components/exception-log/view/exception-log.view.component';
 import { RequiredFieldDirective } from './directives/required-field.directive';
-import { OtpAutocompleteDirective } from './directives/otp-autocomplete.directive';
+import { OtpNumericKeyboardDirective } from './directives/otp-numeric-keyboard.directive';
 
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -104,7 +104,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
     ExceptionLogSearchComponent,
     ExceptionLogViewComponent,
     RequiredFieldDirective,
-    OtpAutocompleteDirective
+    OtpNumericKeyboardDirective
   ],
   imports: [
     BrowserModule,
