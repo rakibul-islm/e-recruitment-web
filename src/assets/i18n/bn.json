@@ -186,6 +186,7 @@
     "namePlaceholder": "নাম দিয়ে সার্চ করুন",
     "authorityPlaceholder": "অথরিটি (Authority) দিয়ে সার্চ করুন",
     "modulePlaceholder": "মডিউল দিয়ে সার্চ করুন",
+    "routeNamePlaceholder": "রুটের নাম (Route Name) দিয়ে সার্চ করুন",
     "routeName": "রুটের নাম (Route Name)",
     "noneFound": "কোনো পারমিশন পাওয়া যায়নি।",
     "formTitleCreate": "পারমিশন তৈরি করুন",

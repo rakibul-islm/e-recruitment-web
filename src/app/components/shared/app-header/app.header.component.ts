@@ -2,11 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { UserService } from '../../../services/user/user.service';
-import { PermissionService } from '../../../services/permission/permission.service';
-import { Permission } from '../../../services/permission/domain/permission.domain';
 import { Profile } from '../../../services/user/domain/user.domain';
 import { BaseComponent } from '../../base.component';
 import { AuthService } from '../../../services/utility/security/auth.service';
+import { PermissionService } from '../../../services/permission/permission.service';
 import { LanguageService } from '../../../services/utility/language.service';
 import { AppMenuItem, MENU_ITEMS, ACCOUNT_MENU_ITEMS } from '../../../services/utility/constants/app.menu.model';
 
@@ -22,7 +21,6 @@ export class AppHeaderComponent extends BaseComponent implements OnInit {
   profile: Profile = new Profile();
   menuItems: AppMenuItem[] = [];
   accountMenuItems: AppMenuItem[] = [];
-  private grantedRouteNames: Set<string> = new Set<string>();
 
   constructor(
     private authService: AuthService,
@@ -42,6 +40,9 @@ export class AppHeaderComponent extends BaseComponent implements OnInit {
     });
 
     this.subscribeToProfileData();
+
+    this.subscribers.routePermissionsSub = this.permissionService.grantedRouteNames$
+      .subscribe(() => this.renderMenuItems());
 
     this.subscribers.langChangeSub = this.translate.onLangChange.subscribe(() => this.renderMenuItems());
   }
@@ -67,20 +68,15 @@ export class AppHeaderComponent extends BaseComponent implements OnInit {
 
   loadMenuData(): void {
     if (!this.isAuthenticated) {
-      this.grantedRouteNames = new Set<string>();
-      this.renderMenuItems();
+      this.permissionService.clearGrantedRouteNames();
       return;
     }
 
-    this.subscribers.permissionsSub = this.permissionService.searchPermissions(new Map().set('isPageable', false))
-      .subscribe(response => {
-        this.grantedRouteNames = this.resolveGrantedRouteNames(response?.list || []);
-        this.renderMenuItems();
-      });
+    this.permissionService.fetchGrantedRouteNames();
   }
 
   renderMenuItems(): void {
-    this.menuItems = [...this.translateMenuItems(this.filterMenuItems(MENU_ITEMS, this.grantedRouteNames)), this.languageService.buildLanguageMenuItem()];
+    this.menuItems = [...this.translateMenuItems(this.filterMenuItems(MENU_ITEMS)), this.languageService.buildLanguageMenuItem()];
     this.accountMenuItems = !this.isAuthenticated ? [] : [
       ...this.translateMenuItems(ACCOUNT_MENU_ITEMS),
       { separator: true },
@@ -88,18 +84,10 @@ export class AppHeaderComponent extends BaseComponent implements OnInit {
     ];
   }
 
-  resolveGrantedRouteNames(permissions: Permission[]): Set<string> {
-    return new Set(
-      permissions
-        .filter(permission => permission.routeName && this.authService.hasAuthority(permission.authority))
-        .map(permission => permission.routeName)
-    );
-  }
-
-  filterMenuItems(items: AppMenuItem[], grantedRouteNames: Set<string>): AppMenuItem[] {
+  filterMenuItems(items: AppMenuItem[]): AppMenuItem[] {
     return items
-      .map(item => item.items ? { ...item, items: this.filterMenuItems(item.items, grantedRouteNames) } : item)
-      .filter(item => item.items ? item.items.length > 0 : (!item.routeName || grantedRouteNames.has(item.routeName)));
+      .map(item => item.items ? { ...item, items: this.filterMenuItems(item.items) } : item)
+      .filter(item => item.items ? item.items.length > 0 : this.permissionService.hasRoutePermission(item.routeName));
   }
 
   translateMenuItems(items: AppMenuItem[]): AppMenuItem[] {

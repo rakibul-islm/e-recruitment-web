@@ -1,5 +1,5 @@
 <app-page-header [title]="'permission.searchTitle' | translate">
-  <p-button [label]="'permission.createButton' | translate" icon="pi pi-plus" (onClick)="createPermission()"></p-button>
+  <p-button *appPermissionHide="'permission-manage'" [label]="'permission.createButton' | translate" icon="pi pi-plus" (onClick)="createPermission()"></p-button>
 </app-page-header>
 
 <div class="p-3">
@@ -21,6 +21,11 @@
             <label for="filterModule">{{ 'common.module' | translate }}</label>
             <input id="filterModule" type="text" pInputText formControlName="module"
               [placeholder]="'permission.modulePlaceholder' | translate" (keyup.enter)="search(dt)" />
+          </div>
+          <div class="col-12 md:col-4 flex flex-column gap-2">
+            <label for="routeName">{{ 'permission.routeName' | translate }}</label>
+            <input id="routeName" type="text" pInputText formControlName="routeName"
+              [placeholder]="'permission.routeNamePlaceholder' | translate" (keyup.enter)="search(dt)" />
           </div>
         </div>
         <div class="search-actions">
