@@ -33,7 +33,8 @@ export class PermissionSearchComponent extends BaseComponent implements OnInit {
     this.filterForm = this.formBuilder.group({
       name: [''],
       authority: [''],
-      module: ['']
+      module: [''],
+      routeName: ['']
     });
   }
 

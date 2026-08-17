@@ -1,5 +1,5 @@
 <app-page-header [title]="'exceptionLog.viewTitle' | translate">
-  <p-button [label]="'common.delete' | translate" icon="pi pi-trash" styleClass="p-button-danger" (onClick)="deleteExceptionLog()"></p-button>
+  <p-button *appPermissionHide="'exception-log-delete'" [label]="'common.delete' | translate" icon="pi pi-trash" styleClass="p-button-danger" (onClick)="deleteExceptionLog()"></p-button>
   <p-button [label]="'common.back' | translate" icon="pi pi-arrow-left" styleClass="p-button-secondary" (onClick)="navigateToSearch()"></p-button>
 </app-page-header>
 

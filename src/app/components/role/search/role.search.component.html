@@ -1,5 +1,5 @@
 <app-page-header [title]="'role.searchTitle' | translate">
-  <p-button [label]="'role.createButton' | translate" icon="pi pi-plus" (onClick)="createRole()"></p-button>
+  <p-button *appPermissionHide="'role-manage'" [label]="'role.createButton' | translate" icon="pi pi-plus" (onClick)="createRole()"></p-button>
 </app-page-header>
 
 <div class="p-3">

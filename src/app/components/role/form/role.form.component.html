@@ -1,5 +1,5 @@
 <app-page-header [title]="(roleId ? 'role.formTitleUpdate' : 'role.formTitleCreate') | translate">
-  <p-button [label]="'common.save' | translate" icon="pi pi-check" (onClick)="submit()"></p-button>
+  <p-button *appPermissionHide="'role-manage'" [label]="'common.save' | translate" icon="pi pi-check" (onClick)="submit()"></p-button>
   <p-button [label]="'common.back' | translate" icon="pi pi-arrow-left" styleClass="p-button-secondary" (onClick)="navigateToSearch()"></p-button>
 </app-page-header>
 
