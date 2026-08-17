@@ -1,6 +1,6 @@
 <app-page-header [title]="'user.viewTitle' | translate">
-  <p-button [label]="'common.edit' | translate" icon="pi pi-pencil" [routerLink]="['/users', userId, 'edit']"></p-button>
-  <p-button [label]="'common.delete' | translate" icon="pi pi-trash" styleClass="p-button-danger" (onClick)="deleteUser()"></p-button>
+  <p-button *appPermissionHide="'user-manage'" [label]="'common.edit' | translate" icon="pi pi-pencil" [routerLink]="['/users', userId, 'edit']"></p-button>
+  <p-button *appPermissionHide="'user-delete'" [label]="'common.delete' | translate" icon="pi pi-trash" styleClass="p-button-danger" (onClick)="deleteUser()"></p-button>
   <p-button [label]="'common.back' | translate" icon="pi pi-arrow-left" styleClass="p-button-secondary" routerLink="/users"></p-button>
 </app-page-header>
 

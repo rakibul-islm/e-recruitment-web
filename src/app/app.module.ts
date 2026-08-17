@@ -40,6 +40,8 @@ import { ExceptionLogSearchComponent } from './components/exception-log/search/e
 import { ExceptionLogViewComponent } from './components/exception-log/view/exception-log.view.component';
 import { RequiredFieldDirective } from './directives/required-field.directive';
 import { OtpNumericKeyboardDirective } from './directives/otp-numeric-keyboard.directive';
+import { PermissionHideDirective } from './directives/permission-hide.directive';
+import { PermissionDisableDirective } from './directives/permission-disable.directive';
 
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -104,7 +106,9 @@ export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
     ExceptionLogSearchComponent,
     ExceptionLogViewComponent,
     RequiredFieldDirective,
-    OtpNumericKeyboardDirective
+    OtpNumericKeyboardDirective,
+    PermissionHideDirective,
+    PermissionDisableDirective
   ],
   imports: [
     BrowserModule,

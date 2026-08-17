@@ -1,6 +1,6 @@
 <app-page-header [title]="'permission.viewTitle' | translate">
-  <p-button [label]="'common.edit' | translate" icon="pi pi-pencil" [routerLink]="['/permissions', permissionId, 'edit']"></p-button>
-  <p-button [label]="'common.delete' | translate" icon="pi pi-trash" styleClass="p-button-danger" (onClick)="deletePermission()"></p-button>
+  <p-button *appPermissionHide="'permission-manage'" [label]="'common.edit' | translate" icon="pi pi-pencil" [routerLink]="['/permissions', permissionId, 'edit']"></p-button>
+  <p-button *appPermissionHide="'permission-delete'" [label]="'common.delete' | translate" icon="pi pi-trash" styleClass="p-button-danger" (onClick)="deletePermission()"></p-button>
   <p-button [label]="'common.back' | translate" icon="pi pi-arrow-left" styleClass="p-button-secondary" (onClick)="navigateToSearch()"></p-button>
 </app-page-header>
 

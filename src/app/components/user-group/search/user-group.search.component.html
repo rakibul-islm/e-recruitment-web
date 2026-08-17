@@ -1,5 +1,5 @@
 <app-page-header [title]="'userGroup.searchTitle' | translate">
-  <p-button [label]="'userGroup.createButton' | translate" icon="pi pi-plus" (onClick)="createUserGroup()"></p-button>
+  <p-button *appPermissionHide="'user-group-manage'" [label]="'userGroup.createButton' | translate" icon="pi pi-plus" (onClick)="createUserGroup()"></p-button>
 </app-page-header>
 
 <div class="p-3">
