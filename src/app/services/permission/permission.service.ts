@@ -1,20 +1,50 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { BaseService } from '../base.service';
 import { API_URLS } from '../utility/constants/api.urls';
+import { AuthService } from '../utility/security/auth.service';
+import { Permission } from './domain/permission.domain';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PermissionService extends BaseService {
+  private grantedRouteNamesSubject = new BehaviorSubject<Set<string>>(new Set<string>());
 
-  constructor(http: HttpClient) {
+  constructor(http: HttpClient, private authService: AuthService) {
     super(http);
   }
 
   public searchPermissions(paramsMap: Map<any, any>): Observable<any> {
     return super.get(API_URLS.FILTER_PERMISSION, paramsMap);
+  }
+
+  get grantedRouteNames$(): Observable<Set<string>> {
+    return this.grantedRouteNamesSubject.asObservable();
+  }
+
+  public fetchGrantedRouteNames(): void {
+    this.searchPermissions(new Map().set('isPageable', false))
+      .subscribe(response => {
+        this.grantedRouteNamesSubject.next(this.resolveGrantedRouteNames(response?.list || []));
+      });
+  }
+
+  public clearGrantedRouteNames(): void {
+    this.grantedRouteNamesSubject.next(new Set<string>());
+  }
+
+  public hasRoutePermission(routeName?: string): boolean {
+    return !routeName || this.grantedRouteNamesSubject.value.has(routeName);
+  }
+
+  private resolveGrantedRouteNames(permissions: Permission[]): Set<string> {
+    return new Set(
+      permissions
+        .filter(permission => permission.routeName && this.authService.hasAuthority(permission.authority))
+        .map(permission => permission.routeName)
+    );
   }
 
   public createPermission(body: any): Observable<any> {

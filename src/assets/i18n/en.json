@@ -186,6 +186,7 @@
     "namePlaceholder": "Search by name",
     "authorityPlaceholder": "Search by authority",
     "modulePlaceholder": "Search by module",
+    "routeNamePlaceholder": "Search by Route Name",
     "routeName": "Route Name",
     "noneFound": "No permissions found.",
     "formTitleCreate": "Create Permission",
