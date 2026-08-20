@@ -19,7 +19,11 @@ export class SessionSearchComponent extends BaseComponent implements OnInit {
 
   filterForm!: FormGroup;
 
-  statusOptions: { label: string; value: boolean | null }[] = [];
+  statusOptions: { label: string; value: boolean | null }[] = [
+    { label: 'session.statusAll', value: null },
+    { label: 'session.statusActive', value: false },
+    { label: 'session.statusRevoked', value: true }
+  ];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -32,23 +36,14 @@ export class SessionSearchComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.prepareStatusOptions();
     this.prepareForm();
     this.registerFilterForm('session-search-filters', this.filterForm);
     this.fetchSummary();
   }
 
-  prepareStatusOptions(): void {
-    this.statusOptions = [
-      { label: this.translate.instant('session.statusAll'), value: null },
-      { label: this.translate.instant('session.statusActive'), value: false },
-      { label: this.translate.instant('session.statusRevoked'), value: true }
-    ];
-  }
-
   prepareForm(): void {
     this.filterForm = this.formBuilder.group({
-      revoked: [false],
+      revoked: [null],
       ipAddress_like: [''],
       issuedAt_gte: [null],
       issuedAt_lte: [null]
