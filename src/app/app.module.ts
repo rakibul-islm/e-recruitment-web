@@ -44,6 +44,7 @@ import { RequiredFieldDirective } from './directives/required-field.directive';
 import { OtpNumericKeyboardDirective } from './directives/otp-numeric-keyboard.directive';
 import { PermissionHideDirective } from './directives/permission-hide.directive';
 import { PermissionDisableDirective } from './directives/permission-disable.directive';
+import { TranslateOptionsDirective } from './directives/translate-options.directive';
 
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -112,7 +113,8 @@ export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
     RequiredFieldDirective,
     OtpNumericKeyboardDirective,
     PermissionHideDirective,
-    PermissionDisableDirective
+    PermissionDisableDirective,
+    TranslateOptionsDirective
   ],
   imports: [
     BrowserModule,
