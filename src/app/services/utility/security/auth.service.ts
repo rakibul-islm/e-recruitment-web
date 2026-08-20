@@ -65,6 +65,10 @@ export class AuthService {
     return this.http.post(API_URLS.SET_PASSWORD, payload);
   }
 
+  serverLogout(): Observable<any> {
+    return this.http.post(API_URLS.LOGOUT, {});
+  }
+
   logout(): void {
     localStorage.removeItem(this.TOKEN_KEY);
     sessionStorage.removeItem(this.TOKEN_KEY);

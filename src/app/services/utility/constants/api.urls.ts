@@ -5,6 +5,7 @@ export const API_URLS = {
     VERIFY_OTP: 'authenticate/verify-otp',
     RESET_PASSWORD: 'authenticate/reset-password',
     SET_PASSWORD: 'authenticate/set-password',
+    LOGOUT: 'authenticate/logout',
     FETCH_PROFILE: 'profile',
     UPDATE_PROFILE: 'profile',
     REQUEST_CHANGE_PASSWORD_OTP: 'profile/change-password/request-otp',
@@ -48,5 +49,12 @@ export const API_URLS = {
     FILTER_EXCEPTION_LOG: 'exception-log/filter',
     FIND_EXCEPTION_LOG_BY_ID: 'exception-log/:id',
     REMOVE_EXCEPTION_LOG: 'exception-log/:id',
+
+    FILTER_SESSION: 'session/filter',
+    FIND_SESSION_BY_ID: 'session/:id',
+    SESSION_SUMMARY: 'session/summary',
+    SESSIONS_BY_USER: 'session/user/:userId',
+    REMOVE_SESSION: 'session/:id',
+    FORCE_LOGOUT_ALL: 'session/all',
 
 };
