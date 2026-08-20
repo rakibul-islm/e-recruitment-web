@@ -34,18 +34,8 @@
         <div class="grid">
           <div class="col-12 md:col-4 flex flex-column gap-2">
             <label for="filterRevoked">{{ 'common.status' | translate }}</label>
-            <p-dropdown id="filterRevoked" formControlName="revoked"
-              [options]="[
-                { label: ('session.statusAll' | translate), value: '' },
-                { label: ('session.statusActive' | translate), value: 'false' },
-                { label: ('session.statusRevoked' | translate), value: 'true' }
-              ]"
+            <p-dropdown id="filterRevoked" [options]="statusOptions" formControlName="revoked"
               optionLabel="label" optionValue="value" styleClass="w-full"></p-dropdown>
-          </div>
-          <div class="col-12 md:col-4 flex flex-column gap-2">
-            <label for="filterIpAddress">{{ 'session.ipAddress' | translate }}</label>
-            <input id="filterIpAddress" type="text" pInputText formControlName="ipAddress_like"
-              [placeholder]="'session.ipAddressPlaceholder' | translate" (keyup.enter)="search(dt)" />
           </div>
           <div class="col-12 md:col-4 flex flex-column gap-2">
             <label for="filterIssuedAtGte">{{ 'session.loggedInFrom' | translate }}</label>
@@ -58,6 +48,11 @@
             <p-calendar id="filterIssuedAtLte" formControlName="issuedAt_lte"
               dateFormat="dd-mm-yy" [showIcon]="true" [showButtonBar]="true" [placeholder]="'session.datePlaceholder' | translate"
               styleClass="w-full" inputStyleClass="w-full"></p-calendar>
+          </div>
+          <div class="col-12 md:col-4 flex flex-column gap-2">
+            <label for="filterIpAddress">{{ 'session.ipAddress' | translate }}</label>
+            <input id="filterIpAddress" type="text" pInputText formControlName="ipAddress_like"
+              [placeholder]="'session.ipAddressPlaceholder' | translate" (keyup.enter)="search(dt)" />
           </div>
         </div>
         <div class="search-actions">
