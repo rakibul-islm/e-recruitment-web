@@ -181,6 +181,48 @@ form .form-section-title:not(:first-child) {
   cursor: pointer;
 }
 
+/* Dashboard-style stat tiles at the top of a search page (e.g. Session Management's
+   active sessions / logged-in users / active guests counts). */
+.summary-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.summary-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex: 1 1 220px;
+  padding: 1.1rem 1.4rem;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+  box-shadow: 0 1px 2px rgba(3, 41, 103, 0.04), 0 8px 24px rgba(3, 41, 103, 0.07);
+
+  .pi {
+    font-size: 1.5rem;
+    color: #1e4d8f;
+    background: #eef3fb;
+    padding: 0.75rem;
+    border-radius: 50%;
+  }
+
+  .summary-card-value {
+    color: #032967;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .summary-card-label {
+    color: #6b7280;
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+}
+
 .search-actions {
   display: flex;
   justify-content: flex-start;

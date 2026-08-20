@@ -1,0 +1,114 @@
+<app-page-header [title]="'session.searchTitle' | translate">
+  <p-button *appPermissionHide="'session-delete'" [label]="'session.forceLogoutAll' | translate" icon="pi pi-power-off"
+    styleClass="p-button-danger" (onClick)="forceLogoutAll()"></p-button>
+</app-page-header>
+
+<div class="p-3">
+  <div class="summary-cards">
+    <div class="summary-card">
+      <i class="pi pi-users"></i>
+      <div>
+        <div class="summary-card-value">{{ summary.activeSessions || 0 }}</div>
+        <div class="summary-card-label">{{ 'session.activeSessions' | translate }}</div>
+      </div>
+    </div>
+    <div class="summary-card">
+      <i class="pi pi-user"></i>
+      <div>
+        <div class="summary-card-value">{{ summary.distinctActiveUsers || 0 }}</div>
+        <div class="summary-card-label">{{ 'session.distinctActiveUsers' | translate }}</div>
+      </div>
+    </div>
+    <div class="summary-card">
+      <i class="pi pi-eye"></i>
+      <div>
+        <div class="summary-card-value">{{ summary.activeGuests || 0 }}</div>
+        <div class="summary-card-label">{{ 'session.activeGuests' | translate }}</div>
+      </div>
+    </div>
+  </div>
+
+  <p-accordion [(activeIndex)]="activeTabIndex">
+    <p-accordionTab [header]="'common.search' | translate">
+      <div [formGroup]="filterForm">
+        <div class="grid">
+          <div class="col-12 md:col-4 flex flex-column gap-2">
+            <label for="filterRevoked">{{ 'common.status' | translate }}</label>
+            <p-dropdown id="filterRevoked" formControlName="revoked"
+              [options]="[
+                { label: ('session.statusAll' | translate), value: '' },
+                { label: ('session.statusActive' | translate), value: 'false' },
+                { label: ('session.statusRevoked' | translate), value: 'true' }
+              ]"
+              optionLabel="label" optionValue="value" styleClass="w-full"></p-dropdown>
+          </div>
+          <div class="col-12 md:col-4 flex flex-column gap-2">
+            <label for="filterIpAddress">{{ 'session.ipAddress' | translate }}</label>
+            <input id="filterIpAddress" type="text" pInputText formControlName="ipAddress_like"
+              [placeholder]="'session.ipAddressPlaceholder' | translate" (keyup.enter)="search(dt)" />
+          </div>
+          <div class="col-12 md:col-4 flex flex-column gap-2">
+            <label for="filterIssuedAtGte">{{ 'session.loggedInFrom' | translate }}</label>
+            <p-calendar id="filterIssuedAtGte" formControlName="issuedAt_gte"
+              dateFormat="dd-mm-yy" [showIcon]="true" [showButtonBar]="true" [placeholder]="'session.datePlaceholder' | translate"
+              styleClass="w-full" inputStyleClass="w-full"></p-calendar>
+          </div>
+          <div class="col-12 md:col-4 flex flex-column gap-2">
+            <label for="filterIssuedAtLte">{{ 'session.loggedInTo' | translate }}</label>
+            <p-calendar id="filterIssuedAtLte" formControlName="issuedAt_lte"
+              dateFormat="dd-mm-yy" [showIcon]="true" [showButtonBar]="true" [placeholder]="'session.datePlaceholder' | translate"
+              styleClass="w-full" inputStyleClass="w-full"></p-calendar>
+          </div>
+        </div>
+        <div class="search-actions">
+          <p-button [label]="'common.search' | translate" icon="pi pi-search" (onClick)="search(dt)"></p-button>
+          <p-button [label]="'common.clear' | translate" icon="pi pi-times" styleClass="p-button-outlined p-button-secondary" (onClick)="clearFilters()"></p-button>
+        </div>
+      </div>
+    </p-accordionTab>
+
+    <p-accordionTab [header]="'session.listTab' | translate">
+      <p-table #dt [value]="sessions" [lazy]="true" (onLazyLoad)="fetchSessions($event)" [paginator]="true"
+        [rows]="rows" [totalRecords]="totalRecords" [loading]="loading" [rowsPerPageOptions]="[10, 20, 50]"
+        responsiveLayout="scroll" dataKey="id" selectionMode="single" [(selection)]="selectedSession"
+        (onRowSelect)="viewSession($event.data)">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>{{ 'session.user' | translate }}</th>
+            <th>{{ 'session.ipAddress' | translate }}</th>
+            <th>{{ 'session.loggedInOn' | translate }}</th>
+            <th>{{ 'session.expiresOn' | translate }}</th>
+            <th>{{ 'common.status' | translate }}</th>
+            <th>{{ 'common.actions' | translate }}</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-session>
+          <tr class="selectable-row" [pSelectableRow]="session">
+            <td>{{ session.userFullName || session.userEmail || ('common.notAvailable' | translate) }}</td>
+            <td>{{ session.ipAddress || ('common.notAvailable' | translate) }}</td>
+            <td>{{ (session.issuedAt | date:'dd-MM-yyyy HH:mm:ss') || ('common.notAvailable' | translate) }}</td>
+            <td>{{ (session.expiresAt | date:'dd-MM-yyyy HH:mm:ss') || ('common.notAvailable' | translate) }}</td>
+            <td>
+              <span class="status-badge" [class.active]="isSessionActive(session)" [class.locked]="!isSessionActive(session)">
+                {{ (isSessionActive(session) ? 'session.statusActive' : (session.revoked ? 'session.statusRevoked' : 'session.statusExpired')) | translate }}
+              </span>
+            </td>
+            <td>
+              <ng-container *ngIf="isSessionActive(session)">
+                <p-button *appPermissionHide="'session-delete'" icon="pi pi-sign-out"
+                  styleClass="p-button-danger p-button-sm p-button-text"
+                  [pTooltip]="'session.forceLogout' | translate" tooltipPosition="top"
+                  (onClick)="forceLogout(session, $event)"></p-button>
+              </ng-container>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="6" class="text-center">{{ 'session.noneFound' | translate }}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </p-accordionTab>
+  </p-accordion>
+</div>

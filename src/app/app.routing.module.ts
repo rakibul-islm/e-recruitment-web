@@ -28,6 +28,8 @@ import { PasswordPolicyFormComponent } from './components/password-policy/form/p
 import { PasswordPolicyViewComponent } from './components/password-policy/view/password-policy.view.component';
 import { ExceptionLogSearchComponent } from './components/exception-log/search/exception-log.search.component';
 import { ExceptionLogViewComponent } from './components/exception-log/view/exception-log.view.component';
+import { SessionSearchComponent } from './components/session/search/session.search.component';
+import { SessionViewComponent } from './components/session/view/session.view.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -138,6 +140,14 @@ const routes: Routes = [
   },
   { path: 'exception-logs/:id',
     component: ExceptionLogViewComponent,
+    canActivate: [AuthGuard]
+  },
+  { path: 'sessions',
+    component: SessionSearchComponent,
+    canActivate: [AuthGuard]
+  },
+  { path: 'sessions/:id',
+    component: SessionViewComponent,
     canActivate: [AuthGuard]
   },
 

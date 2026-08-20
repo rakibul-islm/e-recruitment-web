@@ -38,6 +38,8 @@ import { PasswordPolicyFormComponent } from './components/password-policy/form/p
 import { PasswordPolicyViewComponent } from './components/password-policy/view/password-policy.view.component';
 import { ExceptionLogSearchComponent } from './components/exception-log/search/exception-log.search.component';
 import { ExceptionLogViewComponent } from './components/exception-log/view/exception-log.view.component';
+import { SessionSearchComponent } from './components/session/search/session.search.component';
+import { SessionViewComponent } from './components/session/view/session.view.component';
 import { RequiredFieldDirective } from './directives/required-field.directive';
 import { OtpNumericKeyboardDirective } from './directives/otp-numeric-keyboard.directive';
 import { PermissionHideDirective } from './directives/permission-hide.directive';
@@ -105,6 +107,8 @@ export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
     PasswordPolicyViewComponent,
     ExceptionLogSearchComponent,
     ExceptionLogViewComponent,
+    SessionSearchComponent,
+    SessionViewComponent,
     RequiredFieldDirective,
     OtpNumericKeyboardDirective,
     PermissionHideDirective,
