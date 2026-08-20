@@ -44,7 +44,8 @@
     "permission": "Permission",
     "systemConfig": "System Config",
     "passwordPolicy": "Password Policy",
-    "exceptionLog": "Exception Log"
+    "exceptionLog": "Exception Log",
+    "session": "Sessions"
   },
   "account": {
     "myProfile": "My Profile",
@@ -178,6 +179,37 @@
     "deleteSuccess": "Role deleted successfully!",
     "createSuccess": "Role created successfully!",
     "updateSuccess": "Role updated successfully!"
+  },
+  "session": {
+    "searchTitle": "Who's logged in? Search sessions here!",
+    "listTab": "Sessions",
+    "activeSessions": "Active Sessions",
+    "distinctActiveUsers": "Logged In Users",
+    "activeGuests": "Active Guests",
+    "user": "User",
+    "ipAddress": "IP Address",
+    "ipAddressPlaceholder": "Search by IP address",
+    "userAgent": "Device / Browser",
+    "loggedInFrom": "Logged In From",
+    "loggedInTo": "Logged In To",
+    "loggedInOn": "Logged In On",
+    "expiresOn": "Expires On",
+    "datePlaceholder": "Select date",
+    "statusAll": "All",
+    "statusActive": "Active",
+    "statusRevoked": "Revoked",
+    "statusExpired": "Expired",
+    "noneFound": "No sessions found.",
+    "viewTitle": "Session Details",
+    "otherSessionsForUser": "Other Sessions for this User",
+    "revokedOn": "Revoked On",
+    "revokedBy": "Revoked By",
+    "forceLogout": "Force Logout",
+    "forceLogoutAll": "Force Logout All",
+    "forceLogoutConfirm": "Are you sure you want to force logout this session for \"{{name}}\"?",
+    "forceLogoutSuccess": "Session logged out successfully!",
+    "forceLogoutAllConfirm": "Are you sure you want to force logout EVERY active session in the system? All logged-in users will be signed out.",
+    "forceLogoutAllSuccess": "All active sessions logged out successfully!"
   },
   "permission": {
     "searchTitle": "Looking for Permission? Search here!",

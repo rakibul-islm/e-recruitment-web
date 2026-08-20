@@ -44,7 +44,8 @@
     "permission": "পারমিশন",
     "systemConfig": "সিস্টেম কনফিগ",
     "passwordPolicy": "পাসওয়ার্ড পলিসি",
-    "exceptionLog": "এক্সেপশন লগ"
+    "exceptionLog": "এক্সেপশন লগ",
+    "session": "সেশন"
   },
   "account": {
     "myProfile": "আমার প্রোফাইল",
@@ -178,6 +179,37 @@
     "deleteSuccess": "রোলটি সফলভাবে মুছে ফেলা হয়েছে!",
     "createSuccess": "রোলটি সফলভাবে তৈরি করা হয়েছে!",
     "updateSuccess": "রোলটি সফলভাবে আপডেট করা হয়েছে!"
+  },
+  "session": {
+    "searchTitle": "কারা লগ ইন আছেন? এখানে সেশন সার্চ করুন!",
+    "listTab": "সেশনসমূহ",
+    "activeSessions": "সক্রিয় সেশন",
+    "distinctActiveUsers": "লগ ইনকৃত ব্যবহারকারী",
+    "activeGuests": "সক্রিয় গেস্ট",
+    "user": "ব্যবহারকারী",
+    "ipAddress": "আইপি অ্যাড্রেস",
+    "ipAddressPlaceholder": "আইপি অ্যাড্রেস দিয়ে সার্চ করুন",
+    "userAgent": "ডিভাইস / ব্রাউজার",
+    "loggedInFrom": "লগ ইন শুরু",
+    "loggedInTo": "লগ ইন শেষ",
+    "loggedInOn": "লগ ইন করেছেন",
+    "expiresOn": "মেয়াদ শেষ হবে",
+    "datePlaceholder": "তারিখ নির্বাচন করুন",
+    "statusAll": "সব",
+    "statusActive": "সক্রিয়",
+    "statusRevoked": "বাতিলকৃত",
+    "statusExpired": "মেয়াদোত্তীর্ণ",
+    "noneFound": "কোনো সেশন পাওয়া যায়নি।",
+    "viewTitle": "সেশনের বিস্তারিত",
+    "otherSessionsForUser": "এই ব্যবহারকারীর অন্যান্য সেশন",
+    "revokedOn": "বাতিল করা হয়েছে",
+    "revokedBy": "বাতিলকারী",
+    "forceLogout": "জোরপূর্বক লগ আউট",
+    "forceLogoutAll": "সব সেশন লগ আউট",
+    "forceLogoutConfirm": "আপনি কি নিশ্চিত যে আপনি \"{{name}}\" এর এই সেশনটি জোরপূর্বক লগ আউট করতে চান?",
+    "forceLogoutSuccess": "সেশনটি সফলভাবে লগ আউট করা হয়েছে!",
+    "forceLogoutAllConfirm": "আপনি কি নিশ্চিত যে আপনি সিস্টেমের সকল সক্রিয় সেশন জোরপূর্বক লগ আউট করতে চান? সকল লগ ইনকৃত ব্যবহারকারী সাইন আউট হয়ে যাবেন।",
+    "forceLogoutAllSuccess": "সকল সক্রিয় সেশন সফলভাবে লগ আউট করা হয়েছে!"
   },
   "permission": {
     "searchTitle": "পারমিশন খুঁজছেন? এখানে সার্চ করুন!",

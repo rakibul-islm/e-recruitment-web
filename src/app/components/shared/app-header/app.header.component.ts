@@ -99,6 +99,13 @@ export class AppHeaderComponent extends BaseComponent implements OnInit {
   }
 
   logout(): void {
+    this.subscribers.serverLogoutSub = this.authService.serverLogout().subscribe({
+      next: () => this.finishLogout(),
+      error: () => this.finishLogout()
+    });
+  }
+
+  private finishLogout(): void {
     this.authService.logout();
     this.router.navigate(['/login']);
   }
