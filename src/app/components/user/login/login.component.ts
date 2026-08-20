@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, NgZone, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -20,7 +20,8 @@ export class LoginComponent extends BaseComponent implements OnInit, AfterViewIn
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private translate: TranslateService,
-    private router: Router
+    private router: Router,
+    private ngZone: NgZone
   ) {
     super();
   }
@@ -32,7 +33,7 @@ export class LoginComponent extends BaseComponent implements OnInit, AfterViewIn
   ngAfterViewInit(): void {
     google.accounts.id.initialize({
       client_id: environment.googleClientId,
-      callback: (response: any) => this.handleGoogleCredentialResponse(response)
+      callback: (response: any) => this.ngZone.run(() => this.handleGoogleCredentialResponse(response))
     });
 
     google.accounts.id.renderButton(
