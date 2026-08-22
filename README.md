@@ -21,9 +21,11 @@ A web client for the e-recruitment platform — built with Angular 17 and PrimeN
 - **Role-based administration** — CRUD for users, roles, permissions, and user groups, with drag-and-drop assignment of permissions to roles and roles to users/groups
 - **System configuration** — centralized view/edit of backend system config entries and the global password policy
 - **Exception log viewer** — searchable, paginated view of server-side exception logs for diagnostics
+- **Session management** — searchable, paginated view of user login sessions with detail view
+- **Audit log viewer** — searchable, paginated view of audit trail entries with detail view
 - **User profile** — self-service profile view/edit with avatar upload
 - **Internationalization** — full English and Bengali (বাংলা) translations with a live language switcher
-- **Route guards** — authenticated areas are protected by `AuthGuard`, with JWT attached via an HTTP interceptor
+- **Route guards** — authenticated areas are protected by `AuthGuard`, and admin routes additionally by a permission-aware `PermissionGuard` that redirects to `/access-denied` when the signed-in user lacks the route's permission; JWT is attached via an HTTP interceptor
 
 ## Tech Stack
 
@@ -110,7 +112,8 @@ src/app/
 ├── components/
 │   ├── shared/
 │   │   ├── app-header/            Top navigation bar (PrimeNG Menubar + Avatar + Menu + language switcher)
-│   │   └── page-header/           Reusable page title + action-buttons bar
+│   │   ├── page-header/           Reusable page title + action-buttons bar
+│   │   └── access-denied/         Shown when PermissionGuard blocks a route
 │   ├── dashboard/                 Landing page after login
 │   ├── user/
 │   │   ├── login/                 Sign-in form (email/password + Google Sign-In)
@@ -124,15 +127,19 @@ src/app/
 │   ├── system-config/             Admin search/view/edit for system configuration entries
 │   ├── password-policy/           Admin view/edit for the global password policy
 │   ├── exception-log/             Admin search/view for server-side exception logs
+│   ├── session/                   Admin search/view for user login sessions
+│   ├── audit-log/                 Admin search/view for audit trail entries
 │   └── base.component.ts          Shared base class (subscription cleanup, search/pagination helpers)
 ├── directives/
-│   └── required-field.directive.ts
+│   ├── required-field.directive.ts
+│   └── translate-options.directive.ts   Live-translates `p-dropdown[optionLabel="label"]` option lists on language change
 ├── services/
 │   ├── user/                      User/profile API service + domain models
 │   ├── role/, permission/, user-group/,
-│   │   system-config/, password-policy/, exception-log/   Feature API services + domain models
+│   │   system-config/, password-policy/, exception-log/,
+│   │   session/, audit-log/       Feature API services + domain models
 │   └── utility/
-│       ├── security/               AuthService (login/session state) + AuthGuard
+│       ├── security/               AuthService (login/session state), AuthGuard, PermissionGuard
 │       ├── interceptors/           Auth + loading HTTP interceptors
 │       ├── language.service.ts     ngx-translate init + language switching
 │       ├── notification.service.ts        Wrapper around PrimeNG's MessageService (<p-toast>)
@@ -155,32 +162,37 @@ src/assets/i18n/                   Translation files (en.json, bn.json)
 | `/forgot-password`          | `ForgotPasswordComponent`      | —            |
 | `/set-password`             | `SetPasswordComponent`         | —            |
 | `/dashboard`                | `DashboardComponent`           | —            |
+| `/access-denied`            | `AccessDeniedComponent`        | —            |
 | `/profile`                  | `ProfileViewComponent`         | `AuthGuard`  |
 | `/profile/edit`             | `ProfileEditComponent`         | `AuthGuard`  |
 | `/profile/change-password`  | `ChangePasswordComponent`      | `AuthGuard`  |
-| `/roles`                    | `RoleSearchComponent`          | `AuthGuard`  |
-| `/roles/create`             | `RoleFormComponent`            | `AuthGuard`  |
-| `/roles/:id/edit`           | `RoleFormComponent`            | `AuthGuard`  |
-| `/roles/:id`                | `RoleViewComponent`            | `AuthGuard`  |
-| `/users`                    | `UserSearchComponent`          | `AuthGuard`  |
-| `/users/create`             | `UserFormComponent`            | `AuthGuard`  |
-| `/users/:id/edit`           | `UserFormComponent`            | `AuthGuard`  |
-| `/users/:id`                | `UserViewComponent`            | `AuthGuard`  |
-| `/user-groups`              | `UserGroupSearchComponent`     | `AuthGuard`  |
-| `/user-groups/create`       | `UserGroupFormComponent`       | `AuthGuard`  |
-| `/user-groups/:id/edit`     | `UserGroupFormComponent`       | `AuthGuard`  |
-| `/user-groups/:id`          | `UserGroupViewComponent`       | `AuthGuard`  |
-| `/permissions`              | `PermissionSearchComponent`    | `AuthGuard`  |
-| `/permissions/create`       | `PermissionFormComponent`      | `AuthGuard`  |
-| `/permissions/:id/edit`     | `PermissionFormComponent`      | `AuthGuard`  |
-| `/permissions/:id`          | `PermissionViewComponent`      | `AuthGuard`  |
-| `/system-configs`           | `SystemConfigSearchComponent`  | `AuthGuard`  |
-| `/system-configs/:id/edit`  | `SystemConfigFormComponent`    | `AuthGuard`  |
-| `/system-configs/:id`       | `SystemConfigViewComponent`    | `AuthGuard`  |
-| `/password-policy`          | `PasswordPolicyViewComponent`  | `AuthGuard`  |
-| `/password-policy/edit`     | `PasswordPolicyFormComponent`  | `AuthGuard`  |
-| `/exception-logs`           | `ExceptionLogSearchComponent`  | `AuthGuard`  |
-| `/exception-logs/:id`       | `ExceptionLogViewComponent`    | `AuthGuard`  |
+| `/roles`                    | `RoleSearchComponent`          | `AuthGuard`, `PermissionGuard` |
+| `/roles/create`             | `RoleFormComponent`            | `AuthGuard`, `PermissionGuard` |
+| `/roles/:id/edit`           | `RoleFormComponent`            | `AuthGuard`, `PermissionGuard` |
+| `/roles/:id`                | `RoleViewComponent`            | `AuthGuard`, `PermissionGuard` |
+| `/users`                    | `UserSearchComponent`          | `AuthGuard`, `PermissionGuard` |
+| `/users/create`             | `UserFormComponent`            | `AuthGuard`, `PermissionGuard` |
+| `/users/:id/edit`           | `UserFormComponent`            | `AuthGuard`, `PermissionGuard` |
+| `/users/:id`                | `UserViewComponent`            | `AuthGuard`, `PermissionGuard` |
+| `/user-groups`              | `UserGroupSearchComponent`     | `AuthGuard`, `PermissionGuard` |
+| `/user-groups/create`       | `UserGroupFormComponent`       | `AuthGuard`, `PermissionGuard` |
+| `/user-groups/:id/edit`     | `UserGroupFormComponent`       | `AuthGuard`, `PermissionGuard` |
+| `/user-groups/:id`          | `UserGroupViewComponent`       | `AuthGuard`, `PermissionGuard` |
+| `/permissions`              | `PermissionSearchComponent`    | `AuthGuard`, `PermissionGuard` |
+| `/permissions/create`       | `PermissionFormComponent`      | `AuthGuard`, `PermissionGuard` |
+| `/permissions/:id/edit`     | `PermissionFormComponent`      | `AuthGuard`, `PermissionGuard` |
+| `/permissions/:id`          | `PermissionViewComponent`      | `AuthGuard`, `PermissionGuard` |
+| `/system-configs`           | `SystemConfigSearchComponent`  | `AuthGuard`, `PermissionGuard` |
+| `/system-configs/:id/edit`  | `SystemConfigFormComponent`    | `AuthGuard`, `PermissionGuard` |
+| `/system-configs/:id`       | `SystemConfigViewComponent`    | `AuthGuard`, `PermissionGuard` |
+| `/password-policy`          | `PasswordPolicyViewComponent`  | `AuthGuard`, `PermissionGuard` |
+| `/password-policy/edit`     | `PasswordPolicyFormComponent`  | `AuthGuard`, `PermissionGuard` |
+| `/exception-logs`           | `ExceptionLogSearchComponent`  | `AuthGuard`, `PermissionGuard` |
+| `/exception-logs/:id`       | `ExceptionLogViewComponent`    | `AuthGuard`, `PermissionGuard` |
+| `/sessions`                 | `SessionSearchComponent`       | `AuthGuard`, `PermissionGuard` |
+| `/sessions/:id`             | `SessionViewComponent`         | `AuthGuard`, `PermissionGuard` |
+| `/audit-logs`               | `AuditLogSearchComponent`      | `AuthGuard`, `PermissionGuard` |
+| `/audit-logs/:id`           | `AuditLogViewComponent`        | `AuthGuard`, `PermissionGuard` |
 | `**`                        | redirects to `/login`          | —            |
 
 </details>
