@@ -16,6 +16,7 @@ export class AuditLogSearchComponent extends BaseComponent implements OnInit {
 
   filterForm!: FormGroup;
   isEntityScoped: boolean = false;
+  scopedEntityType: string = '';
 
   categoryOptions: { label: string; value: string | null }[] = [
     { label: 'auditLog.categoryAll', value: null },
@@ -67,7 +68,12 @@ export class AuditLogSearchComponent extends BaseComponent implements OnInit {
     if (entityType || entityId) {
       this.filterForm.patchValue({ entityType: entityType || '', entityId: entityId || '' });
       this.isEntityScoped = true;
+      this.scopedEntityType = this.formatEntityType(entityType || '');
     }
+  }
+
+  formatEntityType(entityType: string): string {
+    return entityType.replace(/([a-z])([A-Z])/g, '$1 $2');
   }
 
   prepareForm(): void {

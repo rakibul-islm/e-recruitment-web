@@ -149,6 +149,7 @@
   "auditLog": {
     "searchTitle": "অডিট ট্রেইল এন্ট্রি খুঁজছেন? এখানে সার্চ করুন!",
     "listTab": "অডিট ট্রেইল",
+    "entityScopedTitle": "{{entity}} অডিট ট্রেইল",
     "category": "ক্যাটাগরি",
     "categoryAll": "সব",
     "categoryEntity": "এন্টিটি",
