@@ -14,7 +14,7 @@ export class SystemConfigViewComponent extends BaseComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router,
+    protected router: Router,
     private systemConfigService: SystemConfigService
   ) {
     super();

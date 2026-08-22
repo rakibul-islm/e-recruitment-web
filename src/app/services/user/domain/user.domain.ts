@@ -1,5 +1,4 @@
 import { Role } from '../../role/domain/role.domain';
-import { UserGroup } from '../../user-group/domain/user-group.domain';
 
 export class Profile {
     id!: number;
@@ -31,5 +30,5 @@ export class UserAccount {
     expiryDate!: Date;
     imageBase64!: string;
     roles?: Role[];
-    userGroup?: UserGroup;
+    userGroupId!: number;
 }

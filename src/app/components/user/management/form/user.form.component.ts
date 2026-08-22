@@ -59,7 +59,7 @@ export class UserFormComponent extends BaseComponent implements OnInit {
       locked: [formData.locked ?? false],
       expiryDate: [formData.expiryDate ? new Date(formData.expiryDate) : null, Validators.required],
       roleIds: [formData.roles ? formData.roles.map(role => role.id) : []],
-      userGroupId: [formData.userGroup ? formData.userGroup.id : null]
+      userGroupId: [formData.userGroupId ?? null]
     });
 
     this.subscribers.userGroupChangeSub = this.userForm.get('userGroupId')!.valueChanges
@@ -73,6 +73,7 @@ export class UserFormComponent extends BaseComponent implements OnInit {
     this.syncRoleLists();
   }
 
+  // No backend relation to userGroupId; this just seeds the role picklist, admin can still adjust it.
   selectGroupRoles(groupId: number | null): void {
     const group = this.userGroups.find(userGroup => userGroup.id === groupId);
     if (!group) { return; }

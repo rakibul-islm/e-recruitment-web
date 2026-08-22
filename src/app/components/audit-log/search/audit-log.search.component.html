@@ -1,0 +1,102 @@
+<app-page-header [title]="(isEntityScoped ? 'auditLog.listTab' : 'auditLog.searchTitle') | translate">
+  <p-button *ngIf="isEntityScoped" [label]="'common.back' | translate" icon="pi pi-arrow-left" styleClass="p-button-secondary" (onClick)="goBack()"></p-button>
+</app-page-header>
+
+<div class="p-3">
+  <p-accordion [(activeIndex)]="activeTabIndex">
+    <p-accordionTab *ngIf="!isEntityScoped" [header]="'common.search' | translate">
+      <div [formGroup]="filterForm">
+        <div class="grid">
+          <div class="col-12 md:col-4 flex flex-column gap-2">
+            <label for="filterCategory">{{ 'auditLog.category' | translate }}</label>
+            <p-dropdown id="filterCategory" [options]="categoryOptions" formControlName="category_eq"
+              optionLabel="label" optionValue="value" styleClass="w-full"></p-dropdown>
+          </div>
+          <div class="col-12 md:col-4 flex flex-column gap-2">
+            <label for="filterAction">{{ 'auditLog.action' | translate }}</label>
+            <p-dropdown id="filterAction" [options]="actionOptions" formControlName="action_eq"
+              optionLabel="label" optionValue="value" styleClass="w-full"></p-dropdown>
+          </div>
+          <div class="col-12 md:col-4 flex flex-column gap-2">
+            <label for="filterOutcome">{{ 'auditLog.outcome' | translate }}</label>
+            <p-dropdown id="filterOutcome" [options]="outcomeOptions" formControlName="outcome_eq"
+              optionLabel="label" optionValue="value" styleClass="w-full"></p-dropdown>
+          </div>
+          <div class="col-12 md:col-4 flex flex-column gap-2">
+            <label for="filterEntityType">{{ 'auditLog.entityType' | translate }}</label>
+            <input id="filterEntityType" type="text" pInputText formControlName="entityType"
+              [placeholder]="'auditLog.entityTypePlaceholder' | translate" (keyup.enter)="search(dt)" />
+          </div>
+          <div class="col-12 md:col-4 flex flex-column gap-2">
+            <label for="filterEntityId">{{ 'auditLog.entityId' | translate }}</label>
+            <input id="filterEntityId" type="text" pInputText formControlName="entityId"
+              [placeholder]="'auditLog.entityIdPlaceholder' | translate" (keyup.enter)="search(dt)" />
+          </div>
+          <div class="col-12 md:col-4 flex flex-column gap-2">
+            <label for="filterCreatedBy">{{ 'auditLog.createdBy' | translate }}</label>
+            <input id="filterCreatedBy" type="text" pInputText formControlName="createdBy_eq"
+              [placeholder]="'auditLog.createdByPlaceholder' | translate" (keyup.enter)="search(dt)" />
+          </div>
+          <div class="col-12 md:col-4 flex flex-column gap-2">
+            <label for="filterIpAddress">{{ 'auditLog.ipAddress' | translate }}</label>
+            <input id="filterIpAddress" type="text" pInputText formControlName="ipAddress_eq"
+              [placeholder]="'auditLog.ipAddressPlaceholder' | translate" (keyup.enter)="search(dt)" />
+          </div>
+          <div class="col-12 md:col-4 flex flex-column gap-2">
+            <label for="filterCreatedOnGte">{{ 'auditLog.occurredFrom' | translate }}</label>
+            <p-calendar id="filterCreatedOnGte" formControlName="createdOn_gte"
+              dateFormat="dd-mm-yy" [showIcon]="true" [showButtonBar]="true" [placeholder]="'auditLog.datePlaceholder' | translate"
+              styleClass="w-full" inputStyleClass="w-full"></p-calendar>
+          </div>
+          <div class="col-12 md:col-4 flex flex-column gap-2">
+            <label for="filterCreatedOnLte">{{ 'auditLog.occurredTo' | translate }}</label>
+            <p-calendar id="filterCreatedOnLte" formControlName="createdOn_lte"
+              dateFormat="dd-mm-yy" [showIcon]="true" [showButtonBar]="true" [placeholder]="'auditLog.datePlaceholder' | translate"
+              styleClass="w-full" inputStyleClass="w-full"></p-calendar>
+          </div>
+        </div>
+        <div class="search-actions">
+          <p-button [label]="'common.search' | translate" icon="pi pi-search" (onClick)="search(dt)"></p-button>
+          <p-button [label]="'common.clear' | translate" icon="pi pi-times" styleClass="p-button-outlined p-button-secondary" (onClick)="clearFilters()"></p-button>
+        </div>
+      </div>
+    </p-accordionTab>
+
+    <p-accordionTab [header]="'auditLog.listTab' | translate">
+      <p-table #dt [value]="auditLogs" [lazy]="true" (onLazyLoad)="fetchAuditLogs($event)" [paginator]="true"
+        [rows]="rows" [totalRecords]="totalRecords" [loading]="loading" [rowsPerPageOptions]="[10, 20, 50]"
+        responsiveLayout="scroll" dataKey="id" selectionMode="single" [(selection)]="selectedAuditLog"
+        (onRowSelect)="viewAuditLog($event.data)">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>{{ 'auditLog.occurredOn' | translate }}</th>
+            <th>{{ 'auditLog.category' | translate }}</th>
+            <th>{{ 'auditLog.action' | translate }}</th>
+            <th>{{ 'auditLog.entity' | translate }}</th>
+            <th>{{ 'common.status' | translate }}</th>
+            <th>{{ 'auditLog.createdBy' | translate }}</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-auditLog>
+          <tr class="selectable-row" [pSelectableRow]="auditLog">
+            <td>{{ (auditLog.createdOn | date:'dd-MM-yyyy HH:mm:ss') || ('common.notAvailable' | translate) }}</td>
+            <td>{{ auditLog.category || ('common.notAvailable' | translate) }}</td>
+            <td>{{ auditLog.action || ('common.notAvailable' | translate) }}</td>
+            <td>{{ auditLog.entityType ? (auditLog.entityType + (auditLog.entityId ? ' #' + auditLog.entityId : '')) : ('common.notAvailable' | translate) }}</td>
+            <td>
+              <span class="status-badge" [class.active]="auditLog.outcome === 'SUCCESS'" [class.locked]="auditLog.outcome === 'FAILURE'">
+                {{ (auditLog.outcome === 'SUCCESS' ? 'auditLog.outcomeSuccess' : 'auditLog.outcomeFailure') | translate }}
+              </span>
+            </td>
+            <td>{{ auditLog.createdBy || ('common.notAvailable' | translate) }}</td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="6" class="text-center">{{ 'auditLog.noneFound' | translate }}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </p-accordionTab>
+  </p-accordion>
+</div>

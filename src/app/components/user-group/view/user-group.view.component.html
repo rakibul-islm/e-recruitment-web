@@ -1,7 +1,8 @@
 <app-page-header [title]="'userGroup.viewTitle' | translate">
   <p-button *appPermissionHide="'user-group-manage'" [label]="'common.edit' | translate" icon="pi pi-pencil" [routerLink]="['/user-groups', userGroupId, 'edit']"></p-button>
   <p-button *appPermissionHide="'user-group-delete'" [label]="'common.delete' | translate" icon="pi pi-trash" styleClass="p-button-danger" (onClick)="deleteUserGroup()"></p-button>
-  <p-button [label]="'common.back' | translate" icon="pi pi-arrow-left" styleClass="p-button-secondary" routerLink="/user-groups"></p-button>
+  <p-button *appPermissionHide="'audit-log-list'" [label]="'auditLog.viewForEntity' | translate" icon="pi pi-history" styleClass="p-button-secondary" (onClick)="navigateToAuditLog(router, 'UserGroup', userGroupId)"></p-button>
+  <p-button [label]="'common.back' | translate" icon="pi pi-arrow-left" styleClass="p-button-secondary" (onClick)="goBack()"></p-button>
 </app-page-header>
 
 <div class="flex justify-content-center mt-3 px-3">

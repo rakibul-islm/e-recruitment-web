@@ -1,6 +1,6 @@
 <app-page-header [title]="'systemConfig.formTitle' | translate">
   <p-button *appPermissionHide="'system-config-manage'" [label]="'common.save' | translate" icon="pi pi-check" (onClick)="submit()"></p-button>
-  <p-button [label]="'common.back' | translate" icon="pi pi-arrow-left" styleClass="p-button-secondary" (onClick)="navigateToSearch()"></p-button>
+  <p-button [label]="'common.back' | translate" icon="pi pi-arrow-left" styleClass="p-button-secondary" (onClick)="goBack()"></p-button>
 </app-page-header>
 
 <div class="flex justify-content-center mt-3 px-3">
@@ -21,7 +21,7 @@
             <ng-container *ngIf="configValueOptions.length; else configValueText">
               <p-floatLabel>
                 <p-dropdown id="systemConfigValue" [options]="configValueOptions" formControlName="configValue"
-                  optionLabel="label" optionValue="value" styleClass="w-full"></p-dropdown>
+                  optionLabel="label" optionValue="value" styleClass="w-full" appendTo="body"></p-dropdown>
                 <label for="systemConfigValue">{{ 'systemConfig.configValue' | translate }}</label>
               </p-floatLabel>
             </ng-container>
@@ -37,7 +37,8 @@
 
           <div class="col-12 md:col-4">
             <p-floatLabel>
-              <input id="systemConfigDescription" type="text" formControlName="description" pInputText class="w-full" />
+              <input id="systemConfigDescription" type="text" formControlName="description" pInputText class="w-full"
+                [appPermissionDisable]="'system-config-description-edit'" />
               <label for="systemConfigDescription">{{ 'common.description' | translate }}</label>
             </p-floatLabel>
           </div>

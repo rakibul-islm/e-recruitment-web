@@ -42,6 +42,7 @@ export const API_URLS = {
     FILTER_SYSTEM_CONFIG: 'system-config/filter',
     UPDATE_SYSTEM_CONFIG: 'system-config',
     FIND_SYSTEM_CONFIG_BY_ID: 'system-config/:id',
+    FIND_SYSTEM_CONFIG_BY_KEY: 'system-config/key/:configKey',
 
     FIND_PASSWORD_POLICY: 'password-policy',
     UPDATE_PASSWORD_POLICY: 'password-policy',
@@ -56,5 +57,8 @@ export const API_URLS = {
     SESSIONS_BY_USER: 'session/user/:userId',
     REMOVE_SESSION: 'session/:id',
     FORCE_LOGOUT_ALL: 'session/all',
+
+    FILTER_AUDIT_LOG: 'audit-log/filter',
+    FIND_AUDIT_LOG_BY_ID: 'audit-log/:id',
 
 };

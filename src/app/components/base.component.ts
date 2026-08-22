@@ -1,5 +1,7 @@
 import { Directive, OnDestroy, inject } from '@angular/core';
 import { FormGroup, FormArray } from '@angular/forms';
+import { Location } from '@angular/common';
+import { Router } from '@angular/router';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { NotificationService } from '../services/utility/notification.service';
 
@@ -7,6 +9,7 @@ import { NotificationService } from '../services/utility/notification.service';
 export abstract class BaseComponent implements OnDestroy {
   subscribers: any = {};
   protected notificationService = inject(NotificationService);
+  private location = inject(Location);
 
   totalRecords: number = 0;
   loading: boolean = false;
@@ -47,6 +50,14 @@ export abstract class BaseComponent implements OnDestroy {
 
   protected preserveFiltersOnNavigate(): void {
     this.preserveFiltersOnDestroy = true;
+  }
+
+  navigateToAuditLog(router: Router, entityType: string, entityId: number | string | null | undefined): void {
+    router.navigate(['/audit-logs'], { queryParams: { entityType, entityId } });
+  }
+
+  goBack(): void {
+    this.location.back();
   }
 
   protected buildSearchParams(form: FormGroup, event: TableLazyLoadEvent): Map<any, any> {

@@ -30,6 +30,10 @@ import { ExceptionLogSearchComponent } from './components/exception-log/search/e
 import { ExceptionLogViewComponent } from './components/exception-log/view/exception-log.view.component';
 import { SessionSearchComponent } from './components/session/search/session.search.component';
 import { SessionViewComponent } from './components/session/view/session.view.component';
+import { AuditLogSearchComponent } from './components/audit-log/search/audit-log.search.component';
+import { AuditLogViewComponent } from './components/audit-log/view/audit-log.view.component';
+import { AccessDeniedComponent } from './components/shared/access-denied/access-denied.component';
+import { PermissionGuard } from './services/utility/security/permission.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -38,6 +42,7 @@ const routes: Routes = [
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'set-password', component: SetPasswordComponent },
   { path: 'dashboard', component: DashboardComponent },
+  { path: 'access-denied', component: AccessDeniedComponent },
   { path: 'profile',
     component: ProfileViewComponent,
     canActivate: [AuthGuard]
@@ -52,103 +57,138 @@ const routes: Routes = [
   },
   { path: 'roles',
     component: RoleSearchComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, PermissionGuard],
+    data: { routeName: 'role-list' }
   },
   { path: 'roles/create',
     component: RoleFormComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, PermissionGuard],
+    data: { routeName: 'role-manage' }
   },
   { path: 'roles/:id/edit',
     component: RoleFormComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, PermissionGuard],
+    data: { routeName: 'role-manage' }
   },
   { path: 'roles/:id',
     component: RoleViewComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, PermissionGuard],
+    data: { routeName: 'role-list' }
   },
   { path: 'users',
     component: UserSearchComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, PermissionGuard],
+    data: { routeName: 'user-list' }
   },
   { path: 'users/create',
     component: UserFormComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, PermissionGuard],
+    data: { routeName: 'user-manage' }
   },
   { path: 'users/:id/edit',
     component: UserFormComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, PermissionGuard],
+    data: { routeName: 'user-manage' }
   },
   { path: 'users/:id',
     component: UserViewComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, PermissionGuard],
+    data: { routeName: 'user-list' }
   },
   { path: 'user-groups',
     component: UserGroupSearchComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, PermissionGuard],
+    data: { routeName: 'user-group-list' }
   },
   { path: 'user-groups/create',
     component: UserGroupFormComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, PermissionGuard],
+    data: { routeName: 'user-group-manage' }
   },
   { path: 'user-groups/:id/edit',
     component: UserGroupFormComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, PermissionGuard],
+    data: { routeName: 'user-group-manage' }
   },
   { path: 'user-groups/:id',
     component: UserGroupViewComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, PermissionGuard],
+    data: { routeName: 'user-group-list' }
   },
   { path: 'permissions',
     component: PermissionSearchComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, PermissionGuard],
+    data: { routeName: 'permission-list' }
   },
   { path: 'permissions/create',
     component: PermissionFormComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, PermissionGuard],
+    data: { routeName: 'permission-manage' }
   },
   { path: 'permissions/:id/edit',
     component: PermissionFormComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, PermissionGuard],
+    data: { routeName: 'permission-manage' }
   },
   { path: 'permissions/:id',
     component: PermissionViewComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, PermissionGuard],
+    data: { routeName: 'permission-list' }
   },
   { path: 'system-configs',
     component: SystemConfigSearchComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, PermissionGuard],
+    data: { routeName: 'system-config-list' }
   },
   { path: 'system-configs/:id/edit',
     component: SystemConfigFormComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, PermissionGuard],
+    data: { routeName: 'system-config-manage' }
   },
   { path: 'system-configs/:id',
     component: SystemConfigViewComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, PermissionGuard],
+    data: { routeName: 'system-config-list' }
   },
   { path: 'password-policy',
     component: PasswordPolicyViewComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, PermissionGuard],
+    data: { routeName: 'password-policy-list' }
   },
   { path: 'password-policy/edit',
     component: PasswordPolicyFormComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, PermissionGuard],
+    data: { routeName: 'password-policy-manage' }
   },
   { path: 'exception-logs',
     component: ExceptionLogSearchComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, PermissionGuard],
+    data: { routeName: 'exception-log-list' }
   },
   { path: 'exception-logs/:id',
     component: ExceptionLogViewComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, PermissionGuard],
+    data: { routeName: 'exception-log-list' }
   },
   { path: 'sessions',
     component: SessionSearchComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, PermissionGuard],
+    data: { routeName: 'session-list' }
   },
   { path: 'sessions/:id',
     component: SessionViewComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, PermissionGuard],
+    data: { routeName: 'session-list' }
+  },
+  { path: 'audit-logs',
+    component: AuditLogSearchComponent,
+    canActivate: [AuthGuard, PermissionGuard],
+    data: { routeName: 'audit-log-list' }
+  },
+  { path: 'audit-logs/:id',
+    component: AuditLogViewComponent,
+    canActivate: [AuthGuard, PermissionGuard],
+    data: { routeName: 'audit-log-list' }
   },
 
   { path: '**', redirectTo: '/login' }

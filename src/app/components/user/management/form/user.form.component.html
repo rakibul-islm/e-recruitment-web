@@ -1,6 +1,6 @@
 <app-page-header [title]="(userId ? 'user.formTitleUpdate' : 'user.formTitleCreate') | translate">
   <p-button *appPermissionHide="'user-manage'" [label]="'common.save' | translate" icon="pi pi-check" (onClick)="submit()"></p-button>
-  <p-button [label]="'common.back' | translate" icon="pi pi-arrow-left" styleClass="p-button-secondary" (onClick)="navigateToSearch()"></p-button>
+  <p-button [label]="'common.back' | translate" icon="pi pi-arrow-left" styleClass="p-button-secondary" (onClick)="goBack()"></p-button>
 </app-page-header>
 
 <div class="flex justify-content-center mt-3 px-3">
@@ -21,7 +21,8 @@
 
           <div class="col-12 md:col-4">
             <p-floatLabel>
-              <input id="userEmail" type="email" formControlName="email" pInputText class="w-full" />
+              <input id="userEmail" type="email" formControlName="email" pInputText class="w-full"
+                [appPermissionDisable]="userId ? 'user-email-edit' : ''" />
               <label for="userEmail">{{ 'user.email' | translate }}</label>
             </p-floatLabel>
             <ng-container *ngIf="userForm.controls['email'].touched">

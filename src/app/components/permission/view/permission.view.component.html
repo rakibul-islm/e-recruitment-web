@@ -1,7 +1,8 @@
 <app-page-header [title]="'permission.viewTitle' | translate">
   <p-button *appPermissionHide="'permission-manage'" [label]="'common.edit' | translate" icon="pi pi-pencil" [routerLink]="['/permissions', permissionId, 'edit']"></p-button>
   <p-button *appPermissionHide="'permission-delete'" [label]="'common.delete' | translate" icon="pi pi-trash" styleClass="p-button-danger" (onClick)="deletePermission()"></p-button>
-  <p-button [label]="'common.back' | translate" icon="pi pi-arrow-left" styleClass="p-button-secondary" (onClick)="navigateToSearch()"></p-button>
+  <p-button *appPermissionHide="'audit-log-list'" [label]="'auditLog.viewForEntity' | translate" icon="pi pi-history" styleClass="p-button-secondary" (onClick)="navigateToAuditLog(router, 'Permission', permissionId)"></p-button>
+  <p-button [label]="'common.back' | translate" icon="pi pi-arrow-left" styleClass="p-button-secondary" (onClick)="goBack()"></p-button>
 </app-page-header>
 
 <div class="flex justify-content-center mt-3 px-3">

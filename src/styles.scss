@@ -149,6 +149,31 @@ form .form-section-title:not(:first-child) {
   }
 }
 
+/* Audit log field diffs — old/removed value in red, new/added value in green,
+   reusing the same palette as .status-badge for visual consistency. */
+.diff-value {
+  display: inline-block;
+  padding: 0.15rem 0.6rem;
+  border-radius: 0.35rem;
+  font-weight: 500;
+  margin: 0 0.35rem 0.35rem 0;
+
+  &.diff-old {
+    background: #fee2e2;
+    color: #dc2626;
+  }
+
+  &.diff-new {
+    background: #dcfce7;
+    color: #16a34a;
+  }
+
+  &.diff-unchanged {
+    background: #f3f4f6;
+    color: #6b7280;
+  }
+}
+
 /* Embedded read-only tables inside view pages (e.g. a role's permissions, a
    user's roles) — branded header to match page-header-actions buttons. */
 .view-table {
@@ -331,6 +356,51 @@ form .form-section-title:not(:first-child) {
 @keyframes toast-progress {
   from { width: 100%; }
   to { width: 0%; }
+}
+
+/* p-calendar's default theme trigger/action buttons use PrimeNG's bright Lara blue, which
+   clashes with the app's own, more muted navy palette used everywhere else — retone to match. */
+.p-calendar .p-datepicker-trigger {
+  background: #eef3fb;
+  border-color: #eef3fb;
+  color: #1e4d8f;
+
+  &:hover {
+    background: #dce8fb !important;
+    border-color: #dce8fb !important;
+    color: #163a6b !important;
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px rgba(30, 77, 143, 0.35);
+  }
+}
+
+.p-datepicker {
+  .p-datepicker-header .p-datepicker-title {
+    color: #032967;
+  }
+
+  table td.p-datepicker-today > span,
+  table td > span.p-highlight {
+    background: #1e4d8f;
+    color: #ffffff;
+  }
+
+  .p-datepicker-buttonbar .p-button {
+    color: #1e4d8f;
+
+    &:hover {
+      background: #eef3fb;
+      color: #163a6b;
+    }
+  }
+
+  .p-monthpicker .p-monthpicker-month.p-highlight,
+  .p-yearpicker .p-yearpicker-year.p-highlight {
+    background: #1e4d8f;
+    color: #ffffff;
+  }
 }
 
 /* Outlined-style floating label: sits on top of the input's border line, like a Material "outlined" field */

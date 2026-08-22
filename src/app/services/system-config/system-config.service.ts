@@ -25,4 +25,9 @@ export class SystemConfigService extends BaseService {
     const url = this.createUrl(API_URLS.FIND_SYSTEM_CONFIG_BY_ID, { id });
     return super.get(url);
   }
+
+  public findSystemConfigByKey(configKey: string): Observable<any> {
+    const url = this.createUrl(API_URLS.FIND_SYSTEM_CONFIG_BY_KEY, { configKey });
+    return super.get(url);
+  }
 }

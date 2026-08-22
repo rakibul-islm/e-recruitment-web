@@ -1,0 +1,10 @@
+<div class="flex justify-content-center mt-3 px-3">
+  <p-card class="page-card text-center">
+    <div class="flex flex-column align-items-center gap-3 py-3">
+      <i class="pi pi-lock" style="font-size: 2.5rem"></i>
+      <h2 class="m-0">{{ 'accessDenied.title' | translate }}</h2>
+      <p class="m-0">{{ 'accessDenied.message' | translate }}</p>
+      <p-button [label]="'accessDenied.backButton' | translate" icon="pi pi-arrow-left" (onClick)="goToDashboard()"></p-button>
+    </div>
+  </p-card>
+</div>

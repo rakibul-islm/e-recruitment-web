@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { BaseComponent } from '../../../base.component';
 import { UserService } from '../../../../services/user/user.service';
+import { UserGroupService } from '../../../../services/user-group/user-group.service';
 import { CommonConfirmDialogService } from '../../../../services/utility/common.confirm.dialog.service';
 import { UserAccount } from '../../../../services/user/domain/user.domain';
 
@@ -13,11 +14,13 @@ import { UserAccount } from '../../../../services/user/domain/user.domain';
 export class UserViewComponent extends BaseComponent implements OnInit {
   user: UserAccount = new UserAccount();
   userId!: number;
+  userGroupName: string | null = null;
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router,
+    protected router: Router,
     private userService: UserService,
+    private userGroupService: UserGroupService,
     private commonConfirmDialogService: CommonConfirmDialogService,
     private translate: TranslateService
   ) {
@@ -26,12 +29,23 @@ export class UserViewComponent extends BaseComponent implements OnInit {
 
   ngOnInit(): void {
     this.userId = Number(this.route.snapshot.paramMap.get('id'));
-    this.fetchUser();
+    this.fetchUser(this.userId);
   }
 
-  fetchUser(): void {
-    this.subscribers.findUserSub = this.userService.findUserById(this.userId).subscribe(response => {
+  fetchUser(userId: number): void {
+    if (!userId) { return; }
+
+    this.subscribers.findUserSub = this.userService.findUserById(userId).subscribe(response => {
       this.user = response?.obj;
+      this.fetchUserGroupName(this.user.userGroupId);
+    });
+  }
+
+  fetchUserGroupName(userGroupId: number): void {
+    if (!userGroupId) { return; }
+
+    this.subscribers.findUserGroupSub = this.userGroupService.findUserGroupById(userGroupId).subscribe(response => {
+      this.userGroupName = response?.obj?.name || null;
     });
   }
 
