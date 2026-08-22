@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 import { BaseService } from '../base.service';
 import { API_URLS } from '../utility/constants/api.urls';
 import { AuthService } from '../utility/security/auth.service';
@@ -11,6 +12,7 @@ import { Permission } from './domain/permission.domain';
 })
 export class PermissionService extends BaseService {
   private grantedRouteNamesSubject = new BehaviorSubject<Set<string>>(new Set<string>());
+  private loaded = false;
 
   constructor(http: HttpClient, private authService: AuthService) {
     super(http);
@@ -25,14 +27,28 @@ export class PermissionService extends BaseService {
   }
 
   public fetchGrantedRouteNames(): void {
-    this.searchPermissions(new Map().set('isPageable', false))
-      .subscribe(response => {
-        this.grantedRouteNamesSubject.next(this.resolveGrantedRouteNames(response?.list || []));
-      });
+    this.loadGrantedRouteNames().subscribe();
   }
 
   public clearGrantedRouteNames(): void {
+    this.loaded = false;
     this.grantedRouteNamesSubject.next(new Set<string>());
+  }
+
+  // PermissionGuard needs this: reading grantedRouteNamesSubject.value directly would race the
+  // header's initial fetch on app bootstrap, wrongly denying access before permissions arrive.
+  public ensureGrantedRouteNamesLoaded(): Observable<Set<string>> {
+    return this.loaded ? of(this.grantedRouteNamesSubject.value) : this.loadGrantedRouteNames();
+  }
+
+  private loadGrantedRouteNames(): Observable<Set<string>> {
+    return this.searchPermissions(new Map().set('isPageable', false)).pipe(
+      map(response => this.resolveGrantedRouteNames(response?.list || [])),
+      tap(names => {
+        this.loaded = true;
+        this.grantedRouteNamesSubject.next(names);
+      })
+    );
   }
 
   public hasRoutePermission(routeName?: string): boolean {

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { BaseComponent } from '../../base.component';
 import { PasswordPolicyService } from '../../../services/password-policy/password-policy.service';
 import { PasswordPolicy } from '../../../services/password-policy/domain/password-policy.domain';
@@ -11,7 +12,8 @@ export class PasswordPolicyViewComponent extends BaseComponent implements OnInit
   passwordPolicy: PasswordPolicy = new PasswordPolicy();
 
   constructor(
-    private passwordPolicyService: PasswordPolicyService
+    private passwordPolicyService: PasswordPolicyService,
+    protected router: Router
   ) {
     super();
   }

@@ -16,7 +16,7 @@ export class RoleViewComponent extends BaseComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router,
+    protected router: Router,
     private roleService: RoleService,
     private commonConfirmDialogService: CommonConfirmDialogService,
     private translate: TranslateService
