@@ -65,6 +65,11 @@
     "notFound": "রিসোর্সটি পাওয়া যায়নি।",
     "server": "সার্ভার ত্রুটি: অনুগ্রহ করে কিছুক্ষণ পর আবার চেষ্টা করুন।"
   },
+  "accessDenied": {
+    "title": "প্রবেশাধিকার নেই",
+    "message": "এই পৃষ্ঠাটি দেখার অনুমতি আপনার নেই।",
+    "backButton": "ড্যাশবোর্ডে ফিরে যান"
+  },
   "auth": {
     "login": {
       "title": "সাইন ইন",
@@ -75,7 +80,7 @@
       "passwordRequired": "পাসওয়ার্ড দেওয়া আবশ্যক।",
       "rememberMe": "আমাকে মনে রাখুন",
       "forgotPassword": "পাসওয়ার্ড ভুলে গেছেন?",
-      "signIn": "সাইন ইন",
+      "signIn": "লগইন",
       "noAccount": "অ্যাকাউন্ট নেই?",
       "registerHere": "এখানে নিবন্ধন করুন",
       "or": "অথবা",
@@ -112,7 +117,7 @@
       "strengthWeak": "দুর্বল",
       "strengthFair": "মোটামুটি",
       "strengthStrong": "শক্তিশালী",
-      "signUp": "সাইন আপ",
+      "signUp": "নিবন্ধন",
       "haveAccount": "ইতিমধ্যেই অ্যাকাউন্ট আছে?",
       "signIn": "সাইন ইন",
       "resendSuccess": "আপনার ইমেইলে একটি নতুন OTP পাঠানো হয়েছে।",
@@ -173,9 +178,9 @@
     "entityId": "এন্টিটি আইডি",
     "entityIdPlaceholder": "এন্টিটি আইডি দিয়ে সার্চ করুন",
     "createdBy": "কর্তা",
-    "createdByPlaceholder": "ব্যবহারকারী দিয়ে সার্চ করুন",
+    "createdByPlaceholder": "সঠিক ব্যবহারকারী নাম",
     "ipAddress": "আইপি অ্যাড্রেস",
-    "ipAddressPlaceholder": "আইপি অ্যাড্রেস দিয়ে সার্চ করুন",
+    "ipAddressPlaceholder": "সঠিক আইপি অ্যাড্রেস",
     "userAgent": "ডিভাইস / ব্রাউজার",
     "httpMethod": "HTTP মেথড",
     "requestUri": "রিকোয়েস্ট URI",
@@ -190,7 +195,7 @@
     "datePlaceholder": "তারিখ নির্বাচন করুন",
     "noneFound": "কোনো অডিট লগ এন্ট্রি পাওয়া যায়নি।",
     "viewTitle": "অডিট লগের বিস্তারিত",
-    "viewForEntity": "অডিট লগ"
+    "viewForEntity": "অডিট"
   },
   "passwordPolicy": {
     "viewTitle": "পাসওয়ার্ড পলিসি",
@@ -210,7 +215,7 @@
   },
   "role": {
     "searchTitle": "রোল খুঁজছেন? এখানে সার্চ করুন!",
-    "createButton": "রোল তৈরি করুন",
+    "createButton": "তৈরি করুন",
     "listTab": "রোলসমূহ",
     "namePlaceholder": "নাম দিয়ে সার্চ করুন",
     "codePlaceholder": "কোড দিয়ে সার্চ করুন",
@@ -267,7 +272,7 @@
   },
   "permission": {
     "searchTitle": "পারমিশন খুঁজছেন? এখানে সার্চ করুন!",
-    "createButton": "পারমিশন তৈরি করুন",
+    "createButton": "তৈরি করুন",
     "listTab": "পারমিশনসমূহ",
     "namePlaceholder": "নাম দিয়ে সার্চ করুন",
     "authorityPlaceholder": "অথরিটি (Authority) দিয়ে সার্চ করুন",
@@ -300,7 +305,7 @@
   },
   "user": {
     "searchTitle": "ব্যবহারকারী খুঁজছেন? এখানে সার্চ করুন!",
-    "createButton": "ব্যবহারকারী তৈরি করুন",
+    "createButton": "তৈরি করুন",
     "listTab": "ব্যবহারকারীসমূহ",
     "fullName": "পূর্ণ নাম",
     "fullNameRequired": "পূর্ণ নাম দেওয়া আবশ্যক।",
@@ -340,7 +345,7 @@
   },
   "userGroup": {
     "searchTitle": "ব্যবহারকারী গ্রুপ খুঁজছেন? এখানে সার্চ করুন!",
-    "createButton": "ব্যবহারকারী গ্রুপ তৈরি করুন",
+    "createButton": "তৈরি করুন",
     "listTab": "ব্যবহারকারী গ্রুপসমূহ",
     "namePlaceholder": "নাম দিয়ে সার্চ করুন",
     "noneFound": "কোনো ব্যবহারকারী গ্রুপ পাওয়া যায়নি।",

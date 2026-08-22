@@ -42,6 +42,7 @@ import { SessionSearchComponent } from './components/session/search/session.sear
 import { SessionViewComponent } from './components/session/view/session.view.component';
 import { AuditLogSearchComponent } from './components/audit-log/search/audit-log.search.component';
 import { AuditLogViewComponent } from './components/audit-log/view/audit-log.view.component';
+import { AccessDeniedComponent } from './components/shared/access-denied/access-denied.component';
 import { RequiredFieldDirective } from './directives/required-field.directive';
 import { OtpNumericKeyboardDirective } from './directives/otp-numeric-keyboard.directive';
 import { PermissionHideDirective } from './directives/permission-hide.directive';
@@ -114,6 +115,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
     SessionViewComponent,
     AuditLogSearchComponent,
     AuditLogViewComponent,
+    AccessDeniedComponent,
     RequiredFieldDirective,
     OtpNumericKeyboardDirective,
     PermissionHideDirective,

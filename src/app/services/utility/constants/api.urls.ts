@@ -42,6 +42,7 @@ export const API_URLS = {
     FILTER_SYSTEM_CONFIG: 'system-config/filter',
     UPDATE_SYSTEM_CONFIG: 'system-config',
     FIND_SYSTEM_CONFIG_BY_ID: 'system-config/:id',
+    FIND_SYSTEM_CONFIG_BY_KEY: 'system-config/key/:configKey',
 
     FIND_PASSWORD_POLICY: 'password-policy',
     UPDATE_PASSWORD_POLICY: 'password-policy',

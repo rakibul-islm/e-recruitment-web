@@ -65,6 +65,11 @@
     "notFound": "Resource not found.",
     "server": "Server Error: Please try again later."
   },
+  "accessDenied": {
+    "title": "Access Denied",
+    "message": "You don't have permission to view this page.",
+    "backButton": "Back to Dashboard"
+  },
   "auth": {
     "login": {
       "title": "Sign in",
@@ -75,7 +80,7 @@
       "passwordRequired": "Password is required.",
       "rememberMe": "Remember me",
       "forgotPassword": "Forgot Password?",
-      "signIn": "Sign in",
+      "signIn": "Login",
       "noAccount": "Don't have an account",
       "registerHere": "Register here",
       "or": "or",
@@ -112,7 +117,7 @@
       "strengthWeak": "Weak",
       "strengthFair": "Fair",
       "strengthStrong": "Strong",
-      "signUp": "Sign Up",
+      "signUp": "Register",
       "haveAccount": "Already have an account?",
       "signIn": "Sign in",
       "resendSuccess": "A new OTP has been sent to your email.",
@@ -173,9 +178,9 @@
     "entityId": "Entity Id",
     "entityIdPlaceholder": "Search by entity id",
     "createdBy": "Performed By",
-    "createdByPlaceholder": "Search by user",
+    "createdByPlaceholder": "Exact username",
     "ipAddress": "IP Address",
-    "ipAddressPlaceholder": "Search by IP address",
+    "ipAddressPlaceholder": "Exact IP address",
     "userAgent": "Device / Browser",
     "httpMethod": "HTTP Method",
     "requestUri": "Request URI",
@@ -190,7 +195,7 @@
     "datePlaceholder": "Select date",
     "noneFound": "No audit log entries found.",
     "viewTitle": "Audit Log Details",
-    "viewForEntity": "Audit Log"
+    "viewForEntity": "Audit"
   },
   "passwordPolicy": {
     "viewTitle": "Password Policy",
@@ -210,7 +215,7 @@
   },
   "role": {
     "searchTitle": "Looking for Role? Search here!",
-    "createButton": "Create Role",
+    "createButton": "Create",
     "listTab": "Roles",
     "namePlaceholder": "Search by name",
     "codePlaceholder": "Search by code",
@@ -267,7 +272,7 @@
   },
   "permission": {
     "searchTitle": "Looking for Permission? Search here!",
-    "createButton": "Create Permission",
+    "createButton": "Create",
     "listTab": "Permissions",
     "namePlaceholder": "Search by name",
     "authorityPlaceholder": "Search by authority",
@@ -300,7 +305,7 @@
   },
   "user": {
     "searchTitle": "Looking for User? Search here!",
-    "createButton": "Create User",
+    "createButton": "Create",
     "listTab": "Users",
     "fullName": "Full Name",
     "fullNameRequired": "Full name is required.",
@@ -340,7 +345,7 @@
   },
   "userGroup": {
     "searchTitle": "Looking for User Group? Search here!",
-    "createButton": "Create User Group",
+    "createButton": "Create",
     "listTab": "User Groups",
     "namePlaceholder": "Search by name",
     "noneFound": "No user groups found.",

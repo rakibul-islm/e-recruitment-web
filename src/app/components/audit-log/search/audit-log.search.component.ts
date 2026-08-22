@@ -77,8 +77,8 @@ export class AuditLogSearchComponent extends BaseComponent implements OnInit {
       outcome_eq: [null],
       entityType: [''],
       entityId: [''],
-      createdBy: [''],
-      ipAddress: [''],
+      createdBy_eq: [''],
+      ipAddress_eq: [''],
       createdOn_gte: [null],
       createdOn_lte: [null]
     });
