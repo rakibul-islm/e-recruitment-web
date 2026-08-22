@@ -1,4 +1,4 @@
-<app-page-header [title]="(isEntityScoped ? 'auditLog.listTab' : 'auditLog.searchTitle') | translate">
+<app-page-header [title]="isEntityScoped ? ('auditLog.entityScopedTitle' | translate:{ entity: scopedEntityType }) : ('auditLog.searchTitle' | translate)">
   <p-button *ngIf="isEntityScoped" [label]="'common.back' | translate" icon="pi pi-arrow-left" styleClass="p-button-secondary" (onClick)="goBack()"></p-button>
 </app-page-header>
 
