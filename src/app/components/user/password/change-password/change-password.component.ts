@@ -158,7 +158,4 @@ export class ChangePasswordComponent extends BaseComponent implements OnInit {
     });
   }
 
-  navigateToProfile(): void {
-    this.router.navigate(['/profile']);
-  }
 }

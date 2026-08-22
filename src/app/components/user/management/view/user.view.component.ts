@@ -16,7 +16,7 @@ export class UserViewComponent extends BaseComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router,
+    protected router: Router,
     private userService: UserService,
     private commonConfirmDialogService: CommonConfirmDialogService,
     private translate: TranslateService

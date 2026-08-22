@@ -30,6 +30,8 @@ import { ExceptionLogSearchComponent } from './components/exception-log/search/e
 import { ExceptionLogViewComponent } from './components/exception-log/view/exception-log.view.component';
 import { SessionSearchComponent } from './components/session/search/session.search.component';
 import { SessionViewComponent } from './components/session/view/session.view.component';
+import { AuditLogSearchComponent } from './components/audit-log/search/audit-log.search.component';
+import { AuditLogViewComponent } from './components/audit-log/view/audit-log.view.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -148,6 +150,14 @@ const routes: Routes = [
   },
   { path: 'sessions/:id',
     component: SessionViewComponent,
+    canActivate: [AuthGuard]
+  },
+  { path: 'audit-logs',
+    component: AuditLogSearchComponent,
+    canActivate: [AuthGuard]
+  },
+  { path: 'audit-logs/:id',
+    component: AuditLogViewComponent,
     canActivate: [AuthGuard]
   },
 

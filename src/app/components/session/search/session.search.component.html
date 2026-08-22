@@ -33,9 +33,19 @@
       <div [formGroup]="filterForm">
         <div class="grid">
           <div class="col-12 md:col-4 flex flex-column gap-2">
-            <label for="filterRevoked">{{ 'common.status' | translate }}</label>
-            <p-dropdown id="filterRevoked" [options]="statusOptions" formControlName="revoked"
+            <label for="filterStatus">{{ 'common.status' | translate }}</label>
+            <p-dropdown id="filterStatus" [options]="statusOptions" formControlName="status"
               optionLabel="label" optionValue="value" styleClass="w-full"></p-dropdown>
+          </div>
+          <div class="col-12 md:col-4 flex flex-column gap-2">
+            <label for="filterUserEmail">{{ 'session.userEmail' | translate }}</label>
+            <input id="filterUserEmail" type="text" pInputText formControlName="userEmail_like"
+              [placeholder]="'session.userEmailPlaceholder' | translate" (keyup.enter)="search(dt)" />
+          </div>
+          <div class="col-12 md:col-4 flex flex-column gap-2">
+            <label for="filterIpAddress">{{ 'session.ipAddress' | translate }}</label>
+            <input id="filterIpAddress" type="text" pInputText formControlName="ipAddress_like"
+              [placeholder]="'session.ipAddressPlaceholder' | translate" (keyup.enter)="search(dt)" />
           </div>
           <div class="col-12 md:col-4 flex flex-column gap-2">
             <label for="filterIssuedAtGte">{{ 'session.loggedInFrom' | translate }}</label>
@@ -48,11 +58,6 @@
             <p-calendar id="filterIssuedAtLte" formControlName="issuedAt_lte"
               dateFormat="dd-mm-yy" [showIcon]="true" [showButtonBar]="true" [placeholder]="'session.datePlaceholder' | translate"
               styleClass="w-full" inputStyleClass="w-full"></p-calendar>
-          </div>
-          <div class="col-12 md:col-4 flex flex-column gap-2">
-            <label for="filterIpAddress">{{ 'session.ipAddress' | translate }}</label>
-            <input id="filterIpAddress" type="text" pInputText formControlName="ipAddress_like"
-              [placeholder]="'session.ipAddressPlaceholder' | translate" (keyup.enter)="search(dt)" />
           </div>
         </div>
         <div class="search-actions">

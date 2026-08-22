@@ -1,0 +1,101 @@
+<app-page-header [title]="'auditLog.viewTitle' | translate">
+  <p-button [label]="'common.back' | translate" icon="pi pi-arrow-left" styleClass="p-button-secondary" (onClick)="goBack()"></p-button>
+</app-page-header>
+
+<div class="flex justify-content-center mt-3 px-3">
+  <p-card class="page-card">
+    <h3 class="form-section-title">{{ 'common.basicInfo' | translate }}</h3>
+    <table class="detail-table">
+      <tbody>
+        <tr>
+          <td class="detail-label">{{ 'auditLog.occurredOn' | translate }}</td>
+          <td class="detail-value">{{ (auditLog.createdOn | date:'dd-MM-yyyy HH:mm:ss') || ('common.notAvailable' | translate) }}</td>
+        </tr>
+        <tr>
+          <td class="detail-label">{{ 'auditLog.category' | translate }}</td>
+          <td class="detail-value">{{ auditLog.category || ('common.notAvailable' | translate) }}</td>
+        </tr>
+        <tr>
+          <td class="detail-label">{{ 'auditLog.action' | translate }}</td>
+          <td class="detail-value">{{ auditLog.action || ('common.notAvailable' | translate) }}</td>
+        </tr>
+        <tr>
+          <td class="detail-label">{{ 'common.status' | translate }}</td>
+          <td class="detail-value">
+            <span class="status-badge" [class.active]="auditLog.outcome === 'SUCCESS'" [class.locked]="auditLog.outcome === 'FAILURE'">
+              {{ (auditLog.outcome === 'SUCCESS' ? 'auditLog.outcomeSuccess' : 'auditLog.outcomeFailure') | translate }}
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td class="detail-label">{{ 'auditLog.entityType' | translate }}</td>
+          <td class="detail-value">{{ auditLog.entityType || ('common.notAvailable' | translate) }}</td>
+        </tr>
+        <tr>
+          <td class="detail-label">{{ 'auditLog.entityId' | translate }}</td>
+          <td class="detail-value">{{ auditLog.entityId || ('common.notAvailable' | translate) }}</td>
+        </tr>
+        <tr>
+          <td class="detail-label">{{ 'auditLog.createdBy' | translate }}</td>
+          <td class="detail-value">{{ auditLog.createdBy || ('common.notAvailable' | translate) }}</td>
+        </tr>
+        <tr>
+          <td class="detail-label">{{ 'auditLog.ipAddress' | translate }}</td>
+          <td class="detail-value">{{ auditLog.ipAddress || ('common.notAvailable' | translate) }}</td>
+        </tr>
+        <tr>
+          <td class="detail-label">{{ 'auditLog.userAgent' | translate }}</td>
+          <td class="detail-value">{{ auditLog.userAgent || ('common.notAvailable' | translate) }}</td>
+        </tr>
+        <tr>
+          <td class="detail-label">{{ 'auditLog.httpMethod' | translate }}</td>
+          <td class="detail-value">{{ auditLog.httpMethod || ('common.notAvailable' | translate) }}</td>
+        </tr>
+        <tr>
+          <td class="detail-label">{{ 'auditLog.requestUri' | translate }}</td>
+          <td class="detail-value">{{ auditLog.requestUri || ('common.notAvailable' | translate) }}</td>
+        </tr>
+        <tr>
+          <td class="detail-label">{{ 'auditLog.correlationId' | translate }}</td>
+          <td class="detail-value">{{ auditLog.correlationId || ('common.notAvailable' | translate) }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <ng-container *ngIf="changedFieldEntries.length">
+      <h3 class="form-section-title">{{ 'auditLog.changedFields' | translate }}</h3>
+      <p-table [value]="changedFieldEntries" responsiveLayout="scroll" styleClass="view-table">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>{{ 'auditLog.field' | translate }}</th>
+            <th>{{ 'auditLog.oldValue' | translate }}</th>
+            <th>{{ 'auditLog.newValue' | translate }}</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-change>
+          <tr>
+            <td>{{ change.field }}</td>
+            <td>
+              <ng-container *ngIf="change.type === 'collection'; else scalarOld">
+                <span *ngFor="let item of change.unchanged" class="diff-value diff-unchanged">{{ item }}</span>
+                <span *ngFor="let item of change.removed" class="diff-value diff-old">{{ item }}</span>
+              </ng-container>
+              <ng-template #scalarOld>
+                <span *ngIf="change.oldValue" class="diff-value diff-old">{{ change.oldValue }}</span>
+              </ng-template>
+            </td>
+            <td>
+              <ng-container *ngIf="change.type === 'collection'; else scalarNew">
+                <span *ngFor="let item of change.unchanged" class="diff-value diff-unchanged">{{ item }}</span>
+                <span *ngFor="let item of change.added" class="diff-value diff-new">{{ item }}</span>
+              </ng-container>
+              <ng-template #scalarNew>
+                <span *ngIf="change.newValue" class="diff-value diff-new">{{ change.newValue }}</span>
+              </ng-template>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </ng-container>
+  </p-card>
+</div>

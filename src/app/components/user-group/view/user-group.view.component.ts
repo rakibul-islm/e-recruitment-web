@@ -16,7 +16,7 @@ export class UserGroupViewComponent extends BaseComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router,
+    protected router: Router,
     private userGroupService: UserGroupService,
     private commonConfirmDialogService: CommonConfirmDialogService,
     private translate: TranslateService

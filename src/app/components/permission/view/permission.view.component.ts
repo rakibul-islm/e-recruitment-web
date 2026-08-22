@@ -16,7 +16,7 @@ export class PermissionViewComponent extends BaseComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router,
+    protected router: Router,
     private permissionService: PermissionService,
     private commonConfirmDialogService: CommonConfirmDialogService,
     private translate: TranslateService

@@ -57,4 +57,7 @@ export const API_URLS = {
     REMOVE_SESSION: 'session/:id',
     FORCE_LOGOUT_ALL: 'session/all',
 
+    FILTER_AUDIT_LOG: 'audit-log/filter',
+    FIND_AUDIT_LOG_BY_ID: 'audit-log/:id',
+
 };
