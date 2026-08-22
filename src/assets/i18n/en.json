@@ -149,6 +149,7 @@
   "auditLog": {
     "searchTitle": "Looking for an Audit Trail Entry? Search here!",
     "listTab": "Audit Trail",
+    "entityScopedTitle": "{{entity}} Audit Trail",
     "category": "Category",
     "categoryAll": "All",
     "categoryEntity": "Entity",
