@@ -32,15 +32,15 @@
         </tr>
         <tr>
           <td class="detail-label">{{ 'session.loggedInOn' | translate }}</td>
-          <td class="detail-value">{{ (session.issuedAt | date:'dd-MM-yyyy HH:mm:ss') || ('common.notAvailable' | translate) }}</td>
+          <td class="detail-value">{{ (session.issuedAt | date:'dd-MMM-yyyy hh:mm a') || ('common.notAvailable' | translate) }}</td>
         </tr>
         <tr>
           <td class="detail-label">{{ 'session.expiresOn' | translate }}</td>
-          <td class="detail-value">{{ (session.expiresAt | date:'dd-MM-yyyy HH:mm:ss') || ('common.notAvailable' | translate) }}</td>
+          <td class="detail-value">{{ (session.expiresAt | date:'dd-MMM-yyyy hh:mm a') || ('common.notAvailable' | translate) }}</td>
         </tr>
         <tr *ngIf="session.revoked">
           <td class="detail-label">{{ 'session.revokedOn' | translate }}</td>
-          <td class="detail-value">{{ (session.revokedAt | date:'dd-MM-yyyy HH:mm:ss') || ('common.notAvailable' | translate) }}</td>
+          <td class="detail-value">{{ (session.revokedAt | date:'dd-MMM-yyyy hh:mm a') || ('common.notAvailable' | translate) }}</td>
         </tr>
         <tr *ngIf="session.revoked">
           <td class="detail-label">{{ 'session.revokedBy' | translate }}</td>
@@ -62,8 +62,8 @@
       <ng-template pTemplate="body" let-userSession>
         <tr>
           <td>{{ userSession.ipAddress || ('common.notAvailable' | translate) }}</td>
-          <td>{{ (userSession.issuedAt | date:'dd-MM-yyyy HH:mm:ss') || ('common.notAvailable' | translate) }}</td>
-          <td>{{ (userSession.expiresAt | date:'dd-MM-yyyy HH:mm:ss') || ('common.notAvailable' | translate) }}</td>
+          <td>{{ (userSession.issuedAt | date:'dd-MMM-yyyy hh:mm a') || ('common.notAvailable' | translate) }}</td>
+          <td>{{ (userSession.expiresAt | date:'dd-MMM-yyyy hh:mm a') || ('common.notAvailable' | translate) }}</td>
           <td>
             <span class="status-badge" [class.active]="isSessionActive(userSession)" [class.locked]="!isSessionActive(userSession)">
               {{ (isSessionActive(userSession) ? 'session.statusActive' : (userSession.revoked ? 'session.statusRevoked' : 'session.statusExpired')) | translate }}

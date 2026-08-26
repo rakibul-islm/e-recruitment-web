@@ -9,7 +9,7 @@
       <tbody>
         <tr>
           <td class="detail-label">{{ 'auditLog.occurredOn' | translate }}</td>
-          <td class="detail-value">{{ (auditLog.createdOn | date:'dd-MM-yyyy HH:mm:ss') || ('common.notAvailable' | translate) }}</td>
+          <td class="detail-value">{{ (auditLog.createdOn | date:'dd-MMM-yyyy hh:mm a') || ('common.notAvailable' | translate) }}</td>
         </tr>
         <tr>
           <td class="detail-label">{{ 'auditLog.category' | translate }}</td>
