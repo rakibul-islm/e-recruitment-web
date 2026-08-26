@@ -86,8 +86,8 @@
           <tr class="selectable-row" [pSelectableRow]="session">
             <td>{{ session.userFullName || session.userEmail || ('common.notAvailable' | translate) }}</td>
             <td>{{ session.ipAddress || ('common.notAvailable' | translate) }}</td>
-            <td>{{ (session.issuedAt | date:'dd-MM-yyyy HH:mm:ss') || ('common.notAvailable' | translate) }}</td>
-            <td>{{ (session.expiresAt | date:'dd-MM-yyyy HH:mm:ss') || ('common.notAvailable' | translate) }}</td>
+            <td>{{ (session.issuedAt | date:'dd-MMM-yyyy hh:mm a') || ('common.notAvailable' | translate) }}</td>
+            <td>{{ (session.expiresAt | date:'dd-MMM-yyyy hh:mm a') || ('common.notAvailable' | translate) }}</td>
             <td>
               <span class="status-badge" [class.active]="isSessionActive(session)" [class.locked]="!isSessionActive(session)">
                 {{ (isSessionActive(session) ? 'session.statusActive' : (session.revoked ? 'session.statusRevoked' : 'session.statusExpired')) | translate }}
