@@ -20,7 +20,8 @@ export const MENU_ITEMS: AppMenuItem[] = [
       { label: 'menu.passwordPolicy', icon: 'pi pi-lock', routerLink: '/password-policy', routeName: 'password-policy-list' },
       { label: 'menu.exceptionLog', icon: 'pi pi-exclamation-triangle', routerLink: '/exception-logs', routeName: 'exception-log-list' },
       { label: 'menu.session', icon: 'pi pi-desktop', routerLink: '/sessions', routeName: 'session-list' },
-      { label: 'menu.auditLog', icon: 'pi pi-history', routerLink: '/audit-logs', routeName: 'audit-log-list' }
+      { label: 'menu.auditLog', icon: 'pi pi-history', routerLink: '/audit-logs', routeName: 'audit-log-list' },
+      { label: 'menu.archiveConfig', icon: 'pi pi-database', routerLink: '/archive-configs', routeName: 'archive-config-list' }
     ]
   }
 ];
