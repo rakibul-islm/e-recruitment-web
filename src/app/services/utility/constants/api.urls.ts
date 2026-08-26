@@ -61,4 +61,15 @@ export const API_URLS = {
     FILTER_AUDIT_LOG: 'audit-log/filter',
     FIND_AUDIT_LOG_BY_ID: 'audit-log/:id',
 
+    FILTER_ARCHIVE_CONFIG: 'archive-config/filter',
+    CREATE_ARCHIVE_CONFIG: 'archive-config',
+    UPDATE_ARCHIVE_CONFIG: 'archive-config',
+    FIND_ARCHIVE_CONFIG_BY_ID: 'archive-config/:id',
+    REMOVE_ARCHIVE_CONFIG: 'archive-config/:id',
+    LIST_ARCHIVE_CONFIG_SOURCE_TABLES: 'archive-config/source-tables',
+    LIST_ARCHIVE_CONFIG_SCHEMAS: 'archive-config/schemas',
+    LIST_ARCHIVE_CONFIG_DATE_COLUMNS: 'archive-config/date-columns',
+    ARCHIVE_CONFIG_ARCHIVE_NOW: 'archive-config/:id/archive-now',
+    FIND_ARCHIVE_CONFIG_ARCHIVED_DATA: 'archive-config/:id/archived-data',
+
 };

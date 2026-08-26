@@ -1,0 +1,84 @@
+<app-page-header [title]="(archiveConfigId ? 'archiveConfig.formTitleUpdate' : 'archiveConfig.formTitleCreate') | translate">
+  <p-button *appPermissionHide="'archive-config-manage'" [label]="'common.save' | translate" icon="pi pi-check" (onClick)="submit()"></p-button>
+  <p-button [label]="'common.back' | translate" icon="pi pi-arrow-left" styleClass="p-button-secondary" (onClick)="goBack()"></p-button>
+</app-page-header>
+
+<div class="flex justify-content-center mt-3 px-3">
+  <p-card class="page-card">
+    <form *ngIf="archiveConfigForm" [formGroup]="archiveConfigForm" (ngSubmit)="submit()">
+      <div class="flex flex-column gap-4 mt-3">
+        <h3 class="form-section-title">{{ 'common.basicInfo' | translate }}</h3>
+
+        <div class="grid row-gap-3">
+          <div class="col-12 md:col-4">
+            <p-floatLabel>
+              <p-dropdown id="archiveConfigSourceTable" [options]="sourceTableOptions" formControlName="sourceTable"
+                optionLabel="label" optionValue="value" styleClass="w-full" appendTo="body" [filter]="true" filterBy="label"></p-dropdown>
+              <label for="archiveConfigSourceTable">{{ 'archiveConfig.sourceTable' | translate }}</label>
+            </p-floatLabel>
+            <small class="p-error" *ngIf="archiveConfigForm.controls['sourceTable'].touched && archiveConfigForm.controls['sourceTable'].errors?.['required']">
+              {{ 'archiveConfig.sourceTableRequired' | translate }}</small>
+          </div>
+
+          <div class="col-12 md:col-4">
+            <p-floatLabel>
+              <p-dropdown id="archiveConfigArchiveSchema" [options]="archiveSchemaOptions" formControlName="archiveSchema"
+                optionLabel="label" optionValue="value" styleClass="w-full" appendTo="body"></p-dropdown>
+              <label for="archiveConfigArchiveSchema">{{ 'archiveConfig.archiveSchema' | translate }}</label>
+            </p-floatLabel>
+            <small class="p-error" *ngIf="archiveConfigForm.controls['archiveSchema'].touched && archiveConfigForm.controls['archiveSchema'].errors?.['required']">
+              {{ 'archiveConfig.archiveSchemaRequired' | translate }}</small>
+          </div>
+
+          <div class="col-12 md:col-4">
+            <p-floatLabel>
+              <p-dropdown id="archiveConfigArchiveTable" [options]="sourceTableOptions" formControlName="archiveTable"
+                optionLabel="label" optionValue="value" styleClass="w-full" appendTo="body" [filter]="true" filterBy="label"></p-dropdown>
+              <label for="archiveConfigArchiveTable">{{ 'archiveConfig.archiveTable' | translate }}</label>
+            </p-floatLabel>
+            <small class="p-error" *ngIf="archiveConfigForm.controls['archiveTable'].touched && archiveConfigForm.controls['archiveTable'].errors?.['required']">
+              {{ 'archiveConfig.archiveTableRequired' | translate }}</small>
+          </div>
+
+          <div class="col-12 md:col-4">
+            <p-floatLabel>
+              <p-dropdown id="archiveConfigDateColumn" [options]="dateColumnOptions" formControlName="dateColumn"
+                optionLabel="label" optionValue="value" styleClass="w-full" appendTo="body" [filter]="true" filterBy="label"
+                [pTooltip]="'archiveConfig.dateColumnHint' | translate" tooltipPosition="top" [positionLeft]="-100"></p-dropdown>
+              <label for="archiveConfigDateColumn">{{ 'archiveConfig.dateColumn' | translate }}</label>
+            </p-floatLabel>
+          </div>
+
+          <div class="col-12 md:col-4">
+            <p-floatLabel>
+              <input id="archiveConfigRetentionDays" type="number" formControlName="retentionDays" pInputText class="w-full" />
+              <label for="archiveConfigRetentionDays">{{ 'archiveConfig.retentionDays' | translate }}</label>
+            </p-floatLabel>
+            <small class="p-error" *ngIf="archiveConfigForm.controls['retentionDays'].touched && archiveConfigForm.controls['retentionDays'].errors?.['required']">
+              {{ 'archiveConfig.retentionDaysRequired' | translate }}</small>
+          </div>
+
+          <div class="col-12 md:col-4">
+            <p-floatLabel>
+              <input id="archiveConfigDescription" type="text" formControlName="description" pInputText class="w-full" />
+              <label for="archiveConfigDescription">{{ 'common.description' | translate }}</label>
+            </p-floatLabel>
+          </div>
+
+          <div class="col-12">
+            <p-floatLabel>
+              <input id="archiveConfigWhereCondition" type="text" formControlName="whereCondition" pInputText class="w-full"
+                [pTooltip]="'archiveConfig.whereConditionHint' | translate" tooltipPosition="top" [positionLeft]="-150" />
+              <label for="archiveConfigWhereCondition">{{ 'archiveConfig.whereCondition' | translate }}</label>
+            </p-floatLabel>
+          </div>
+        </div>
+
+        <div class="flex align-items-center gap-2">
+          <p-checkbox inputId="archiveConfigEnabled" formControlName="enabled" [binary]="true"></p-checkbox>
+          <label for="archiveConfigEnabled">{{ 'common.active' | translate }}</label>
+        </div>
+      </div>
+    </form>
+  </p-card>
+</div>

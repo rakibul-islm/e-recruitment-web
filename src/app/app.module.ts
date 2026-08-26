@@ -42,6 +42,10 @@ import { SessionSearchComponent } from './components/session/search/session.sear
 import { SessionViewComponent } from './components/session/view/session.view.component';
 import { AuditLogSearchComponent } from './components/audit-log/search/audit-log.search.component';
 import { AuditLogViewComponent } from './components/audit-log/view/audit-log.view.component';
+import { ArchiveConfigSearchComponent } from './components/archive-config/search/archive-config.search.component';
+import { ArchiveConfigFormComponent } from './components/archive-config/form/archive-config.form.component';
+import { ArchiveConfigViewComponent } from './components/archive-config/view/archive-config.view.component';
+import { ArchiveConfigArchivedDataComponent } from './components/archive-config/archived-data/archive-config.archived-data.component';
 import { AccessDeniedComponent } from './components/shared/access-denied/access-denied.component';
 import { RequiredFieldDirective } from './directives/required-field.directive';
 import { OtpNumericKeyboardDirective } from './directives/otp-numeric-keyboard.directive';
@@ -115,6 +119,10 @@ export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
     SessionViewComponent,
     AuditLogSearchComponent,
     AuditLogViewComponent,
+    ArchiveConfigSearchComponent,
+    ArchiveConfigFormComponent,
+    ArchiveConfigViewComponent,
+    ArchiveConfigArchivedDataComponent,
     AccessDeniedComponent,
     RequiredFieldDirective,
     OtpNumericKeyboardDirective,

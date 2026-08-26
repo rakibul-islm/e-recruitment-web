@@ -1,0 +1,54 @@
+<app-page-header [title]="'archiveConfig.searchTitle' | translate">
+  <p-button *appPermissionHide="'archive-config-manage'" [label]="'archiveConfig.createButton' | translate" icon="pi pi-plus" (onClick)="createArchiveConfig()"></p-button>
+</app-page-header>
+
+<div class="p-3">
+  <p-accordion [(activeIndex)]="activeTabIndex">
+    <p-accordionTab [header]="'common.search' | translate">
+      <div [formGroup]="filterForm">
+        <div class="grid">
+          <div class="col-12 md:col-4 flex flex-column gap-2">
+            <label for="filterSourceTable">{{ 'archiveConfig.sourceTable' | translate }}</label>
+            <p-dropdown id="filterSourceTable" [options]="sourceTableOptions" formControlName="sourceTable"
+              optionLabel="label" optionValue="value" styleClass="w-full" [filter]="true" filterBy="label"></p-dropdown>
+          </div>
+        </div>
+        <div class="search-actions">
+          <p-button [label]="'common.search' | translate" icon="pi pi-search" (onClick)="search(dt)"></p-button>
+          <p-button [label]="'common.clear' | translate" icon="pi pi-times" styleClass="p-button-outlined p-button-secondary" (onClick)="clearFilters()"></p-button>
+        </div>
+      </div>
+    </p-accordionTab>
+
+    <p-accordionTab [header]="'archiveConfig.listTab' | translate">
+      <p-table #dt [value]="archiveConfigs" [lazy]="true" (onLazyLoad)="fetchArchiveConfigs($event)" [paginator]="true"
+        [rows]="rows" [totalRecords]="totalRecords" [loading]="loading" [rowsPerPageOptions]="[10, 20, 50]"
+        responsiveLayout="scroll" dataKey="id" selectionMode="single" [(selection)]="selectedArchiveConfig"
+        (onRowSelect)="viewArchiveConfig($event.data)">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>{{ 'archiveConfig.sourceTable' | translate }}</th>
+            <th>{{ 'archiveConfig.archiveSchema' | translate }}</th>
+            <th>{{ 'archiveConfig.archiveTable' | translate }}</th>
+            <th>{{ 'archiveConfig.retentionDays' | translate }}</th>
+            <th>{{ 'common.status' | translate }}</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-archiveConfig>
+          <tr class="selectable-row" [pSelectableRow]="archiveConfig">
+            <td>{{ archiveConfig.sourceTable }}</td>
+            <td>{{ archiveConfig.archiveSchema }}</td>
+            <td>{{ archiveConfig.archiveTable }}</td>
+            <td>{{ archiveConfig.retentionDays }}</td>
+            <td>{{ (archiveConfig.enabled ? 'common.active' : 'common.inactive') | translate }}</td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="5" class="text-center">{{ 'archiveConfig.noneFound' | translate }}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </p-accordionTab>
+  </p-accordion>
+</div>

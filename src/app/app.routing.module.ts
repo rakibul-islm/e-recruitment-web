@@ -32,6 +32,10 @@ import { SessionSearchComponent } from './components/session/search/session.sear
 import { SessionViewComponent } from './components/session/view/session.view.component';
 import { AuditLogSearchComponent } from './components/audit-log/search/audit-log.search.component';
 import { AuditLogViewComponent } from './components/audit-log/view/audit-log.view.component';
+import { ArchiveConfigSearchComponent } from './components/archive-config/search/archive-config.search.component';
+import { ArchiveConfigFormComponent } from './components/archive-config/form/archive-config.form.component';
+import { ArchiveConfigViewComponent } from './components/archive-config/view/archive-config.view.component';
+import { ArchiveConfigArchivedDataComponent } from './components/archive-config/archived-data/archive-config.archived-data.component';
 import { AccessDeniedComponent } from './components/shared/access-denied/access-denied.component';
 import { PermissionGuard } from './services/utility/security/permission.guard';
 
@@ -189,6 +193,31 @@ const routes: Routes = [
     component: AuditLogViewComponent,
     canActivate: [AuthGuard, PermissionGuard],
     data: { routeName: 'audit-log-list' }
+  },
+  { path: 'archive-configs',
+    component: ArchiveConfigSearchComponent,
+    canActivate: [AuthGuard, PermissionGuard],
+    data: { routeName: 'archive-config-list' }
+  },
+  { path: 'archive-configs/create',
+    component: ArchiveConfigFormComponent,
+    canActivate: [AuthGuard, PermissionGuard],
+    data: { routeName: 'archive-config-manage' }
+  },
+  { path: 'archive-configs/:id/edit',
+    component: ArchiveConfigFormComponent,
+    canActivate: [AuthGuard, PermissionGuard],
+    data: { routeName: 'archive-config-manage' }
+  },
+  { path: 'archive-configs/:id/archived-data',
+    component: ArchiveConfigArchivedDataComponent,
+    canActivate: [AuthGuard, PermissionGuard],
+    data: { routeName: 'archive-config-list' }
+  },
+  { path: 'archive-configs/:id',
+    component: ArchiveConfigViewComponent,
+    canActivate: [AuthGuard, PermissionGuard],
+    data: { routeName: 'archive-config-list' }
   },
 
   { path: '**', redirectTo: '/login' }

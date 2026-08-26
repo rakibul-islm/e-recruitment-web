@@ -1,0 +1,50 @@
+<app-page-header [title]="'archiveConfig.viewTitle' | translate">
+  <p-button *appPermissionHide="'archive-config-list'" [label]="'archiveConfig.viewArchivedDataButton' | translate" icon="pi pi-table" styleClass="p-button-secondary"
+    [routerLink]="['/archive-configs', archiveConfigId, 'archived-data']" [queryParams]="{ sourceTable: archiveConfig.sourceTable }"></p-button>
+  <p-button *appPermissionHide="'archive-config-manage'" [label]="'archiveConfig.archiveNowButton' | translate" icon="pi pi-play" styleClass="p-button-secondary" (onClick)="archiveNow()"></p-button>
+  <p-button *appPermissionHide="'archive-config-manage'" [label]="'common.edit' | translate" icon="pi pi-pencil" [routerLink]="['/archive-configs', archiveConfigId, 'edit']"></p-button>
+  <p-button *appPermissionHide="'archive-config-delete'" [label]="'common.delete' | translate" icon="pi pi-trash" styleClass="p-button-danger" (onClick)="deleteArchiveConfig()"></p-button>
+  <p-button [label]="'common.back' | translate" icon="pi pi-arrow-left" styleClass="p-button-secondary" (onClick)="goBack()"></p-button>
+</app-page-header>
+
+<div class="flex justify-content-center mt-3 px-3">
+  <p-card class="page-card">
+    <h3 class="form-section-title">{{ 'common.basicInfo' | translate }}</h3>
+    <table class="detail-table">
+      <tbody>
+        <tr>
+          <td class="detail-label">{{ 'archiveConfig.sourceTable' | translate }}</td>
+          <td class="detail-value">{{ archiveConfig.sourceTable || ('common.notAvailable' | translate) }}</td>
+        </tr>
+        <tr>
+          <td class="detail-label">{{ 'archiveConfig.archiveSchema' | translate }}</td>
+          <td class="detail-value">{{ archiveConfig.archiveSchema || ('common.notAvailable' | translate) }}</td>
+        </tr>
+        <tr>
+          <td class="detail-label">{{ 'archiveConfig.archiveTable' | translate }}</td>
+          <td class="detail-value">{{ archiveConfig.archiveTable || ('common.notAvailable' | translate) }}</td>
+        </tr>
+        <tr>
+          <td class="detail-label">{{ 'archiveConfig.dateColumn' | translate }}</td>
+          <td class="detail-value">{{ archiveConfig.dateColumn || ('archiveConfig.dateColumnDefault' | translate) }}</td>
+        </tr>
+        <tr>
+          <td class="detail-label">{{ 'archiveConfig.retentionDays' | translate }}</td>
+          <td class="detail-value">{{ archiveConfig.retentionDays }}</td>
+        </tr>
+        <tr>
+          <td class="detail-label">{{ 'common.status' | translate }}</td>
+          <td class="detail-value">{{ (archiveConfig.enabled ? 'common.active' : 'common.inactive') | translate }}</td>
+        </tr>
+        <tr>
+          <td class="detail-label">{{ 'common.description' | translate }}</td>
+          <td class="detail-value">{{ archiveConfig.description || ('common.notAvailable' | translate) }}</td>
+        </tr>
+        <tr>
+          <td class="detail-label">{{ 'archiveConfig.whereCondition' | translate }}</td>
+          <td class="detail-value">{{ archiveConfig.whereCondition || ('common.notAvailable' | translate) }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </p-card>
+</div>
