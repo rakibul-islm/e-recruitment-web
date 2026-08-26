@@ -60,7 +60,7 @@
         </ng-template>
         <ng-template pTemplate="body" let-exceptionLog>
           <tr class="selectable-row" [pSelectableRow]="exceptionLog">
-            <td>{{ (exceptionLog.createdOn | date:'dd-MM-yyyy HH:mm:ss') || ('common.notAvailable' | translate) }}</td>
+            <td>{{ (exceptionLog.createdOn | date:'dd-MMM-yyyy hh:mm a') || ('common.notAvailable' | translate) }}</td>
             <td>
               <span class="status-badge" [class.active]="exceptionLog.statusCode < 400" [class.locked]="exceptionLog.statusCode >= 400">
                 {{ exceptionLog.statusCode }}
