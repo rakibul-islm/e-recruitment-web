@@ -1,0 +1,25 @@
+<app-page-header [title]="(sourceTable ? ('archiveConfig.archivedDataTitleFor' | translate: { sourceTable }) : ('archiveConfig.archivedDataTitle' | translate))">
+  <p-button [label]="'common.back' | translate" icon="pi pi-arrow-left" styleClass="p-button-secondary" (onClick)="goBack()"></p-button>
+</app-page-header>
+
+<div class="p-3">
+  <p-table [value]="archivedRows" [lazy]="true" (onLazyLoad)="fetchArchivedData($event)" [paginator]="true"
+    [rows]="rows" [totalRecords]="totalRecords" [loading]="loading" [rowsPerPageOptions]="[10, 20, 50]"
+    responsiveLayout="scroll">
+    <ng-template pTemplate="header">
+      <tr>
+        <th *ngFor="let column of columns">{{ column }}</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-row>
+      <tr>
+        <td *ngFor="let column of columns">{{ row[column] ?? ('common.notAvailable' | translate) }}</td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td [attr.colspan]="columns.length || 1" class="text-center">{{ 'archiveConfig.archivedDataNoneFound' | translate }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
