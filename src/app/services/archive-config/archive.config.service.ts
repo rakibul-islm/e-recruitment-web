@@ -46,6 +46,10 @@ export class ArchiveConfigService extends BaseService {
     return super.get(API_URLS.LIST_ARCHIVE_CONFIG_DATE_COLUMNS, new Map<any, any>().set('sourceTable', sourceTable));
   }
 
+  public listColumns(sourceTable: string): Observable<any> {
+    return super.get(API_URLS.LIST_ARCHIVE_CONFIG_COLUMNS, new Map<any, any>().set('sourceTable', sourceTable));
+  }
+
   public archiveNow(id: number): Observable<any> {
     const url = this.createUrl(API_URLS.ARCHIVE_CONFIG_ARCHIVE_NOW, { id });
     return super.post(url, {});

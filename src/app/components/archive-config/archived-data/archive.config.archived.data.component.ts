@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { BaseComponent } from '../../base.component';
-import { ArchiveConfigService } from '../../../services/archive-config/archive-config.service';
+import { ArchiveConfigService } from '../../../services/archive-config/archive.config.service';
 
 @Component({
   selector: 'app-archive-config-archived-data',
-  templateUrl: './archive-config.archived-data.component.html'
+  templateUrl: './archive.config.archived.data.component.html'
 })
 export class ArchiveConfigArchivedDataComponent extends BaseComponent implements OnInit {
   archiveConfigId!: number;

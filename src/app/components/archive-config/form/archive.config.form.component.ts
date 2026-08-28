@@ -3,13 +3,13 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { BaseComponent } from '../../base.component';
-import { ArchiveConfigService } from '../../../services/archive-config/archive-config.service';
+import { ArchiveConfigService } from '../../../services/archive-config/archive.config.service';
 import { CommonConfirmDialogService } from '../../../services/utility/common.confirm.dialog.service';
-import { ArchiveConfig, ArchiveConfigRequest } from '../../../services/archive-config/domain/archive-config.domain';
+import { ArchiveConfig, ArchiveConfigRequest } from '../../../services/archive-config/domain/archive.config.domain';
 
 @Component({
   selector: 'app-archive-config-form',
-  templateUrl: './archive-config.form.component.html'
+  templateUrl: './archive.config.form.component.html'
 })
 export class ArchiveConfigFormComponent extends BaseComponent implements OnInit {
   archiveConfigForm!: FormGroup;
@@ -18,6 +18,7 @@ export class ArchiveConfigFormComponent extends BaseComponent implements OnInit 
   sourceTableOptions: { label: string; value: string }[] = [];
   archiveSchemaOptions: { label: string; value: string }[] = [];
   dateColumnOptions: { label: string; value: string }[] = [];
+  whereConditionBuilderVisible = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -86,7 +87,7 @@ export class ArchiveConfigFormComponent extends BaseComponent implements OnInit 
       retentionDays: [formData.retentionDays, [Validators.required, Validators.min(1)]],
       enabled: [formData.enabled ?? true],
       description: [formData.description],
-      whereCondition: [formData.whereCondition]
+      whereCondition: [{ value: formData.whereCondition, disabled: true }]
     });
 
     this.subscribers.sourceTableChangeSub = this.archiveConfigForm.get('sourceTable')!.valueChanges
@@ -136,5 +137,13 @@ export class ArchiveConfigFormComponent extends BaseComponent implements OnInit 
 
   navigateToSearch(): void {
     this.router.navigate(['/archive-configs']);
+  }
+
+  openWhereConditionBuilder(): void {
+    this.whereConditionBuilderVisible = true;
+  }
+
+  onWhereConditionApplied(condition: string): void {
+    this.archiveConfigForm.get('whereCondition')!.setValue(condition);
   }
 }

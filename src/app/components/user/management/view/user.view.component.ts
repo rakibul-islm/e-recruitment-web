@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { BaseComponent } from '../../../base.component';
 import { UserService } from '../../../../services/user/user.service';
-import { UserGroupService } from '../../../../services/user-group/user-group.service';
+import { UserGroupService } from '../../../../services/user-group/user.group.service';
 import { CommonConfirmDialogService } from '../../../../services/utility/common.confirm.dialog.service';
 import { UserAccount } from '../../../../services/user/domain/user.domain';
 

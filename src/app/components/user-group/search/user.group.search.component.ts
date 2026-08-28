@@ -3,12 +3,12 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Table, TableLazyLoadEvent } from 'primeng/table';
 import { BaseComponent } from '../../base.component';
-import { UserGroupService } from '../../../services/user-group/user-group.service';
-import { UserGroup } from '../../../services/user-group/domain/user-group.domain';
+import { UserGroupService } from '../../../services/user-group/user.group.service';
+import { UserGroup } from '../../../services/user-group/domain/user.group.domain';
 
 @Component({
   selector: 'app-user-group-search',
-  templateUrl: './user-group.search.component.html'
+  templateUrl: './user.group.search.component.html'
 })
 export class UserGroupSearchComponent extends BaseComponent implements OnInit {
   userGroups: UserGroup[] = [];

@@ -5,11 +5,11 @@ import { TranslateService } from '@ngx-translate/core';
 import { BaseComponent } from '../../../base.component';
 import { UserService } from '../../../../services/user/user.service';
 import { RoleService } from '../../../../services/role/role.service';
-import { UserGroupService } from '../../../../services/user-group/user-group.service';
+import { UserGroupService } from '../../../../services/user-group/user.group.service';
 import { CommonConfirmDialogService } from '../../../../services/utility/common.confirm.dialog.service';
 import { UserAccount } from '../../../../services/user/domain/user.domain';
 import { Role } from '../../../../services/role/domain/role.domain';
-import { UserGroup } from '../../../../services/user-group/domain/user-group.domain';
+import { UserGroup } from '../../../../services/user-group/domain/user.group.domain';
 
 @Component({
   selector: 'app-user-form',

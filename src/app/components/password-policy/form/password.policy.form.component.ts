@@ -3,13 +3,13 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { BaseComponent } from '../../base.component';
-import { PasswordPolicyService } from '../../../services/password-policy/password-policy.service';
+import { PasswordPolicyService } from '../../../services/password-policy/password.policy.service';
 import { CommonConfirmDialogService } from '../../../services/utility/common.confirm.dialog.service';
-import { PasswordPolicy, PasswordPolicyRequest } from '../../../services/password-policy/domain/password-policy.domain';
+import { PasswordPolicy, PasswordPolicyRequest } from '../../../services/password-policy/domain/password.policy.domain';
 
 @Component({
   selector: 'app-password-policy-form',
-  templateUrl: './password-policy.form.component.html'
+  templateUrl: './password.policy.form.component.html'
 })
 export class PasswordPolicyFormComponent extends BaseComponent implements OnInit {
   passwordPolicyForm!: FormGroup;

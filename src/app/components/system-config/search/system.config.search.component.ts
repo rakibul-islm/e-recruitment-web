@@ -3,12 +3,12 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Table, TableLazyLoadEvent } from 'primeng/table';
 import { BaseComponent } from '../../base.component';
-import { SystemConfigService } from '../../../services/system-config/system-config.service';
-import { SystemConfig } from '../../../services/system-config/domain/system-config.domain';
+import { SystemConfigService } from '../../../services/system-config/system.config.service';
+import { SystemConfig } from '../../../services/system-config/domain/system.config.domain';
 
 @Component({
   selector: 'app-system-config-search',
-  templateUrl: './system-config.search.component.html'
+  templateUrl: './system.config.search.component.html'
 })
 export class SystemConfigSearchComponent extends BaseComponent implements OnInit {
   systemConfigs: SystemConfig[] = [];

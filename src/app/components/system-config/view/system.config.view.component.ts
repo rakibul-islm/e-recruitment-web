@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BaseComponent } from '../../base.component';
-import { SystemConfigService } from '../../../services/system-config/system-config.service';
-import { SystemConfig } from '../../../services/system-config/domain/system-config.domain';
+import { SystemConfigService } from '../../../services/system-config/system.config.service';
+import { SystemConfig } from '../../../services/system-config/domain/system.config.domain';
 
 @Component({
   selector: 'app-system-config-view',
-  templateUrl: './system-config.view.component.html'
+  templateUrl: './system.config.view.component.html'
 })
 export class SystemConfigViewComponent extends BaseComponent implements OnInit {
   systemConfig: SystemConfig = new SystemConfig();

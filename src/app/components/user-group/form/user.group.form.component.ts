@@ -3,15 +3,15 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { BaseComponent } from '../../base.component';
-import { UserGroupService } from '../../../services/user-group/user-group.service';
+import { UserGroupService } from '../../../services/user-group/user.group.service';
 import { RoleService } from '../../../services/role/role.service';
 import { CommonConfirmDialogService } from '../../../services/utility/common.confirm.dialog.service';
-import { UserGroup } from '../../../services/user-group/domain/user-group.domain';
+import { UserGroup } from '../../../services/user-group/domain/user.group.domain';
 import { Role } from '../../../services/role/domain/role.domain';
 
 @Component({
   selector: 'app-user-group-form',
-  templateUrl: './user-group.form.component.html'
+  templateUrl: './user.group.form.component.html'
 })
 export class UserGroupFormComponent extends BaseComponent implements OnInit {
   userGroupForm!: FormGroup;

@@ -11,7 +11,7 @@ a {
 
 /* app-page-header action buttons are ng-content-projected from each page's own
    component, so they're scoped to that component, not app-page-header — a
-   ::ng-deep rule inside page-header.component.scss can't reliably reach them.
+   ::ng-deep rule inside page.header.component.scss can't reliably reach them.
    Defined globally here instead, matching the header title's color. */
 .page-header-actions .p-button {
   background: #1e4d8f !important;

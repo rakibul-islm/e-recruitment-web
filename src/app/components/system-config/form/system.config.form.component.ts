@@ -3,13 +3,13 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { BaseComponent } from '../../base.component';
-import { SystemConfigService } from '../../../services/system-config/system-config.service';
+import { SystemConfigService } from '../../../services/system-config/system.config.service';
 import { CommonConfirmDialogService } from '../../../services/utility/common.confirm.dialog.service';
-import { SystemConfig, SystemConfigRequest } from '../../../services/system-config/domain/system-config.domain';
+import { SystemConfig, SystemConfigRequest } from '../../../services/system-config/domain/system.config.domain';
 
 @Component({
   selector: 'app-system-config-form',
-  templateUrl: './system-config.form.component.html'
+  templateUrl: './system.config.form.component.html'
 })
 export class SystemConfigFormComponent extends BaseComponent implements OnInit {
   systemConfigForm!: FormGroup;
