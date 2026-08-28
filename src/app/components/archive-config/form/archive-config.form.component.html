@@ -66,13 +66,25 @@
           </div>
 
           <div class="col-12">
-            <p-floatLabel>
-              <input id="archiveConfigWhereCondition" type="text" formControlName="whereCondition" pInputText class="w-full"
-                [pTooltip]="'archiveConfig.whereConditionHint' | translate" tooltipPosition="top" [positionLeft]="-150" />
-              <label for="archiveConfigWhereCondition">{{ 'archiveConfig.whereCondition' | translate }}</label>
-            </p-floatLabel>
+            <div class="flex align-items-center gap-2">
+              <p-floatLabel class="flex-1">
+                <input id="archiveConfigWhereCondition" type="text" formControlName="whereCondition" pInputText class="w-full"
+                  [pTooltip]="'archiveConfig.whereConditionHint' | translate" tooltipPosition="top" [positionLeft]="-150" />
+                <label for="archiveConfigWhereCondition">{{ 'archiveConfig.whereCondition' | translate }}</label>
+              </p-floatLabel>
+              <p-button icon="pi pi-sliders-h"
+                [label]="(archiveConfigForm.controls['whereCondition'].value ? 'archiveConfig.whereConditionBuilderButtonEdit' : 'archiveConfig.whereConditionBuilderButtonAdd') | translate"
+                styleClass="p-button-outlined" [disabled]="!archiveConfigForm.controls['sourceTable'].value"
+                [pTooltip]="!archiveConfigForm.controls['sourceTable'].value ? ('archiveConfig.whereConditionBuilderDisabledHint' | translate) : ''"
+                tooltipPosition="top" (onClick)="openWhereConditionBuilder()"></p-button>
+            </div>
           </div>
         </div>
+
+        <app-archive-config-where-condition-builder [(visible)]="whereConditionBuilderVisible"
+          [sourceTable]="archiveConfigForm.controls['sourceTable'].value"
+          [existingCondition]="archiveConfigForm.controls['whereCondition'].value" (apply)="onWhereConditionApplied($event)">
+        </app-archive-config-where-condition-builder>
 
         <div class="flex align-items-center gap-2">
           <p-checkbox inputId="archiveConfigEnabled" formControlName="enabled" [binary]="true"></p-checkbox>

@@ -18,6 +18,7 @@ export class ArchiveConfigFormComponent extends BaseComponent implements OnInit 
   sourceTableOptions: { label: string; value: string }[] = [];
   archiveSchemaOptions: { label: string; value: string }[] = [];
   dateColumnOptions: { label: string; value: string }[] = [];
+  whereConditionBuilderVisible = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -86,7 +87,7 @@ export class ArchiveConfigFormComponent extends BaseComponent implements OnInit 
       retentionDays: [formData.retentionDays, [Validators.required, Validators.min(1)]],
       enabled: [formData.enabled ?? true],
       description: [formData.description],
-      whereCondition: [formData.whereCondition]
+      whereCondition: [{ value: formData.whereCondition, disabled: true }]
     });
 
     this.subscribers.sourceTableChangeSub = this.archiveConfigForm.get('sourceTable')!.valueChanges
@@ -136,5 +137,13 @@ export class ArchiveConfigFormComponent extends BaseComponent implements OnInit 
 
   navigateToSearch(): void {
     this.router.navigate(['/archive-configs']);
+  }
+
+  openWhereConditionBuilder(): void {
+    this.whereConditionBuilderVisible = true;
+  }
+
+  onWhereConditionApplied(condition: string): void {
+    this.archiveConfigForm.get('whereCondition')!.setValue(condition);
   }
 }

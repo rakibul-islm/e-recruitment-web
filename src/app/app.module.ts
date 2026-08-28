@@ -46,6 +46,7 @@ import { ArchiveConfigSearchComponent } from './components/archive-config/search
 import { ArchiveConfigFormComponent } from './components/archive-config/form/archive-config.form.component';
 import { ArchiveConfigViewComponent } from './components/archive-config/view/archive-config.view.component';
 import { ArchiveConfigArchivedDataComponent } from './components/archive-config/archived-data/archive-config.archived-data.component';
+import { ArchiveConfigWhereConditionBuilderComponent } from './components/archive-config/where-condition-builder/archive-config.where-condition-builder.component';
 import { AccessDeniedComponent } from './components/shared/access-denied/access-denied.component';
 import { RequiredFieldDirective } from './directives/required-field.directive';
 import { OtpNumericKeyboardDirective } from './directives/otp-numeric-keyboard.directive';
@@ -78,6 +79,7 @@ import { CalendarModule } from 'primeng/calendar';
 import { TooltipModule } from 'primeng/tooltip';
 import { AccordionModule } from 'primeng/accordion';
 import { ToastModule } from 'primeng/toast';
+import { DialogModule } from 'primeng/dialog';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
   return new TranslateHttpLoader(http, '/assets/i18n/', '.json');
@@ -123,6 +125,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
     ArchiveConfigFormComponent,
     ArchiveConfigViewComponent,
     ArchiveConfigArchivedDataComponent,
+    ArchiveConfigWhereConditionBuilderComponent,
     AccessDeniedComponent,
     RequiredFieldDirective,
     OtpNumericKeyboardDirective,
@@ -157,6 +160,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
     CalendarModule,
     TooltipModule,
     AccordionModule,
+    DialogModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
