@@ -14,4 +14,41 @@
   line-height: 1;
 }
 
+.page-header-menu-trigger {
+  display: none;
+}
+
 // Action button styling lives in src/styles.scss (global) — buttons are ng-content-projected, so a scoped rule here can't reach them.
+
+@media screen and (max-width: 768px) {
+  .page-header-menu-trigger {
+    display: inline-flex;
+  }
+
+  .page-header-actions {
+    display: none !important;
+    position: absolute;
+    top: 100%;
+    right: 1.5rem;
+    margin-top: 0.375rem;
+    background: #ffffff;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 0.4rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    box-shadow: 0 8px 24px rgba(3, 41, 103, 0.14);
+    z-index: 101;
+    min-width: 210px;
+    max-height: calc(100vh - 5rem);
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+
+    // PrimeFlex's .flex class also sets display:flex !important, so this needs !important too.
+    &.open {
+      display: flex !important;
+    }
+  }
+}
