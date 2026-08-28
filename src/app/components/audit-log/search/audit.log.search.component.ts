@@ -3,12 +3,12 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Table, TableLazyLoadEvent } from 'primeng/table';
 import { BaseComponent } from '../../base.component';
-import { AuditLogService } from '../../../services/audit-log/audit-log.service';
-import { AuditLog } from '../../../services/audit-log/domain/audit-log.domain';
+import { AuditLogService } from '../../../services/audit-log/audit.log.service';
+import { AuditLog } from '../../../services/audit-log/domain/audit.log.domain';
 
 @Component({
   selector: 'app-audit-log-search',
-  templateUrl: './audit-log.search.component.html'
+  templateUrl: './audit.log.search.component.html'
 })
 export class AuditLogSearchComponent extends BaseComponent implements OnInit {
   auditLogs: AuditLog[] = [];

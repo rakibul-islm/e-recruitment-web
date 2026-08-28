@@ -6,8 +6,8 @@ import { BaseComponent } from '../../base.component';
 import { Register } from '../../../services/user/domain/user.domain';
 import { UserService } from '../../../services/user/user.service';
 import { CommonConfirmDialogService } from '../../../services/utility/common.confirm.dialog.service';
-import { PasswordPolicyService } from '../../../services/password-policy/password-policy.service';
-import { PasswordPolicy } from '../../../services/password-policy/domain/password-policy.domain';
+import { PasswordPolicyService } from '../../../services/password-policy/password.policy.service';
+import { PasswordPolicy } from '../../../services/password-policy/domain/password.policy.domain';
 
 @Component({
   selector: 'app-signup',

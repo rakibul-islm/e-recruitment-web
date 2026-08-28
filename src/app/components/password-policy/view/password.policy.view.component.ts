@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BaseComponent } from '../../base.component';
-import { PasswordPolicyService } from '../../../services/password-policy/password-policy.service';
-import { PasswordPolicy } from '../../../services/password-policy/domain/password-policy.domain';
+import { PasswordPolicyService } from '../../../services/password-policy/password.policy.service';
+import { PasswordPolicy } from '../../../services/password-policy/domain/password.policy.domain';
 
 @Component({
   selector: 'app-password-policy-view',
-  templateUrl: './password-policy.view.component.html'
+  templateUrl: './password.policy.view.component.html'
 })
 export class PasswordPolicyViewComponent extends BaseComponent implements OnInit {
   passwordPolicy: PasswordPolicy = new PasswordPolicy();

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BaseComponent } from '../../base.component';
-import { AuditLogService } from '../../../services/audit-log/audit-log.service';
-import { AuditLog } from '../../../services/audit-log/domain/audit-log.domain';
+import { AuditLogService } from '../../../services/audit-log/audit.log.service';
+import { AuditLog } from '../../../services/audit-log/domain/audit.log.domain';
 
 interface ChangedFieldEntry {
   field: string;
@@ -16,7 +16,7 @@ interface ChangedFieldEntry {
 
 @Component({
   selector: 'app-audit-log-view',
-  templateUrl: './audit-log.view.component.html'
+  templateUrl: './audit.log.view.component.html'
 })
 export class AuditLogViewComponent extends BaseComponent implements OnInit {
   auditLog: AuditLog = new AuditLog();

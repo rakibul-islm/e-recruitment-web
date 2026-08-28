@@ -3,12 +3,12 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Table, TableLazyLoadEvent } from 'primeng/table';
 import { BaseComponent } from '../../base.component';
-import { ExceptionLogService } from '../../../services/exception-log/exception-log.service';
-import { ExceptionLog } from '../../../services/exception-log/domain/exception-log.domain';
+import { ExceptionLogService } from '../../../services/exception-log/exception.log.service';
+import { ExceptionLog } from '../../../services/exception-log/domain/exception.log.domain';
 
 @Component({
   selector: 'app-exception-log-search',
-  templateUrl: './exception-log.search.component.html'
+  templateUrl: './exception.log.search.component.html'
 })
 export class ExceptionLogSearchComponent extends BaseComponent implements OnInit {
   exceptionLogs: ExceptionLog[] = [];

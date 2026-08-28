@@ -3,13 +3,13 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { BaseComponent } from '../../base.component';
-import { ArchiveConfigService } from '../../../services/archive-config/archive-config.service';
+import { ArchiveConfigService } from '../../../services/archive-config/archive.config.service';
 import { CommonConfirmDialogService } from '../../../services/utility/common.confirm.dialog.service';
-import { ArchiveConfig, ArchiveConfigRequest } from '../../../services/archive-config/domain/archive-config.domain';
+import { ArchiveConfig, ArchiveConfigRequest } from '../../../services/archive-config/domain/archive.config.domain';
 
 @Component({
   selector: 'app-archive-config-form',
-  templateUrl: './archive-config.form.component.html'
+  templateUrl: './archive.config.form.component.html'
 })
 export class ArchiveConfigFormComponent extends BaseComponent implements OnInit {
   archiveConfigForm!: FormGroup;

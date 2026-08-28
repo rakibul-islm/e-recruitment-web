@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-access-denied',
-  templateUrl: './access-denied.component.html'
+  templateUrl: './access.denied.component.html'
 })
 export class AccessDeniedComponent {
   constructor(private router: Router) {}

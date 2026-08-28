@@ -1,20 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { BaseComponent } from '../../../base.component';
+import { UserService } from '../../../../services/user/user.service';
 import { AuthService } from '../../../../services/utility/security/auth.service';
-import { PasswordPolicyService } from '../../../../services/password-policy/password-policy.service';
-import { PasswordPolicy } from '../../../../services/password-policy/domain/password-policy.domain';
+import { PasswordPolicyService } from '../../../../services/password-policy/password.policy.service';
+import { PasswordPolicy } from '../../../../services/password-policy/domain/password.policy.domain';
 
 @Component({
-  selector: 'app-set-password',
-  templateUrl: './set-password.component.html',
-  styleUrls: ['./set-password.component.scss']
+  selector: 'app-change-password',
+  templateUrl: './change.password.component.html',
+  styleUrls: ['./change.password.component.scss']
 })
-export class SetPasswordComponent extends BaseComponent implements OnInit {
-  setPasswordForm!: FormGroup;
-  token = '';
+export class ChangePasswordComponent extends BaseComponent implements OnInit {
+  step: 'verify' | 'otp' | 'reset' = 'verify';
+  verifyForm!: FormGroup;
+  otpForm!: FormGroup;
+  resetForm!: FormGroup;
+  private oldPassword = '';
+  private verifiedOtp = '';
   policy: PasswordPolicy = {
     id: 0,
     minLength: 8,
@@ -28,7 +33,7 @@ export class SetPasswordComponent extends BaseComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private route: ActivatedRoute,
+    private userService: UserService,
     private authService: AuthService,
     private passwordPolicyService: PasswordPolicyService,
     private translate: TranslateService,
@@ -38,9 +43,15 @@ export class SetPasswordComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.token = this.route.snapshot.queryParamMap.get('token') || '';
+    this.verifyForm = this.formBuilder.group({
+      oldPassword: ['', Validators.required]
+    });
 
-    this.setPasswordForm = this.formBuilder.group({
+    this.otpForm = this.formBuilder.group({
+      otp: ['', [Validators.required, Validators.pattern('^[0-9]{6}$')]]
+    });
+
+    this.resetForm = this.formBuilder.group({
       newPassword: ['', [Validators.required]],
       confirmPassword: ['', Validators.required]
     }, { validators: this.passwordMatchValidator });
@@ -57,7 +68,7 @@ export class SetPasswordComponent extends BaseComponent implements OnInit {
   }
 
   get newPasswordValue(): string {
-    return this.setPasswordForm?.get('newPassword')?.value || '';
+    return this.resetForm?.get('newPassword')?.value || '';
   }
 
   hasMinLength(): boolean {
@@ -106,15 +117,45 @@ export class SetPasswordComponent extends BaseComponent implements OnInit {
     return 'strong';
   }
 
-  submit(): void {
-    if (this.isFormInvalid(this.setPasswordForm)) { return; }
+  requestOtp(): void {
+    if (this.isFormInvalid(this.verifyForm)) { return; }
 
-    const { newPassword, confirmPassword } = this.setPasswordForm.getRawValue();
-    this.subscribers.setPasswordSub = this.authService
-      .setPassword({ token: this.token, newPassword, confirmPassword })
-      .subscribe(() => {
-        this.notificationService.sendSuccessMsg(this.translate.instant('password.setSuccess'));
-        this.router.navigate(['/login']);
-      });
+    this.oldPassword = this.verifyForm.getRawValue().oldPassword;
+    this.subscribers.requestOtpSub = this.userService.requestChangePasswordOtp({ oldPassword: this.oldPassword }).subscribe(() => {
+      this.step = 'otp';
+    });
   }
+
+  resendOtp(): void {
+    this.otpForm.reset();
+    this.subscribers.resendOtpSub = this.userService.requestChangePasswordOtp({ oldPassword: this.oldPassword }).subscribe(() => {
+      this.notificationService.sendSuccessMsg(this.translate.instant('auth.register.resendSuccess'));
+    });
+  }
+
+  verifyOtp(): void {
+    if (this.isFormInvalid(this.otpForm)) { return; }
+
+    const { otp } = this.otpForm.getRawValue();
+    this.subscribers.verifyOtpSub = this.userService.verifyChangePasswordOtp({ otp }).subscribe(() => {
+      this.verifiedOtp = otp;
+      this.step = 'reset';
+    });
+  }
+
+  submit(): void {
+    if (this.step === 'verify') { this.requestOtp(); return; }
+    if (this.step === 'otp') { this.verifyOtp(); return; }
+    if (this.isFormInvalid(this.resetForm)) { return; }
+
+    const { newPassword, confirmPassword } = this.resetForm.getRawValue();
+    const payload = { oldPassword: this.oldPassword, otp: this.verifiedOtp, newPassword, confirmPassword };
+
+    this.subscribers.changePasswordSub = this.userService.changePassword(payload).subscribe(() => {
+      this.notificationService.sendSuccessMsg(this.translate.instant('password.changeSuccess'));
+      this.authService.logout();
+      this.router.navigate(['/login']);
+    });
+  }
+
 }

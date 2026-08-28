@@ -2,8 +2,8 @@ import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { BaseComponent } from '../../base.component';
-import { ArchiveConfigService } from '../../../services/archive-config/archive-config.service';
-import { ArchiveConfigColumn, ConditionClause, ConditionRow, OPERATORS_BY_CATEGORY, OP_BETWEEN, OP_IN, OP_IS_NOT_NULL, OP_IS_NULL, ParsedClause } from '../../../services/archive-config/domain/archive-config.domain';
+import { ArchiveConfigService } from '../../../services/archive-config/archive.config.service';
+import { ArchiveConfigColumn, ConditionClause, ConditionRow, OPERATORS_BY_CATEGORY, OP_BETWEEN, OP_IN, OP_IS_NOT_NULL, OP_IS_NULL, ParsedClause } from '../../../services/archive-config/domain/archive.config.domain';
 
 const OPERATOR_OPTIONS_BY_CATEGORY: Record<string, { label: string; value: string }[]> = Object.fromEntries(
   Object.entries(OPERATORS_BY_CATEGORY).map(([category, operators]) => [category, operators.map(operator => ({ label: operator, value: operator }))])
@@ -31,7 +31,7 @@ const CLAUSE_PATTERNS: { regex: RegExp; toClause: (match: RegExpMatchArray, unqu
 
 @Component({
   selector: 'app-archive-config-where-condition-builder',
-  templateUrl: './archive-config.where-condition-builder.component.html'
+  templateUrl: './archive.config.where.condition.builder.component.html'
 })
 export class ArchiveConfigWhereConditionBuilderComponent extends BaseComponent implements OnChanges {
   @Input() visible = false;
