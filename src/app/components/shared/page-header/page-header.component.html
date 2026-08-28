@@ -1,7 +1,7 @@
 <div class="page-header flex align-items-center justify-content-between">
   <span class="page-header-title">{{ title }}</span>
 
-  <button #menuTrigger type="button" pButton icon="pi pi-ellipsis-v" class="page-header-menu-trigger p-button-text p-button-rounded" (click)="toggleMenu()"></button>
+  <button *ngIf="hasActions" #menuTrigger type="button" pButton icon="pi pi-ellipsis-v" class="page-header-menu-trigger p-button-text p-button-rounded" (click)="toggleMenu()"></button>
 
   <div #actionsPanel class="page-header-actions flex align-items-center gap-2" [class.open]="menuOpen" (click)="closeMenu()">
     <ng-content></ng-content>
