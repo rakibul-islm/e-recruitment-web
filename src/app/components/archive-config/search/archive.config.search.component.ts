@@ -3,12 +3,12 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Table, TableLazyLoadEvent } from 'primeng/table';
 import { BaseComponent } from '../../base.component';
-import { ArchiveConfigService } from '../../../services/archive-config/archive-config.service';
-import { ArchiveConfig } from '../../../services/archive-config/domain/archive-config.domain';
+import { ArchiveConfigService } from '../../../services/archive-config/archive.config.service';
+import { ArchiveConfig } from '../../../services/archive-config/domain/archive.config.domain';
 
 @Component({
   selector: 'app-archive-config-search',
-  templateUrl: './archive-config.search.component.html'
+  templateUrl: './archive.config.search.component.html'
 })
 export class ArchiveConfigSearchComponent extends BaseComponent implements OnInit {
   archiveConfigs: ArchiveConfig[] = [];

@@ -2,13 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { BaseComponent } from '../../base.component';
-import { ArchiveConfigService } from '../../../services/archive-config/archive-config.service';
+import { ArchiveConfigService } from '../../../services/archive-config/archive.config.service';
 import { CommonConfirmDialogService } from '../../../services/utility/common.confirm.dialog.service';
-import { ArchiveConfig } from '../../../services/archive-config/domain/archive-config.domain';
+import { ArchiveConfig } from '../../../services/archive-config/domain/archive.config.domain';
 
 @Component({
   selector: 'app-archive-config-view',
-  templateUrl: './archive-config.view.component.html'
+  templateUrl: './archive.config.view.component.html'
 })
 export class ArchiveConfigViewComponent extends BaseComponent implements OnInit {
   archiveConfig: ArchiveConfig = new ArchiveConfig();

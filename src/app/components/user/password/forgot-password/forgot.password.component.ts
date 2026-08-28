@@ -7,8 +7,8 @@ import { BaseComponent } from '../../../base.component';
 
 @Component({
   selector: 'app-forgot-password',
-  templateUrl: './forgot-password.component.html',
-  styleUrls: ['./forgot-password.component.scss']
+  templateUrl: './forgot.password.component.html',
+  styleUrls: ['./forgot.password.component.scss']
 })
 export class ForgotPasswordComponent extends BaseComponent implements OnInit {
   step: 'email' | 'otp' | 'reset' = 'email';

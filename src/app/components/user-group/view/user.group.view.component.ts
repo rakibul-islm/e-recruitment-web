@@ -2,13 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { BaseComponent } from '../../base.component';
-import { UserGroupService } from '../../../services/user-group/user-group.service';
+import { UserGroupService } from '../../../services/user-group/user.group.service';
 import { CommonConfirmDialogService } from '../../../services/utility/common.confirm.dialog.service';
-import { UserGroup } from '../../../services/user-group/domain/user-group.domain';
+import { UserGroup } from '../../../services/user-group/domain/user.group.domain';
 
 @Component({
   selector: 'app-user-group-view',
-  templateUrl: './user-group.view.component.html'
+  templateUrl: './user.group.view.component.html'
 })
 export class UserGroupViewComponent extends BaseComponent implements OnInit {
   userGroup: UserGroup = new UserGroup();

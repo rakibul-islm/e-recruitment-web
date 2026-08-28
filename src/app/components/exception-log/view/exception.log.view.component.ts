@@ -2,13 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { BaseComponent } from '../../base.component';
-import { ExceptionLogService } from '../../../services/exception-log/exception-log.service';
+import { ExceptionLogService } from '../../../services/exception-log/exception.log.service';
 import { CommonConfirmDialogService } from '../../../services/utility/common.confirm.dialog.service';
-import { ExceptionLog } from '../../../services/exception-log/domain/exception-log.domain';
+import { ExceptionLog } from '../../../services/exception-log/domain/exception.log.domain';
 
 @Component({
   selector: 'app-exception-log-view',
-  templateUrl: './exception-log.view.component.html'
+  templateUrl: './exception.log.view.component.html'
 })
 export class ExceptionLogViewComponent extends BaseComponent implements OnInit {
   exceptionLog: ExceptionLog = new ExceptionLog();

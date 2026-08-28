@@ -133,8 +133,10 @@ src/app/
 │   ├── archive-config/            Admin CRUD for scheduled data-archiving rules (search / form / view / archived-data)
 │   └── base.component.ts          Shared base class (subscription cleanup, search/pagination helpers)
 ├── directives/
-│   ├── required-field.directive.ts
-│   └── translate-options.directive.ts   Live-translates `p-dropdown[optionLabel="label"]` option lists on language change
+│   ├── required.field.directive.ts
+│   ├── permission.disable.directive.ts  Disables the host control/element when the user lacks the given route permission
+│   ├── permission.hide.directive.ts     Structural directive that hides its template when the user lacks the given route permission
+│   └── translate.options.directive.ts   Live-translates `p-dropdown[optionLabel="label"]` option lists on language change
 ├── services/
 │   ├── user/                      User/profile API service + domain models
 │   ├── role/, permission/, user-group/,

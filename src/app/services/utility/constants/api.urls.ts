@@ -69,6 +69,7 @@ export const API_URLS = {
     LIST_ARCHIVE_CONFIG_SOURCE_TABLES: 'archive-config/source-tables',
     LIST_ARCHIVE_CONFIG_SCHEMAS: 'archive-config/schemas',
     LIST_ARCHIVE_CONFIG_DATE_COLUMNS: 'archive-config/date-columns',
+    LIST_ARCHIVE_CONFIG_COLUMNS: 'archive-config/columns',
     ARCHIVE_CONFIG_ARCHIVE_NOW: 'archive-config/:id/archive-now',
     FIND_ARCHIVE_CONFIG_ARCHIVED_DATA: 'archive-config/:id/archived-data',
 
