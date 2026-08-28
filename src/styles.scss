@@ -39,68 +39,24 @@ a {
   }
 }
 
-/* Mobile 3-dot menu (page-header.component.scss): flat list rows instead of stacked solid-color blocks. */
+/* Mobile page-header actions: compact buttons with the icon on top and a small label
+   below it, shown inline instead of a 3-dot dropdown. */
 @media screen and (max-width: 768px) {
-  .page-header-actions.open > * {
-    width: 100%;
-  }
-
-  .page-header-actions.open .p-button {
-    width: 100%;
-    justify-content: flex-start;
-    gap: 0.65rem;
-    background: transparent !important;
-    border: none !important;
-    color: #1f2937 !important;
-    box-shadow: none !important;
-    padding: 0.7rem 0.75rem !important;
-    border-radius: 6px !important;
-    font-weight: 500 !important;
-
-    .p-button-icon {
-      color: #1e4d8f;
-    }
+  .page-header-actions .p-button {
+    flex-direction: column;
+    gap: 0.15rem;
+    padding: 0.4rem 0.5rem !important;
+    min-width: 0;
+    border-radius: 10px !important;
 
     .p-button-label {
-      text-align: left;
+      font-size: 0.65rem;
+      line-height: 1;
     }
 
-    &:hover {
-      background: #eef3fb !important;
+    .p-button-icon-left {
+      margin-right: 0 !important;
     }
-
-    &:active {
-      background: #e2e8f4 !important;
-      transform: none;
-    }
-
-    &:focus {
-      box-shadow: inset 0 0 0 2px rgba(30, 77, 143, 0.35) !important;
-    }
-  }
-
-  .page-header-actions.open .p-button-danger {
-    color: #b91c1c !important;
-
-    .p-button-icon {
-      color: #b91c1c;
-    }
-
-    &:hover {
-      background: #fef2f2 !important;
-    }
-  }
-
-  .page-header-actions.open .p-button-secondary {
-    color: #374151 !important;
-
-    .p-button-icon {
-      color: #6b7280;
-    }
-  }
-
-  .page-header-actions.open > * + * {
-    border-top: 1px solid #f1f5f9;
   }
 }
 
