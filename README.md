@@ -23,6 +23,7 @@ A web client for the e-recruitment platform — built with Angular 17 and PrimeN
 - **Exception log viewer** — searchable, paginated view of server-side exception logs for diagnostics
 - **Session management** — searchable, paginated view of user login sessions with detail view
 - **Audit log viewer** — searchable, paginated view of audit trail entries with detail view
+- **Archive configuration** — CRUD for scheduled data-archiving rules (source table, age/date condition, optional extra WHERE clause, schedule), with an on-demand "Archive Now" trigger and a viewer for already-archived rows
 - **User profile** — self-service profile view/edit with avatar upload
 - **Internationalization** — full English and Bengali (বাংলা) translations with a live language switcher
 - **Route guards** — authenticated areas are protected by `AuthGuard`, and admin routes additionally by a permission-aware `PermissionGuard` that redirects to `/access-denied` when the signed-in user lacks the route's permission; JWT is attached via an HTTP interceptor
@@ -112,7 +113,7 @@ src/app/
 ├── components/
 │   ├── shared/
 │   │   ├── app-header/            Top navigation bar (PrimeNG Menubar + Avatar + Menu + language switcher)
-│   │   ├── page-header/           Reusable page title + action-buttons bar
+│   │   ├── page-header/           Reusable page title + action-buttons bar (collapses into a 3-dot menu on mobile)
 │   │   └── access-denied/         Shown when PermissionGuard blocks a route
 │   ├── dashboard/                 Landing page after login
 │   ├── user/
@@ -129,6 +130,7 @@ src/app/
 │   ├── exception-log/             Admin search/view for server-side exception logs
 │   ├── session/                   Admin search/view for user login sessions
 │   ├── audit-log/                 Admin search/view for audit trail entries
+│   ├── archive-config/            Admin CRUD for scheduled data-archiving rules (search / form / view / archived-data)
 │   └── base.component.ts          Shared base class (subscription cleanup, search/pagination helpers)
 ├── directives/
 │   ├── required-field.directive.ts
@@ -137,7 +139,7 @@ src/app/
 │   ├── user/                      User/profile API service + domain models
 │   ├── role/, permission/, user-group/,
 │   │   system-config/, password-policy/, exception-log/,
-│   │   session/, audit-log/       Feature API services + domain models
+│   │   session/, audit-log/, archive-config/  Feature API services + domain models
 │   └── utility/
 │       ├── security/               AuthService (login/session state), AuthGuard, PermissionGuard
 │       ├── interceptors/           Auth + loading HTTP interceptors
@@ -193,6 +195,11 @@ src/assets/i18n/                   Translation files (en.json, bn.json)
 | `/sessions/:id`             | `SessionViewComponent`         | `AuthGuard`, `PermissionGuard` |
 | `/audit-logs`               | `AuditLogSearchComponent`      | `AuthGuard`, `PermissionGuard` |
 | `/audit-logs/:id`           | `AuditLogViewComponent`        | `AuthGuard`, `PermissionGuard` |
+| `/archive-configs`          | `ArchiveConfigSearchComponent` | `AuthGuard`, `PermissionGuard` |
+| `/archive-configs/create`   | `ArchiveConfigFormComponent`   | `AuthGuard`, `PermissionGuard` |
+| `/archive-configs/:id/edit` | `ArchiveConfigFormComponent`   | `AuthGuard`, `PermissionGuard` |
+| `/archive-configs/:id/archived-data` | `ArchiveConfigArchivedDataComponent` | `AuthGuard`, `PermissionGuard` |
+| `/archive-configs/:id`      | `ArchiveConfigViewComponent`   | `AuthGuard`, `PermissionGuard` |
 | `**`                        | redirects to `/login`          | —            |
 
 </details>
