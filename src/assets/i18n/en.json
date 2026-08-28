@@ -429,7 +429,7 @@
     "defaultName": "User",
     "editTitle": "Update Profile",
     "removePhoto": "Remove Photo",
-    "updateButton": "Update",
+    "updateButton": "Save",
     "updateSuccess": "Profile updated successfully!"
   }
 }

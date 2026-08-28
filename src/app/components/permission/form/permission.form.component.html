@@ -1,5 +1,5 @@
 <app-page-header [title]="(permissionId ? 'permission.formTitleUpdate' : 'permission.formTitleCreate') | translate">
-  <p-button *appPermissionHide="'permission-manage'" [label]="'common.save' | translate" icon="pi pi-check" (onClick)="submit()"></p-button>
+  <p-button *appPermissionHide="'permission-manage'" [label]="'common.save' | translate" icon="pi pi-save" (onClick)="submit()"></p-button>
   <p-button [label]="'common.back' | translate" icon="pi pi-arrow-left" styleClass="p-button-secondary" (onClick)="goBack()"></p-button>
 </app-page-header>
 
