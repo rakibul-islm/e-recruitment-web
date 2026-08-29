@@ -66,15 +66,15 @@
           </div>
 
           <div class="col-12">
-            <div class="flex align-items-center gap-2">
-              <p-floatLabel class="flex-1">
+            <div class="flex flex-column md:flex-row align-items-stretch md:align-items-center gap-2">
+              <p-floatLabel class="md:flex-1">
                 <input id="archiveConfigWhereCondition" type="text" formControlName="whereCondition" pInputText class="w-full"
                   [pTooltip]="'archiveConfig.whereConditionHint' | translate" tooltipPosition="top" [positionLeft]="-150" />
                 <label for="archiveConfigWhereCondition">{{ 'archiveConfig.whereCondition' | translate }}</label>
               </p-floatLabel>
-              <p-button icon="pi pi-sliders-h"
+              <p-button icon="pi pi-sliders-h" styleClass="p-button-outlined w-full md:w-auto"
                 [label]="(archiveConfigForm.controls['whereCondition'].value ? 'archiveConfig.whereConditionBuilderButtonEdit' : 'archiveConfig.whereConditionBuilderButtonAdd') | translate"
-                styleClass="p-button-outlined" [disabled]="!archiveConfigForm.controls['sourceTable'].value"
+                [disabled]="!archiveConfigForm.controls['sourceTable'].value"
                 [pTooltip]="!archiveConfigForm.controls['sourceTable'].value ? ('archiveConfig.whereConditionBuilderDisabledHint' | translate) : ''"
                 tooltipPosition="top" (onClick)="openWhereConditionBuilder()"></p-button>
             </div>
