@@ -1,56 +1,62 @@
 <p-dialog [header]="'archiveConfig.whereConditionBuilderTitle' | translate" [(visible)]="visible" [modal]="true"
-  [style]="{ width: '55rem' }" [draggable]="false" (onHide)="visibleChange.emit(false)">
+  [style]="{ width: '55rem' }" [breakpoints]="{ '960px': '75vw', '575px': '95vw' }" [draggable]="false"
+  styleClass="branded-dialog" (onHide)="visibleChange.emit(false)">
 
-  <p class="text-sm text-color-secondary mb-3">{{ 'archiveConfig.whereConditionBuilderHint' | translate }}</p>
+  <p class="text-sm builder-hint mb-3">{{ 'archiveConfig.whereConditionBuilderHint' | translate }}</p>
 
   <div class="flex flex-column gap-3">
-    <div *ngFor="let row of conditionRows; let i = index" [formGroup]="row" class="flex align-items-start gap-2 flex-wrap">
+    <div *ngFor="let row of conditionRows; let i = index" [formGroup]="row" class="condition-row">
+      <p-button icon="pi pi-trash" [label]="'archiveConfig.whereConditionRemoveRow' | translate"
+        styleClass="p-button-text p-button-danger p-button-sm condition-row-remove" [disabled]="conditionRows.length === 1"
+        (onClick)="removeRow(i)"></p-button>
       <ng-container *ngIf="{ category: row.controls['category'].value, operator: row.controls['operator'].value } as f">
-        <p-dropdown *ngIf="i > 0" [options]="combinatorOptions"
-          formControlName="combinator" optionLabel="label" optionValue="value" styleClass="w-10rem" appendTo="body"></p-dropdown>
+        <div class="flex align-items-start gap-2 flex-wrap">
+          <p-dropdown *ngIf="i > 0" [options]="combinatorOptions"
+            formControlName="combinator" optionLabel="label" optionValue="value" styleClass="w-full sm:w-10rem" appendTo="body"></p-dropdown>
 
-        <p-dropdown [options]="fieldOptions" formControlName="field" optionLabel="label" optionValue="value"
-          [placeholder]="'archiveConfig.whereConditionField' | translate" styleClass="w-10rem" appendTo="body"
-          [filter]="true" filterBy="label" (onChange)="onFieldSelected(row, $event.value)"></p-dropdown>
+          <p-dropdown [options]="fieldOptions" formControlName="field" optionLabel="label" optionValue="value"
+            [placeholder]="'archiveConfig.whereConditionField' | translate" styleClass="w-full sm:w-10rem" appendTo="body"
+            [filter]="true" filterBy="label" (onChange)="onFieldSelected(row, $event.value)"></p-dropdown>
 
-        <p-dropdown [options]="getOperatorOptions(f.category)" formControlName="operator" optionLabel="label"
-          optionValue="value" [placeholder]="'archiveConfig.whereConditionOperator' | translate" styleClass="w-10rem" appendTo="body"></p-dropdown>
+          <p-dropdown [options]="getOperatorOptions(f.category)" formControlName="operator" optionLabel="label"
+            optionValue="value" [placeholder]="'archiveConfig.whereConditionOperator' | translate" styleClass="w-full sm:w-10rem" appendTo="body"></p-dropdown>
 
-        <ng-container *ngIf="!isValueHidden(f.operator)">
-          <p-dropdown *ngIf="isBoolean(f.category); else valueInput" [options]="booleanOptions"
-            formControlName="value" optionLabel="label" optionValue="value" styleClass="w-10rem" appendTo="body"></p-dropdown>
+          <ng-container *ngIf="!isValueHidden(f.operator)">
+            <p-dropdown *ngIf="isBoolean(f.category); else valueInput" [options]="booleanOptions"
+              formControlName="value" optionLabel="label" optionValue="value" styleClass="w-full sm:w-10rem" appendTo="body"></p-dropdown>
 
-          <ng-template #valueInput>
-            <input formControlName="value" pInputText class="w-10rem"
+            <ng-template #valueInput>
+              <input formControlName="value" pInputText class="w-full sm:w-10rem"
+                [type]="isNumber(f.category) ? 'number' : (isDate(f.category) ? 'date' : 'text')"
+                [placeholder]="f.operator === 'IN' ? ('archiveConfig.whereConditionValueListHint' | translate) : ''" />
+            </ng-template>
+
+            <input *ngIf="isBetween(f.operator)" formControlName="value2" pInputText class="w-full sm:w-10rem"
               [type]="isNumber(f.category) ? 'number' : (isDate(f.category) ? 'date' : 'text')"
-              [placeholder]="f.operator === 'IN' ? ('archiveConfig.whereConditionValueListHint' | translate) : ''" />
-          </ng-template>
-
-          <input *ngIf="isBetween(f.operator)" formControlName="value2" pInputText class="w-10rem"
-            [type]="isNumber(f.category) ? 'number' : (isDate(f.category) ? 'date' : 'text')"
-            [placeholder]="'archiveConfig.whereConditionValueTo' | translate" />
-        </ng-container>
-
-        <p-button icon="pi pi-trash" styleClass="p-button-text p-button-danger" [disabled]="conditionRows.length === 1"
-          (onClick)="removeRow(i)" [pTooltip]="'archiveConfig.whereConditionRemoveRow' | translate"></p-button>
+              [placeholder]="'archiveConfig.whereConditionValueTo' | translate" />
+          </ng-container>
+        </div>
       </ng-container>
     </div>
 
-    <div class="flex gap-2">
+    <div class="condition-actions flex flex-column sm:flex-row gap-2">
       <p-button icon="pi pi-plus" [label]="'archiveConfig.whereConditionAddRow' | translate"
-        styleClass="p-button-outlined w-max" (onClick)="addRow()"></p-button>
+        styleClass="p-button-outlined w-full sm:w-max" (onClick)="addRow()"></p-button>
       <p-button icon="pi pi-times-circle" [label]="'archiveConfig.whereConditionClearAll' | translate"
-        styleClass="p-button-outlined p-button-danger w-max" (onClick)="clearAll()"></p-button>
+        styleClass="p-button-outlined p-button-danger w-full sm:w-max" (onClick)="clearAll()"></p-button>
     </div>
 
-    <div class="p-2 border-round surface-100">
-      <div class="text-sm font-medium mb-1">{{ 'archiveConfig.whereConditionPreview' | translate }}</div>
-      <code>{{ preview || '—' }}</code>
+    <div class="condition-preview">
+      <div class="condition-preview-label">
+        <i class="pi pi-eye"></i>
+        <span>{{ 'archiveConfig.whereConditionPreview' | translate }}</span>
+      </div>
+      <code class="condition-preview-code">{{ preview || '—' }}</code>
     </div>
   </div>
 
   <ng-template pTemplate="footer">
-    <p-button [label]="'common.cancel' | translate" icon="pi pi-times" styleClass="p-button-secondary" (onClick)="close()"></p-button>
-    <p-button [label]="'archiveConfig.whereConditionApply' | translate" icon="pi pi-check" (onClick)="applyCondition()"></p-button>
+    <p-button [label]="'archiveConfig.whereConditionApply' | translate" icon="pi pi-check" styleClass="p-button-sm primary-action" (onClick)="applyCondition()"></p-button>
+    <p-button [label]="'common.cancel' | translate" icon="pi pi-times" styleClass="p-button-sm p-button-outlined p-button-secondary" (onClick)="close()"></p-button>
   </ng-template>
 </p-dialog>

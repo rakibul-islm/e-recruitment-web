@@ -31,7 +31,8 @@ const CLAUSE_PATTERNS: { regex: RegExp; toClause: (match: RegExpMatchArray, unqu
 
 @Component({
   selector: 'app-archive-config-where-condition-builder',
-  templateUrl: './archive.config.where.condition.builder.component.html'
+  templateUrl: './archive.config.where.condition.builder.component.html',
+  styleUrls: ['./archive.config.where.condition.builder.component.scss']
 })
 export class ArchiveConfigWhereConditionBuilderComponent extends BaseComponent implements OnChanges {
   @Input() visible = false;

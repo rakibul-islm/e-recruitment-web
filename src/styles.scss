@@ -342,6 +342,56 @@ form .form-section-title:not(:first-child) {
   }
 }
 
+/* Branded dialogs that share the confirm-dialog's navy header/footer treatment
+   (e.g. the archive-config where-condition builder). Apply via [styleClass]. */
+.branded-dialog {
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(3, 41, 103, 0.2);
+
+  .p-dialog-header {
+    padding: 1rem 1.5rem;
+    background: #032967;
+    color: #ffffff;
+  }
+
+  .p-dialog-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+  }
+
+  .p-dialog-header-icon {
+    color: #ffffff;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.15);
+      color: #ffffff;
+    }
+  }
+
+  .p-dialog-content {
+    padding: 1.5rem;
+  }
+
+  .p-dialog-footer {
+    padding: 1rem 1.5rem;
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    border-top: 1px solid #e5e7eb;
+  }
+
+  .primary-action {
+    background: #032967;
+    border-color: #032967;
+
+    &:hover {
+      background: #021c47;
+      border-color: #021c47;
+    }
+  }
+}
+
 /* Professional, animated toast notifications (NotificationService / <p-toast>) */
 .p-toast-message {
   position: relative;

@@ -1,0 +1,49 @@
+.builder-hint {
+  color: #6b7280;
+}
+
+.condition-row {
+  position: relative;
+  padding: 2.25rem 0.9rem 0.9rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #f8fafc;
+}
+
+::ng-deep .condition-row-remove {
+  position: absolute !important;
+  right: 0.4rem;
+  top: 0.4rem;
+}
+
+.condition-actions {
+  padding-top: 0.25rem;
+}
+
+.condition-preview {
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #eef3fb;
+  padding: 0.85rem 1rem;
+}
+
+.condition-preview-label {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: #032967;
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  margin-bottom: 0.45rem;
+}
+
+.condition-preview-code {
+  display: block;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.9rem;
+  color: #1f2937;
+  word-break: break-word;
+  white-space: pre-wrap;
+}
