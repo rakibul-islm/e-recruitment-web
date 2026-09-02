@@ -4,6 +4,7 @@
   <p-button *appPermissionHide="'archive-config-manage'" [label]="'archiveConfig.archiveNowButton' | translate" icon="pi pi-play" styleClass="p-button-secondary" (onClick)="archiveNow()"></p-button>
   <p-button *appPermissionHide="'archive-config-manage'" [label]="'common.edit' | translate" icon="pi pi-pencil" [routerLink]="['/archive-configs', archiveConfigId, 'edit']"></p-button>
   <p-button *appPermissionHide="'archive-config-delete'" [label]="'common.delete' | translate" icon="pi pi-trash" styleClass="p-button-danger" (onClick)="deleteArchiveConfig()"></p-button>
+  <p-button *appPermissionHide="'audit-log-list'" [label]="'auditLog.viewForEntity' | translate" icon="pi pi-history" styleClass="p-button-secondary" (onClick)="navigateToAuditLog(router, 'ArchiveConfig', archiveConfigId)"></p-button>
   <p-button [label]="'common.back' | translate" icon="pi pi-arrow-left" styleClass="p-button-secondary" (onClick)="goBack()"></p-button>
 </app-page-header>
 
