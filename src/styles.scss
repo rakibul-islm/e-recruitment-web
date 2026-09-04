@@ -140,6 +140,39 @@ form .form-section-title:not(:first-child) {
   }
 }
 
+/* Below ~576px a 30%/70% label/value split gets cramped for longer labels (e.g. "Application
+   Deadline") - stack label above value instead, same table markup, no per-page changes needed. */
+@media screen and (max-width: 576px) {
+  .detail-table {
+    display: block;
+
+    tbody, tr, td {
+      display: block;
+      width: 100% !important;
+    }
+
+    tr {
+      padding: 0.5rem 0;
+    }
+
+    td {
+      padding: 0.2rem 0.25rem;
+      border-bottom: none !important;
+    }
+
+    .detail-label {
+      font-size: 0.8rem;
+    }
+  }
+}
+
+/* Safety wrapper for any table that could still overflow a narrow viewport (e.g. long
+   unbreakable values) - scrolls horizontally inside itself rather than the whole page. */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+}
+
 .status-badge {
   display: inline-flex;
   align-items: center;
@@ -225,6 +258,31 @@ form .form-section-title:not(:first-child) {
 
 .selectable-row {
   cursor: pointer;
+}
+
+/* Lightweight chip for skills/status labels on job-portal and application screens - simpler
+   than .status-badge (no active/locked color variants needed here). */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background: #eef3fb;
+  color: #1e4d8f;
+}
+
+/* Public job-portal listing cards */
+.job-card {
+  height: 100%;
+  cursor: pointer;
+  transition: box-shadow 0.15s ease, transform 0.1s ease;
+
+  &:hover {
+    box-shadow: 0 8px 24px rgba(3, 41, 103, 0.12);
+    transform: translateY(-2px);
+  }
 }
 
 /* Dashboard-style stat tiles at the top of a search page (e.g. Session Management's

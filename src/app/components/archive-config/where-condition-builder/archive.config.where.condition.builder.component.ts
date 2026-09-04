@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
-import { TranslateService } from '@ngx-translate/core';
 import { BaseComponent } from '../../base.component';
 import { ArchiveConfigService } from '../../../services/archive-config/archive.config.service';
 import { ArchiveConfigColumn, ConditionClause, ConditionRow, OPERATORS_BY_CATEGORY, OP_BETWEEN, OP_IN, OP_IS_NOT_NULL, OP_IS_NULL, ParsedClause } from '../../../services/archive-config/domain/archive.config.domain';
@@ -50,8 +49,7 @@ export class ArchiveConfigWhereConditionBuilderComponent extends BaseComponent i
 
   constructor(
     private formBuilder: FormBuilder,
-    private archiveConfigService: ArchiveConfigService,
-    private translate: TranslateService
+    private archiveConfigService: ArchiveConfigService
   ) {
     super();
   }
@@ -229,7 +227,7 @@ export class ArchiveConfigWhereConditionBuilderComponent extends BaseComponent i
 
   applyCondition(): void {
     if (this.hasIncompleteRow()) {
-      this.notificationService.sendErrorMsg(this.translate.instant('archiveConfig.whereConditionIncomplete'));
+      this.notificationService.sendErrorMsg('archiveConfig.whereConditionIncomplete');
       return;
     }
     this.apply.emit(this.buildConditionString());

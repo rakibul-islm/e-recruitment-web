@@ -1,7 +1,6 @@
 import { AfterViewInit, Component, NgZone, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../../services/utility/security/auth.service';
 import { BaseComponent } from '../../base.component';
 import { environment } from '../../../../environments/environment';
@@ -19,7 +18,6 @@ export class LoginComponent extends BaseComponent implements OnInit, AfterViewIn
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
-    private translate: TranslateService,
     private router: Router,
     private ngZone: NgZone
   ) {
@@ -46,7 +44,7 @@ export class LoginComponent extends BaseComponent implements OnInit, AfterViewIn
     this.subscribers.googleLoginSub = this.authService.googleLogin(response.credential).subscribe(
       success => {
         if (success) {
-          this.notificationService.sendSuccessMsg(this.translate.instant('auth.login.successRedirect'));
+          this.notificationService.sendSuccessMsg('auth.login.successRedirect');
           this.router.navigate(['/dashboard']);
         }
       }
@@ -68,7 +66,7 @@ export class LoginComponent extends BaseComponent implements OnInit, AfterViewIn
     this.subscribers.loginSub = this.authService.login(email, password, rememberMe).subscribe(
       success => {
         if (success) {
-          this.notificationService.sendSuccessMsg(this.translate.instant('auth.login.successRedirect'));
+          this.notificationService.sendSuccessMsg('auth.login.successRedirect');
           this.router.navigate(['/dashboard']);
         }
       }

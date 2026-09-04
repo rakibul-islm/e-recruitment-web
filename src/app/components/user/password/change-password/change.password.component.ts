@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
 import { BaseComponent } from '../../../base.component';
 import { UserService } from '../../../../services/user/user.service';
 import { AuthService } from '../../../../services/utility/security/auth.service';
@@ -36,7 +35,6 @@ export class ChangePasswordComponent extends BaseComponent implements OnInit {
     private userService: UserService,
     private authService: AuthService,
     private passwordPolicyService: PasswordPolicyService,
-    private translate: TranslateService,
     private router: Router
   ) {
     super();
@@ -129,7 +127,7 @@ export class ChangePasswordComponent extends BaseComponent implements OnInit {
   resendOtp(): void {
     this.otpForm.reset();
     this.subscribers.resendOtpSub = this.userService.requestChangePasswordOtp({ oldPassword: this.oldPassword }).subscribe(() => {
-      this.notificationService.sendSuccessMsg(this.translate.instant('auth.register.resendSuccess'));
+      this.notificationService.sendSuccessMsg('auth.register.resendSuccess');
     });
   }
 
@@ -152,7 +150,7 @@ export class ChangePasswordComponent extends BaseComponent implements OnInit {
     const payload = { oldPassword: this.oldPassword, otp: this.verifiedOtp, newPassword, confirmPassword };
 
     this.subscribers.changePasswordSub = this.userService.changePassword(payload).subscribe(() => {
-      this.notificationService.sendSuccessMsg(this.translate.instant('password.changeSuccess'));
+      this.notificationService.sendSuccessMsg('password.changeSuccess');
       this.authService.logout();
       this.router.navigate(['/login']);
     });

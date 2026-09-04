@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
 import { BaseComponent } from '../../../base.component';
 import { AuthService } from '../../../../services/utility/security/auth.service';
 import { PasswordPolicyService } from '../../../../services/password-policy/password.policy.service';
@@ -31,7 +30,6 @@ export class SetPasswordComponent extends BaseComponent implements OnInit {
     private route: ActivatedRoute,
     private authService: AuthService,
     private passwordPolicyService: PasswordPolicyService,
-    private translate: TranslateService,
     private router: Router
   ) {
     super();
@@ -113,7 +111,7 @@ export class SetPasswordComponent extends BaseComponent implements OnInit {
     this.subscribers.setPasswordSub = this.authService
       .setPassword({ token: this.token, newPassword, confirmPassword })
       .subscribe(() => {
-        this.notificationService.sendSuccessMsg(this.translate.instant('password.setSuccess'));
+        this.notificationService.sendSuccessMsg('password.setSuccess');
         this.router.navigate(['/login']);
       });
   }
