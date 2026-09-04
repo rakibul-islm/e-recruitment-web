@@ -91,8 +91,9 @@ export abstract class BaseComponent implements OnDestroy {
     }
   }
 
-  // Marks controls touched and surfaces a toast if the form is invalid.
-  protected isFormInvalid(form: FormGroup, message: string = 'Please fill in all required fields correctly.'): boolean {
+  // Marks controls touched and surfaces a toast if the form is invalid. `message` is an i18n key,
+  // resolved by NotificationService itself.
+  protected isFormInvalid(form: FormGroup, message: string = 'common.formInvalidMessage'): boolean {
     this.markFormGroupAsTouched(form);
     if (form.invalid) {
       this.notificationService.sendErrorMsg(message);

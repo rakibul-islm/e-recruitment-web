@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
 import { Table, TableLazyLoadEvent } from 'primeng/table';
 import { BaseComponent } from '../../base.component';
 import { SessionService } from '../../../services/session/session.service';
@@ -30,7 +29,6 @@ export class SessionSearchComponent extends BaseComponent implements OnInit {
     private formBuilder: FormBuilder,
     private sessionService: SessionService,
     private commonConfirmDialogService: CommonConfirmDialogService,
-    private translate: TranslateService,
     private router: Router
   ) {
     super();
@@ -98,13 +96,13 @@ export class SessionSearchComponent extends BaseComponent implements OnInit {
     this.commonConfirmDialogService.confirm(
       () => {
         this.subscribers.forceLogoutSub = this.sessionService.forceLogoutSession(session.id).subscribe(() => {
-          this.notificationService.sendSuccessMsg(this.translate.instant('session.forceLogoutSuccess'));
+          this.notificationService.sendSuccessMsg('session.forceLogoutSuccess');
           session.revoked = true;
           this.fetchSummary();
         });
       },
       null,
-      this.translate.instant('session.forceLogoutConfirm', { name: session.userFullName || session.userEmail })
+      'session.forceLogoutConfirm', { name: session.userFullName || session.userEmail }
     );
   }
 
@@ -112,13 +110,13 @@ export class SessionSearchComponent extends BaseComponent implements OnInit {
     this.commonConfirmDialogService.confirm(
       () => {
         this.subscribers.forceLogoutAllSub = this.sessionService.forceLogoutAll().subscribe(() => {
-          this.notificationService.sendSuccessMsg(this.translate.instant('session.forceLogoutAllSuccess'));
+          this.notificationService.sendSuccessMsg('session.forceLogoutAllSuccess');
           this.sessions.forEach(s => s.revoked = true);
           this.fetchSummary();
         });
       },
       null,
-      this.translate.instant('session.forceLogoutAllConfirm')
+      'session.forceLogoutAllConfirm'
     );
   }
 }

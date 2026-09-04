@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../../../services/utility/security/auth.service';
 import { BaseComponent } from '../../../base.component';
 
@@ -21,7 +20,6 @@ export class ForgotPasswordComponent extends BaseComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
-    private translate: TranslateService,
     private router: Router
   ) {
     super();
@@ -60,7 +58,7 @@ export class ForgotPasswordComponent extends BaseComponent implements OnInit {
   resendOtp(): void {
     this.otpForm.reset();
     this.subscribers.resendOtpSub = this.authService.forgotPassword(this.email).subscribe(() => {
-      this.notificationService.sendSuccessMsg(this.translate.instant('auth.register.resendSuccess'));
+      this.notificationService.sendSuccessMsg('auth.register.resendSuccess');
     });
   }
 
@@ -81,7 +79,7 @@ export class ForgotPasswordComponent extends BaseComponent implements OnInit {
     this.subscribers.resetPasswordSub = this.authService
       .resetPassword({ email: this.email, otp: this.verifiedOtp, newPassword, confirmPassword })
       .subscribe(() => {
-        this.notificationService.sendSuccessMsg(this.translate.instant('password.resetSuccess'));
+        this.notificationService.sendSuccessMsg('password.resetSuccess');
         this.router.navigate(['/login']);
       });
   }

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
 import { BaseComponent } from '../../base.component';
 import { ExceptionLogService } from '../../../services/exception-log/exception.log.service';
 import { CommonConfirmDialogService } from '../../../services/utility/common.confirm.dialog.service';
@@ -18,8 +17,7 @@ export class ExceptionLogViewComponent extends BaseComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private exceptionLogService: ExceptionLogService,
-    private commonConfirmDialogService: CommonConfirmDialogService,
-    private translate: TranslateService
+    private commonConfirmDialogService: CommonConfirmDialogService
   ) {
     super();
   }
@@ -39,12 +37,12 @@ export class ExceptionLogViewComponent extends BaseComponent implements OnInit {
     this.commonConfirmDialogService.confirm(
       () => {
         this.subscribers.deleteExceptionLogSub = this.exceptionLogService.deleteExceptionLog(this.exceptionLogId).subscribe(() => {
-          this.notificationService.sendSuccessMsg(this.translate.instant('exceptionLog.deleteSuccess'));
+          this.notificationService.sendSuccessMsg('exceptionLog.deleteSuccess');
           this.navigateToSearch();
         });
       },
       null,
-      this.translate.instant('exceptionLog.deleteConfirm')
+      'exceptionLog.deleteConfirm'
     );
   }
 

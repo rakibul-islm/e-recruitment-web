@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
 import { BaseComponent } from '../../base.component';
 import { Register } from '../../../services/user/domain/user.domain';
 import { UserService } from '../../../services/user/user.service';
@@ -35,8 +34,8 @@ export class RegistrationFormComponent extends BaseComponent implements OnInit {
     private router: Router,
     private userService: UserService,
     private commonConfirmDialogService: CommonConfirmDialogService,
-    private passwordPolicyService: PasswordPolicyService,
-    private translate: TranslateService) {
+    private passwordPolicyService: PasswordPolicyService
+  ) {
     super();
   }
 
@@ -138,7 +137,7 @@ export class RegistrationFormComponent extends BaseComponent implements OnInit {
   resendOtp(): void {
     this.otpForm.reset();
     this.subscribers.resendOtpSub = this.userService.resendSignupOtp(this.email).subscribe(() => {
-      this.notificationService.sendSuccessMsg(this.translate.instant('auth.register.resendSuccess'));
+      this.notificationService.sendSuccessMsg('auth.register.resendSuccess');
     });
   }
 
@@ -147,7 +146,7 @@ export class RegistrationFormComponent extends BaseComponent implements OnInit {
 
     const { otp } = this.otpForm.getRawValue();
     this.subscribers.verifySignupOtpSub = this.userService.verifySignupOtp({ email: this.email, otp }).subscribe(() => {
-      this.notificationService.sendSuccessMsg(this.translate.instant('auth.register.verifySuccess'));
+      this.notificationService.sendSuccessMsg('auth.register.verifySuccess');
       this.navigateToLogin();
     });
   }
