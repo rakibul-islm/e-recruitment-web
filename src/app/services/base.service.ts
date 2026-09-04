@@ -31,6 +31,12 @@ export abstract class BaseService {
     return this.http.get<T>(url, options);
   }
 
+  // A plain <a href> download can't carry the Authorization header AuthInterceptor adds, so file
+  // downloads (CVs, resumes) go through HttpClient as a blob and get saved via triggerDownload.
+  public getBlob(url: string): Observable<Blob> {
+    return this.http.get(url, { responseType: 'blob' });
+  }
+
   public post<T>(url: string, body: any): Observable<T> {
     return this.http.post<T>(url, body);
   }

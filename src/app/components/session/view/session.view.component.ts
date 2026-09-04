@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
 import { BaseComponent } from '../../base.component';
 import { SessionService } from '../../../services/session/session.service';
 import { CommonConfirmDialogService } from '../../../services/utility/common.confirm.dialog.service';
@@ -19,8 +18,7 @@ export class SessionViewComponent extends BaseComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private sessionService: SessionService,
-    private commonConfirmDialogService: CommonConfirmDialogService,
-    private translate: TranslateService
+    private commonConfirmDialogService: CommonConfirmDialogService
   ) {
     super();
   }
@@ -51,12 +49,12 @@ export class SessionViewComponent extends BaseComponent implements OnInit {
     this.commonConfirmDialogService.confirm(
       () => {
         this.subscribers.forceLogoutSub = this.sessionService.forceLogoutSession(this.sessionId).subscribe(() => {
-          this.notificationService.sendSuccessMsg(this.translate.instant('session.forceLogoutSuccess'));
+          this.notificationService.sendSuccessMsg('session.forceLogoutSuccess');
           this.fetchSession();
         });
       },
       null,
-      this.translate.instant('session.forceLogoutConfirm', { name: this.session.userFullName || this.session.userEmail })
+      'session.forceLogoutConfirm', { name: this.session.userFullName || this.session.userEmail }
     );
   }
 

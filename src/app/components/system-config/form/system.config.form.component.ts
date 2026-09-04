@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
 import { BaseComponent } from '../../base.component';
 import { SystemConfigService } from '../../../services/system-config/system.config.service';
 import { CommonConfirmDialogService } from '../../../services/utility/common.confirm.dialog.service';
@@ -22,8 +21,7 @@ export class SystemConfigFormComponent extends BaseComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private systemConfigService: SystemConfigService,
-    private commonConfirmDialogService: CommonConfirmDialogService,
-    private translate: TranslateService
+    private commonConfirmDialogService: CommonConfirmDialogService
   ) {
     super();
   }
@@ -71,7 +69,7 @@ export class SystemConfigFormComponent extends BaseComponent implements OnInit {
   updateSystemConfig(payload: SystemConfigRequest): void {
     this.subscribers.updateSystemConfigSub = this.systemConfigService.updateSystemConfig(payload)
     .subscribe(() => {
-      this.notificationService.sendSuccessMsg(this.translate.instant('systemConfig.updateSuccess'));
+      this.notificationService.sendSuccessMsg('systemConfig.updateSuccess');
       this.navigateToSearch();
     });
   }

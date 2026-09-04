@@ -12,7 +12,9 @@ export class CommonConfirmDialogService {
     private translate: TranslateService
   ) {}
 
-  confirm(accept: () => void, reject?: (() => void) | null, message?: string, options?: Partial<Confirmation>): void {
+  // `message` is an i18n key, translated here so callers never need to inject TranslateService just
+  // to resolve a confirm-dialog string. `params` interpolates into it (e.g. { name: role.name }).
+  confirm(accept: () => void, reject?: (() => void) | null, message?: string, params?: object, options?: Partial<Confirmation>): void {
     this.confirmationService.confirm({
       header: this.translate.instant('common.confirmation'),
       icon: 'pi pi-exclamation-triangle',
@@ -23,7 +25,7 @@ export class CommonConfirmDialogService {
       acceptButtonStyleClass: 'p-button-sm',
       rejectButtonStyleClass: 'p-button-sm p-button-outlined p-button-secondary',
       dismissableMask: true,
-      message: message || this.translate.instant('common.confirmDefaultMessage'),
+      message: this.translate.instant(message || 'common.confirmDefaultMessage', params),
       accept,
       reject: reject ?? undefined,
       ...options

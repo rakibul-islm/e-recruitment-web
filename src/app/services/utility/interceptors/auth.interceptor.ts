@@ -40,24 +40,27 @@ export class AuthInterceptor implements HttpInterceptor {
     );
   }
 
+  // errorMessage ends up either a server-provided string or an i18n key (e.g. "errors.network") -
+  // both are valid input to NotificationService.sendErrorMsg, which resolves keys itself and
+  // passes already-resolved text through unchanged.
   private handleError(error: HttpErrorResponse) {
-    let errorMessage = error?.error?.message || this.translate.instant('errors.unexpected');
+    let errorMessage = error?.error?.message || 'errors.unexpected';
 
     if (error.status === 0) {
-      errorMessage = error?.error?.message || this.translate.instant('errors.network');
+      errorMessage = error?.error?.message || 'errors.network';
     } else if (error.status === 401) {
-      errorMessage = error?.error?.message || this.translate.instant('errors.unauthorized');
+      errorMessage = error?.error?.message || 'errors.unauthorized';
       this.authService.logout();
       this.router.navigate(['/login']);
     } else if (error.status === 403) {
-      errorMessage = error?.error?.message || this.translate.instant('errors.forbidden');
+      errorMessage = error?.error?.message || 'errors.forbidden';
       this.router.navigate(['/access-denied']);
     } else if (error.status === 404) {
-      errorMessage = error?.error?.message || this.translate.instant('errors.notFound');
+      errorMessage = error?.error?.message || 'errors.notFound';
     } else if (error.status >= 500) {
-      errorMessage = error?.error?.message || this.translate.instant('errors.server');
+      errorMessage = error?.error?.message || 'errors.server';
     }
 
-    this.notificationService.sendErrorMsg(errorMessage, this.translate.instant('errors.title', { status: error.status }));
+    this.notificationService.sendErrorMsg(errorMessage, undefined, this.translate.instant('errors.title', { status: error.status }));
   }
 }

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
 import { BaseComponent } from '../../base.component';
 import { ArchiveConfigService } from '../../../services/archive-config/archive.config.service';
 import { CommonConfirmDialogService } from '../../../services/utility/common.confirm.dialog.service';
@@ -18,8 +17,7 @@ export class ArchiveConfigViewComponent extends BaseComponent implements OnInit 
     private route: ActivatedRoute,
     protected router: Router,
     private archiveConfigService: ArchiveConfigService,
-    private commonConfirmDialogService: CommonConfirmDialogService,
-    private translate: TranslateService
+    private commonConfirmDialogService: CommonConfirmDialogService
   ) {
     super();
   }
@@ -39,12 +37,12 @@ export class ArchiveConfigViewComponent extends BaseComponent implements OnInit 
     this.commonConfirmDialogService.confirm(
       () => {
         this.subscribers.deleteArchiveConfigSub = this.archiveConfigService.deleteArchiveConfig(this.archiveConfigId).subscribe(() => {
-          this.notificationService.sendSuccessMsg(this.translate.instant('archiveConfig.deleteSuccess'));
+          this.notificationService.sendSuccessMsg('archiveConfig.deleteSuccess');
           this.navigateToSearch();
         });
       },
       null,
-      this.translate.instant('archiveConfig.deleteConfirm', { sourceTable: this.archiveConfig.sourceTable })
+      'archiveConfig.deleteConfirm', { sourceTable: this.archiveConfig.sourceTable }
     );
   }
 
@@ -52,11 +50,11 @@ export class ArchiveConfigViewComponent extends BaseComponent implements OnInit 
     this.commonConfirmDialogService.confirm(
       () => {
         this.subscribers.archiveNowSub = this.archiveConfigService.archiveNow(this.archiveConfigId).subscribe(response => {
-          this.notificationService.sendSuccessMsg(this.translate.instant('archiveConfig.archiveNowSuccess', { count: response?.obj ?? 0 }));
+          this.notificationService.sendSuccessMsg('archiveConfig.archiveNowSuccess', { count: response?.obj ?? 0 });
         });
       },
       null,
-      this.translate.instant('archiveConfig.archiveNowConfirm', { sourceTable: this.archiveConfig.sourceTable })
+      'archiveConfig.archiveNowConfirm', { sourceTable: this.archiveConfig.sourceTable }
     );
   }
 

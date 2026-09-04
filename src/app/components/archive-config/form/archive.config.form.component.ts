@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
 import { BaseComponent } from '../../base.component';
 import { ArchiveConfigService } from '../../../services/archive-config/archive.config.service';
 import { CommonConfirmDialogService } from '../../../services/utility/common.confirm.dialog.service';
@@ -25,8 +24,7 @@ export class ArchiveConfigFormComponent extends BaseComponent implements OnInit 
     private route: ActivatedRoute,
     private router: Router,
     private archiveConfigService: ArchiveConfigService,
-    private commonConfirmDialogService: CommonConfirmDialogService,
-    private translate: TranslateService
+    private commonConfirmDialogService: CommonConfirmDialogService
   ) {
     super();
   }
@@ -122,7 +120,7 @@ export class ArchiveConfigFormComponent extends BaseComponent implements OnInit 
   createArchiveConfig(payload: ArchiveConfigRequest): void {
     this.subscribers.createArchiveConfigSub = this.archiveConfigService.createArchiveConfig(payload)
     .subscribe(() => {
-      this.notificationService.sendSuccessMsg(this.translate.instant('archiveConfig.createSuccess'));
+      this.notificationService.sendSuccessMsg('archiveConfig.createSuccess');
       this.navigateToSearch();
     });
   }
@@ -130,7 +128,7 @@ export class ArchiveConfigFormComponent extends BaseComponent implements OnInit 
   updateArchiveConfig(payload: ArchiveConfigRequest): void {
     this.subscribers.updateArchiveConfigSub = this.archiveConfigService.updateArchiveConfig(payload)
     .subscribe(() => {
-      this.notificationService.sendSuccessMsg(this.translate.instant('archiveConfig.updateSuccess'));
+      this.notificationService.sendSuccessMsg('archiveConfig.updateSuccess');
       this.navigateToSearch();
     });
   }
