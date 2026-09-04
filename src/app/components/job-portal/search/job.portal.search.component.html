@@ -1,0 +1,56 @@
+<app-page-header [title]="'jobPortal.pageTitle' | translate"></app-page-header>
+
+<div class="job-portal-page">
+  <p-card class="job-filter-card">
+    <div [formGroup]="filterForm" class="job-filter-row">
+      <div class="job-filter-field">
+        <i class="pi pi-search"></i>
+        <input id="jobPortalTitle" type="text" pInputText [placeholder]="'jobPortal.keywordPlaceholder' | translate" formControlName="jobTitle_like" (keyup.enter)="search()" />
+      </div>
+      <div class="job-filter-field">
+        <i class="pi pi-map-marker"></i>
+        <input id="jobPortalLocation" type="text" pInputText [placeholder]="'jobPortal.locationPlaceholder' | translate" formControlName="jobLocation_like" (keyup.enter)="search()" />
+      </div>
+      <p-button [label]="'common.search' | translate" icon="pi pi-search" styleClass="job-filter-btn" (onClick)="search()"></p-button>
+    </div>
+  </p-card>
+
+  <div class="job-results-summary" *ngIf="!loading && jobPostings.length">
+    <span class="job-results-count">{{ totalRecords }}</span>
+    {{ (totalRecords === 1 ? 'jobPortal.resultSingular' : 'jobPortal.resultPlural') | translate }}
+  </div>
+
+  <div *ngIf="loading" class="job-portal-status">
+    <i class="pi pi-spin pi-spinner"></i>
+    <span>{{ 'jobPortal.loading' | translate }}</span>
+  </div>
+
+  <div *ngIf="!loading && jobPostings.length === 0" class="job-portal-status">
+    <i class="pi pi-briefcase"></i>
+    <span>{{ 'jobPortal.noneFound' | translate }}</span>
+  </div>
+
+  <div class="grid" *ngIf="!loading && jobPostings.length">
+    <div class="col-12 md:col-6 lg:col-4 job-card-col" *ngFor="let job of jobPostings">
+      <p-card class="job-card" (click)="viewJob(job)">
+        <div class="flex justify-content-between align-items-start gap-2 mb-2">
+          <div class="job-card-avatar"><i class="pi pi-building"></i></div>
+          <p-button [icon]="savedJobIds.has(job.id) ? 'pi pi-bookmark-fill' : 'pi pi-bookmark'"
+            styleClass="p-button-text p-button-rounded flex-shrink-0" (onClick)="toggleSave(job, $event)"></p-button>
+        </div>
+        <h3 class="job-card-title">{{ job.jobTitle }}</h3>
+        <div class="job-card-company">{{ job.companyName }} &middot; {{ job.jobLocation || ('jobPortal.notSpecified' | translate) }}</div>
+        <div class="flex flex-wrap gap-2 my-2" *ngIf="job.skills">
+          <span class="tag" *ngFor="let skill of job.skills.split(',').slice(0, 4)">{{ skill.trim() }}</span>
+        </div>
+        <div class="job-card-footer">
+          <span class="job-card-type" *ngIf="job.employmentStatus || job.workPlace">{{ job.employmentStatus || job.workPlace }}</span>
+          <span class="job-card-deadline"><i class="pi pi-clock"></i> {{ job.applicationDeadLine | date:'dd MMM yyyy' }}</span>
+        </div>
+      </p-card>
+    </div>
+  </div>
+
+  <p-paginator *ngIf="!loading && totalRecords > rows" [first]="first" [rows]="rows" [totalRecords]="totalRecords"
+    (onPageChange)="fetchJobPostings($event)" styleClass="job-paginator"></p-paginator>
+</div>

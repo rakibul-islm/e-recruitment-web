@@ -1,0 +1,142 @@
+<app-page-header [title]="'candidateProfile.pageTitle' | translate">
+  <ng-container *ngIf="latestCv as cv">
+    <p-button [label]="'common.view' | translate" icon="pi pi-eye" styleClass="p-button-outlined cv-action-btn" (onClick)="viewCv(cv)"></p-button>
+    <p-button [label]="'common.download' | translate" icon="pi pi-download" styleClass="p-button-outlined cv-action-btn" (onClick)="downloadCv(cv)"></p-button>
+  </ng-container>
+  <p-button [label]="'common.edit' | translate" icon="pi pi-pencil" (onClick)="editProfile()"></p-button>
+</app-page-header>
+
+<div class="flex justify-content-center mt-3 px-3 pb-4">
+  <p-card class="page-card">
+    <div class="flex align-items-center gap-3 mb-4">
+      <p-avatar [image]="accountProfile.imageBase64" shape="circle" size="xlarge" styleClass="cv-account-avatar"></p-avatar>
+      <div>
+        <h2 class="mt-0 mb-1">{{ accountProfile.fullName }}</h2>
+        <div class="text-color-secondary">{{ accountProfile.email }}</div>
+        <div class="text-color-secondary" *ngIf="profile.headline">{{ profile.headline }}</div>
+      </div>
+    </div>
+
+    <table class="detail-table mb-3">
+      <tbody>
+        <tr>
+          <td class="detail-label">{{ 'candidateProfile.mobilePrimary' | translate }}</td>
+          <td class="detail-value">
+            <ng-container *ngIf="accountProfile.mobile; else mobileHint">{{ accountProfile.mobile }}</ng-container>
+          </td>
+        </tr>
+        <tr>
+          <td class="detail-label">{{ 'candidateProfile.mobileSecondary' | translate }}</td>
+          <td class="detail-value">
+            <ng-container *ngIf="accountProfile.phone; else phoneHint">{{ accountProfile.phone }}</ng-container>
+          </td>
+        </tr>
+        <tr>
+          <td class="detail-label">{{ 'candidateProfile.address' | translate }}</td>
+          <td class="detail-value">
+            <ng-container *ngIf="accountProfile.address; else addressHint">{{ accountProfile.address }}</ng-container>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <ng-template #mobileHint><span class="cv-inherited-hint"><i class="pi pi-info-circle"></i>{{ 'candidateProfile.notSetHint' | translate }} <a routerLink="/profile/edit">{{ 'candidateProfile.updateProfileLink' | translate }}</a></span></ng-template>
+    <ng-template #phoneHint><span class="cv-inherited-hint"><i class="pi pi-info-circle"></i>{{ 'candidateProfile.notSetHint' | translate }} <a routerLink="/profile/edit">{{ 'candidateProfile.updateProfileLink' | translate }}</a></span></ng-template>
+    <ng-template #addressHint><span class="cv-inherited-hint"><i class="pi pi-info-circle"></i>{{ 'candidateProfile.notSetHint' | translate }} <a routerLink="/profile/edit">{{ 'candidateProfile.updateProfileLink' | translate }}</a></span></ng-template>
+
+    <h3 class="form-section-title">{{ 'candidateProfile.basicInfo' | translate }}</h3>
+    <table class="detail-table mb-3">
+      <tbody>
+        <tr>
+          <td class="detail-label">{{ 'candidateProfile.linkedinUrl' | translate }}</td>
+          <td class="detail-value">{{ profile.linkedinUrl || ('common.notAvailable' | translate) }}</td>
+        </tr>
+        <tr>
+          <td class="detail-label">{{ 'candidateProfile.portfolioUrl' | translate }}</td>
+          <td class="detail-value">{{ profile.portfolioUrl || ('common.notAvailable' | translate) }}</td>
+        </tr>
+        <tr *ngIf="profile.summary">
+          <td class="detail-label">{{ 'candidateProfile.summary' | translate }}</td>
+          <td class="detail-value" style="white-space:pre-line">{{ profile.summary }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 class="form-section-title">{{ 'candidateProfile.workExperience' | translate }}</h3>
+    <div class="flex flex-column gap-2 mb-3" *ngIf="profile.workExperience?.length; else noWorkExperience">
+      <p-card *ngFor="let item of profile.workExperience" styleClass="border-1 surface-border">
+        <div class="flex justify-content-between align-items-start flex-wrap gap-2">
+          <div>
+            <div class="font-bold">{{ item.title }}</div>
+            <div class="text-color-secondary">{{ item.companyName }}<span *ngIf="item.location"> &middot; {{ item.location }}</span></div>
+          </div>
+          <span class="text-color-secondary text-sm white-space-nowrap">
+            {{ item.startDate | date:'MMM yyyy' }} - {{ item.current ? ('candidateProfile.present' | translate) : (item.endDate | date:'MMM yyyy') }}
+          </span>
+        </div>
+        <div class="mt-2" style="white-space:pre-line" *ngIf="item.description">{{ item.description }}</div>
+      </p-card>
+    </div>
+    <ng-template #noWorkExperience><p class="text-color-secondary mb-3">{{ 'candidateProfile.noneAdded' | translate }}</p></ng-template>
+
+    <h3 class="form-section-title">{{ 'candidateProfile.education' | translate }}</h3>
+    <div class="flex flex-column gap-2 mb-3" *ngIf="profile.education?.length; else noEducation">
+      <p-card *ngFor="let item of profile.education" styleClass="border-1 surface-border">
+        <div class="flex justify-content-between align-items-start flex-wrap gap-2">
+          <div>
+            <div class="font-bold">{{ item.degree }}<span *ngIf="item.fieldOfStudy">, {{ item.fieldOfStudy }}</span></div>
+            <div class="text-color-secondary">{{ item.institution }}<span *ngIf="item.grade"> &middot; {{ item.grade }}</span></div>
+          </div>
+          <span class="text-color-secondary text-sm white-space-nowrap">
+            {{ item.startDate | date:'MMM yyyy' }} - {{ item.endDate | date:'MMM yyyy' }}
+          </span>
+        </div>
+      </p-card>
+    </div>
+    <ng-template #noEducation><p class="text-color-secondary mb-3">{{ 'candidateProfile.noneAdded' | translate }}</p></ng-template>
+
+    <h3 class="form-section-title">{{ 'candidateProfile.skills' | translate }}</h3>
+    <div class="flex flex-wrap gap-2 mb-3" *ngIf="profile.skills?.length; else noSkills">
+      <span class="tag" *ngFor="let item of profile.skills">{{ item.name }}<span *ngIf="item.level"> ({{ item.level }})</span></span>
+    </div>
+    <ng-template #noSkills><p class="text-color-secondary mb-3">{{ 'candidateProfile.noneAdded' | translate }}</p></ng-template>
+
+    <h3 class="form-section-title">{{ 'candidateProfile.certifications' | translate }}</h3>
+    <div class="flex flex-column gap-2 mb-3" *ngIf="profile.certifications?.length; else noCertifications">
+      <p-card *ngFor="let item of profile.certifications" styleClass="border-1 surface-border">
+        <div class="flex justify-content-between align-items-start flex-wrap gap-2">
+          <div>
+            <div class="font-bold">{{ item.name }}</div>
+            <div class="text-color-secondary">{{ item.issuer }}</div>
+          </div>
+          <span class="text-color-secondary text-sm white-space-nowrap" *ngIf="item.date">{{ item.date | date:'MMM yyyy' }}</span>
+        </div>
+      </p-card>
+    </div>
+    <ng-template #noCertifications><p class="text-color-secondary mb-3">{{ 'candidateProfile.noneAdded' | translate }}</p></ng-template>
+
+    <h3 class="form-section-title">{{ 'candidateProfile.languages' | translate }}</h3>
+    <div class="flex flex-wrap gap-2 mb-3" *ngIf="profile.languages?.length; else noLanguages">
+      <span class="tag" *ngFor="let item of profile.languages">{{ item.name }}<span *ngIf="item.proficiency"> ({{ item.proficiency }})</span></span>
+    </div>
+    <ng-template #noLanguages><p class="text-color-secondary mb-3">{{ 'candidateProfile.noneAdded' | translate }}</p></ng-template>
+
+    <h3 class="form-section-title">{{ 'candidateProfile.projects' | translate }}</h3>
+    <div class="flex flex-column gap-2 mb-3" *ngIf="profile.projects?.length; else noProjects">
+      <p-card *ngFor="let item of profile.projects" styleClass="border-1 surface-border">
+        <div class="font-bold">{{ item.name }}</div>
+        <div class="text-color-secondary" *ngIf="item.url">{{ item.url }}</div>
+        <div class="mt-1" style="white-space:pre-line" *ngIf="item.description">{{ item.description }}</div>
+      </p-card>
+    </div>
+    <ng-template #noProjects><p class="text-color-secondary mb-3">{{ 'candidateProfile.noneAdded' | translate }}</p></ng-template>
+
+    <p class="cv-footer-note" *ngIf="latestCv as cv; else noCvs">
+      <i class="pi pi-info-circle"></i>
+      {{ 'candidateProfile.generatedOn' | translate }} {{ cv.generatedOn | date:'dd-MM-yyyy HH:mm' }}
+    </p>
+    <ng-template #noCvs>
+      <p class="cv-footer-note"><i class="pi pi-info-circle"></i>{{ 'candidateProfile.noCvsYet' | translate }}</p>
+    </ng-template>
+  </p-card>
+</div>

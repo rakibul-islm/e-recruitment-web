@@ -1,0 +1,155 @@
+<app-page-header [title]="(jobPostingId ? 'jobPosting.formTitleUpdate' : 'jobPosting.formTitleCreate') | translate">
+  <p-button [label]="'common.save' | translate" icon="pi pi-save" (onClick)="submit()"></p-button>
+  <p-button [label]="'common.back' | translate" icon="pi pi-arrow-left" styleClass="p-button-secondary" (onClick)="goBack()"></p-button>
+</app-page-header>
+
+<div class="flex justify-content-center mt-3 px-3">
+  <p-card class="page-card">
+    <form *ngIf="jobPostingForm" [formGroup]="jobPostingForm" (ngSubmit)="submit()">
+      <div class="flex flex-column gap-4 mt-3">
+        <div class="flex align-items-center justify-content-between flex-wrap gap-2">
+          <h3 class="form-section-title m-0">{{ 'jobPosting.jobDetails' | translate }}</h3>
+          <p-button [label]="'jobPosting.aiAutoFill' | translate" icon="pi pi-sparkles" styleClass="p-button-outlined"
+            [loading]="aiSuggesting" (onClick)="autoFillWithAi()"></p-button>
+        </div>
+        <div class="grid row-gap-3">
+          <div class="col-12 md:col-6">
+            <p-floatLabel>
+              <input id="jobTitle" type="text" formControlName="jobTitle" pInputText class="w-full" />
+              <label for="jobTitle">{{ 'candidateApplication.jobTitle' | translate }}</label>
+            </p-floatLabel>
+            <small class="p-error" *ngIf="jobPostingForm.controls['jobTitle'].touched && jobPostingForm.controls['jobTitle'].errors?.['required']">
+              {{ 'jobPosting.jobTitleRequired' | translate }}</small>
+          </div>
+          <div class="col-12 md:col-6">
+            <p-floatLabel>
+              <p-dropdown id="jobCompany" [options]="companyOptions" formControlName="companyId" optionLabel="label" optionValue="value"
+                styleClass="w-full" appendTo="body" [filter]="true" filterBy="label"></p-dropdown>
+              <label for="jobCompany">{{ 'jobPortal.company' | translate }}</label>
+            </p-floatLabel>
+          </div>
+          <div class="col-12 md:col-4">
+            <p-floatLabel>
+              <p-calendar id="jobDeadline" formControlName="applicationDeadLine" dateFormat="dd-mm-yy" styleClass="w-full" appendTo="body"></p-calendar>
+              <label for="jobDeadline">{{ 'jobPortal.applicationDeadline' | translate }}</label>
+            </p-floatLabel>
+            <small class="p-error" *ngIf="jobPostingForm.controls['applicationDeadLine'].touched && jobPostingForm.controls['applicationDeadLine'].errors?.['required']">
+              {{ 'jobPosting.deadlineRequired' | translate }}</small>
+          </div>
+          <div class="col-12 md:col-4">
+            <p-floatLabel>
+              <input id="jobVacancy" type="number" formControlName="vacancy" pInputText class="w-full" />
+              <label for="jobVacancy">{{ 'jobPortal.vacancy' | translate }}</label>
+            </p-floatLabel>
+            <small class="p-error" *ngIf="jobPostingForm.controls['vacancy'].touched && jobPostingForm.controls['vacancy'].errors?.['required']">
+              {{ 'jobPosting.vacancyRequired' | translate }}</small>
+          </div>
+          <div class="col-12 md:col-4">
+            <p-floatLabel>
+              <p-dropdown id="jobStatus" [options]="statusOptions" formControlName="status" optionLabel="label" optionValue="value" styleClass="w-full"></p-dropdown>
+              <label for="jobStatus">{{ 'common.status' | translate }}</label>
+            </p-floatLabel>
+          </div>
+          <div class="col-12 md:col-4">
+            <p-floatLabel>
+              <input id="jobExperience" type="text" formControlName="experience" pInputText class="w-full" />
+              <label for="jobExperience">{{ 'jobPortal.experience' | translate }}</label>
+            </p-floatLabel>
+          </div>
+          <div class="col-12 md:col-4">
+            <p-floatLabel>
+              <input id="jobLocation" type="text" formControlName="jobLocation" pInputText class="w-full" />
+              <label for="jobLocation">{{ 'jobPosting.jobLocation' | translate }}</label>
+            </p-floatLabel>
+          </div>
+          <div class="col-12 md:col-4">
+            <p-floatLabel>
+              <input id="jobWorkPlace" type="text" formControlName="workPlace" pInputText class="w-full" />
+              <label for="jobWorkPlace">{{ 'jobPosting.workplaceHint' | translate }}</label>
+            </p-floatLabel>
+          </div>
+          <div class="col-12 md:col-4">
+            <p-floatLabel>
+              <input id="jobEmploymentStatus" type="text" formControlName="employmentStatus" pInputText class="w-full" />
+              <label for="jobEmploymentStatus">{{ 'jobPortal.employmentType' | translate }}</label>
+            </p-floatLabel>
+          </div>
+          <div class="col-12 md:col-4">
+            <p-floatLabel>
+              <input id="jobCategory" type="text" formControlName="category" pInputText class="w-full" />
+              <label for="jobCategory">{{ 'jobAlert.category' | translate }}</label>
+            </p-floatLabel>
+          </div>
+          <div class="col-12 md:col-4">
+            <p-floatLabel>
+              <input id="jobSalaryMin" type="number" formControlName="salaryMin" pInputText class="w-full" />
+              <label for="jobSalaryMin">{{ 'jobPosting.salaryMin' | translate }}</label>
+            </p-floatLabel>
+          </div>
+          <div class="col-12 md:col-4">
+            <p-floatLabel>
+              <input id="jobSalaryMax" type="number" formControlName="salaryMax" pInputText class="w-full" />
+              <label for="jobSalaryMax">{{ 'jobPosting.salaryMax' | translate }}</label>
+            </p-floatLabel>
+          </div>
+          <div class="col-12 md:col-4">
+            <p-floatLabel>
+              <input id="jobSalary" type="text" formControlName="salary" pInputText class="w-full" />
+              <label for="jobSalary">{{ 'jobPosting.salaryNotes' | translate }}</label>
+            </p-floatLabel>
+          </div>
+          <div class="col-12">
+            <p-floatLabel>
+              <input id="jobSkills" type="text" formControlName="skills" pInputText class="w-full" />
+              <label for="jobSkills">{{ 'jobPosting.skillsCommaSeparated' | translate }}</label>
+            </p-floatLabel>
+          </div>
+          <div class="col-12 flex flex-column gap-2">
+            <label for="jobRequirement">{{ 'jobPortal.requirements' | translate }}</label>
+            <p-editor formControlName="jobRequirement" [style]="{ height: '160px' }"></p-editor>
+            <small class="p-error" *ngIf="jobPostingForm.controls['jobRequirement'].touched && jobPostingForm.controls['jobRequirement'].errors?.['required']">
+              {{ 'jobPosting.requirementsRequired' | translate }}</small>
+          </div>
+          <div class="col-12 flex flex-column gap-2">
+            <label for="jobResponsibilities">{{ 'jobPortal.responsibilities' | translate }}</label>
+            <p-editor formControlName="jobResponsibilities" [style]="{ height: '160px' }"></p-editor>
+          </div>
+          <div class="col-12">
+            <p-floatLabel>
+              <textarea id="jobOtherBenefits" pInputTextarea formControlName="otherBenefits" class="w-full" rows="2"></textarea>
+              <label for="jobOtherBenefits">{{ 'jobPortal.otherBenefits' | translate }}</label>
+            </p-floatLabel>
+          </div>
+        </div>
+
+        <h3 class="form-section-title">{{ 'jobPosting.companyContact' | translate }}</h3>
+        <div class="grid row-gap-3">
+          <div class="col-12 md:col-6">
+            <p-floatLabel>
+              <input id="jobCompanyPhone" type="text" formControlName="companyPhone" pInputText class="w-full" />
+              <label for="jobCompanyPhone">{{ 'jobPosting.companyPhone' | translate }}</label>
+            </p-floatLabel>
+          </div>
+          <div class="col-12 md:col-6">
+            <p-floatLabel>
+              <input id="jobCompanyEmail" type="text" formControlName="companyEmail" pInputText class="w-full" />
+              <label for="jobCompanyEmail">{{ 'jobPosting.companyEmail' | translate }}</label>
+            </p-floatLabel>
+          </div>
+          <div class="col-12 md:col-6">
+            <p-floatLabel>
+              <input id="jobCompanyWebsite" type="text" formControlName="companyWebsite" pInputText class="w-full" />
+              <label for="jobCompanyWebsite">{{ 'jobPosting.companyWebsite' | translate }}</label>
+            </p-floatLabel>
+          </div>
+          <div class="col-12 md:col-6">
+            <p-floatLabel>
+              <input id="jobCompanyAddress" type="text" formControlName="companyAddress" pInputText class="w-full" />
+              <label for="jobCompanyAddress">{{ 'jobPosting.companyAddress' | translate }}</label>
+            </p-floatLabel>
+          </div>
+        </div>
+      </div>
+    </form>
+  </p-card>
+</div>

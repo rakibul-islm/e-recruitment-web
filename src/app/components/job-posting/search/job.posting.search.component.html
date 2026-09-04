@@ -1,0 +1,57 @@
+<app-page-header [title]="'jobPosting.searchTitle' | translate">
+  <p-button *appPermissionHide="'job-circular-manage'" [label]="'jobPosting.createButton' | translate" icon="pi pi-plus" (onClick)="createJobPosting()"></p-button>
+</app-page-header>
+
+<div class="p-3">
+  <p-accordion [(activeIndex)]="activeTabIndex">
+    <p-accordionTab [header]="'common.search' | translate">
+      <div [formGroup]="filterForm">
+        <div class="grid">
+          <div class="col-12 md:col-4 flex flex-column gap-2">
+            <label for="filterJobTitle">{{ 'candidateApplication.jobTitle' | translate }}</label>
+            <input id="filterJobTitle" type="text" pInputText class="w-full" formControlName="jobTitle_like" />
+          </div>
+          <div class="col-12 md:col-4 flex flex-column gap-2">
+            <label for="filterStatus">{{ 'common.status' | translate }}</label>
+            <p-dropdown id="filterStatus" [options]="statusOptions" formControlName="status" optionLabel="label" optionValue="value" styleClass="w-full"></p-dropdown>
+          </div>
+        </div>
+        <div class="search-actions">
+          <p-button [label]="'common.search' | translate" icon="pi pi-search" (onClick)="search(dt)"></p-button>
+          <p-button [label]="'common.clear' | translate" icon="pi pi-times" styleClass="p-button-outlined p-button-secondary" (onClick)="clearFilters()"></p-button>
+        </div>
+      </div>
+    </p-accordionTab>
+
+    <p-accordionTab [header]="'company.listTab' | translate">
+      <p-table #dt [value]="jobPostings" [lazy]="true" (onLazyLoad)="fetchJobPostings($event)" [paginator]="true"
+        [rows]="rows" [totalRecords]="totalRecords" [loading]="loading" [rowsPerPageOptions]="[10, 20, 50]"
+        responsiveLayout="scroll" dataKey="id" selectionMode="single" [(selection)]="selectedJobPosting"
+        (onRowSelect)="viewJobPosting($event.data)">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>{{ 'candidateApplication.jobTitle' | translate }}</th>
+            <th>{{ 'jobPortal.company' | translate }}</th>
+            <th>{{ 'jobPortal.vacancy' | translate }}</th>
+            <th>{{ 'jobPortal.deadline' | translate }}</th>
+            <th>{{ 'common.status' | translate }}</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-jobPosting>
+          <tr class="selectable-row" [pSelectableRow]="jobPosting">
+            <td>{{ jobPosting.jobTitle }}</td>
+            <td>{{ jobPosting.companyName }}</td>
+            <td>{{ jobPosting.vacancy }}</td>
+            <td>{{ jobPosting.applicationDeadLine | date:'dd-MM-yyyy' }}</td>
+            <td><span class="tag">{{ jobPosting.status }}</span></td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="5" class="text-center">{{ 'jobPosting.noneFound' | translate }}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </p-accordionTab>
+  </p-accordion>
+</div>

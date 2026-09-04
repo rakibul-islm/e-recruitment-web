@@ -1,0 +1,31 @@
+<app-page-header [title]="'savedJob.pageTitle' | translate"></app-page-header>
+
+<div class="p-3">
+  <p-card>
+    <p-table [value]="savedJobs" [loading]="loading" responsiveLayout="scroll" dataKey="id">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>{{ 'candidateApplication.jobTitle' | translate }}</th>
+          <th>{{ 'jobPortal.company' | translate }}</th>
+          <th>{{ 'common.status' | translate }}</th>
+          <th>{{ 'savedJob.savedOn' | translate }}</th>
+          <th></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-savedJob>
+        <tr>
+          <td class="selectable-row" (click)="viewJob(savedJob)">{{ savedJob.jobTitle }}</td>
+          <td>{{ savedJob.companyName }}</td>
+          <td><span class="tag">{{ savedJob.jobStatus }}</span></td>
+          <td>{{ savedJob.savedOn | date:'dd-MM-yyyy' }}</td>
+          <td><p-button icon="pi pi-trash" styleClass="p-button-text p-button-danger p-button-sm" (onClick)="unsave(savedJob)"></p-button></td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="5" class="text-center">{{ 'savedJob.noneFound' | translate }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-card>
+</div>

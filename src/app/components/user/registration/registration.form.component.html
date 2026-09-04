@@ -1,4 +1,17 @@
-<div class="flex justify-content-center align-items-center min-h-screen p-4">
+<div class="auth-layout">
+  <aside class="auth-brand-panel">
+    <div class="auth-brand-content">
+      <h1>{{ 'auth.register.brandTitle' | translate }}</h1>
+      <p>{{ 'auth.register.brandSubtitle' | translate }}</p>
+      <ul class="auth-brand-points">
+        <li><i class="pi pi-check-circle"></i><span>{{ 'auth.register.brandPoint1' | translate }}</span></li>
+        <li><i class="pi pi-check-circle"></i><span>{{ 'auth.register.brandPoint2' | translate }}</span></li>
+        <li><i class="pi pi-check-circle"></i><span>{{ 'auth.register.brandPoint3' | translate }}</span></li>
+      </ul>
+    </div>
+  </aside>
+
+  <div class="auth-form-panel flex justify-content-center align-items-center p-4">
   <p-card class="register-card" styleClass="register-card-surface">
     <ng-template pTemplate="title">
       <div class="text-center">{{ 'auth.register.title' | translate }}</div>
@@ -125,6 +138,13 @@
           {{ 'auth.register.signIn' | translate }}
         </a>
       </p>
+      <p class="text-sm text-center mt-2 mb-0">
+        {{ 'auth.login.hiringPrompt' | translate }}
+        <a routerLink="/register/recruiter" class="text-primary font-semibold ml-1 white-space-nowrap">
+          {{ 'home.registerCompany' | translate }}
+        </a>
+      </p>
     </form>
   </p-card>
+  </div>
 </div>

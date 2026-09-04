@@ -1,0 +1,48 @@
+<app-page-header [title]="'company.viewTitle' | translate">
+  <p-button *appPermissionHide="'company-manage'" [label]="'common.edit' | translate" icon="pi pi-pencil" [routerLink]="['/companies', companyId, 'edit']"></p-button>
+  <ng-container *appPermissionHide="'company-manage'">
+    <p-button *ngIf="!isCompanyScoped" [label]="'company.removeButton' | translate" icon="pi pi-trash" styleClass="p-button-danger" (onClick)="deleteCompany()"></p-button>
+  </ng-container>
+  <p-button [label]="'common.back' | translate" icon="pi pi-arrow-left" styleClass="p-button-secondary" (onClick)="goBack()"></p-button>
+</app-page-header>
+
+<div class="flex justify-content-center mt-3 px-3">
+  <p-card class="page-card">
+    <table class="detail-table">
+      <tbody>
+        <tr>
+          <td class="detail-label">{{ 'common.name' | translate }}</td>
+          <td class="detail-value">{{ company.name }}</td>
+        </tr>
+        <tr>
+          <td class="detail-label">{{ 'company.industry' | translate }}</td>
+          <td class="detail-value">{{ company.industry || ('common.notAvailable' | translate) }}</td>
+        </tr>
+        <tr>
+          <td class="detail-label">{{ 'company.website' | translate }}</td>
+          <td class="detail-value">{{ company.website || ('common.notAvailable' | translate) }}</td>
+        </tr>
+        <tr>
+          <td class="detail-label">{{ 'company.phone' | translate }}</td>
+          <td class="detail-value">{{ company.phone || ('common.notAvailable' | translate) }}</td>
+        </tr>
+        <tr>
+          <td class="detail-label">{{ 'company.email' | translate }}</td>
+          <td class="detail-value">{{ company.email || ('common.notAvailable' | translate) }}</td>
+        </tr>
+        <tr>
+          <td class="detail-label">{{ 'company.size' | translate }}</td>
+          <td class="detail-value">{{ company.size || ('common.notAvailable' | translate) }}</td>
+        </tr>
+        <tr>
+          <td class="detail-label">{{ 'company.address' | translate }}</td>
+          <td class="detail-value">{{ company.address || ('common.notAvailable' | translate) }}</td>
+        </tr>
+        <tr>
+          <td class="detail-label">{{ 'common.description' | translate }}</td>
+          <td class="detail-value">{{ company.description || ('common.notAvailable' | translate) }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </p-card>
+</div>

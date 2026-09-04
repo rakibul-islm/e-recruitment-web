@@ -9,6 +9,8 @@ import { CommonConfirmDialogService } from '../../../../services/utility/common.
 import { UserAccount } from '../../../../services/user/domain/user.domain';
 import { Role } from '../../../../services/role/domain/role.domain';
 import { UserGroup } from '../../../../services/user-group/domain/user.group.domain';
+import { CompanyService } from '../../../../services/company/company.service';
+import { Company } from '../../../../services/company/domain/company.domain';
 
 @Component({
   selector: 'app-user-form',
@@ -18,6 +20,7 @@ export class UserFormComponent extends BaseComponent implements OnInit {
   userForm!: FormGroup;
   roles: Role[] = [];
   userGroups: UserGroup[] = [];
+  companies: Company[] = [];
   userId?: number;
   availableRoles: Role[] = [];
   assignedRoles: Role[] = [];
@@ -29,6 +32,7 @@ export class UserFormComponent extends BaseComponent implements OnInit {
     private userService: UserService,
     private roleService: RoleService,
     private userGroupService: UserGroupService,
+    private companyService: CompanyService,
     private commonConfirmDialogService: CommonConfirmDialogService
   ) {
     super();
@@ -37,6 +41,7 @@ export class UserFormComponent extends BaseComponent implements OnInit {
   ngOnInit(): void {
     this.fetchRoles();
     this.fetchUserGroups();
+    this.fetchCompanies();
 
     this.subscribers.paramMapSub = this.route.paramMap.subscribe(paramMap => {
       this.userId = Number(paramMap.get('id'));
@@ -57,7 +62,8 @@ export class UserFormComponent extends BaseComponent implements OnInit {
       locked: [formData.locked ?? false],
       expiryDate: [formData.expiryDate ? new Date(formData.expiryDate) : null, Validators.required],
       roleIds: [formData.roles ? formData.roles.map(role => role.id) : []],
-      userGroupId: [formData.userGroupId ?? null]
+      userGroupId: [formData.userGroupId ?? null],
+      companyId: [formData.companyId ?? null]
     });
 
     this.subscribers.userGroupChangeSub = this.userForm.get('userGroupId')!.valueChanges
@@ -108,6 +114,14 @@ export class UserFormComponent extends BaseComponent implements OnInit {
     params.set('isPageable', false);
     this.subscribers.fetchUserGroupsSub = this.userGroupService.searchUserGroups(params).subscribe(response => {
       this.userGroups = response?.list || [];
+    });
+  }
+
+  fetchCompanies(): void {
+    const params = new Map<any, any>();
+    params.set('isPageable', false);
+    this.subscribers.fetchCompaniesSub = this.companyService.searchCompanies(params).subscribe(response => {
+      this.companies = response?.list || [];
     });
   }
 

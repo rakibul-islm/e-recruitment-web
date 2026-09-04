@@ -1,3 +1,185 @@
-<app-page-header [title]="'menu.dashboard' | translate"></app-page-header>
+<app-page-header [title]="'dashboard.pageTitle' | translate"></app-page-header>
 
-<p>{{ 'dashboard.welcome' | translate }}</p>
+<div class="p-3 dashboard-page">
+  <p class="dashboard-welcome">{{ 'dashboard.welcomeBack' | translate: { name: profile.fullName } }}</p>
+
+  <!-- Recruiter / Admin view -->
+  <ng-container *ngIf="roleResolved && isStaff">
+    <div class="summary-cards">
+      <div class="summary-card">
+        <i class="pi pi-briefcase"></i>
+        <div>
+          <div class="summary-card-value">{{ summary.totalJobs }}</div>
+          <div class="summary-card-label">{{ 'analyticsPage.totalJobs' | translate }} ({{ summary.publishedJobs }} {{ 'jobPosting.statusPublished' | translate | lowercase }})</div>
+        </div>
+      </div>
+      <div class="summary-card">
+        <i class="pi pi-send"></i>
+        <div>
+          <div class="summary-card-value">{{ summary.totalApplications }}</div>
+          <div class="summary-card-label">{{ 'analyticsPage.totalApplications' | translate }}</div>
+        </div>
+      </div>
+      <div class="summary-card">
+        <i class="pi pi-calendar"></i>
+        <div>
+          <div class="summary-card-value">{{ summary.applicationsLast30Days }}</div>
+          <div class="summary-card-label">{{ 'analyticsPage.applicationsLast30Days' | translate }}</div>
+        </div>
+      </div>
+      <div class="summary-card">
+        <i class="pi pi-check-circle"></i>
+        <div>
+          <div class="summary-card-value">{{ summary.hiresLast30Days }}</div>
+          <div class="summary-card-label">{{ 'analyticsPage.hiresLast30Days' | translate }}</div>
+        </div>
+      </div>
+      <div class="summary-card">
+        <i class="pi pi-clock"></i>
+        <div>
+          <div class="summary-card-value">{{ summary.avgTimeToHireDays ? (summary.avgTimeToHireDays | number:'1.0-1') : ('common.notAvailable' | translate) }}</div>
+          <div class="summary-card-label">{{ 'analyticsPage.avgTimeToHire' | translate }}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="col-12 md:col-7">
+        <p-card>
+          <h3 class="form-section-title">{{ 'analyticsPage.applicationsByStatus' | translate }}</h3>
+          <div class="stat-bars" *ngIf="statusEntries.length; else noStaffApplications">
+            <div class="stat-bar-row" *ngFor="let entry of statusEntries">
+              <span class="stat-bar-label">{{ entry.status }}</span>
+              <div class="stat-bar-track">
+                <div class="stat-bar-fill" [style.width.%]="summary.totalApplications ? (entry.count / summary.totalApplications * 100) : 0"></div>
+              </div>
+              <span class="stat-bar-value">{{ entry.count }}</span>
+            </div>
+          </div>
+          <ng-template #noStaffApplications>
+            <p class="text-center dashboard-empty">{{ 'analyticsPage.noApplicationsYet' | translate }}</p>
+          </ng-template>
+        </p-card>
+      </div>
+      <div class="col-12 md:col-5">
+        <p-card>
+          <h3 class="form-section-title">{{ 'dashboard.quickActions' | translate }}</h3>
+          <div class="quick-links">
+            <a class="quick-link-card" routerLink="/job-postings" *appPermissionHide="'job-circular-list'">
+              <i class="pi pi-briefcase"></i>
+              <span>{{ 'menu.jobPostings' | translate }}</span>
+            </a>
+            <a class="quick-link-card" routerLink="/application-management" *appPermissionHide="'job-circular-manage'">
+              <i class="pi pi-users"></i>
+              <span>{{ 'menu.applicationManagement' | translate }}</span>
+            </a>
+            <a class="quick-link-card" routerLink="/companies" *appPermissionHide="'company-list'">
+              <i class="pi pi-building"></i>
+              <span>{{ 'menu.companies' | translate }}</span>
+            </a>
+            <a class="quick-link-card" routerLink="/analytics" *appPermissionHide="'analytics-list'">
+              <i class="pi pi-chart-bar"></i>
+              <span>{{ 'menu.analytics' | translate }}</span>
+            </a>
+          </div>
+        </p-card>
+      </div>
+    </div>
+  </ng-container>
+
+  <!-- Candidate view -->
+  <ng-container *ngIf="roleResolved && !isStaff">
+    <div class="summary-cards">
+      <div class="summary-card">
+        <i class="pi pi-send"></i>
+        <div>
+          <div class="summary-card-value">{{ applications.length }}</div>
+          <div class="summary-card-label">{{ 'dashboard.totalApplications' | translate }}</div>
+        </div>
+      </div>
+      <div class="summary-card">
+        <i class="pi pi-sync"></i>
+        <div>
+          <div class="summary-card-value">{{ activeApplicationsCount }}</div>
+          <div class="summary-card-label">{{ 'dashboard.activeApplications' | translate }}</div>
+        </div>
+      </div>
+      <div class="summary-card">
+        <i class="pi pi-file"></i>
+        <div>
+          <div class="summary-card-value">{{ offersToRespondCount }}</div>
+          <div class="summary-card-label">{{ 'dashboard.offersToRespond' | translate }}</div>
+        </div>
+      </div>
+      <div class="summary-card">
+        <i class="pi pi-bookmark"></i>
+        <div>
+          <div class="summary-card-value">{{ savedJobsCount }}</div>
+          <div class="summary-card-label">{{ 'menu.savedJobs' | translate }}</div>
+        </div>
+      </div>
+      <div class="summary-card">
+        <i class="pi pi-bell"></i>
+        <div>
+          <div class="summary-card-value">{{ jobAlertsCount }}</div>
+          <div class="summary-card-label">{{ 'menu.jobAlerts' | translate }}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="col-12 md:col-7">
+        <p-card>
+          <div class="dashboard-card-heading">
+            <h3 class="form-section-title">{{ 'dashboard.recentApplications' | translate }}</h3>
+            <a class="dashboard-view-all" routerLink="/my/applications">{{ 'dashboard.viewAll' | translate }}</a>
+          </div>
+          <p-table [value]="recentApplications" responsiveLayout="scroll" dataKey="id">
+            <ng-template pTemplate="header">
+              <tr>
+                <th>{{ 'candidateApplication.jobTitle' | translate }}</th>
+                <th>{{ 'candidateApplication.appliedOn' | translate }}</th>
+                <th>{{ 'common.status' | translate }}</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-application>
+              <tr class="selectable-row" [routerLink]="['/my/applications', application.id]">
+                <td>{{ application.jobTitle }}</td>
+                <td>{{ application.appliedOn | date:'dd-MM-yyyy' }}</td>
+                <td><span class="tag">{{ application.status }}</span></td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+              <tr>
+                <td colspan="3" class="text-center">{{ 'candidateApplication.noneFound' | translate }}</td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </p-card>
+      </div>
+      <div class="col-12 md:col-5">
+        <p-card>
+          <h3 class="form-section-title">{{ 'dashboard.quickActions' | translate }}</h3>
+          <div class="quick-links">
+            <a class="quick-link-card" routerLink="/jobs">
+              <i class="pi pi-search"></i>
+              <span>{{ 'menu.findJobs' | translate }}</span>
+            </a>
+            <a class="quick-link-card" routerLink="/my/profile">
+              <i class="pi pi-user"></i>
+              <span>{{ 'menu.myCv' | translate }}</span>
+            </a>
+            <a class="quick-link-card" routerLink="/my/saved-jobs">
+              <i class="pi pi-bookmark"></i>
+              <span>{{ 'menu.savedJobs' | translate }}</span>
+            </a>
+            <a class="quick-link-card" routerLink="/my/job-alerts">
+              <i class="pi pi-bell"></i>
+              <span>{{ 'menu.jobAlerts' | translate }}</span>
+            </a>
+          </div>
+        </p-card>
+      </div>
+    </div>
+  </ng-container>
+</div>

@@ -2,12 +2,35 @@ import { MenuItem } from 'primeng/api';
 
 export interface AppMenuItem extends MenuItem {
   routeName?: string;
+  authOnly?: boolean;
   items?: AppMenuItem[];
 }
 
 export const MENU_ITEMS: AppMenuItem[] = [
-  { label: 'menu.dashboard', icon: 'pi pi-home', routerLink: '/dashboard' },
-  { label: 'menu.myCv', icon: 'pi pi-file', routerLink: '/view-cv' },
+  { label: 'menu.dashboard', icon: 'pi pi-home', routerLink: '/dashboard', authOnly: true },
+  { label: 'menu.findJobs', icon: 'pi pi-briefcase', routerLink: '/jobs' },
+  {
+    label: 'menu.candidate',
+    icon: 'pi pi-user',
+    authOnly: true,
+    items: [
+      { label: 'menu.myCv', icon: 'pi pi-file', routerLink: '/my/profile' },
+      { label: 'menu.myApplications', icon: 'pi pi-send', routerLink: '/my/applications' },
+      { label: 'menu.savedJobs', icon: 'pi pi-bookmark', routerLink: '/my/saved-jobs' },
+      { label: 'menu.jobAlerts', icon: 'pi pi-bell', routerLink: '/my/job-alerts' }
+    ]
+  },
+  {
+    label: 'menu.recruiting',
+    icon: 'pi pi-building',
+    items: [
+      { label: 'menu.companies', icon: 'pi pi-building', routerLink: '/companies', routeName: 'company-list' },
+      { label: 'menu.jobPostings', icon: 'pi pi-briefcase', routerLink: '/job-postings', routeName: 'job-circular-list' },
+      { label: 'menu.applicationManagement', icon: 'pi pi-users', routerLink: '/application-management', routeName: 'job-circular-manage' },
+      { label: 'menu.analytics', icon: 'pi pi-chart-bar', routerLink: '/analytics', routeName: 'analytics-list' },
+      { label: 'menu.recruiterApplications', icon: 'pi pi-user-plus', routerLink: '/recruiter-applications', routeName: 'recruiter-application-list' }
+    ]
+  },
   {
     label: 'menu.administration',
     icon: 'pi pi-cog',

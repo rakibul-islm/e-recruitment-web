@@ -1,0 +1,189 @@
+<app-page-header [title]="'applicationManagement.detailsTitle' | translate">
+  <p-button *ngIf="application.generatedCvId" [label]="'applicationManagement.downloadCv' | translate" icon="pi pi-download" styleClass="p-button-secondary" (onClick)="downloadCv()"></p-button>
+  <p-button [label]="'common.back' | translate" icon="pi pi-arrow-left" styleClass="p-button-secondary" (onClick)="goBack()"></p-button>
+</app-page-header>
+
+<div class="flex justify-content-center mt-3 px-3">
+  <div class="page-card">
+    <p-card class="mb-3">
+      <table class="detail-table">
+        <tbody>
+          <tr>
+            <td class="detail-label">{{ 'candidateApplication.job' | translate }}</td>
+            <td class="detail-value">{{ application.jobTitle }}</td>
+          </tr>
+          <tr>
+            <td class="detail-label">{{ 'applicationManagement.candidate' | translate }}</td>
+            <td class="detail-value">{{ application.candidateName }} ({{ application.candidateEmail }})</td>
+          </tr>
+          <tr>
+            <td class="detail-label">{{ 'candidateApplication.appliedOn' | translate }}</td>
+            <td class="detail-value">{{ application.appliedOn | date:'dd-MM-yyyy HH:mm' }}</td>
+          </tr>
+          <tr>
+            <td class="detail-label">{{ 'applicationManagement.currentStatus' | translate }}</td>
+            <td class="detail-value"><span class="tag">{{ application.status }}</span></td>
+          </tr>
+          <tr *ngIf="application.coverLetter">
+            <td class="detail-label">{{ 'applicationManagement.coverLetter' | translate }}</td>
+            <td class="detail-value" style="white-space:pre-line">{{ application.coverLetter }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </p-card>
+
+    <p-card class="mb-3">
+      <h3 class="form-section-title">{{ 'applicationManagement.updateStatus' | translate }}</h3>
+      <form [formGroup]="statusForm" class="flex flex-column gap-3">
+        <div class="grid row-gap-3">
+          <div class="col-12 md:col-6">
+            <p-floatLabel>
+              <p-dropdown id="statusChangeStatus" [options]="statusOptions" formControlName="status" optionLabel="label" optionValue="value" styleClass="w-full"></p-dropdown>
+              <label for="statusChangeStatus">{{ 'applicationManagement.newStatus' | translate }}</label>
+            </p-floatLabel>
+          </div>
+          <div class="col-12">
+            <p-floatLabel>
+              <textarea id="statusChangeNote" pInputTextarea formControlName="note" class="w-full" rows="2"></textarea>
+              <label for="statusChangeNote">{{ 'applicationManagement.noteOptional' | translate }}</label>
+            </p-floatLabel>
+          </div>
+        </div>
+        <div>
+          <p-button [label]="'applicationManagement.updateStatus' | translate" icon="pi pi-check" [loading]="updatingStatus" (onClick)="changeStatus()"></p-button>
+        </div>
+      </form>
+    </p-card>
+
+    <p-card class="mb-3">
+      <h3 class="form-section-title">{{ 'applicationManagement.statusHistory' | translate }}</h3>
+      <table class="detail-table">
+        <tbody>
+          <tr *ngFor="let entry of history">
+            <td class="detail-label">{{ entry.changedOn | date:'dd-MM-yyyy HH:mm' }}</td>
+            <td class="detail-value">
+              <span class="tag">{{ entry.status }}</span>
+              <span *ngIf="entry.note"> - {{ entry.note }}</span>
+              <span class="text-color-secondary"> ({{ 'applicationManagement.by' | translate }} {{ entry.changedBy }})</span>
+            </td>
+          </tr>
+          <tr *ngIf="!history.length">
+            <td colspan="2" class="text-center">{{ 'applicationManagement.noHistory' | translate }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </p-card>
+
+    <p-card class="mb-3">
+      <h3 class="form-section-title flex justify-content-between align-items-center flex-wrap gap-2">
+        {{ 'candidateApplication.interviews' | translate }}
+        <p-button [label]="'applicationManagement.scheduleInterview' | translate" icon="pi pi-plus" styleClass="p-button-sm" (onClick)="openScheduleInterview()"></p-button>
+      </h3>
+      <div *ngFor="let interview of interviews" class="mb-3 p-3" style="border:1px solid #e5e7eb;border-radius:8px;">
+        <div class="flex justify-content-between align-items-start flex-wrap gap-2 mb-2">
+          <div>
+            <strong>{{ interview.title }}</strong>
+            <div class="text-color-secondary">{{ interview.scheduledAt | date:'dd-MM-yyyy HH:mm' }} &middot; {{ interview.mode }}</div>
+            <div *ngIf="interview.location" class="text-color-secondary">{{ interview.location }}</div>
+          </div>
+          <span class="tag">{{ interview.status }}</span>
+        </div>
+        <div *ngIf="interview.feedback.length" class="mb-2">
+          <div *ngFor="let fb of interview.feedback" class="text-sm">
+            <strong>{{ fb.interviewerName }}</strong>: {{ fb.rating }}/5 - {{ fb.comments }}
+          </div>
+        </div>
+        <div class="flex gap-2 flex-wrap" *ngIf="interview.status === 'SCHEDULED'">
+          <p-button [label]="'applicationManagement.markCompleted' | translate" icon="pi pi-check" styleClass="p-button-outlined p-button-sm" (onClick)="markInterviewCompleted(interview)"></p-button>
+          <p-button [label]="'common.cancel' | translate" icon="pi pi-times" styleClass="p-button-outlined p-button-danger p-button-sm" (onClick)="cancelInterview(interview)"></p-button>
+        </div>
+      </div>
+      <div *ngIf="!interviews.length" class="text-center text-color-secondary p-2">{{ 'applicationManagement.noInterviews' | translate }}</div>
+    </p-card>
+
+    <p-card class="mb-3">
+      <h3 class="form-section-title flex justify-content-between align-items-center flex-wrap gap-2">
+        {{ 'candidateApplication.offers' | translate }}
+        <p-button [label]="'applicationManagement.createOffer' | translate" icon="pi pi-plus" styleClass="p-button-sm" (onClick)="openCreateOffer()"></p-button>
+      </h3>
+      <div *ngFor="let offer of offers" class="mb-3 p-3" style="border:1px solid #e5e7eb;border-radius:8px;">
+        <div class="flex justify-content-between align-items-start flex-wrap gap-2 mb-2">
+          <div>
+            <strong>{{ offer.position }}</strong>
+            <div class="text-color-secondary">{{ offer.salaryOffered }}</div>
+          </div>
+          <span class="tag">{{ offer.status }}</span>
+        </div>
+        <div class="flex gap-2 flex-wrap">
+          <p-button *ngIf="!offer.offerLetterFileId" [label]="'applicationManagement.generateLetter' | translate" icon="pi pi-file-pdf" styleClass="p-button-outlined p-button-sm" (onClick)="generateLetter(offer)"></p-button>
+          <p-button *ngIf="offer.offerLetterFileId" [label]="'applicationManagement.downloadLetter' | translate" icon="pi pi-download" styleClass="p-button-outlined p-button-sm" (onClick)="downloadOfferLetter(offer)"></p-button>
+          <p-button *ngIf="offer.status === 'DRAFT' && offer.offerLetterFileId" [label]="'applicationManagement.sendToCandidate' | translate" icon="pi pi-send" styleClass="p-button-sm" (onClick)="sendOffer(offer)"></p-button>
+        </div>
+      </div>
+      <div *ngIf="!offers.length" class="text-center text-color-secondary p-2">{{ 'applicationManagement.noOffers' | translate }}</div>
+    </p-card>
+
+    <p-card>
+      <h3 class="form-section-title flex justify-content-between align-items-center flex-wrap gap-2">
+        {{ 'candidateApplication.onboardingChecklist' | translate }}
+        <p-button [label]="'applicationManagement.addTask' | translate" icon="pi pi-plus" styleClass="p-button-sm" (onClick)="openAddTask()"></p-button>
+      </h3>
+      <div *ngFor="let task of onboardingTasks" class="flex align-items-center justify-content-between flex-wrap gap-2 mb-2 p-2" style="border-bottom:1px solid #f1f5f9;">
+        <div>
+          <div [style.textDecoration]="task.completed ? 'line-through' : 'none'">{{ task.title }}</div>
+          <div class="text-color-secondary" *ngIf="task.description">{{ task.description }}</div>
+        </div>
+        <div class="flex gap-2">
+          <p-button *ngIf="!task.completed" [label]="'candidateApplication.markComplete' | translate" icon="pi pi-check" styleClass="p-button-outlined p-button-sm" (onClick)="completeTask(task)"></p-button>
+          <span *ngIf="task.completed" class="tag">{{ 'candidateApplication.done' | translate }}</span>
+          <p-button icon="pi pi-trash" styleClass="p-button-text p-button-danger p-button-sm" (onClick)="removeTask(task)"></p-button>
+        </div>
+      </div>
+      <div *ngIf="!onboardingTasks.length" class="text-center text-color-secondary p-2">{{ 'applicationManagement.noTasks' | translate }}</div>
+    </p-card>
+  </div>
+</div>
+
+<p-dialog [header]="'applicationManagement.scheduleInterview' | translate" [(visible)]="interviewDialogVisible" [modal]="true"
+  [style]="{ width: '32rem' }" [breakpoints]="{ '575px': '95vw' }">
+  <div [formGroup]="interviewForm" class="flex flex-column gap-3">
+    <input type="text" pInputText class="w-full" [placeholder]="'applicationManagement.interviewTitlePlaceholder' | translate" formControlName="title" />
+    <p-calendar [placeholder]="'applicationManagement.scheduledAt' | translate" formControlName="scheduledAt" [showTime]="true" dateFormat="dd-mm-yy" styleClass="w-full" appendTo="body"></p-calendar>
+    <input type="number" pInputText class="w-full" [placeholder]="'applicationManagement.durationMinutes' | translate" formControlName="durationMinutes" />
+    <p-dropdown [options]="interviewModeOptions" formControlName="mode" optionLabel="label" optionValue="value" styleClass="w-full" [placeholder]="'applicationManagement.mode' | translate"></p-dropdown>
+    <input type="text" pInputText class="w-full" [placeholder]="'applicationManagement.locationPlaceholder' | translate" formControlName="location" />
+    <input type="text" pInputText class="w-full" [placeholder]="'applicationManagement.interviewerIdsPlaceholder' | translate" formControlName="interviewerUserIds" />
+  </div>
+  <ng-template pTemplate="footer">
+    <p-button [label]="'common.cancel' | translate" styleClass="p-button-outlined p-button-secondary" (onClick)="interviewDialogVisible = false"></p-button>
+    <p-button [label]="'applicationManagement.schedule' | translate" icon="pi pi-check" [loading]="schedulingInterview" (onClick)="scheduleInterview()"></p-button>
+  </ng-template>
+</p-dialog>
+
+<p-dialog [header]="'applicationManagement.createOffer' | translate" [(visible)]="offerDialogVisible" [modal]="true"
+  [style]="{ width: '32rem' }" [breakpoints]="{ '575px': '95vw' }">
+  <div [formGroup]="offerForm" class="flex flex-column gap-3">
+    <input type="text" pInputText class="w-full" [placeholder]="'applicationManagement.position' | translate" formControlName="position" />
+    <input type="text" pInputText class="w-full" [placeholder]="'applicationManagement.salaryOfferedPlaceholder' | translate" formControlName="salaryOffered" />
+    <p-calendar [placeholder]="'candidateApplication.startDateLabel' | translate" formControlName="startDate" dateFormat="dd-mm-yy" styleClass="w-full" appendTo="body"></p-calendar>
+    <p-calendar [placeholder]="'applicationManagement.offerValidUntil' | translate" formControlName="expiryDate" dateFormat="dd-mm-yy" styleClass="w-full" appendTo="body"></p-calendar>
+    <textarea pInputTextarea class="w-full" rows="3" [placeholder]="'applicationManagement.notes' | translate" formControlName="notes"></textarea>
+  </div>
+  <ng-template pTemplate="footer">
+    <p-button [label]="'common.cancel' | translate" styleClass="p-button-outlined p-button-secondary" (onClick)="offerDialogVisible = false"></p-button>
+    <p-button [label]="'applicationManagement.createOffer' | translate" icon="pi pi-check" [loading]="savingOffer" (onClick)="createOffer()"></p-button>
+  </ng-template>
+</p-dialog>
+
+<p-dialog [header]="'applicationManagement.addTask' | translate" [(visible)]="taskDialogVisible" [modal]="true"
+  [style]="{ width: '28rem' }" [breakpoints]="{ '575px': '95vw' }">
+  <div [formGroup]="taskForm" class="flex flex-column gap-3">
+    <input type="text" pInputText class="w-full" [placeholder]="'applicationManagement.taskTitlePlaceholder' | translate" formControlName="title" />
+    <textarea pInputTextarea class="w-full" rows="2" [placeholder]="'common.description' | translate" formControlName="description"></textarea>
+    <p-calendar [placeholder]="'applicationManagement.dueDate' | translate" formControlName="dueDate" dateFormat="dd-mm-yy" styleClass="w-full" appendTo="body"></p-calendar>
+  </div>
+  <ng-template pTemplate="footer">
+    <p-button [label]="'common.cancel' | translate" styleClass="p-button-outlined p-button-secondary" (onClick)="taskDialogVisible = false"></p-button>
+    <p-button [label]="'applicationManagement.addTask' | translate" icon="pi pi-check" [loading]="savingTask" (onClick)="addTask()"></p-button>
+  </ng-template>
+</p-dialog>

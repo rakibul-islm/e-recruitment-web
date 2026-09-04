@@ -1,0 +1,79 @@
+<app-page-header [title]="'jobPosting.viewTitle' | translate">
+  <p-button *appPermissionHide="'application-list'" [label]="'jobPosting.viewApplications' | translate" icon="pi pi-users" styleClass="p-button-secondary" (onClick)="viewApplications()"></p-button>
+  <p-button *ngIf="jobPosting.status === 'DRAFT'" [label]="'jobPosting.publish' | translate" icon="pi pi-check" styleClass="p-button-success" (onClick)="changeStatus('PUBLISHED')"></p-button>
+  <p-button *ngIf="jobPosting.status === 'PUBLISHED'" [label]="'jobPosting.close' | translate" icon="pi pi-ban" styleClass="p-button-warning" (onClick)="changeStatus('CLOSED')"></p-button>
+  <p-button *appPermissionHide="'job-circular-manage'" [label]="'common.edit' | translate" icon="pi pi-pencil" [routerLink]="['/job-postings', jobPostingId, 'edit']"></p-button>
+  <p-button *appPermissionHide="'job-circular-delete'" [label]="'company.removeButton' | translate" icon="pi pi-trash" styleClass="p-button-danger" (onClick)="deleteJobPosting()"></p-button>
+  <p-button [label]="'common.back' | translate" icon="pi pi-arrow-left" styleClass="p-button-secondary" (onClick)="goBack()"></p-button>
+</app-page-header>
+
+<div class="flex justify-content-center mt-3 px-3">
+  <p-card class="page-card">
+    <table class="detail-table">
+      <tbody>
+        <tr>
+          <td class="detail-label">{{ 'candidateApplication.jobTitle' | translate }}</td>
+          <td class="detail-value">{{ jobPosting.jobTitle }}</td>
+        </tr>
+        <tr>
+          <td class="detail-label">{{ 'common.status' | translate }}</td>
+          <td class="detail-value"><span class="tag">{{ jobPosting.status }}</span></td>
+        </tr>
+        <tr>
+          <td class="detail-label">{{ 'jobPortal.company' | translate }}</td>
+          <td class="detail-value">{{ jobPosting.companyName }}</td>
+        </tr>
+        <tr>
+          <td class="detail-label">{{ 'jobPortal.vacancy' | translate }}</td>
+          <td class="detail-value">{{ jobPosting.vacancy }}</td>
+        </tr>
+        <tr>
+          <td class="detail-label">{{ 'jobPortal.applicationDeadline' | translate }}</td>
+          <td class="detail-value">{{ jobPosting.applicationDeadLine | date:'dd-MM-yyyy' }}</td>
+        </tr>
+        <tr>
+          <td class="detail-label">{{ 'jobPortal.experience' | translate }}</td>
+          <td class="detail-value">{{ jobPosting.experience || ('common.notAvailable' | translate) }}</td>
+        </tr>
+        <tr>
+          <td class="detail-label">{{ 'jobPosting.jobLocation' | translate }}</td>
+          <td class="detail-value">{{ jobPosting.jobLocation || ('common.notAvailable' | translate) }}</td>
+        </tr>
+        <tr>
+          <td class="detail-label">{{ 'jobPortal.workplace' | translate }}</td>
+          <td class="detail-value">{{ jobPosting.workPlace || ('common.notAvailable' | translate) }}</td>
+        </tr>
+        <tr>
+          <td class="detail-label">{{ 'jobPortal.employmentType' | translate }}</td>
+          <td class="detail-value">{{ jobPosting.employmentStatus || ('common.notAvailable' | translate) }}</td>
+        </tr>
+        <tr>
+          <td class="detail-label">{{ 'jobAlert.category' | translate }}</td>
+          <td class="detail-value">{{ jobPosting.category || ('common.notAvailable' | translate) }}</td>
+        </tr>
+        <tr>
+          <td class="detail-label">{{ 'jobPortal.skills' | translate }}</td>
+          <td class="detail-value">{{ jobPosting.skills || ('common.notAvailable' | translate) }}</td>
+        </tr>
+        <tr>
+          <td class="detail-label">{{ 'jobPortal.salary' | translate }}</td>
+          <td class="detail-value">
+            {{ jobPosting.salaryMin || jobPosting.salaryMax ? (jobPosting.salaryMin || '?') + ' - ' + (jobPosting.salaryMax || '?') : (jobPosting.salary || ('common.notAvailable' | translate)) }}
+          </td>
+        </tr>
+        <tr>
+          <td class="detail-label">{{ 'jobPortal.requirements' | translate }}</td>
+          <td class="detail-value" [innerHTML]="jobPosting.jobRequirement"></td>
+        </tr>
+        <tr>
+          <td class="detail-label">{{ 'jobPortal.responsibilities' | translate }}</td>
+          <td class="detail-value" [innerHTML]="jobPosting.jobResponsibilities || ('common.notAvailable' | translate)"></td>
+        </tr>
+        <tr>
+          <td class="detail-label">{{ 'jobPortal.otherBenefits' | translate }}</td>
+          <td class="detail-value">{{ jobPosting.otherBenefits || ('common.notAvailable' | translate) }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </p-card>
+</div>

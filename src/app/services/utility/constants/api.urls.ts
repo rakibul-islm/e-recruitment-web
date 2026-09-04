@@ -73,4 +73,71 @@ export const API_URLS = {
     ARCHIVE_CONFIG_ARCHIVE_NOW: 'archive-config/:id/archive-now',
     FIND_ARCHIVE_CONFIG_ARCHIVED_DATA: 'archive-config/:id/archived-data',
 
+    FILTER_COMPANY: 'company/filter',
+    CREATE_COMPANY: 'company',
+    UPDATE_COMPANY: 'company',
+    FIND_COMPANY_BY_ID: 'company/:id',
+    REMOVE_COMPANY: 'company/:id',
+
+    FILTER_COMPANY_TYPE: 'company-type/filter',
+    CREATE_COMPANY_TYPE: 'company-type',
+
+    FILTER_JOB_POSTING: 'job-circular/filter',
+    CREATE_JOB_POSTING: 'job-circular',
+    UPDATE_JOB_POSTING: 'job-circular',
+    FIND_JOB_POSTING_BY_ID: 'job-circular/:id',
+    REMOVE_JOB_POSTING: 'job-circular/:id',
+    AI_SUGGEST_JOB_POSTING: 'job-circular/ai-suggest',
+
+    FETCH_CANDIDATE_PROFILE: 'candidate-profile',
+    UPDATE_CANDIDATE_PROFILE: 'candidate-profile',
+    GENERATE_CANDIDATE_CV: 'candidate-profile/generate-cv',
+    LIST_CANDIDATE_CVS: 'candidate-profile/cv',
+    DOWNLOAD_CANDIDATE_CV: 'candidate-profile/cv/:id/download',
+
+    APPLY_TO_JOB: 'application',
+    MY_APPLICATIONS: 'application/my',
+    FILTER_APPLICATIONS: 'application/filter',
+    FIND_APPLICATION_BY_ID: 'application/:id',
+    CHANGE_APPLICATION_STATUS: 'application/:id/status',
+    APPLICATION_HISTORY: 'application/:id/history',
+    DOWNLOAD_APPLICATION_CV: 'application/:id/cv',
+
+    SCHEDULE_INTERVIEW: 'interview',
+    FILTER_INTERVIEWS: 'interview/filter',
+    FIND_INTERVIEW_BY_ID: 'interview/:id',
+    INTERVIEWS_BY_APPLICATION: 'interview/by-application/:applicationId',
+    CHANGE_INTERVIEW_STATUS: 'interview/:id/status',
+    SUBMIT_INTERVIEW_FEEDBACK: 'interview/:id/feedback',
+
+    CREATE_OFFER: 'offer',
+    GENERATE_OFFER_LETTER: 'offer/:id/generate-letter',
+    SEND_OFFER: 'offer/:id/send',
+    FIND_OFFER_BY_ID: 'offer/:id',
+    OFFERS_BY_APPLICATION: 'offer/by-application/:applicationId',
+    MY_OFFERS: 'offer/my',
+    RESPOND_TO_OFFER: 'offer/:id/respond',
+    DOWNLOAD_OFFER_LETTER: 'offer/:id/letter',
+
+    ADD_ONBOARDING_TASK: 'onboarding-task',
+    ONBOARDING_TASKS_BY_APPLICATION: 'onboarding-task/by-application/:applicationId',
+    COMPLETE_ONBOARDING_TASK: 'onboarding-task/:id/complete',
+    REMOVE_ONBOARDING_TASK: 'onboarding-task/:id',
+
+    TOGGLE_SAVED_JOB: 'saved-job/toggle/:jobCircularId',
+    MY_SAVED_JOBS: 'saved-job/my',
+
+    SAVE_JOB_ALERT: 'job-alert',
+    MY_JOB_ALERTS: 'job-alert/my',
+    REMOVE_JOB_ALERT: 'job-alert/:id',
+
+    ANALYTICS_SUMMARY: 'analytics/summary',
+    ANALYTICS_FUNNEL: 'analytics/funnel',
+
+    SUBMIT_RECRUITER_APPLICATION: 'recruiter-application',
+    FILTER_RECRUITER_APPLICATION: 'recruiter-application/filter',
+    FIND_RECRUITER_APPLICATION_BY_ID: 'recruiter-application/:id',
+    APPROVE_RECRUITER_APPLICATION: 'recruiter-application/:id/approve',
+    REJECT_RECRUITER_APPLICATION: 'recruiter-application/:id/reject',
+
 };

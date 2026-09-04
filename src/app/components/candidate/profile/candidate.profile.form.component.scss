@@ -1,0 +1,41 @@
+::ng-deep .cv-account-avatar.p-avatar {
+  width: 6.5rem !important;
+  height: 6.5rem !important;
+  font-size: 2.75rem !important;
+  flex-shrink: 0;
+
+  .p-avatar-image {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.cv-inherited-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  width: fit-content;
+  padding: 0.3rem 0.7rem;
+  border-radius: 1rem;
+  background: #fff7ed;
+  border: 1px solid #fed7aa;
+  color: #9a3412;
+  font-size: 0.75rem;
+  font-weight: 500;
+
+  .pi {
+    font-size: 0.75rem;
+    color: #c2410c;
+  }
+
+  a {
+    color: #9a3412;
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+
+    &:hover {
+      color: #7c2d12;
+    }
+  }
+}

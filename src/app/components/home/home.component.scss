@@ -1,0 +1,332 @@
+:host {
+  display: block;
+}
+
+.hero {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 78vh;
+  padding: 3rem 1.5rem;
+  background-image: url(/assets/images/background.image.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(160deg, rgba(3, 41, 103, 0.82), rgba(30, 77, 143, 0.72));
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 46rem;
+  text-align: center;
+  color: #ffffff;
+}
+
+.hero-eyebrow {
+  display: inline-block;
+  padding: 0.3rem 0.9rem;
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 1.25rem;
+}
+
+.hero-title {
+  margin: 0 0 0.75rem;
+  font-size: 2.6rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.hero-subtitle {
+  margin: 0 auto 2rem;
+  max-width: 34rem;
+  color: #e5edfa;
+  font-size: 1.05rem;
+}
+
+.hero-search {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  padding: 0.6rem;
+  background: rgba(255, 255, 255, 0.97);
+  border-radius: 14px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+  margin-bottom: 1.5rem;
+}
+
+.hero-search-field {
+  flex: 1 1 12rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0 0.75rem;
+
+  .pi {
+    color: #6b7280;
+  }
+
+  input {
+    border: none;
+    outline: none;
+    width: 100%;
+    padding: 0.65rem 0;
+    font-size: 0.95rem;
+    color: #1f2937;
+    background: transparent;
+  }
+}
+
+::ng-deep .hero-search-btn.p-button {
+  background: #1e4d8f !important;
+  border-color: #1e4d8f !important;
+  border-radius: 10px !important;
+  padding: 0.7rem 1.5rem !important;
+  font-weight: 700 !important;
+
+  &:hover {
+    background: #163a6b !important;
+    border-color: #163a6b !important;
+  }
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.9rem;
+  margin-bottom: 2.25rem;
+}
+
+.hero-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.7rem 1.6rem;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: box-shadow 0.15s ease, transform 0.1s ease;
+
+  &:hover {
+    transform: translateY(-1px);
+  }
+}
+
+.hero-btn-primary {
+  background: #ffffff;
+  color: #032967;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+}
+
+.hero-btn-secondary {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.hero-stats {
+  display: flex;
+  justify-content: center;
+  gap: 2.5rem;
+  flex-wrap: wrap;
+}
+
+.hero-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.hero-stat-value {
+  font-size: 1.6rem;
+  font-weight: 800;
+}
+
+.hero-stat-label {
+  font-size: 0.8rem;
+  color: #cfe0f7;
+  letter-spacing: 0.02em;
+}
+
+.home-section {
+  max-width: 76rem;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+}
+
+.home-section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+
+  &.center {
+    justify-content: center;
+    text-align: center;
+  }
+
+  h2 {
+    margin: 0;
+    color: #032967;
+    font-size: 1.5rem;
+    font-weight: 800;
+  }
+}
+
+.how-it-works-grid {
+  display: grid;
+  // min(15rem, 100%) keeps a narrow viewport (< 15rem wide track) from forcing horizontal
+  // overflow - plain "minmax(15rem, 1fr)" would hold the column at 15rem regardless of container.
+  grid-template-columns: repeat(auto-fit, minmax(min(15rem, 100%), 1fr));
+  gap: 1.5rem;
+}
+
+.how-it-works-step {
+  text-align: center;
+  padding: 2rem 1.25rem;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+
+  .pi {
+    font-size: 1.75rem;
+    color: #1e4d8f;
+    background: #eef3fb;
+    padding: 1rem;
+    border-radius: 50%;
+    margin-bottom: 1rem;
+  }
+
+  h3 {
+    margin: 0 0 0.5rem;
+    color: #032967;
+    font-size: 1.05rem;
+    font-weight: 700;
+  }
+
+  p {
+    margin: 0;
+    color: #6b7280;
+    font-size: 0.9rem;
+  }
+}
+
+.employer-banner {
+  background: linear-gradient(135deg, #032967, #1e4d8f);
+  padding: 2.75rem 1.5rem;
+}
+
+.employer-banner-content {
+  max-width: 76rem;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  color: #ffffff;
+
+  h2 {
+    margin: 0 0 0.35rem;
+    font-size: 1.4rem;
+    font-weight: 800;
+  }
+
+  p {
+    margin: 0;
+    color: #dce8fa;
+    font-size: 0.9rem;
+  }
+}
+
+.employer-banner-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+@media screen and (max-width: 576px) {
+  .hero {
+    min-height: 0;
+    padding: 3.5rem 1.1rem;
+  }
+
+  .hero-eyebrow {
+    font-size: 0.7rem;
+    margin-bottom: 1rem;
+  }
+
+  .hero-title {
+    font-size: 1.85rem;
+  }
+
+  .hero-subtitle {
+    font-size: 0.92rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-search {
+    padding: 0.75rem;
+    border-radius: 12px;
+  }
+
+  .hero-search-field {
+    flex-basis: 100%;
+    padding: 0.15rem 0.5rem;
+  }
+
+  ::ng-deep .hero-search-btn.p-button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    gap: 0.65rem;
+    margin-bottom: 2rem;
+  }
+
+  .hero-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .hero-stats {
+    gap: 2rem;
+  }
+
+  .home-section {
+    padding: 2.5rem 1.1rem;
+  }
+
+  .home-section-heading h2 {
+    font-size: 1.25rem;
+  }
+
+  .employer-banner {
+    padding: 2.25rem 1.1rem;
+  }
+
+  .employer-banner-content {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .employer-banner-actions {
+    width: 100%;
+    flex-direction: column;
+  }
+}

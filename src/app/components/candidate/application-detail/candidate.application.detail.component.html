@@ -1,0 +1,74 @@
+<app-page-header [title]="application.jobTitle || ('candidateApplication.detailsTitle' | translate)">
+  <p-button [label]="'common.back' | translate" icon="pi pi-arrow-left" styleClass="p-button-secondary" (onClick)="goBack()"></p-button>
+</app-page-header>
+
+<div class="flex justify-content-center mt-3 px-3">
+  <div class="page-card">
+    <p-card class="mb-3">
+      <table class="detail-table">
+        <tbody>
+          <tr>
+            <td class="detail-label">{{ 'candidateApplication.job' | translate }}</td>
+            <td class="detail-value">{{ application.jobTitle }}</td>
+          </tr>
+          <tr>
+            <td class="detail-label">{{ 'candidateApplication.appliedOn' | translate }}</td>
+            <td class="detail-value">{{ application.appliedOn | date:'dd-MM-yyyy HH:mm' }}</td>
+          </tr>
+          <tr>
+            <td class="detail-label">{{ 'common.status' | translate }}</td>
+            <td class="detail-value"><span class="tag">{{ application.status }}</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </p-card>
+
+    <p-card class="mb-3" *ngIf="offers.length">
+      <h3 class="form-section-title">{{ 'candidateApplication.offers' | translate }}</h3>
+      <div *ngFor="let offer of offers" class="mb-3 p-3" style="border:1px solid #e5e7eb;border-radius:8px;">
+        <div class="flex justify-content-between align-items-start flex-wrap gap-2 mb-2">
+          <div>
+            <strong>{{ offer.position }}</strong>
+            <div class="text-color-secondary">{{ offer.salaryOffered }}</div>
+          </div>
+          <span class="tag">{{ offer.status }}</span>
+        </div>
+        <div class="mb-2" *ngIf="offer.startDate">{{ 'candidateApplication.startDateLabel' | translate }}: {{ offer.startDate | date:'dd-MM-yyyy' }}</div>
+        <div class="mb-2" *ngIf="offer.expiryDate">{{ 'candidateApplication.validUntil' | translate }}: {{ offer.expiryDate | date:'dd-MM-yyyy' }}</div>
+        <div class="flex gap-2 flex-wrap">
+          <p-button *ngIf="offer.offerLetterFileId" [label]="'candidateApplication.downloadOfferLetter' | translate" icon="pi pi-download" styleClass="p-button-outlined p-button-sm" (onClick)="downloadOfferLetter(offer)"></p-button>
+          <ng-container *ngIf="offer.status === 'SENT'">
+            <p-button [label]="'candidateApplication.accept' | translate" icon="pi pi-check" styleClass="p-button-success p-button-sm" (onClick)="respondToOffer(offer, true)"></p-button>
+            <p-button [label]="'candidateApplication.decline' | translate" icon="pi pi-times" styleClass="p-button-danger p-button-sm" (onClick)="respondToOffer(offer, false)"></p-button>
+          </ng-container>
+        </div>
+      </div>
+    </p-card>
+
+    <p-card class="mb-3" *ngIf="interviews.length">
+      <h3 class="form-section-title">{{ 'candidateApplication.interviews' | translate }}</h3>
+      <div *ngFor="let interview of interviews" class="mb-3 p-3" style="border:1px solid #e5e7eb;border-radius:8px;">
+        <div class="flex justify-content-between align-items-start flex-wrap gap-2">
+          <div>
+            <strong>{{ interview.title }}</strong>
+            <div class="text-color-secondary">{{ interview.scheduledAt | date:'dd-MM-yyyy HH:mm' }} &middot; {{ interview.mode }}</div>
+            <div *ngIf="interview.location" class="text-color-secondary">{{ interview.location }}</div>
+          </div>
+          <span class="tag">{{ interview.status }}</span>
+        </div>
+      </div>
+    </p-card>
+
+    <p-card *ngIf="onboardingTasks.length">
+      <h3 class="form-section-title">{{ 'candidateApplication.onboardingChecklist' | translate }}</h3>
+      <div *ngFor="let task of onboardingTasks" class="flex align-items-center justify-content-between flex-wrap gap-2 mb-2 p-2" style="border-bottom:1px solid #f1f5f9;">
+        <div>
+          <div [style.textDecoration]="task.completed ? 'line-through' : 'none'">{{ task.title }}</div>
+          <div class="text-color-secondary" *ngIf="task.description">{{ task.description }}</div>
+        </div>
+        <p-button *ngIf="!task.completed" [label]="'candidateApplication.markComplete' | translate" icon="pi pi-check" styleClass="p-button-outlined p-button-sm" (onClick)="completeTask(task)"></p-button>
+        <span *ngIf="task.completed" class="tag">{{ 'candidateApplication.done' | translate }}</span>
+      </div>
+    </p-card>
+  </div>
+</div>

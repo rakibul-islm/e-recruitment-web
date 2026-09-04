@@ -1,0 +1,95 @@
+<app-page-header [title]="'recruiterApplication.detailsTitle' | translate">
+  <ng-container *appPermissionHide="'recruiter-application-manage'">
+    <ng-container *ngIf="application.status === 'PENDING'">
+      <p-button [label]="'recruiterApplication.reject' | translate" icon="pi pi-times" styleClass="p-button-outlined p-button-danger" (onClick)="openReject()"></p-button>
+      <p-button [label]="'recruiterApplication.approve' | translate" icon="pi pi-check" (onClick)="approve()"></p-button>
+    </ng-container>
+  </ng-container>
+</app-page-header>
+
+<div class="flex justify-content-center mt-3 px-3">
+  <p-card class="page-card">
+    <div class="flex justify-content-between align-items-start flex-wrap gap-3 mb-3">
+      <div>
+        <h2 class="mt-0 mb-1">{{ application.fullName }}</h2>
+        <div class="text-color-secondary">{{ application.companyName }}</div>
+      </div>
+      <span class="tag">{{ ('recruiterApplication.status' + application.status.charAt(0) + application.status.slice(1).toLowerCase()) | translate }}</span>
+    </div>
+
+    <div class="table-responsive">
+      <table class="detail-table">
+        <tbody>
+          <tr>
+            <td class="detail-label">{{ 'recruiterApplication.email' | translate }}</td>
+            <td class="detail-value">{{ application.email }}</td>
+          </tr>
+          <tr>
+            <td class="detail-label">{{ 'recruiterApplication.phone' | translate }}</td>
+            <td class="detail-value">{{ application.phone || ('common.notAvailable' | translate) }}</td>
+          </tr>
+          <tr>
+            <td class="detail-label">{{ 'recruiterApplication.companyWebsite' | translate }}</td>
+            <td class="detail-value">{{ application.companyWebsite || ('common.notAvailable' | translate) }}</td>
+          </tr>
+          <tr>
+            <td class="detail-label">{{ 'company.industry' | translate }}</td>
+            <td class="detail-value">{{ application.companyIndustry || ('common.notAvailable' | translate) }}</td>
+          </tr>
+          <tr>
+            <td class="detail-label">{{ 'company.size' | translate }}</td>
+            <td class="detail-value">{{ application.companySize || ('common.notAvailable' | translate) }}</td>
+          </tr>
+          <tr>
+            <td class="detail-label">{{ 'recruiterApplication.companyAddress' | translate }}</td>
+            <td class="detail-value">{{ application.companyAddress || ('common.notAvailable' | translate) }}</td>
+          </tr>
+          <tr>
+            <td class="detail-label">{{ 'recruiterApplication.companyPhone' | translate }}</td>
+            <td class="detail-value">{{ application.companyPhone || ('common.notAvailable' | translate) }}</td>
+          </tr>
+          <tr>
+            <td class="detail-label">{{ 'recruiterApplication.companyEmail' | translate }}</td>
+            <td class="detail-value">{{ application.companyEmail || ('common.notAvailable' | translate) }}</td>
+          </tr>
+          <tr *ngIf="application.companyDescription">
+            <td class="detail-label">{{ 'common.description' | translate }}</td>
+            <td class="detail-value" style="white-space:pre-line">{{ application.companyDescription }}</td>
+          </tr>
+          <tr>
+            <td class="detail-label">{{ 'recruiterApplication.jobTitle' | translate }}</td>
+            <td class="detail-value">{{ application.jobTitle || ('common.notAvailable' | translate) }}</td>
+          </tr>
+          <tr *ngIf="application.message">
+            <td class="detail-label">{{ 'recruiterApplication.message' | translate }}</td>
+            <td class="detail-value" style="white-space:pre-line">{{ application.message }}</td>
+          </tr>
+          <tr>
+            <td class="detail-label">{{ 'recruiterApplication.submittedOn' | translate }}</td>
+            <td class="detail-value">{{ application.createdOn | date:'dd-MM-yyyy HH:mm' }}</td>
+          </tr>
+          <tr *ngIf="application.status !== 'PENDING'">
+            <td class="detail-label">{{ 'recruiterApplication.reviewedBy' | translate }}</td>
+            <td class="detail-value">{{ application.updatedBy }} &middot; {{ application.updatedOn | date:'dd-MM-yyyy HH:mm' }}</td>
+          </tr>
+          <tr *ngIf="application.status === 'REJECTED' && application.reviewNote">
+            <td class="detail-label">{{ 'recruiterApplication.reviewNote' | translate }}</td>
+            <td class="detail-value">{{ application.reviewNote }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </p-card>
+</div>
+
+<p-dialog [header]="'recruiterApplication.rejectDialogTitle' | translate" [(visible)]="rejectDialogVisible" [modal]="true"
+  [style]="{ width: '28rem' }" [breakpoints]="{ '575px': '95vw' }">
+  <div [formGroup]="rejectForm" class="flex flex-column gap-2">
+    <label for="rejectNote">{{ 'recruiterApplication.reviewNote' | translate }}</label>
+    <textarea id="rejectNote" pInputTextarea formControlName="note" rows="4" class="w-full"></textarea>
+  </div>
+  <ng-template pTemplate="footer">
+    <p-button [label]="'common.cancel' | translate" styleClass="p-button-outlined p-button-secondary" (onClick)="rejectDialogVisible = false"></p-button>
+    <p-button [label]="'recruiterApplication.reject' | translate" icon="pi pi-times" [loading]="processing" (onClick)="reject()"></p-button>
+  </ng-template>
+</p-dialog>

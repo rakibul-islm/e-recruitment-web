@@ -1,0 +1,96 @@
+<section class="hero">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <span class="hero-eyebrow">{{ 'home.eyebrow' | translate }}</span>
+    <h1 class="hero-title">{{ 'home.heroTitle' | translate }}</h1>
+    <p class="hero-subtitle">{{ 'home.heroSubtitle' | translate }}</p>
+
+    <div class="hero-search" [formGroup]="searchForm">
+      <div class="hero-search-field">
+        <i class="pi pi-search"></i>
+        <input type="text" pInputText [placeholder]="'jobPortal.keywordPlaceholder' | translate" formControlName="keyword" (keyup.enter)="searchJobs()" />
+      </div>
+      <div class="hero-search-field">
+        <i class="pi pi-map-marker"></i>
+        <input type="text" pInputText [placeholder]="'jobPortal.locationPlaceholder' | translate" formControlName="location" (keyup.enter)="searchJobs()" />
+      </div>
+      <p-button [label]="'common.search' | translate" icon="pi pi-search" styleClass="hero-search-btn" (onClick)="searchJobs()"></p-button>
+    </div>
+
+    <div class="hero-actions">
+      <a routerLink="/jobs" class="hero-btn hero-btn-secondary">{{ 'home.browseJobs' | translate }}</a>
+      <a routerLink="/signup" class="hero-btn hero-btn-primary">{{ 'home.createAccount' | translate }}</a>
+    </div>
+
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <span class="hero-stat-value">{{ openJobsCount }}+</span>
+        <span class="hero-stat-label">{{ 'home.openPositions' | translate }}</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-value">{{ companiesCount }}+</span>
+        <span class="hero-stat-label">{{ 'home.companiesHiring' | translate }}</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="home-section">
+  <div class="home-section-heading">
+    <h2>{{ 'home.featuredJobsTitle' | translate }}</h2>
+    <a routerLink="/jobs" class="dashboard-view-all">{{ 'dashboard.viewAll' | translate }}</a>
+  </div>
+
+  <div *ngIf="loading" class="text-center p-4">{{ 'jobPortal.loading' | translate }}</div>
+  <div *ngIf="!loading && !featuredJobs.length" class="text-center p-4">{{ 'jobPortal.noneFound' | translate }}</div>
+
+  <div class="grid" *ngIf="!loading">
+    <div class="col-12 md:col-6 lg:col-4" *ngFor="let job of featuredJobs">
+      <p-card class="job-card" (click)="viewJob(job)">
+        <h3 class="mt-0 mb-1">{{ job.jobTitle }}</h3>
+        <div class="text-color-secondary mb-2">{{ job.companyName }} &middot; {{ job.jobLocation || ('jobPortal.notSpecified' | translate) }}</div>
+        <div class="flex justify-content-between align-items-center flex-wrap gap-2">
+          <span class="tag">{{ job.employmentStatus || job.workPlace || '' }}</span>
+          <span class="text-color-secondary">{{ 'jobPortal.deadline' | translate }}: {{ job.applicationDeadLine | date:'dd-MM-yyyy' }}</span>
+        </div>
+      </p-card>
+    </div>
+  </div>
+</section>
+
+<section class="home-section how-it-works">
+  <div class="home-section-heading center">
+    <h2>{{ 'home.howItWorksTitle' | translate }}</h2>
+  </div>
+
+  <div class="how-it-works-grid">
+    <div class="how-it-works-step">
+      <i class="pi pi-user-plus"></i>
+      <h3>{{ 'home.step1Title' | translate }}</h3>
+      <p>{{ 'home.step1Desc' | translate }}</p>
+    </div>
+    <div class="how-it-works-step">
+      <i class="pi pi-send"></i>
+      <h3>{{ 'home.step2Title' | translate }}</h3>
+      <p>{{ 'home.step2Desc' | translate }}</p>
+    </div>
+    <div class="how-it-works-step">
+      <i class="pi pi-check-circle"></i>
+      <h3>{{ 'home.step3Title' | translate }}</h3>
+      <p>{{ 'home.step3Desc' | translate }}</p>
+    </div>
+  </div>
+</section>
+
+<section class="employer-banner">
+  <div class="employer-banner-content">
+    <div>
+      <h2>{{ 'home.employerTitle' | translate }}</h2>
+      <p>{{ 'home.employerSubtitle' | translate }}</p>
+    </div>
+    <div class="employer-banner-actions">
+      <a routerLink="/register/recruiter" class="hero-btn hero-btn-primary">{{ 'home.registerCompany' | translate }}</a>
+      <a routerLink="/login" class="hero-btn hero-btn-secondary">{{ 'header.signIn' | translate }}</a>
+    </div>
+  </div>
+</section>
