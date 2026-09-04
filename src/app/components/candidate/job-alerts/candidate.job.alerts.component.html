@@ -1,0 +1,56 @@
+<app-page-header [title]="'jobAlert.pageTitle' | translate">
+  <p-button [label]="'jobAlert.createNew' | translate" icon="pi pi-plus" (onClick)="openCreateDialog()"></p-button>
+</app-page-header>
+
+<div class="p-3">
+  <p-card>
+    <h3 class="form-section-title">{{ 'jobAlert.myAlerts' | translate }}</h3>
+    <p-table [value]="alerts" [loading]="loading" responsiveLayout="scroll" dataKey="id">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>{{ 'jobPortal.keyword' | translate }}</th>
+          <th>{{ 'jobPortal.location' | translate }}</th>
+          <th>{{ 'jobAlert.category' | translate }}</th>
+          <th>{{ 'jobAlert.lastNotified' | translate }}</th>
+          <th></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-alert>
+        <tr>
+          <td>{{ alert.keyword || '-' }}</td>
+          <td>{{ alert.location || '-' }}</td>
+          <td>{{ alert.category || '-' }}</td>
+          <td>{{ alert.lastNotifiedOn ? (alert.lastNotifiedOn | date:'dd-MM-yyyy') : ('jobAlert.notYet' | translate) }}</td>
+          <td><p-button icon="pi pi-trash" styleClass="p-button-text p-button-danger p-button-sm" (onClick)="removeAlert(alert)"></p-button></td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="5" class="text-center">{{ 'jobAlert.noneFound' | translate }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-card>
+</div>
+
+<p-dialog [header]="'jobAlert.createNew' | translate" [(visible)]="createDialogVisible" [modal]="true"
+  [style]="{ width: '32rem' }" [breakpoints]="{ '575px': '95vw' }">
+  <form [formGroup]="alertForm" class="flex flex-column gap-3">
+    <div class="flex flex-column gap-2">
+      <label for="jobAlertKeyword">{{ 'jobPortal.keyword' | translate }}</label>
+      <input id="jobAlertKeyword" type="text" pInputText class="w-full" [placeholder]="'jobAlert.keywordPlaceholder' | translate" formControlName="keyword" />
+    </div>
+    <div class="flex flex-column gap-2">
+      <label for="jobAlertLocation">{{ 'jobPortal.location' | translate }}</label>
+      <input id="jobAlertLocation" type="text" pInputText class="w-full" [placeholder]="'jobPortal.location' | translate" formControlName="location" />
+    </div>
+    <div class="flex flex-column gap-2">
+      <label for="jobAlertCategory">{{ 'jobAlert.category' | translate }}</label>
+      <input id="jobAlertCategory" type="text" pInputText class="w-full" [placeholder]="'jobAlert.category' | translate" formControlName="category" />
+    </div>
+  </form>
+  <ng-template pTemplate="footer">
+    <p-button [label]="'common.cancel' | translate" styleClass="p-button-outlined p-button-secondary" (onClick)="createDialogVisible = false"></p-button>
+    <p-button [label]="'jobAlert.createAlert' | translate" icon="pi pi-plus" [loading]="saving" (onClick)="createAlert()"></p-button>
+  </ng-template>
+</p-dialog>

@@ -1,0 +1,33 @@
+<app-page-header [title]="'candidateApplication.pageTitle' | translate"></app-page-header>
+
+<div class="p-3">
+  <p-card>
+    <p-table [value]="applications" [loading]="loading" responsiveLayout="scroll" dataKey="id">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>{{ 'candidateApplication.jobTitle' | translate }}</th>
+          <th>{{ 'candidateApplication.appliedOn' | translate }}</th>
+          <th>{{ 'common.status' | translate }}</th>
+          <th>{{ 'candidateApplication.lastUpdated' | translate }}</th>
+          <th>{{ 'candidateApplication.cv' | translate }}</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-application>
+        <tr class="selectable-row" (click)="viewApplication(application)">
+          <td>{{ application.jobTitle }}</td>
+          <td>{{ application.appliedOn | date:'dd-MM-yyyy HH:mm' }}</td>
+          <td><span class="tag">{{ application.status }}</span></td>
+          <td>{{ application.statusUpdatedOn | date:'dd-MM-yyyy HH:mm' }}</td>
+          <td>
+            <p-button *ngIf="application.generatedCvId" icon="pi pi-download" styleClass="p-button-text p-button-sm" (onClick)="downloadCv(application); $event.stopPropagation()"></p-button>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="5" class="text-center">{{ 'candidateApplication.noneFound' | translate }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-card>
+</div>

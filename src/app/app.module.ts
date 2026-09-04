@@ -48,6 +48,27 @@ import { ArchiveConfigViewComponent } from './components/archive-config/view/arc
 import { ArchiveConfigArchivedDataComponent } from './components/archive-config/archived-data/archive.config.archived.data.component';
 import { ArchiveConfigWhereConditionBuilderComponent } from './components/archive-config/where-condition-builder/archive.config.where.condition.builder.component';
 import { AccessDeniedComponent } from './components/shared/access-denied/access.denied.component';
+import { JobPortalSearchComponent } from './components/job-portal/search/job.portal.search.component';
+import { JobPortalViewComponent } from './components/job-portal/view/job.portal.view.component';
+import { CandidateProfileFormComponent } from './components/candidate/profile/candidate.profile.form.component';
+import { CandidateProfileViewComponent } from './components/candidate/profile/view/candidate.profile.view.component';
+import { CandidateApplicationsComponent } from './components/candidate/applications/candidate.applications.component';
+import { CompanySearchComponent } from './components/company/search/company.search.component';
+import { CompanyFormComponent } from './components/company/form/company.form.component';
+import { CompanyViewComponent } from './components/company/view/company.view.component';
+import { JobPostingSearchComponent } from './components/job-posting/search/job.posting.search.component';
+import { JobPostingFormComponent } from './components/job-posting/form/job.posting.form.component';
+import { JobPostingViewComponent } from './components/job-posting/view/job.posting.view.component';
+import { ApplicationManagementSearchComponent } from './components/application-management/search/application.management.search.component';
+import { ApplicationManagementViewComponent } from './components/application-management/view/application.management.view.component';
+import { CandidateSavedJobsComponent } from './components/candidate/saved-jobs/candidate.saved.jobs.component';
+import { CandidateJobAlertsComponent } from './components/candidate/job-alerts/candidate.job.alerts.component';
+import { CandidateApplicationDetailComponent } from './components/candidate/application-detail/candidate.application.detail.component';
+import { AnalyticsDashboardComponent } from './components/analytics/analytics.dashboard.component';
+import { HomeComponent } from './components/home/home.component';
+import { RecruiterApplicationRegisterComponent } from './components/recruiter-application/register/recruiter.application.register.component';
+import { RecruiterApplicationSearchComponent } from './components/recruiter-application/search/recruiter.application.search.component';
+import { RecruiterApplicationViewComponent } from './components/recruiter-application/view/recruiter.application.view.component';
 import { RequiredFieldDirective } from './directives/required.field.directive';
 import { OtpNumericKeyboardDirective } from './directives/otp.numeric.keyboard.directive';
 import { PermissionHideDirective } from './directives/permission.hide.directive';
@@ -72,6 +93,7 @@ import { AvatarModule } from 'primeng/avatar';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { TableModule } from 'primeng/table';
+import { PaginatorModule } from 'primeng/paginator';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { PickListModule } from 'primeng/picklist';
 import { DropdownModule } from 'primeng/dropdown';
@@ -80,6 +102,7 @@ import { TooltipModule } from 'primeng/tooltip';
 import { AccordionModule } from 'primeng/accordion';
 import { ToastModule } from 'primeng/toast';
 import { DialogModule } from 'primeng/dialog';
+import { EditorModule } from 'primeng/editor';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
   return new TranslateHttpLoader(http, '/assets/i18n/', '.json');
@@ -127,6 +150,27 @@ export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
     ArchiveConfigArchivedDataComponent,
     ArchiveConfigWhereConditionBuilderComponent,
     AccessDeniedComponent,
+    JobPortalSearchComponent,
+    JobPortalViewComponent,
+    CandidateProfileFormComponent,
+    CandidateProfileViewComponent,
+    CandidateApplicationsComponent,
+    CompanySearchComponent,
+    CompanyFormComponent,
+    CompanyViewComponent,
+    JobPostingSearchComponent,
+    JobPostingFormComponent,
+    JobPostingViewComponent,
+    ApplicationManagementSearchComponent,
+    ApplicationManagementViewComponent,
+    CandidateSavedJobsComponent,
+    CandidateJobAlertsComponent,
+    CandidateApplicationDetailComponent,
+    AnalyticsDashboardComponent,
+    HomeComponent,
+    RecruiterApplicationRegisterComponent,
+    RecruiterApplicationSearchComponent,
+    RecruiterApplicationViewComponent,
     RequiredFieldDirective,
     OtpNumericKeyboardDirective,
     PermissionHideDirective,
@@ -154,6 +198,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
     ConfirmDialogModule,
     FloatLabelModule,
     TableModule,
+    PaginatorModule,
     MultiSelectModule,
     PickListModule,
     DropdownModule,
@@ -161,6 +206,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
     TooltipModule,
     AccordionModule,
     DialogModule,
+    EditorModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

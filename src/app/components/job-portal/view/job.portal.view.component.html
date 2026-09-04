@@ -1,0 +1,124 @@
+<app-page-header [title]="job.jobTitle || ('jobPortal.detailsTitle' | translate)">
+  <p-button [label]="'jobPortal.backToJobs' | translate" icon="pi pi-arrow-left" styleClass="p-button-secondary" (onClick)="goBack()"></p-button>
+</app-page-header>
+
+<div class="job-view-page">
+  <div class="job-view-hero">
+    <div class="job-view-hero-avatar"><i class="pi pi-building"></i></div>
+    <div class="job-view-hero-info">
+      <h1>{{ job.jobTitle }}</h1>
+      <div class="job-view-hero-meta">
+        <span><i class="pi pi-building"></i> {{ job.companyName }}</span>
+        <span><i class="pi pi-map-marker"></i> {{ job.jobLocation || ('jobPortal.notSpecified' | translate) }}</span>
+        <span *ngIf="job.employmentStatus"><i class="pi pi-briefcase"></i> {{ job.employmentStatus }}</span>
+      </div>
+    </div>
+    <div class="job-view-hero-action">
+      <p-button *ngIf="!alreadyApplied" [label]="'jobPortal.applyNow' | translate" icon="pi pi-send" styleClass="job-apply-btn" (onClick)="openApply()"></p-button>
+      <span *ngIf="alreadyApplied" class="tag job-applied-tag"><i class="pi pi-check-circle"></i> {{ 'jobPortal.applicationSubmitted' | translate }}</span>
+    </div>
+  </div>
+
+  <div class="grid job-view-grid">
+    <div class="col-12 lg:col-8">
+      <p-card class="page-card mb-3">
+        <h3 class="form-section-title">{{ 'jobPortal.requirements' | translate }}</h3>
+        <div class="job-view-prose" [innerHTML]="job.jobRequirement"></div>
+
+        <ng-container *ngIf="job.jobResponsibilities">
+          <h3 class="form-section-title">{{ 'jobPortal.responsibilities' | translate }}</h3>
+          <div class="job-view-prose" [innerHTML]="job.jobResponsibilities"></div>
+        </ng-container>
+
+        <ng-container *ngIf="job.otherBenefits">
+          <h3 class="form-section-title">{{ 'jobPortal.otherBenefits' | translate }}</h3>
+          <p class="job-view-prose">{{ job.otherBenefits }}</p>
+        </ng-container>
+
+        <ng-container *ngIf="job.skills">
+          <h3 class="form-section-title">{{ 'jobPortal.skills' | translate }}</h3>
+          <div class="flex flex-wrap gap-2">
+            <span class="tag" *ngFor="let skill of job.skills.split(',')">{{ skill.trim() }}</span>
+          </div>
+        </ng-container>
+      </p-card>
+    </div>
+
+    <div class="col-12 lg:col-4">
+      <p-card class="page-card mb-3">
+        <h3 class="form-section-title">{{ 'jobPortal.jobOverview' | translate }}</h3>
+        <div class="job-fact">
+          <i class="pi pi-users"></i>
+          <div>
+            <span class="job-fact-label">{{ 'jobPortal.vacancy' | translate }}</span>
+            <span class="job-fact-value">{{ job.vacancy }}</span>
+          </div>
+        </div>
+        <div class="job-fact">
+          <i class="pi pi-calendar"></i>
+          <div>
+            <span class="job-fact-label">{{ 'jobPortal.applicationDeadline' | translate }}</span>
+            <span class="job-fact-value">{{ job.applicationDeadLine | date:'dd MMM yyyy' }}</span>
+          </div>
+        </div>
+        <div class="job-fact">
+          <i class="pi pi-chart-line"></i>
+          <div>
+            <span class="job-fact-label">{{ 'jobPortal.experience' | translate }}</span>
+            <span class="job-fact-value">{{ job.experience || ('common.notAvailable' | translate) }}</span>
+          </div>
+        </div>
+        <div class="job-fact">
+          <i class="pi pi-briefcase"></i>
+          <div>
+            <span class="job-fact-label">{{ 'jobPortal.employmentType' | translate }}</span>
+            <span class="job-fact-value">{{ job.employmentStatus || ('common.notAvailable' | translate) }}</span>
+          </div>
+        </div>
+        <div class="job-fact">
+          <i class="pi pi-home"></i>
+          <div>
+            <span class="job-fact-label">{{ 'jobPortal.workplace' | translate }}</span>
+            <span class="job-fact-value">{{ job.workPlace || ('common.notAvailable' | translate) }}</span>
+          </div>
+        </div>
+        <div class="job-fact">
+          <i class="pi pi-wallet"></i>
+          <div>
+            <span class="job-fact-label">{{ 'jobPortal.salary' | translate }}</span>
+            <span class="job-fact-value">
+              {{ job.salaryMin || job.salaryMax ? (job.salaryMin || '?') + ' - ' + (job.salaryMax || '?') : (job.salary || ('common.notAvailable' | translate)) }}
+            </span>
+          </div>
+        </div>
+      </p-card>
+
+      <p-card class="page-card">
+        <h3 class="form-section-title">{{ 'jobPortal.company' | translate }}</h3>
+        <div class="job-company-name">{{ job.companyName }}</div>
+        <div class="job-company-detail" *ngIf="job.companyAddress"><i class="pi pi-map-marker"></i> {{ job.companyAddress }}</div>
+        <div class="job-company-detail" *ngIf="job.companyEmail"><i class="pi pi-envelope"></i> {{ job.companyEmail }}</div>
+        <div class="job-company-detail" *ngIf="job.companyWebsite"><i class="pi pi-globe"></i> {{ job.companyWebsite }}</div>
+      </p-card>
+    </div>
+  </div>
+</div>
+
+<p-dialog [header]="('jobPortal.applyDialogTitle' | translate) + ' ' + job.jobTitle" [(visible)]="applyDialogVisible" [modal]="true"
+  [style]="{ width: '32rem' }" [breakpoints]="{ '575px': '95vw' }">
+  <div [formGroup]="applyForm" class="flex flex-column gap-3">
+    <p>
+      {{ 'jobPortal.applyDialogHintBefore' | translate }}
+      <a routerLink="/my/profile">{{ 'jobPortal.applyDialogHintLink' | translate }}</a>
+      {{ 'jobPortal.applyDialogHintAfter' | translate }}
+    </p>
+    <div class="flex flex-column gap-2">
+      <label for="applyCoverLetter">{{ 'jobPortal.coverLetter' | translate }}</label>
+      <textarea id="applyCoverLetter" pInputTextarea formControlName="coverLetter" rows="5" class="w-full"></textarea>
+    </div>
+  </div>
+  <ng-template pTemplate="footer">
+    <p-button [label]="'common.cancel' | translate" styleClass="p-button-outlined p-button-secondary" (onClick)="applyDialogVisible = false"></p-button>
+    <p-button [label]="'jobPortal.submitApplication' | translate" icon="pi pi-send" [loading]="submitting" (onClick)="submitApplication()"></p-button>
+  </ng-template>
+</p-dialog>

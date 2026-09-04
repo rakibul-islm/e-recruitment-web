@@ -1,0 +1,181 @@
+:host {
+  display: block;
+  min-height: 100vh;
+}
+
+.auth-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+// Solid brand-color panel (not the photo) - hidden below 992px, see media query at bottom.
+.auth-brand-panel {
+  display: none;
+}
+
+.auth-form-panel {
+  flex: 1 1 auto;
+  min-height: 100vh;
+  background-image: url(/assets/images/background.image.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+@media screen and (min-width: 992px) {
+  .auth-brand-panel {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-top: 12vh;
+    flex: 0 0 40%;
+    max-width: 27rem;
+    padding-left: 2.75rem;
+    padding-right: 2.75rem;
+    padding-bottom: 3rem;
+    background: linear-gradient(160deg, #032967, #1e4d8f);
+    color: #ffffff;
+  }
+}
+
+.auth-brand-content {
+  h1 {
+    font-size: 1.9rem;
+    font-weight: 800;
+    line-height: 1.28;
+    margin: 0 0 0.9rem;
+  }
+
+  > p {
+    color: #cfe0f7;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin: 0 0 2.25rem;
+  }
+}
+
+.auth-brand-points {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+    font-size: 0.92rem;
+    color: #e5edfa;
+    line-height: 1.4;
+  }
+
+  .pi {
+    color: #86efac;
+    margin-top: 0.15rem;
+    flex-shrink: 0;
+  }
+}
+
+.recruiter-register-card {
+  display: block;
+  max-width: 42rem;
+  width: 100%;
+}
+
+::ng-deep .recruiter-register-card-surface {
+  width: 100%;
+  background: linear-gradient(160deg, rgba(96, 165, 250, 0.35), rgba(59, 130, 246, 0.22));
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(147, 197, 253, 0.25);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35), 0 0 48px rgba(59, 130, 246, 0.12);
+
+  .p-card-title {
+    color: #ffffff;
+    text-align: center;
+  }
+
+  .p-card-body,
+  .p-card-content {
+    color: #f1f5fb;
+  }
+
+  .intro-text {
+    color: #dbeafe;
+    font-size: 0.85rem;
+    margin: 0;
+  }
+
+  label {
+    color: #ffffff !important;
+    font-size: 1rem;
+  }
+
+  .p-float-label > label {
+    color: #6b7280 !important;
+    font-size: 1rem;
+  }
+
+  .p-float-label input:focus ~ label,
+  .p-float-label input.p-filled ~ label,
+  .p-float-label .p-inputwrapper-focus ~ label,
+  .p-float-label .p-inputwrapper-filled ~ label {
+    color: #ffffff !important;
+    font-size: 0.95rem !important;
+  }
+
+  .p-inputtext,
+  textarea.p-inputtextarea {
+    background: #ffffff;
+    border: 1px solid #d1d5db;
+    color: #000000;
+    caret-color: #000000;
+
+    &:enabled:focus {
+      border-color: #60a5fa;
+      box-shadow: 0 0 0 1px #60a5fa;
+    }
+
+    &::placeholder {
+      color: #9ca3af;
+    }
+  }
+
+  .p-error {
+    color: #fca5a5;
+  }
+
+  a.text-primary {
+    color: #93c5fd;
+
+    &:hover {
+      color: #bfdbfe;
+    }
+  }
+}
+
+.confirmation-block {
+  padding: 1rem 0;
+}
+
+.confirmation-icon {
+  font-size: 2.75rem;
+  color: #4ade80;
+  margin-bottom: 0.75rem;
+}
+
+.confirmation-title {
+  color: #ffffff;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem;
+}
+
+.confirmation-text {
+  color: #dbeafe;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin: 0 0 1.25rem;
+}

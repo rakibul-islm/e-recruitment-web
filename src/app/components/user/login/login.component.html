@@ -1,4 +1,17 @@
-<div class="flex justify-content-center align-items-center min-h-screen p-4">
+<div class="auth-layout">
+  <aside class="auth-brand-panel">
+    <div class="auth-brand-content">
+      <h1>{{ 'auth.login.brandTitle' | translate }}</h1>
+      <p>{{ 'auth.login.brandSubtitle' | translate }}</p>
+      <ul class="auth-brand-points">
+        <li><i class="pi pi-check-circle"></i><span>{{ 'auth.login.brandPoint1' | translate }}</span></li>
+        <li><i class="pi pi-check-circle"></i><span>{{ 'auth.login.brandPoint2' | translate }}</span></li>
+        <li><i class="pi pi-check-circle"></i><span>{{ 'auth.login.brandPoint3' | translate }}</span></li>
+      </ul>
+    </div>
+  </aside>
+
+  <div class="auth-form-panel flex justify-content-center align-items-center p-4">
   <p-card class="login-card" styleClass="login-card-surface">
     <ng-template pTemplate="title">{{ 'auth.login.title' | translate }}</ng-template>
 
@@ -58,9 +71,10 @@
 
     <hr class="my-2" />
 
-    <div class="flex justify-content-center align-items-center mt-4 gap-2">
+    <div class="flex justify-content-center align-items-center mt-4 gap-2 auth-mobile-brand">
       <img src="/assets/images/app.logo.png" alt="e-recruitment logo" class="w-2rem h-2rem" />
       <span class="text-lg font-semibold">{{ 'app.name' | translate }}</span>
     </div>
   </p-card>
+  </div>
 </div>

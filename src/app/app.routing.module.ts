@@ -38,15 +38,119 @@ import { ArchiveConfigViewComponent } from './components/archive-config/view/arc
 import { ArchiveConfigArchivedDataComponent } from './components/archive-config/archived-data/archive.config.archived.data.component';
 import { AccessDeniedComponent } from './components/shared/access-denied/access.denied.component';
 import { PermissionGuard } from './services/utility/security/permission.guard';
+import { JobPortalSearchComponent } from './components/job-portal/search/job.portal.search.component';
+import { JobPortalViewComponent } from './components/job-portal/view/job.portal.view.component';
+import { CandidateProfileFormComponent } from './components/candidate/profile/candidate.profile.form.component';
+import { CandidateProfileViewComponent } from './components/candidate/profile/view/candidate.profile.view.component';
+import { CandidateApplicationsComponent } from './components/candidate/applications/candidate.applications.component';
+import { CompanySearchComponent } from './components/company/search/company.search.component';
+import { CompanyFormComponent } from './components/company/form/company.form.component';
+import { CompanyViewComponent } from './components/company/view/company.view.component';
+import { JobPostingSearchComponent } from './components/job-posting/search/job.posting.search.component';
+import { JobPostingFormComponent } from './components/job-posting/form/job.posting.form.component';
+import { JobPostingViewComponent } from './components/job-posting/view/job.posting.view.component';
+import { ApplicationManagementSearchComponent } from './components/application-management/search/application.management.search.component';
+import { ApplicationManagementViewComponent } from './components/application-management/view/application.management.view.component';
+import { CandidateSavedJobsComponent } from './components/candidate/saved-jobs/candidate.saved.jobs.component';
+import { CandidateJobAlertsComponent } from './components/candidate/job-alerts/candidate.job.alerts.component';
+import { CandidateApplicationDetailComponent } from './components/candidate/application-detail/candidate.application.detail.component';
+import { AnalyticsDashboardComponent } from './components/analytics/analytics.dashboard.component';
+import { HomeComponent } from './components/home/home.component';
+import { RecruiterApplicationRegisterComponent } from './components/recruiter-application/register/recruiter.application.register.component';
+import { RecruiterApplicationSearchComponent } from './components/recruiter-application/search/recruiter.application.search.component';
+import { RecruiterApplicationViewComponent } from './components/recruiter-application/view/recruiter.application.view.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+  { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: RegistrationFormComponent },
+  { path: 'register/recruiter', component: RecruiterApplicationRegisterComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'set-password', component: SetPasswordComponent },
-  { path: 'dashboard', component: DashboardComponent },
+  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   { path: 'access-denied', component: AccessDeniedComponent },
+
+  { path: 'jobs', component: JobPortalSearchComponent },
+  { path: 'jobs/:id', component: JobPortalViewComponent },
+
+  { path: 'my/profile', component: CandidateProfileViewComponent, canActivate: [AuthGuard] },
+  { path: 'my/profile/edit', component: CandidateProfileFormComponent, canActivate: [AuthGuard] },
+  { path: 'my/applications', component: CandidateApplicationsComponent, canActivate: [AuthGuard] },
+  { path: 'my/applications/:id', component: CandidateApplicationDetailComponent, canActivate: [AuthGuard] },
+  { path: 'my/saved-jobs', component: CandidateSavedJobsComponent, canActivate: [AuthGuard] },
+  { path: 'my/job-alerts', component: CandidateJobAlertsComponent, canActivate: [AuthGuard] },
+
+  { path: 'analytics',
+    component: AnalyticsDashboardComponent,
+    canActivate: [AuthGuard, PermissionGuard],
+    data: { routeName: 'analytics-list' }
+  },
+
+  { path: 'recruiter-applications',
+    component: RecruiterApplicationSearchComponent,
+    canActivate: [AuthGuard, PermissionGuard],
+    data: { routeName: 'recruiter-application-list' }
+  },
+  { path: 'recruiter-applications/:id',
+    component: RecruiterApplicationViewComponent,
+    canActivate: [AuthGuard, PermissionGuard],
+    data: { routeName: 'recruiter-application-list' }
+  },
+
+  { path: 'companies',
+    component: CompanySearchComponent,
+    canActivate: [AuthGuard, PermissionGuard],
+    data: { routeName: 'company-list' }
+  },
+  { path: 'companies/create',
+    component: CompanyFormComponent,
+    canActivate: [AuthGuard, PermissionGuard],
+    data: { routeName: 'company-manage' }
+  },
+  { path: 'companies/:id/edit',
+    component: CompanyFormComponent,
+    canActivate: [AuthGuard, PermissionGuard],
+    data: { routeName: 'company-manage' }
+  },
+  { path: 'companies/:id',
+    component: CompanyViewComponent,
+    canActivate: [AuthGuard, PermissionGuard],
+    data: { routeName: 'company-list' }
+  },
+
+  { path: 'job-postings',
+    component: JobPostingSearchComponent,
+    canActivate: [AuthGuard, PermissionGuard],
+    data: { routeName: 'job-circular-list' }
+  },
+  { path: 'job-postings/create',
+    component: JobPostingFormComponent,
+    canActivate: [AuthGuard, PermissionGuard],
+    data: { routeName: 'job-circular-manage' }
+  },
+  { path: 'job-postings/:id/edit',
+    component: JobPostingFormComponent,
+    canActivate: [AuthGuard, PermissionGuard],
+    data: { routeName: 'job-circular-manage' }
+  },
+  { path: 'job-postings/:id',
+    component: JobPostingViewComponent,
+    canActivate: [AuthGuard, PermissionGuard],
+    data: { routeName: 'job-circular-list' }
+  },
+
+  // Gated on job-circular-manage (staff-only) rather than application-list, since candidates also
+  // hold application:read for their own /my/applications - see PermissionData's note on application:write.
+  { path: 'application-management',
+    component: ApplicationManagementSearchComponent,
+    canActivate: [AuthGuard, PermissionGuard],
+    data: { routeName: 'job-circular-manage' }
+  },
+  { path: 'application-management/:id',
+    component: ApplicationManagementViewComponent,
+    canActivate: [AuthGuard, PermissionGuard],
+    data: { routeName: 'job-circular-manage' }
+  },
   { path: 'profile',
     component: ProfileViewComponent,
     canActivate: [AuthGuard]

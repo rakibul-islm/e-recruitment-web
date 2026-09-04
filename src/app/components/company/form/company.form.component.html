@@ -1,0 +1,83 @@
+<app-page-header [title]="(companyId ? 'company.formTitleUpdate' : 'company.formTitleCreate') | translate">
+  <p-button [label]="'common.save' | translate" icon="pi pi-save" (onClick)="submit()"></p-button>
+  <p-button [label]="'common.back' | translate" icon="pi pi-arrow-left" styleClass="p-button-secondary" (onClick)="goBack()"></p-button>
+</app-page-header>
+
+<div class="flex justify-content-center mt-3 px-3">
+  <p-card class="page-card">
+    <form *ngIf="companyForm" [formGroup]="companyForm" (ngSubmit)="submit()">
+      <div class="flex flex-column gap-4 mt-3">
+        <div class="grid row-gap-3">
+          <div class="col-12 md:col-6">
+            <p-floatLabel>
+              <input id="companyName" type="text" formControlName="name" pInputText class="w-full" />
+              <label for="companyName">{{ 'company.companyName' | translate }}</label>
+            </p-floatLabel>
+            <small class="p-error" *ngIf="companyForm.controls['name'].touched && companyForm.controls['name'].errors?.['required']">
+              {{ 'company.companyNameRequired' | translate }}</small>
+          </div>
+          <div class="col-12 md:col-6">
+            <div class="flex gap-2 align-items-start">
+              <p-floatLabel class="flex-1">
+                <p-dropdown id="companyIndustry" formControlName="industry" [options]="companyTypes" optionLabel="name" optionValue="name"
+                  [filter]="true" [showClear]="true" styleClass="w-full" appendTo="body"></p-dropdown>
+                <label for="companyIndustry">{{ 'company.industry' | translate }}</label>
+              </p-floatLabel>
+              <p-button icon="pi pi-plus" styleClass="p-button-outlined" [pTooltip]="'company.addNewType' | translate" (onClick)="openNewTypeDialog()"></p-button>
+            </div>
+          </div>
+          <div class="col-12 md:col-6">
+            <p-floatLabel>
+              <input id="companyWebsite" type="text" formControlName="website" pInputText class="w-full" />
+              <label for="companyWebsite">{{ 'company.website' | translate }}</label>
+            </p-floatLabel>
+          </div>
+          <div class="col-12 md:col-6">
+            <p-floatLabel>
+              <input id="companySize" type="text" formControlName="size" pInputText class="w-full" />
+              <label for="companySize">{{ 'company.size' | translate }}</label>
+            </p-floatLabel>
+          </div>
+          <div class="col-12 md:col-6">
+            <p-floatLabel>
+              <input id="companyPhone" type="text" formControlName="phone" pInputText class="w-full" />
+              <label for="companyPhone">{{ 'company.phone' | translate }}</label>
+            </p-floatLabel>
+          </div>
+          <div class="col-12 md:col-6">
+            <p-floatLabel>
+              <input id="companyEmail" type="text" formControlName="email" pInputText class="w-full" />
+              <label for="companyEmail">{{ 'company.email' | translate }}</label>
+            </p-floatLabel>
+          </div>
+          <div class="col-12">
+            <p-floatLabel>
+              <input id="companyAddress" type="text" formControlName="address" pInputText class="w-full" />
+              <label for="companyAddress">{{ 'company.address' | translate }}</label>
+            </p-floatLabel>
+          </div>
+          <div class="col-12">
+            <p-floatLabel>
+              <textarea id="companyDescription" pInputTextarea formControlName="description" class="w-full" rows="4"></textarea>
+              <label for="companyDescription">{{ 'common.description' | translate }}</label>
+            </p-floatLabel>
+          </div>
+        </div>
+      </div>
+    </form>
+  </p-card>
+</div>
+
+<p-dialog [header]="'company.addNewType' | translate" [(visible)]="newTypeDialogVisible" [modal]="true"
+  [style]="{ width: '26rem' }" [breakpoints]="{ '575px': '95vw' }">
+  <div [formGroup]="newTypeForm" class="flex flex-column gap-2">
+    <label for="newCompanyTypeName">{{ 'company.newTypeName' | translate }}</label>
+    <input id="newCompanyTypeName" type="text" pInputText class="w-full" formControlName="name" />
+    <small class="p-error" *ngIf="newTypeForm.controls['name'].touched && newTypeForm.controls['name'].errors?.['required']">
+      {{ 'company.newTypeNameRequired' | translate }}</small>
+  </div>
+  <ng-template pTemplate="footer">
+    <p-button [label]="'common.cancel' | translate" styleClass="p-button-outlined p-button-secondary" (onClick)="newTypeDialogVisible = false"></p-button>
+    <p-button [label]="'common.save' | translate" icon="pi pi-check" [loading]="savingType" (onClick)="createCompanyType()"></p-button>
+  </ng-template>
+</p-dialog>

@@ -60,13 +60,12 @@
         <h3 class="form-section-title">{{ 'user.accountSettings' | translate }}</h3>
 
         <div class="grid align-items-center">
-          <div class="col-6 md:col-2 flex align-items-center gap-2" *ngIf="userId">
-            <p-checkbox inputId="userActive" formControlName="active" [binary]="true"></p-checkbox>
-            <label for="userActive">{{ 'common.active' | translate }}</label>
-          </div>
-          <div class="col-6 md:col-2 flex align-items-center gap-2">
-            <p-checkbox inputId="userLocked" formControlName="locked" [binary]="true"></p-checkbox>
-            <label for="userLocked">{{ 'user.locked' | translate }}</label>
+          <div class="col-12 md:col-4">
+            <p-floatLabel>
+              <p-dropdown id="userCompany" [options]="companies" formControlName="companyId"
+                optionLabel="name" optionValue="id" styleClass="w-full" [filter]="true" [showClear]="true"></p-dropdown>
+              <label for="userCompany">{{ 'user.company' | translate }}</label>
+            </p-floatLabel>
           </div>
           <div class="col-12 md:col-4">
             <p-floatLabel>
@@ -83,6 +82,17 @@
             </p-floatLabel>
             <small class="p-error" *ngIf="userForm.controls['expiryDate'].touched && userForm.controls['expiryDate'].errors?.['required']">
               {{ 'user.expiryDateRequired' | translate }}</small>
+          </div>
+        </div>
+
+        <div class="grid align-items-center">
+          <div class="col-6 md:col-2 flex align-items-center gap-2" *ngIf="userId">
+            <p-checkbox inputId="userActive" formControlName="active" [binary]="true"></p-checkbox>
+            <label for="userActive">{{ 'common.active' | translate }}</label>
+          </div>
+          <div class="col-6 md:col-2 flex align-items-center gap-2">
+            <p-checkbox inputId="userLocked" formControlName="locked" [binary]="true"></p-checkbox>
+            <label for="userLocked">{{ 'user.locked' | translate }}</label>
           </div>
         </div>
 

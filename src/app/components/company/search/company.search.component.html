@@ -1,0 +1,51 @@
+<app-page-header [title]="'company.searchTitle' | translate">
+  <ng-container *appPermissionHide="'company-manage'">
+    <p-button *ngIf="!isCompanyScoped" [label]="'company.createButton' | translate" icon="pi pi-plus" (onClick)="createCompany()"></p-button>
+  </ng-container>
+</app-page-header>
+
+<div class="p-3">
+  <p-accordion [(activeIndex)]="activeTabIndex">
+    <p-accordionTab *ngIf="!isCompanyScoped" [header]="'common.search' | translate">
+      <div [formGroup]="filterForm">
+        <div class="grid">
+          <div class="col-12 md:col-4 flex flex-column gap-2">
+            <label for="filterCompanyName">{{ 'company.companyName' | translate }}</label>
+            <input id="filterCompanyName" type="text" pInputText class="w-full" formControlName="name_like" />
+          </div>
+        </div>
+        <div class="search-actions">
+          <p-button [label]="'common.search' | translate" icon="pi pi-search" (onClick)="search(dt)"></p-button>
+          <p-button [label]="'common.clear' | translate" icon="pi pi-times" styleClass="p-button-outlined p-button-secondary" (onClick)="clearFilters()"></p-button>
+        </div>
+      </div>
+    </p-accordionTab>
+
+    <p-accordionTab [header]="'company.listTab' | translate">
+      <p-table #dt [value]="companies" [lazy]="true" (onLazyLoad)="fetchCompanies($event)" [paginator]="true"
+        [rows]="rows" [totalRecords]="totalRecords" [loading]="loading" [rowsPerPageOptions]="[10, 20, 50]"
+        responsiveLayout="scroll" dataKey="id" selectionMode="single" [(selection)]="selectedCompany"
+        (onRowSelect)="viewCompany($event.data)">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>{{ 'common.name' | translate }}</th>
+            <th>{{ 'company.industry' | translate }}</th>
+            <th>{{ 'company.website' | translate }}</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-company>
+          <tr class="selectable-row" [pSelectableRow]="company">
+            <td>{{ company.name }}</td>
+            <td>{{ company.industry }}</td>
+            <td>{{ company.website }}</td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="3" class="text-center">{{ 'company.noneFound' | translate }}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </p-accordionTab>
+  </p-accordion>
+</div>

@@ -1,0 +1,174 @@
+.job-view-page {
+  max-width: 76rem;
+  margin: 0 auto;
+  padding: 1rem 1.5rem 2.5rem;
+}
+
+.job-view-hero {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  padding: 1.5rem;
+  margin-bottom: 1.25rem;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+  box-shadow: 0 1px 2px rgba(3, 41, 103, 0.04), 0 8px 24px rgba(3, 41, 103, 0.07);
+}
+
+.job-view-hero-avatar {
+  flex-shrink: 0;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 12px;
+  background: #eef3fb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .pi {
+    color: #1e4d8f;
+    font-size: 1.5rem;
+  }
+}
+
+.job-view-hero-info {
+  flex: 1 1 16rem;
+
+  h1 {
+    margin: 0 0 0.4rem;
+    color: #032967;
+    font-size: 1.4rem;
+    font-weight: 800;
+  }
+}
+
+.job-view-hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  color: #6b7280;
+  font-size: 0.88rem;
+
+  span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .pi {
+    color: #1e4d8f;
+  }
+}
+
+.job-view-hero-action {
+  flex-shrink: 0;
+}
+
+::ng-deep .job-apply-btn.p-button {
+  background: #1e4d8f !important;
+  border-color: #1e4d8f !important;
+  padding: 0.7rem 1.75rem !important;
+  font-weight: 700 !important;
+  border-radius: 9px !important;
+
+  &:hover {
+    background: #163a6b !important;
+    border-color: #163a6b !important;
+  }
+}
+
+.job-applied-tag {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.job-view-prose {
+  margin: 0 0 0.5rem;
+  color: #374151;
+  font-size: 0.92rem;
+  line-height: 1.65;
+  white-space: pre-line;
+}
+
+.job-fact {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid #f1f5f9;
+
+  &:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .pi {
+    margin-top: 0.15rem;
+    color: #1e4d8f;
+    font-size: 0.95rem;
+  }
+
+  > div {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.job-fact-label {
+  color: #6b7280;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.job-fact-value {
+  color: #1f2937;
+  font-weight: 600;
+  font-size: 0.92rem;
+}
+
+.job-company-name {
+  color: #032967;
+  font-weight: 700;
+  margin-bottom: 0.6rem;
+}
+
+.job-company-detail {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #6b7280;
+  font-size: 0.85rem;
+  margin-bottom: 0.4rem;
+
+  .pi {
+    color: #1e4d8f;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .job-view-page {
+    padding: 0.75rem 1rem 2rem;
+  }
+
+  .job-view-hero {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 1.25rem;
+  }
+
+  .job-view-hero-meta {
+    justify-content: center;
+  }
+
+  .job-view-hero-action {
+    width: 100%;
+  }
+
+  ::ng-deep .job-apply-btn.p-button {
+    width: 100%;
+    justify-content: center;
+  }
+}

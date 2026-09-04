@@ -1,0 +1,76 @@
+<app-page-header [title]="'analyticsPage.pageTitle' | translate"></app-page-header>
+
+<div class="p-3">
+  <div class="summary-cards">
+    <div class="summary-card">
+      <i class="pi pi-briefcase"></i>
+      <div>
+        <div class="summary-card-value">{{ summary.totalJobs }}</div>
+        <div class="summary-card-label">{{ 'analyticsPage.totalJobs' | translate }} ({{ summary.publishedJobs }} {{ 'jobPosting.statusPublished' | translate | lowercase }})</div>
+      </div>
+    </div>
+    <div class="summary-card">
+      <i class="pi pi-send"></i>
+      <div>
+        <div class="summary-card-value">{{ summary.totalApplications }}</div>
+        <div class="summary-card-label">{{ 'analyticsPage.totalApplications' | translate }}</div>
+      </div>
+    </div>
+    <div class="summary-card">
+      <i class="pi pi-calendar"></i>
+      <div>
+        <div class="summary-card-value">{{ summary.applicationsLast30Days }}</div>
+        <div class="summary-card-label">{{ 'analyticsPage.applicationsLast30Days' | translate }}</div>
+      </div>
+    </div>
+    <div class="summary-card">
+      <i class="pi pi-check-circle"></i>
+      <div>
+        <div class="summary-card-value">{{ summary.hiresLast30Days }}</div>
+        <div class="summary-card-label">{{ 'analyticsPage.hiresLast30Days' | translate }}</div>
+      </div>
+    </div>
+    <div class="summary-card">
+      <i class="pi pi-clock"></i>
+      <div>
+        <div class="summary-card-value">{{ summary.avgTimeToHireDays ? (summary.avgTimeToHireDays | number:'1.0-1') : ('common.notAvailable' | translate) }}</div>
+        <div class="summary-card-label">{{ 'analyticsPage.avgTimeToHire' | translate }}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="col-12 md:col-6">
+      <p-card>
+        <h3 class="form-section-title">{{ 'analyticsPage.applicationsByStatus' | translate }}</h3>
+        <table class="detail-table">
+          <tbody>
+            <tr *ngFor="let entry of statusEntries">
+              <td class="detail-label">{{ entry.status }}</td>
+              <td class="detail-value">{{ entry.count }}</td>
+            </tr>
+            <tr *ngIf="!statusEntries.length">
+              <td colspan="2" class="text-center">{{ 'analyticsPage.noApplicationsYet' | translate }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </p-card>
+    </div>
+    <div class="col-12 md:col-6">
+      <p-card>
+        <h3 class="form-section-title">{{ 'analyticsPage.overallFunnel' | translate }}</h3>
+        <table class="detail-table">
+          <tbody>
+            <tr *ngFor="let entry of funnelEntries">
+              <td class="detail-label">{{ entry.status }}</td>
+              <td class="detail-value">{{ entry.count }}</td>
+            </tr>
+            <tr *ngIf="!funnelEntries.length">
+              <td colspan="2" class="text-center">{{ 'analyticsPage.noApplicationsYet' | translate }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </p-card>
+    </div>
+  </div>
+</div>

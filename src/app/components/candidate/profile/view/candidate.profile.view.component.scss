@@ -1,0 +1,74 @@
+// The global .page-header-actions .p-button rule forces a solid blue background on every button
+// there (including outlined ones), which left these two with blue text on a blue background.
+// Matching its specificity (.page-header-actions .p-button) plus this extra class wins the cascade.
+::ng-deep .page-header-actions .cv-action-btn.p-button-outlined.p-button {
+  background: transparent !important;
+  color: #1e4d8f !important;
+  border-color: #1e4d8f !important;
+  box-shadow: none !important;
+
+  &:hover {
+    background: #eef3fb !important;
+    color: #163a6b !important;
+    border-color: #163a6b !important;
+  }
+}
+
+::ng-deep .cv-account-avatar.p-avatar {
+  width: 6.5rem !important;
+  height: 6.5rem !important;
+  font-size: 2.75rem !important;
+  flex-shrink: 0;
+
+  .p-avatar-image {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.cv-inherited-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.7rem;
+  border-radius: 1rem;
+  background: #fff7ed;
+  border: 1px solid #fed7aa;
+  color: #9a3412;
+  font-size: 0.75rem;
+  font-weight: 500;
+
+  .pi {
+    font-size: 0.75rem;
+    color: #c2410c;
+  }
+
+  a {
+    color: #9a3412;
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+
+    &:hover {
+      color: #7c2d12;
+    }
+  }
+}
+
+.cv-footer-note {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.4rem;
+  margin: 1.5rem 0 0;
+  padding-top: 0.85rem;
+  border-top: 1px solid #f1f5f9;
+  color: #9ca3af;
+  font-size: 0.8rem;
+  font-style: italic;
+
+  .pi {
+    font-size: 0.85rem;
+    font-style: normal;
+  }
+}

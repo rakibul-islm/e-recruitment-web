@@ -86,6 +86,7 @@ export class AppHeaderComponent extends BaseComponent implements OnInit {
 
   filterMenuItems(items: AppMenuItem[]): AppMenuItem[] {
     return items
+      .filter(item => !item.authOnly || this.isAuthenticated)
       .map(item => item.items ? { ...item, items: this.filterMenuItems(item.items) } : item)
       .filter(item => item.items ? item.items.length > 0 : this.permissionService.hasRoutePermission(item.routeName));
   }
