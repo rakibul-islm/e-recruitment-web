@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BaseComponent } from '../../base.component';
 import { RecruiterApplicationService } from '../../../services/recruiter-application/recruiter.application.service';
 import { RecruiterApplication } from '../../../services/recruiter-application/domain/recruiter.application.domain';
@@ -20,6 +20,7 @@ export class RecruiterApplicationViewComponent extends BaseComponent implements 
 
   constructor(
     private route: ActivatedRoute,
+    protected router: Router,
     private recruiterApplicationService: RecruiterApplicationService,
     private commonConfirmDialogService: CommonConfirmDialogService,
     private formBuilder: FormBuilder

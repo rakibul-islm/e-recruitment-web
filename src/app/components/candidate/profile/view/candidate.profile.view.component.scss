@@ -14,11 +14,36 @@
   }
 }
 
+.cv-page {
+  max-width: 76rem;
+  margin: 0 auto;
+  padding: 1rem 1.5rem 2.5rem;
+}
+
+.cv-hero {
+  padding: 1.75rem;
+  margin-bottom: 1.25rem;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  background: linear-gradient(135deg, #ffffff 0%, #f6f9fd 100%);
+  box-shadow: 0 1px 2px rgba(3, 41, 103, 0.04), 0 8px 24px rgba(3, 41, 103, 0.07);
+}
+
+.cv-hero-top {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
 ::ng-deep .cv-account-avatar.p-avatar {
   width: 6.5rem !important;
   height: 6.5rem !important;
   font-size: 2.75rem !important;
   flex-shrink: 0;
+  border: 3px solid #ffffff;
+  box-shadow: 0 2px 8px rgba(3, 41, 103, 0.12);
 
   .p-avatar-image {
     width: 100%;
@@ -26,11 +51,64 @@
   }
 }
 
+.cv-hero-heading {
+  flex: 1 1 16rem;
+}
+
+.cv-hero-name {
+  margin: 0 0 0.25rem;
+  color: #032967;
+  font-size: 1.5rem;
+  font-weight: 800;
+}
+
+.cv-hero-headline {
+  margin: 0;
+  color: #1e4d8f;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.cv-hero-contacts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.cv-contact-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: #374151;
+  font-size: 0.85rem;
+
+  .pi {
+    color: #1e4d8f;
+    font-size: 0.85rem;
+  }
+}
+
+.cv-contact-link {
+  color: #1e4d8f;
+  text-decoration: none;
+  font-weight: 600;
+  max-width: 16rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
 .cv-inherited-hint {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  padding: 0.3rem 0.7rem;
+  padding: 0.15rem 0.65rem;
   border-radius: 1rem;
   background: #fff7ed;
   border: 1px solid #fed7aa;
@@ -55,20 +133,236 @@
   }
 }
 
-.cv-footer-note {
+.cv-grid {
+  row-gap: 0;
+}
+
+.cv-section-icon {
+  color: #1e4d8f;
+  margin-right: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.cv-summary-text {
+  margin: 0;
+  color: #374151;
+  font-size: 0.92rem;
+  line-height: 1.65;
+  white-space: pre-line;
+}
+
+.cv-empty-hint {
+  margin: 0;
+  padding: 0.85rem 1rem;
+  border: 1px dashed #d1d5db;
+  border-radius: 8px;
+  color: #9ca3af;
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+// Vertical timeline for work experience / education entries.
+.cv-timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.cv-timeline-item {
+  position: relative;
+  padding-left: 1.5rem;
+  padding-bottom: 1.35rem;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.3rem;
+    width: 0.65rem;
+    height: 0.65rem;
+    border-radius: 50%;
+    background: #1e4d8f;
+    box-shadow: 0 0 0 3px #eef3fb;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0.29rem;
+    top: 1.05rem;
+    bottom: -0.1rem;
+    width: 2px;
+    background: #e5e7eb;
+  }
+
+  &:last-child {
+    padding-bottom: 0;
+
+    &::after {
+      display: none;
+    }
+  }
+}
+
+.cv-timeline-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.cv-timeline-title {
+  color: #1f2937;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.cv-timeline-subtitle {
+  color: #6b7280;
+  font-size: 0.85rem;
+}
+
+.cv-date-badge {
+  flex-shrink: 0;
+  padding: 0.2rem 0.65rem;
+  border-radius: 1rem;
+  background: #f3f4f6;
+  color: #4b5563;
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.cv-timeline-desc {
+  margin-top: 0.4rem;
+  color: #374151;
+  font-size: 0.85rem;
+  line-height: 1.55;
+  white-space: pre-line;
+}
+
+// Projects
+.cv-project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  gap: 0.85rem;
+}
+
+.cv-project-card {
+  padding: 0.9rem 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #f8fafc;
+}
+
+.cv-project-name {
+  color: #1f2937;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.cv-project-link {
+  display: block;
+  color: #1e4d8f;
+  font-size: 0.8rem;
+  text-decoration: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.cv-project-desc {
+  margin-top: 0.35rem;
+  color: #6b7280;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  white-space: pre-line;
+}
+
+// Certifications
+.cv-cert-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.cv-cert-item {
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #f1f5f9;
+
+  &:last-child {
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+}
+
+.cv-cert-name {
+  color: #1f2937;
+  font-weight: 700;
+  font-size: 0.88rem;
+}
+
+.cv-cert-issuer {
+  color: #6b7280;
+  font-size: 0.82rem;
+}
+
+.cv-cert-date {
+  color: #9ca3af;
+  font-size: 0.75rem;
+  margin-top: 0.15rem;
+}
+
+// CV generation status card
+.cv-status-note {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  gap: 0.4rem;
-  margin: 1.5rem 0 0;
-  padding-top: 0.85rem;
-  border-top: 1px solid #f1f5f9;
-  color: #9ca3af;
-  font-size: 0.8rem;
-  font-style: italic;
+  gap: 0.5rem;
+  margin: 0;
+  color: #16a34a;
+  font-size: 0.82rem;
+  font-weight: 600;
 
   .pi {
-    font-size: 0.85rem;
-    font-style: normal;
+    font-size: 0.9rem;
+  }
+
+  &.cv-status-note-muted {
+    color: #9ca3af;
+    font-weight: 500;
+    font-style: italic;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .cv-page {
+    padding: 0.75rem 1rem 2rem;
+  }
+
+  .cv-hero {
+    padding: 1.25rem;
+  }
+
+  .cv-hero-top {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .cv-hero-contacts {
+    justify-content: center;
+    text-align: center;
+  }
+
+  .cv-contact-link {
+    max-width: 100%;
+  }
+
+  .cv-project-grid {
+    grid-template-columns: 1fr;
   }
 }

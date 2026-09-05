@@ -14,6 +14,7 @@ export class EducationItem {
     fieldOfStudy?: string;
     startDate?: Date | string;
     endDate?: Date | string;
+    current?: boolean;
     grade?: string;
 }
 
@@ -49,12 +50,12 @@ export class CandidateProfile {
     address?: string;
     linkedinUrl?: string;
     portfolioUrl?: string;
-    workExperience: WorkExperienceItem[] = [];
-    education: EducationItem[] = [];
-    skills: SkillItem[] = [];
-    certifications: CertificationItem[] = [];
-    languages: LanguageItem[] = [];
-    projects: ProjectItem[] = [];
+    workExperience?: WorkExperienceItem[] = [];
+    education?: EducationItem[] = [];
+    skills?: SkillItem[] = [];
+    certifications?: CertificationItem[] = [];
+    languages?: LanguageItem[] = [];
+    projects?: ProjectItem[] = [];
 }
 
 export class CandidateProfileRequest {

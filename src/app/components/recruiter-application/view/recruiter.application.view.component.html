@@ -5,6 +5,7 @@
       <p-button [label]="'recruiterApplication.approve' | translate" icon="pi pi-check" (onClick)="approve()"></p-button>
     </ng-container>
   </ng-container>
+  <p-button *appPermissionHide="'audit-log-list'" [label]="'auditLog.viewForEntity' | translate" icon="pi pi-history" styleClass="p-button-secondary" (onClick)="navigateToAuditLog(router, 'RecruiterApplication', applicationId)"></p-button>
 </app-page-header>
 
 <div class="flex justify-content-center mt-3 px-3">

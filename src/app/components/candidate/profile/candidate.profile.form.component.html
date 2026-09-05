@@ -3,14 +3,16 @@
   <p-button [label]="'common.back' | translate" icon="pi pi-arrow-left" styleClass="p-button-secondary" (onClick)="goBack()"></p-button>
 </app-page-header>
 
-<div class="flex justify-content-center mt-3 px-3">
+<div class="cv-page">
   <p-card class="page-card" *ngIf="profileForm">
-    <div class="cv-account-summary flex align-items-center gap-3 mb-4">
+    <div class="cv-form-account">
       <p-avatar [image]="accountProfile.imageBase64" shape="circle" size="xlarge" styleClass="cv-account-avatar"></p-avatar>
       <div class="grid flex-1 row-gap-3">
         <div class="col-12 md:col-6 flex flex-column gap-2">
-          <label for="cvAccountFullName">{{ 'candidateProfile.fullName' | translate }}</label>
-          <input id="cvAccountFullName" type="text" pInputText class="w-full" [value]="accountProfile.fullName" disabled />
+          <p-floatLabel>
+            <input id="cvAccountFullName" type="text" pInputText class="w-full" [value]="accountProfile.fullName" disabled />
+            <label for="cvAccountFullName">{{ 'candidateProfile.fullName' | translate }}</label>
+          </p-floatLabel>
           <small class="cv-inherited-hint" *ngIf="!accountProfile.fullName">
             <i class="pi pi-info-circle"></i>
             {{ 'candidateProfile.notSetHint' | translate }}
@@ -18,8 +20,10 @@
           </small>
         </div>
         <div class="col-12 md:col-6 flex flex-column gap-2">
-          <label for="cvAccountEmail">{{ 'candidateProfile.email' | translate }}</label>
-          <input id="cvAccountEmail" type="text" pInputText class="w-full" [value]="accountProfile.email" disabled />
+          <p-floatLabel>
+            <input id="cvAccountEmail" type="text" pInputText class="w-full" [value]="accountProfile.email" disabled />
+            <label for="cvAccountEmail">{{ 'candidateProfile.email' | translate }}</label>
+          </p-floatLabel>
           <small class="cv-inherited-hint" *ngIf="!accountProfile.email">
             <i class="pi pi-info-circle"></i>
             {{ 'candidateProfile.notSetHint' | translate }}
@@ -27,8 +31,10 @@
           </small>
         </div>
         <div class="col-12 md:col-4 flex flex-column gap-2">
-          <label for="cvAccountMobile">{{ 'candidateProfile.mobilePrimary' | translate }}</label>
-          <input id="cvAccountMobile" type="text" pInputText class="w-full" [value]="accountProfile.mobile" disabled />
+          <p-floatLabel>
+            <input id="cvAccountMobile" type="text" pInputText class="w-full" [value]="accountProfile.mobile" disabled />
+            <label for="cvAccountMobile">{{ 'candidateProfile.mobilePrimary' | translate }}</label>
+          </p-floatLabel>
           <small class="cv-inherited-hint" *ngIf="!accountProfile.mobile">
             <i class="pi pi-info-circle"></i>
             {{ 'candidateProfile.notSetHint' | translate }}
@@ -36,8 +42,10 @@
           </small>
         </div>
         <div class="col-12 md:col-4 flex flex-column gap-2">
-          <label for="cvAccountPhone">{{ 'candidateProfile.mobileSecondary' | translate }}</label>
-          <input id="cvAccountPhone" type="text" pInputText class="w-full" [value]="accountProfile.phone" disabled />
+          <p-floatLabel>
+            <input id="cvAccountPhone" type="text" pInputText class="w-full" [value]="accountProfile.phone" disabled />
+            <label for="cvAccountPhone">{{ 'candidateProfile.mobileSecondary' | translate }}</label>
+          </p-floatLabel>
           <small class="cv-inherited-hint" *ngIf="!accountProfile.phone">
             <i class="pi pi-info-circle"></i>
             {{ 'candidateProfile.notSetHint' | translate }}
@@ -45,8 +53,10 @@
           </small>
         </div>
         <div class="col-12 md:col-4 flex flex-column gap-2">
-          <label for="cvAccountAddress">{{ 'candidateProfile.address' | translate }}</label>
-          <input id="cvAccountAddress" type="text" pInputText class="w-full" [value]="accountProfile.address" disabled />
+          <p-floatLabel>
+            <input id="cvAccountAddress" type="text" pInputText class="w-full" [value]="accountProfile.address" disabled />
+            <label for="cvAccountAddress">{{ 'candidateProfile.address' | translate }}</label>
+          </p-floatLabel>
           <small class="cv-inherited-hint" *ngIf="!accountProfile.address">
             <i class="pi pi-info-circle"></i>
             {{ 'candidateProfile.notSetHint' | translate }}
@@ -58,134 +68,273 @@
 
     <form [formGroup]="profileForm">
       <h3 class="form-section-title">{{ 'candidateProfile.basicInfo' | translate }}</h3>
-      <div class="grid row-gap-3">
-        <div class="col-12 md:col-6">
-          <p-floatLabel>
-            <input id="profileHeadline" type="text" formControlName="headline" pInputText class="w-full" />
-            <label for="profileHeadline">{{ 'candidateProfile.headline' | translate }}</label>
-          </p-floatLabel>
+      <p-card styleClass="cv-form-item-card">
+        <div class="grid row-gap-3">
+          <div class="col-12 md:col-6">
+            <p-floatLabel>
+              <input id="profileHeadline" type="text" formControlName="headline" pInputText class="w-full" />
+              <label for="profileHeadline">{{ 'candidateProfile.headline' | translate }}</label>
+            </p-floatLabel>
+          </div>
+          <div class="col-12 md:col-6">
+            <p-floatLabel>
+              <input id="profileLinkedin" type="text" formControlName="linkedinUrl" pInputText class="w-full" />
+              <label for="profileLinkedin">{{ 'candidateProfile.linkedinUrl' | translate }}</label>
+            </p-floatLabel>
+          </div>
+          <div class="col-12 md:col-6">
+            <p-floatLabel>
+              <input id="profilePortfolio" type="text" formControlName="portfolioUrl" pInputText class="w-full" />
+              <label for="profilePortfolio">{{ 'candidateProfile.portfolioUrl' | translate }}</label>
+            </p-floatLabel>
+          </div>
+          <div class="col-12">
+            <p-floatLabel>
+              <textarea id="profileSummary" pInputTextarea formControlName="summary" class="w-full" rows="3"></textarea>
+              <label for="profileSummary">{{ 'candidateProfile.summary' | translate }}</label>
+            </p-floatLabel>
+          </div>
         </div>
-        <div class="col-12 md:col-6">
-          <p-floatLabel>
-            <input id="profileLinkedin" type="text" formControlName="linkedinUrl" pInputText class="w-full" />
-            <label for="profileLinkedin">{{ 'candidateProfile.linkedinUrl' | translate }}</label>
-          </p-floatLabel>
-        </div>
-        <div class="col-12 md:col-6">
-          <p-floatLabel>
-            <input id="profilePortfolio" type="text" formControlName="portfolioUrl" pInputText class="w-full" />
-            <label for="profilePortfolio">{{ 'candidateProfile.portfolioUrl' | translate }}</label>
-          </p-floatLabel>
-        </div>
-        <div class="col-12">
-          <p-floatLabel>
-            <textarea id="profileSummary" pInputTextarea formControlName="summary" class="w-full" rows="3"></textarea>
-            <label for="profileSummary">{{ 'candidateProfile.summary' | translate }}</label>
-          </p-floatLabel>
-        </div>
-      </div>
+      </p-card>
 
       <h3 class="form-section-title flex justify-content-between align-items-center flex-wrap gap-2">
-        {{ 'candidateProfile.workExperience' | translate }}
-        <p-button icon="pi pi-plus" [label]="'common.add' | translate" styleClass="p-button-text p-button-sm" (onClick)="addWorkExperience()"></p-button>
+        <span><i class="pi pi-briefcase cv-section-icon"></i>{{ 'candidateProfile.workExperience' | translate }}</span>
+        <p-button icon="pi pi-plus" [label]="'common.add' | translate" styleClass="p-button-outlined p-button-sm cv-add-btn" (onClick)="addWorkExperience()"></p-button>
       </h3>
       <div formArrayName="workExperience" class="flex flex-column gap-3">
-        <p-card *ngFor="let group of workExperience.controls; let i = index" [formGroupName]="i" styleClass="border-1 surface-border">
+        <p-card *ngFor="let group of workExperience.controls; let i = index" [formGroupName]="i" styleClass="cv-form-item-card">
+          <div class="cv-form-item-header">
+            <span class="cv-form-item-badge">{{ i + 1 }}</span>
+            <span class="cv-form-item-label">{{ 'candidateProfile.workExperience' | translate }}</span>
+            <p-button icon="pi pi-trash" styleClass="p-button-text p-button-danger p-button-sm" (onClick)="removeAt(workExperience, i)"></p-button>
+          </div>
           <div class="grid row-gap-3">
-            <div class="col-12 md:col-6"><input type="text" pInputText class="w-full" [placeholder]="'candidateProfile.jobTitle' | translate" formControlName="title" /></div>
-            <div class="col-12 md:col-6"><input type="text" pInputText class="w-full" [placeholder]="'candidateProfile.companyName' | translate" formControlName="companyName" /></div>
-            <div class="col-12 md:col-4"><input type="text" pInputText class="w-full" [placeholder]="'candidateProfile.location' | translate" formControlName="location" /></div>
-            <div class="col-12 md:col-4"><p-calendar [placeholder]="'candidateProfile.startDate' | translate" formControlName="startDate" dateFormat="dd-mm-yy" styleClass="w-full" appendTo="body"></p-calendar></div>
-            <div class="col-12 md:col-4"><p-calendar [placeholder]="'candidateProfile.endDate' | translate" formControlName="endDate" dateFormat="dd-mm-yy" styleClass="w-full" appendTo="body"></p-calendar></div>
             <div class="col-12 flex align-items-center gap-2">
-              <p-checkbox [binary]="true" formControlName="current" inputId="current{{i}}"></p-checkbox>
+              <p-checkbox [binary]="true" formControlName="current" inputId="current{{i}}" (onChange)="moveToTopIfCurrent(workExperience, i, $event.checked)"></p-checkbox>
               <label for="current{{i}}">{{ 'candidateProfile.currentlyWorkHere' | translate }}</label>
             </div>
-            <div class="col-12"><textarea pInputTextarea class="w-full" rows="2" [placeholder]="'common.description' | translate" formControlName="description"></textarea></div>
-            <div class="col-12 text-right">
-              <p-button icon="pi pi-trash" styleClass="p-button-text p-button-danger p-button-sm" (onClick)="removeAt(workExperience, i)"></p-button>
+            <div class="col-12 md:col-6">
+              <p-floatLabel>
+                <input id="weTitle{{i}}" type="text" pInputText class="w-full" formControlName="title" />
+                <label for="weTitle{{i}}">{{ 'candidateProfile.jobTitle' | translate }}</label>
+              </p-floatLabel>
+            </div>
+            <div class="col-12 md:col-6">
+              <p-floatLabel>
+                <input id="weCompany{{i}}" type="text" pInputText class="w-full" formControlName="companyName" />
+                <label for="weCompany{{i}}">{{ 'candidateProfile.companyName' | translate }}</label>
+              </p-floatLabel>
+            </div>
+            <div class="col-12 md:col-4">
+              <p-floatLabel>
+                <input id="weLocation{{i}}" type="text" pInputText class="w-full" formControlName="location" />
+                <label for="weLocation{{i}}">{{ 'candidateProfile.location' | translate }}</label>
+              </p-floatLabel>
+            </div>
+            <div class="col-12 md:col-4">
+              <p-floatLabel>
+                <p-calendar id="weStart{{i}}" formControlName="startDate" dateFormat="dd-mm-yy" styleClass="w-full" appendTo="body"></p-calendar>
+                <label for="weStart{{i}}">{{ 'candidateProfile.startDate' | translate }}</label>
+              </p-floatLabel>
+            </div>
+            <div class="col-12 md:col-4">
+              <p-floatLabel>
+                <p-calendar id="weEnd{{i}}" formControlName="endDate" dateFormat="dd-mm-yy" styleClass="w-full" appendTo="body"></p-calendar>
+                <label for="weEnd{{i}}">{{ 'candidateProfile.endDate' | translate }}</label>
+              </p-floatLabel>
+            </div>
+            <div class="col-12">
+              <p-floatLabel>
+                <textarea id="weDescription{{i}}" pInputTextarea class="w-full" rows="2" formControlName="description"></textarea>
+                <label for="weDescription{{i}}">{{ 'common.description' | translate }}</label>
+              </p-floatLabel>
             </div>
           </div>
         </p-card>
+        <p class="cv-empty-hint" *ngIf="!workExperience.length">{{ 'candidateProfile.noneAdded' | translate }}</p>
       </div>
 
       <h3 class="form-section-title flex justify-content-between align-items-center flex-wrap gap-2">
-        {{ 'candidateProfile.education' | translate }}
-        <p-button icon="pi pi-plus" [label]="'common.add' | translate" styleClass="p-button-text p-button-sm" (onClick)="addEducation()"></p-button>
+        <span><i class="pi pi-graduation-cap cv-section-icon"></i>{{ 'candidateProfile.education' | translate }}</span>
+        <p-button icon="pi pi-plus" [label]="'common.add' | translate" styleClass="p-button-outlined p-button-sm cv-add-btn" (onClick)="addEducation()"></p-button>
       </h3>
       <div formArrayName="education" class="flex flex-column gap-3">
-        <p-card *ngFor="let group of education.controls; let i = index" [formGroupName]="i" styleClass="border-1 surface-border">
+        <p-card *ngFor="let group of education.controls; let i = index" [formGroupName]="i" styleClass="cv-form-item-card">
+          <div class="cv-form-item-header">
+            <span class="cv-form-item-badge">{{ i + 1 }}</span>
+            <span class="cv-form-item-label">{{ 'candidateProfile.education' | translate }}</span>
+            <p-button icon="pi pi-trash" styleClass="p-button-text p-button-danger p-button-sm" (onClick)="removeAt(education, i)"></p-button>
+          </div>
           <div class="grid row-gap-3">
-            <div class="col-12 md:col-6"><input type="text" pInputText class="w-full" [placeholder]="'candidateProfile.institution' | translate" formControlName="institution" /></div>
-            <div class="col-12 md:col-6"><input type="text" pInputText class="w-full" [placeholder]="'candidateProfile.degree' | translate" formControlName="degree" /></div>
-            <div class="col-12 md:col-4"><input type="text" pInputText class="w-full" [placeholder]="'candidateProfile.fieldOfStudy' | translate" formControlName="fieldOfStudy" /></div>
-            <div class="col-12 md:col-4"><p-calendar [placeholder]="'candidateProfile.startDate' | translate" formControlName="startDate" dateFormat="dd-mm-yy" styleClass="w-full" appendTo="body"></p-calendar></div>
-            <div class="col-12 md:col-4"><p-calendar [placeholder]="'candidateProfile.endDate' | translate" formControlName="endDate" dateFormat="dd-mm-yy" styleClass="w-full" appendTo="body"></p-calendar></div>
-            <div class="col-12 md:col-6"><input type="text" pInputText class="w-full" [placeholder]="'candidateProfile.grade' | translate" formControlName="grade" /></div>
-            <div class="col-12 text-right">
-              <p-button icon="pi pi-trash" styleClass="p-button-text p-button-danger p-button-sm" (onClick)="removeAt(education, i)"></p-button>
+            <div class="col-12 flex align-items-center gap-2">
+              <p-checkbox [binary]="true" formControlName="current" inputId="eduCurrent{{i}}" (onChange)="moveToTopIfCurrent(education, i, $event.checked)"></p-checkbox>
+              <label for="eduCurrent{{i}}">{{ 'candidateProfile.currentlyStudyHere' | translate }}</label>
+            </div>
+            <div class="col-12 md:col-6">
+              <p-floatLabel>
+                <input id="eduInstitution{{i}}" type="text" pInputText class="w-full" formControlName="institution" />
+                <label for="eduInstitution{{i}}">{{ 'candidateProfile.institution' | translate }}</label>
+              </p-floatLabel>
+            </div>
+            <div class="col-12 md:col-6">
+              <p-floatLabel>
+                <input id="eduDegree{{i}}" type="text" pInputText class="w-full" formControlName="degree" />
+                <label for="eduDegree{{i}}">{{ 'candidateProfile.degree' | translate }}</label>
+              </p-floatLabel>
+            </div>
+            <div class="col-12 md:col-4">
+              <p-floatLabel>
+                <input id="eduField{{i}}" type="text" pInputText class="w-full" formControlName="fieldOfStudy" />
+                <label for="eduField{{i}}">{{ 'candidateProfile.fieldOfStudy' | translate }}</label>
+              </p-floatLabel>
+            </div>
+            <div class="col-12 md:col-4">
+              <p-floatLabel>
+                <p-calendar id="eduStart{{i}}" formControlName="startDate" dateFormat="dd-mm-yy" styleClass="w-full" appendTo="body"></p-calendar>
+                <label for="eduStart{{i}}">{{ 'candidateProfile.startDate' | translate }}</label>
+              </p-floatLabel>
+            </div>
+            <div class="col-12 md:col-4">
+              <p-floatLabel>
+                <p-calendar id="eduEnd{{i}}" formControlName="endDate" dateFormat="dd-mm-yy" styleClass="w-full" appendTo="body"></p-calendar>
+                <label for="eduEnd{{i}}">{{ 'candidateProfile.endDate' | translate }}</label>
+              </p-floatLabel>
+            </div>
+            <div class="col-12 md:col-6">
+              <p-floatLabel>
+                <input id="eduGrade{{i}}" type="text" pInputText class="w-full" formControlName="grade" />
+                <label for="eduGrade{{i}}">{{ 'candidateProfile.grade' | translate }}</label>
+              </p-floatLabel>
             </div>
           </div>
         </p-card>
+        <p class="cv-empty-hint" *ngIf="!education.length">{{ 'candidateProfile.noneAdded' | translate }}</p>
       </div>
 
       <h3 class="form-section-title flex justify-content-between align-items-center flex-wrap gap-2">
-        {{ 'candidateProfile.skills' | translate }}
-        <p-button icon="pi pi-plus" [label]="'common.add' | translate" styleClass="p-button-text p-button-sm" (onClick)="addSkill()"></p-button>
+        <span><i class="pi pi-star cv-section-icon"></i>{{ 'candidateProfile.skills' | translate }}</span>
+        <p-button icon="pi pi-plus" [label]="'common.add' | translate" styleClass="p-button-outlined p-button-sm cv-add-btn" (onClick)="addSkill()"></p-button>
       </h3>
       <div formArrayName="skills" class="flex flex-column gap-2">
-        <div *ngFor="let group of skills.controls; let i = index" [formGroupName]="i" class="grid row-gap-2 align-items-center">
-          <div class="col-12 md:col-5"><input type="text" pInputText class="w-full" [placeholder]="'candidateProfile.skill' | translate" formControlName="name" /></div>
-          <div class="col-10 md:col-5"><input type="text" pInputText class="w-full" [placeholder]="'candidateProfile.skillLevel' | translate" formControlName="level" /></div>
-          <div class="col-2 md:col-2 text-right"><p-button icon="pi pi-trash" styleClass="p-button-text p-button-danger p-button-sm" (onClick)="removeAt(skills, i)"></p-button></div>
+        <div *ngFor="let group of skills.controls; let i = index" [formGroupName]="i" class="cv-form-inline-row">
+          <div class="grid row-gap-2 align-items-center flex-1">
+            <div class="col-12 md:col-6">
+              <p-floatLabel>
+                <input id="skillName{{i}}" type="text" pInputText class="w-full" formControlName="name" />
+                <label for="skillName{{i}}">{{ 'candidateProfile.skill' | translate }}</label>
+              </p-floatLabel>
+            </div>
+            <div class="col-12 md:col-6">
+              <p-floatLabel>
+                <input id="skillLevel{{i}}" type="text" pInputText class="w-full" formControlName="level" />
+                <label for="skillLevel{{i}}">{{ 'candidateProfile.skillLevel' | translate }}</label>
+              </p-floatLabel>
+            </div>
+          </div>
+          <p-button icon="pi pi-trash" styleClass="p-button-text p-button-danger p-button-sm" (onClick)="removeAt(skills, i)"></p-button>
         </div>
+        <p class="cv-empty-hint" *ngIf="!skills.length">{{ 'candidateProfile.noneAdded' | translate }}</p>
       </div>
 
       <h3 class="form-section-title flex justify-content-between align-items-center flex-wrap gap-2">
-        {{ 'candidateProfile.certifications' | translate }}
-        <p-button icon="pi pi-plus" [label]="'common.add' | translate" styleClass="p-button-text p-button-sm" (onClick)="addCertification()"></p-button>
+        <span><i class="pi pi-verified cv-section-icon"></i>{{ 'candidateProfile.certifications' | translate }}</span>
+        <p-button icon="pi pi-plus" [label]="'common.add' | translate" styleClass="p-button-outlined p-button-sm cv-add-btn" (onClick)="addCertification()"></p-button>
       </h3>
       <div formArrayName="certifications" class="flex flex-column gap-3">
-        <p-card *ngFor="let group of certifications.controls; let i = index" [formGroupName]="i" styleClass="border-1 surface-border">
+        <p-card *ngFor="let group of certifications.controls; let i = index" [formGroupName]="i" styleClass="cv-form-item-card">
+          <div class="cv-form-item-header">
+            <span class="cv-form-item-badge">{{ i + 1 }}</span>
+            <span class="cv-form-item-label">{{ 'candidateProfile.certifications' | translate }}</span>
+            <p-button icon="pi pi-trash" styleClass="p-button-text p-button-danger p-button-sm" (onClick)="removeAt(certifications, i)"></p-button>
+          </div>
           <div class="grid row-gap-3">
-            <div class="col-12 md:col-4"><input type="text" pInputText class="w-full" [placeholder]="'common.name' | translate" formControlName="name" /></div>
-            <div class="col-12 md:col-4"><input type="text" pInputText class="w-full" [placeholder]="'candidateProfile.issuer' | translate" formControlName="issuer" /></div>
-            <div class="col-12 md:col-4"><p-calendar [placeholder]="'candidateProfile.date' | translate" formControlName="date" dateFormat="dd-mm-yy" styleClass="w-full" appendTo="body"></p-calendar></div>
-            <div class="col-12"><input type="text" pInputText class="w-full" [placeholder]="'candidateProfile.credentialUrl' | translate" formControlName="credentialUrl" /></div>
-            <div class="col-12 text-right">
-              <p-button icon="pi pi-trash" styleClass="p-button-text p-button-danger p-button-sm" (onClick)="removeAt(certifications, i)"></p-button>
+            <div class="col-12 md:col-4">
+              <p-floatLabel>
+                <input id="certName{{i}}" type="text" pInputText class="w-full" formControlName="name" />
+                <label for="certName{{i}}">{{ 'common.name' | translate }}</label>
+              </p-floatLabel>
+            </div>
+            <div class="col-12 md:col-4">
+              <p-floatLabel>
+                <input id="certIssuer{{i}}" type="text" pInputText class="w-full" formControlName="issuer" />
+                <label for="certIssuer{{i}}">{{ 'candidateProfile.issuer' | translate }}</label>
+              </p-floatLabel>
+            </div>
+            <div class="col-12 md:col-4">
+              <p-floatLabel>
+                <p-calendar id="certDate{{i}}" formControlName="date" dateFormat="dd-mm-yy" styleClass="w-full" appendTo="body"></p-calendar>
+                <label for="certDate{{i}}">{{ 'candidateProfile.date' | translate }}</label>
+              </p-floatLabel>
+            </div>
+            <div class="col-12">
+              <p-floatLabel>
+                <input id="certUrl{{i}}" type="text" pInputText class="w-full" formControlName="credentialUrl" />
+                <label for="certUrl{{i}}">{{ 'candidateProfile.credentialUrl' | translate }}</label>
+              </p-floatLabel>
             </div>
           </div>
         </p-card>
+        <p class="cv-empty-hint" *ngIf="!certifications.length">{{ 'candidateProfile.noneAdded' | translate }}</p>
       </div>
 
       <h3 class="form-section-title flex justify-content-between align-items-center flex-wrap gap-2">
-        {{ 'candidateProfile.languages' | translate }}
-        <p-button icon="pi pi-plus" [label]="'common.add' | translate" styleClass="p-button-text p-button-sm" (onClick)="addLanguage()"></p-button>
+        <span><i class="pi pi-language cv-section-icon"></i>{{ 'candidateProfile.languages' | translate }}</span>
+        <p-button icon="pi pi-plus" [label]="'common.add' | translate" styleClass="p-button-outlined p-button-sm cv-add-btn" (onClick)="addLanguage()"></p-button>
       </h3>
       <div formArrayName="languages" class="flex flex-column gap-2">
-        <div *ngFor="let group of languages.controls; let i = index" [formGroupName]="i" class="grid row-gap-2 align-items-center">
-          <div class="col-12 md:col-5"><input type="text" pInputText class="w-full" [placeholder]="'candidateProfile.language' | translate" formControlName="name" /></div>
-          <div class="col-10 md:col-5"><input type="text" pInputText class="w-full" [placeholder]="'candidateProfile.proficiency' | translate" formControlName="proficiency" /></div>
-          <div class="col-2 md:col-2 text-right"><p-button icon="pi pi-trash" styleClass="p-button-text p-button-danger p-button-sm" (onClick)="removeAt(languages, i)"></p-button></div>
+        <div *ngFor="let group of languages.controls; let i = index" [formGroupName]="i" class="cv-form-inline-row">
+          <div class="grid row-gap-2 align-items-center flex-1">
+            <div class="col-12 md:col-6">
+              <p-floatLabel>
+                <input id="langName{{i}}" type="text" pInputText class="w-full" formControlName="name" />
+                <label for="langName{{i}}">{{ 'candidateProfile.language' | translate }}</label>
+              </p-floatLabel>
+            </div>
+            <div class="col-12 md:col-6">
+              <p-floatLabel>
+                <input id="langProficiency{{i}}" type="text" pInputText class="w-full" formControlName="proficiency" />
+                <label for="langProficiency{{i}}">{{ 'candidateProfile.proficiency' | translate }}</label>
+              </p-floatLabel>
+            </div>
+          </div>
+          <p-button icon="pi pi-trash" styleClass="p-button-text p-button-danger p-button-sm" (onClick)="removeAt(languages, i)"></p-button>
         </div>
+        <p class="cv-empty-hint" *ngIf="!languages.length">{{ 'candidateProfile.noneAdded' | translate }}</p>
       </div>
 
       <h3 class="form-section-title flex justify-content-between align-items-center flex-wrap gap-2">
-        {{ 'candidateProfile.projects' | translate }}
-        <p-button icon="pi pi-plus" [label]="'common.add' | translate" styleClass="p-button-text p-button-sm" (onClick)="addProject()"></p-button>
+        <span><i class="pi pi-code cv-section-icon"></i>{{ 'candidateProfile.projects' | translate }}</span>
+        <p-button icon="pi pi-plus" [label]="'common.add' | translate" styleClass="p-button-outlined p-button-sm cv-add-btn" (onClick)="addProject()"></p-button>
       </h3>
       <div formArrayName="projects" class="flex flex-column gap-3">
-        <p-card *ngFor="let group of projects.controls; let i = index" [formGroupName]="i" styleClass="border-1 surface-border">
+        <p-card *ngFor="let group of projects.controls; let i = index" [formGroupName]="i" styleClass="cv-form-item-card">
+          <div class="cv-form-item-header">
+            <span class="cv-form-item-badge">{{ i + 1 }}</span>
+            <span class="cv-form-item-label">{{ 'candidateProfile.projects' | translate }}</span>
+            <p-button icon="pi pi-trash" styleClass="p-button-text p-button-danger p-button-sm" (onClick)="removeAt(projects, i)"></p-button>
+          </div>
           <div class="grid row-gap-3">
-            <div class="col-12 md:col-6"><input type="text" pInputText class="w-full" [placeholder]="'candidateProfile.projectName' | translate" formControlName="name" /></div>
-            <div class="col-12 md:col-6"><input type="text" pInputText class="w-full" placeholder="URL" formControlName="url" /></div>
-            <div class="col-12"><textarea pInputTextarea class="w-full" rows="2" [placeholder]="'common.description' | translate" formControlName="description"></textarea></div>
-            <div class="col-12 text-right">
-              <p-button icon="pi pi-trash" styleClass="p-button-text p-button-danger p-button-sm" (onClick)="removeAt(projects, i)"></p-button>
+            <div class="col-12 md:col-6">
+              <p-floatLabel>
+                <input id="projName{{i}}" type="text" pInputText class="w-full" formControlName="name" />
+                <label for="projName{{i}}">{{ 'candidateProfile.projectName' | translate }}</label>
+              </p-floatLabel>
+            </div>
+            <div class="col-12 md:col-6">
+              <p-floatLabel>
+                <input id="projUrl{{i}}" type="text" pInputText class="w-full" formControlName="url" />
+                <label for="projUrl{{i}}">{{ 'candidateProfile.projectUrl' | translate }}</label>
+              </p-floatLabel>
+            </div>
+            <div class="col-12">
+              <p-floatLabel>
+                <textarea id="projDescription{{i}}" pInputTextarea class="w-full" rows="2" formControlName="description"></textarea>
+                <label for="projDescription{{i}}">{{ 'common.description' | translate }}</label>
+              </p-floatLabel>
             </div>
           </div>
         </p-card>
+        <p class="cv-empty-hint" *ngIf="!projects.length">{{ 'candidateProfile.noneAdded' | translate }}</p>
       </div>
     </form>
   </p-card>

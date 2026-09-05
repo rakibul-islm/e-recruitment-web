@@ -1,5 +1,6 @@
 <app-page-header [title]="'applicationManagement.detailsTitle' | translate">
   <p-button *ngIf="application.generatedCvId" [label]="'applicationManagement.downloadCv' | translate" icon="pi pi-download" styleClass="p-button-secondary" (onClick)="downloadCv()"></p-button>
+  <p-button *appPermissionHide="'audit-log-list'" [label]="'auditLog.viewForEntity' | translate" icon="pi pi-history" styleClass="p-button-secondary" (onClick)="navigateToAuditLog(router, 'Application', applicationId)"></p-button>
   <p-button [label]="'common.back' | translate" icon="pi pi-arrow-left" styleClass="p-button-secondary" (onClick)="goBack()"></p-button>
 </app-page-header>
 

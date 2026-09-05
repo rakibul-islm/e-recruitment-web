@@ -576,6 +576,7 @@
     "endDate": "শেষের তারিখ",
     "currentlyWorkHere": "আমি বর্তমানে এখানে কর্মরত",
     "education": "শিক্ষাগত যোগ্যতা",
+    "currentlyStudyHere": "আমি বর্তমানে এখানে অধ্যয়নরত",
     "institution": "প্রতিষ্ঠান",
     "degree": "ডিগ্রি",
     "fieldOfStudy": "বিষয়",
@@ -592,6 +593,7 @@
     "proficiency": "দক্ষতার মাত্রা",
     "projects": "প্রকল্প",
     "projectName": "প্রকল্পের নাম",
+    "projectUrl": "প্রকল্পের URL",
     "saveAndGenerateSuccess": "প্রোফাইল সংরক্ষণ ও সিভি সফলভাবে তৈরি হয়েছে!"
   },
   "candidateApplication": {
