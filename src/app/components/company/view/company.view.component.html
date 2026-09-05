@@ -3,6 +3,7 @@
   <ng-container *appPermissionHide="'company-manage'">
     <p-button *ngIf="!isCompanyScoped" [label]="'company.removeButton' | translate" icon="pi pi-trash" styleClass="p-button-danger" (onClick)="deleteCompany()"></p-button>
   </ng-container>
+  <p-button *appPermissionHide="'audit-log-list'" [label]="'auditLog.viewForEntity' | translate" icon="pi pi-history" styleClass="p-button-secondary" (onClick)="navigateToAuditLog(router, 'Company', companyId)"></p-button>
   <p-button [label]="'common.back' | translate" icon="pi pi-arrow-left" styleClass="p-button-secondary" (onClick)="goBack()"></p-button>
 </app-page-header>
 

@@ -82,6 +82,7 @@ export class CandidateProfileFormComponent extends BaseComponent implements OnIn
       fieldOfStudy: [item.fieldOfStudy],
       startDate: [item.startDate ? new Date(item.startDate) : null],
       endDate: [item.endDate ? new Date(item.endDate) : null],
+      current: [item.current || false],
       grade: [item.grade]
     });
   }
@@ -107,12 +108,23 @@ export class CandidateProfileFormComponent extends BaseComponent implements OnIn
     return this.formBuilder.group({ name: [item.name], description: [item.description], url: [item.url] });
   }
 
-  addWorkExperience(): void { this.workExperience.push(this.buildWorkExperienceGroup()); }
-  addEducation(): void { this.education.push(this.buildEducationGroup()); }
-  addSkill(): void { this.skills.push(this.buildSkillGroup()); }
-  addCertification(): void { this.certifications.push(this.buildCertificationGroup()); }
-  addLanguage(): void { this.languages.push(this.buildLanguageGroup()); }
-  addProject(): void { this.projects.push(this.buildProjectGroup()); }
+  // New entries go to the top of each list so the one the candidate is currently filling in
+  // stays visible without scrolling past everything already added.
+  addWorkExperience(): void { this.workExperience.insert(0, this.buildWorkExperienceGroup()); }
+  addEducation(): void { this.education.insert(0, this.buildEducationGroup()); }
+  addSkill(): void { this.skills.insert(0, this.buildSkillGroup()); }
+  addCertification(): void { this.certifications.insert(0, this.buildCertificationGroup()); }
+  addLanguage(): void { this.languages.insert(0, this.buildLanguageGroup()); }
+  addProject(): void { this.projects.insert(0, this.buildProjectGroup()); }
+
+  // Marking an entry "current" pulls it to the top of its list, same as a freshly added entry -
+  // the ongoing job/degree is the one most worth seeing first.
+  moveToTopIfCurrent(array: FormArray, index: number, isCurrent: boolean): void {
+    if (!isCurrent || index === 0) return;
+    const group = array.at(index);
+    array.removeAt(index);
+    array.insert(0, group);
+  }
 
   removeAt(array: FormArray, index: number): void { array.removeAt(index); }
 

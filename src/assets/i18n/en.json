@@ -576,6 +576,7 @@
     "endDate": "End Date",
     "currentlyWorkHere": "I currently work here",
     "education": "Education",
+    "currentlyStudyHere": "I am currently studying here",
     "institution": "Institution",
     "degree": "Degree",
     "fieldOfStudy": "Field of Study",
@@ -592,6 +593,7 @@
     "proficiency": "Proficiency",
     "projects": "Projects",
     "projectName": "Project Name",
+    "projectUrl": "Project URL",
     "saveAndGenerateSuccess": "Profile saved and CV generated successfully!"
   },
   "candidateApplication": {
