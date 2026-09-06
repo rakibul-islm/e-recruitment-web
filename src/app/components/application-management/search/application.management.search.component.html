@@ -10,8 +10,28 @@
             <input id="filterJobCircularId" type="text" pInputText class="w-full" formControlName="jobCircularId" />
           </div>
           <div class="col-12 md:col-4 flex flex-column gap-2">
+            <label for="filterCandidateName">{{ 'applicationManagement.candidateName' | translate }}</label>
+            <input id="filterCandidateName" type="text" pInputText class="w-full" formControlName="candidateName_like" />
+          </div>
+          <div class="col-12 md:col-4 flex flex-column gap-2">
+            <label for="filterCandidateEmail">{{ 'applicationManagement.candidateEmail' | translate }}</label>
+            <input id="filterCandidateEmail" type="text" pInputText class="w-full" formControlName="candidateEmail_like" />
+          </div>
+          <div class="col-12 md:col-4 flex flex-column gap-2">
             <label for="filterAppStatus">{{ 'common.status' | translate }}</label>
             <p-dropdown id="filterAppStatus" [options]="statusOptions" formControlName="status" optionLabel="label" optionValue="value" styleClass="w-full"></p-dropdown>
+          </div>
+          <div class="col-12 md:col-4 flex flex-column gap-2">
+            <label for="filterAppliedFrom">{{ 'applicationManagement.appliedFrom' | translate }}</label>
+            <p-calendar id="filterAppliedFrom" formControlName="appliedOn_gte"
+              dateFormat="dd-mm-yy" [showIcon]="true" [showButtonBar]="true" [placeholder]="'applicationManagement.datePlaceholder' | translate"
+              styleClass="w-full" inputStyleClass="w-full"></p-calendar>
+          </div>
+          <div class="col-12 md:col-4 flex flex-column gap-2">
+            <label for="filterAppliedTo">{{ 'applicationManagement.appliedTo' | translate }}</label>
+            <p-calendar id="filterAppliedTo" formControlName="appliedOn_lte"
+              dateFormat="dd-mm-yy" [showIcon]="true" [showButtonBar]="true" [placeholder]="'applicationManagement.datePlaceholder' | translate"
+              styleClass="w-full" inputStyleClass="w-full"></p-calendar>
           </div>
         </div>
         <div class="search-actions">
