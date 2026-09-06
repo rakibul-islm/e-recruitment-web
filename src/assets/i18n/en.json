@@ -705,6 +705,11 @@
   "applicationManagement": {
     "pageTitle": "Applications",
     "jobPostingId": "Job Posting Id",
+    "candidateName": "Candidate Name",
+    "candidateEmail": "Candidate Email",
+    "appliedFrom": "Applied From",
+    "appliedTo": "Applied To",
+    "datePlaceholder": "Select date",
     "noneFound": "No applications found.",
     "candidate": "Candidate",
     "statusApplied": "Applied",

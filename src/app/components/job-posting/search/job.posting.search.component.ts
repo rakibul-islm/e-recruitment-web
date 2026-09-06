@@ -32,6 +32,7 @@ export class JobPostingSearchComponent extends BaseComponent implements OnInit {
 
   prepareForm(): void {
     this.filterForm = this.formBuilder.group({
+      id: [''],
       jobTitle_like: [''],
       status: ['']
     });

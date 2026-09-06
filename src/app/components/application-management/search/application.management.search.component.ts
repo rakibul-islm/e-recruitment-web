@@ -34,7 +34,11 @@ export class ApplicationManagementSearchComponent extends BaseComponent implemen
   prepareForm(jobCircularId: string): void {
     this.filterForm = this.formBuilder.group({
       jobCircularId: [jobCircularId],
-      status: ['']
+      candidateName_like: [''],
+      candidateEmail_like: [''],
+      status: [''],
+      appliedOn_gte: [null],
+      appliedOn_lte: [null]
     });
   }
 
@@ -59,7 +63,14 @@ export class ApplicationManagementSearchComponent extends BaseComponent implemen
   }
 
   clearFilters(): void {
-    this.filterForm.reset({ jobCircularId: '', status: '' });
+    this.filterForm.reset({
+      jobCircularId: '',
+      candidateName_like: '',
+      candidateEmail_like: '',
+      status: '',
+      appliedOn_gte: null,
+      appliedOn_lte: null
+    });
   }
 
   viewApplication(application: Application): void {

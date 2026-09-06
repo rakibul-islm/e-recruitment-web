@@ -8,6 +8,10 @@
       <div [formGroup]="filterForm">
         <div class="grid">
           <div class="col-12 md:col-4 flex flex-column gap-2">
+            <label for="filterJobPostingId">{{ 'applicationManagement.jobPostingId' | translate }}</label>
+            <input id="filterJobPostingId" type="text" pInputText class="w-full" formControlName="id" />
+          </div>
+          <div class="col-12 md:col-4 flex flex-column gap-2">
             <label for="filterJobTitle">{{ 'candidateApplication.jobTitle' | translate }}</label>
             <input id="filterJobTitle" type="text" pInputText class="w-full" formControlName="jobTitle_like" />
           </div>

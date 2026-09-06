@@ -705,6 +705,11 @@
   "applicationManagement": {
     "pageTitle": "আবেদনসমূহ",
     "jobPostingId": "চাকরির বিজ্ঞপ্তির আইডি",
+    "candidateName": "প্রার্থীর নাম",
+    "candidateEmail": "প্রার্থীর ইমেইল",
+    "appliedFrom": "আবেদনের তারিখ থেকে",
+    "appliedTo": "আবেদনের তারিখ পর্যন্ত",
+    "datePlaceholder": "তারিখ নির্বাচন করুন",
     "noneFound": "কোনো আবেদন পাওয়া যায়নি।",
     "candidate": "প্রার্থী",
     "statusApplied": "আবেদন করেছেন",
