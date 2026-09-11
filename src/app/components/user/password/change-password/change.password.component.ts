@@ -49,6 +49,10 @@ export class ChangePasswordComponent extends BaseComponent implements OnInit {
       otp: ['', [Validators.required, Validators.pattern('^[0-9]{6}$')]]
     });
 
+    this.subscribers.otpAutoSubmitSub = this.otpForm.get('otp')!.valueChanges.subscribe(value => {
+      if (value?.length === 6) { this.verifyOtp(); }
+    });
+
     this.resetForm = this.formBuilder.group({
       newPassword: ['', [Validators.required]],
       confirmPassword: ['', Validators.required]
