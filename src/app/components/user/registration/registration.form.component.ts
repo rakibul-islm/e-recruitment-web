@@ -46,6 +46,10 @@ export class RegistrationFormComponent extends BaseComponent implements OnInit {
       otp: ['', [Validators.required, Validators.pattern('^[0-9]{6}$')]]
     });
 
+    this.subscribers.otpAutoSubmitSub = this.otpForm.get('otp')!.valueChanges.subscribe(value => {
+      if (value?.length === 6) { this.submitOtp(); }
+    });
+
     this.subscribers.passwordPolicySub = this.passwordPolicyService.getPasswordPolicy().subscribe(res => {
       if (res?.obj) { this.policy = res.obj; }
     });
