@@ -50,7 +50,7 @@ export class ChangePasswordComponent extends BaseComponent implements OnInit {
     });
 
     this.subscribers.otpAutoSubmitSub = this.otpForm.get('otp')!.valueChanges.subscribe(value => {
-      if (value?.length === 6) { this.verifyOtp(); }
+      if (value?.length === 6) { Promise.resolve().then(() => this.verifyOtp()); }
     });
 
     this.resetForm = this.formBuilder.group({

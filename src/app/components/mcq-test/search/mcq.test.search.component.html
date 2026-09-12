@@ -1,0 +1,57 @@
+<app-page-header [title]="'mcqTest.searchTitle' | translate">
+  <p-button *appPermissionHide="'mcq-test-manage'" [label]="'mcqTest.createButton' | translate" icon="pi pi-plus" (onClick)="createTest()"></p-button>
+</app-page-header>
+
+<div class="p-3">
+  <p-accordion [(activeIndex)]="activeTabIndex">
+    <p-accordionTab [header]="'common.search' | translate">
+      <div [formGroup]="filterForm">
+        <div class="grid">
+          <div class="col-12 md:col-6 flex flex-column gap-2">
+            <label for="filterName">{{ 'mcqTest.name' | translate }}</label>
+            <input id="filterName" type="text" pInputText class="w-full" formControlName="name_like" />
+          </div>
+          <div class="col-12 md:col-6 flex flex-column gap-2">
+            <label for="filterStatus">{{ 'common.status' | translate }}</label>
+            <p-dropdown id="filterStatus" [options]="statusOptions" formControlName="status" optionLabel="label" optionValue="value" styleClass="w-full"></p-dropdown>
+          </div>
+        </div>
+        <div class="search-actions">
+          <p-button [label]="'common.search' | translate" icon="pi pi-search" (onClick)="search(dt)"></p-button>
+          <p-button [label]="'common.clear' | translate" icon="pi pi-times" styleClass="p-button-outlined p-button-secondary" (onClick)="clearFilters()"></p-button>
+        </div>
+      </div>
+    </p-accordionTab>
+
+    <p-accordionTab [header]="'company.listTab' | translate">
+      <p-table #dt [value]="tests" [lazy]="true" (onLazyLoad)="fetchTests($event)" [paginator]="true"
+        [rows]="rows" [totalRecords]="totalRecords" [loading]="loading" [rowsPerPageOptions]="[10, 20, 50]"
+        responsiveLayout="scroll" dataKey="id" selectionMode="single" [(selection)]="selectedTest"
+        (onRowSelect)="viewTest($event.data)">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>{{ 'mcqTest.name' | translate }}</th>
+            <th>{{ 'mcqTest.durationMinutes' | translate }}</th>
+            <th>{{ 'mcqTest.questionCount' | translate }}</th>
+            <th>{{ 'mcqTest.passingScorePercent' | translate }}</th>
+            <th>{{ 'common.status' | translate }}</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-test>
+          <tr class="selectable-row" [pSelectableRow]="test">
+            <td>{{ test.name }}</td>
+            <td>{{ test.durationMinutes }}</td>
+            <td>{{ test.questionCount }}</td>
+            <td>{{ test.passingScorePercent }}%</td>
+            <td><span class="tag">{{ test.status }}</span></td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="5" class="text-center">{{ 'mcqTest.noneFound' | translate }}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </p-accordionTab>
+  </p-accordion>
+</div>

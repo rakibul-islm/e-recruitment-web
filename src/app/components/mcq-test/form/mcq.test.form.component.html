@@ -1,0 +1,87 @@
+<app-page-header [title]="(testId ? 'mcqTest.editTitle' : 'mcqTest.createTitle') | translate">
+  <p-button [label]="'common.back' | translate" icon="pi pi-arrow-left" styleClass="p-button-secondary" (onClick)="goBack()"></p-button>
+</app-page-header>
+
+<div class="flex justify-content-center mt-3 px-3">
+  <p-card class="page-card">
+    <form *ngIf="testForm" [formGroup]="testForm" (ngSubmit)="submit()">
+      <div class="flex flex-column gap-4">
+        <div>
+          <p-floatLabel>
+            <input id="testName" type="text" pInputText class="w-full" formControlName="name" />
+            <label for="testName">{{ 'mcqTest.name' | translate }}</label>
+          </p-floatLabel>
+        </div>
+
+        <div>
+          <p-floatLabel>
+            <textarea id="testDescription" pInputTextarea formControlName="description" class="w-full" rows="2"></textarea>
+            <label for="testDescription">{{ 'common.description' | translate }}</label>
+          </p-floatLabel>
+        </div>
+
+        <div class="grid row-gap-3">
+          <div class="col-12 md:col-4">
+            <p-floatLabel>
+              <input id="durationMinutes" type="number" pInputText class="w-full" formControlName="durationMinutes" />
+              <label for="durationMinutes">{{ 'mcqTest.durationMinutes' | translate }}</label>
+            </p-floatLabel>
+          </div>
+          <div class="col-12 md:col-4">
+            <p-floatLabel>
+              <input id="passingScorePercent" type="number" pInputText class="w-full" formControlName="passingScorePercent" />
+              <label for="passingScorePercent">{{ 'mcqTest.passingScorePercent' | translate }}</label>
+            </p-floatLabel>
+          </div>
+          <div class="col-12 md:col-4">
+            <p-floatLabel>
+              <input id="questionSelectionCount" type="number" pInputText class="w-full" formControlName="questionSelectionCount" />
+              <label for="questionSelectionCount">{{ 'mcqTest.questionSelectionCount' | translate }}</label>
+            </p-floatLabel>
+            <small class="text-color-secondary">{{ 'mcqTest.questionSelectionCountHint' | translate }}</small>
+          </div>
+          <div class="col-12 md:col-4">
+            <p-floatLabel>
+              <input id="secondsPerQuestion" type="number" pInputText class="w-full" formControlName="secondsPerQuestion" />
+              <label for="secondsPerQuestion">{{ 'mcqTest.secondsPerQuestion' | translate }}</label>
+            </p-floatLabel>
+            <small class="text-color-secondary">{{ 'mcqTest.secondsPerQuestionHint' | translate }}</small>
+          </div>
+        </div>
+
+        <div class="flex gap-4 flex-wrap">
+          <div class="flex align-items-center gap-2">
+            <p-checkbox formControlName="shuffleQuestions" [binary]="true" inputId="shuffleQuestions"></p-checkbox>
+            <label for="shuffleQuestions">{{ 'mcqTest.shuffleQuestions' | translate }}</label>
+          </div>
+          <div class="flex align-items-center gap-2">
+            <p-checkbox formControlName="shuffleOptions" [binary]="true" inputId="shuffleOptions"></p-checkbox>
+            <label for="shuffleOptions">{{ 'mcqTest.shuffleOptions' | translate }}</label>
+          </div>
+        </div>
+
+        <div>
+          <p-floatLabel>
+            <p-multiSelect id="questionIds" [options]="questionOptions" formControlName="questionIds" optionLabel="label" optionValue="value"
+              styleClass="w-full" display="chip" [filter]="true"></p-multiSelect>
+            <label for="questionIds">{{ 'mcqTest.questionPool' | translate }}</label>
+          </p-floatLabel>
+          <small class="text-color-secondary">{{ 'mcqTest.questionPoolHint' | translate }}</small>
+        </div>
+
+        <div>
+          <p-floatLabel>
+            <p-dropdown id="status" [options]="[
+              { label: 'mcqTest.statusDraft' | translate, value: 'DRAFT' },
+              { label: 'mcqTest.statusActive' | translate, value: 'ACTIVE' },
+              { label: 'mcqTest.statusArchived' | translate, value: 'ARCHIVED' }
+            ]" formControlName="status" optionLabel="label" optionValue="value" styleClass="w-full"></p-dropdown>
+            <label for="status">{{ 'common.status' | translate }}</label>
+          </p-floatLabel>
+        </div>
+
+        <p-button type="submit" [label]="'common.save' | translate" styleClass="w-full"></p-button>
+      </div>
+    </form>
+  </p-card>
+</div>

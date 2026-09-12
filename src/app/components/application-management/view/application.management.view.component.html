@@ -81,6 +81,33 @@
 
     <p-card class="mb-3">
       <h3 class="form-section-title flex justify-content-between align-items-center flex-wrap gap-2">
+        {{ 'applicationManagement.mcqTests' | translate }}
+        <p-button [label]="'applicationManagement.assignTest' | translate" icon="pi pi-plus" styleClass="p-button-sm" (onClick)="openAssignTest()"></p-button>
+      </h3>
+      <div *ngFor="let assignment of mcqAssignments" class="mb-3 p-3" style="border:1px solid #e5e7eb;border-radius:8px;">
+        <div class="flex justify-content-between align-items-start flex-wrap gap-2 mb-2">
+          <div>
+            <strong>{{ assignment.testName }}</strong>
+            <div class="text-color-secondary" *ngIf="assignment.scheduledAt">
+              {{ 'applicationManagement.mcqOpensAt' | translate }}: {{ assignment.scheduledAt | date:'dd-MM-yyyy HH:mm' }}
+              <span *ngIf="assignment.scheduledEndAt"> &middot; {{ 'applicationManagement.mcqClosesAt' | translate }}: {{ assignment.scheduledEndAt | date:'dd-MM-yyyy HH:mm' }}</span>
+            </div>
+            <div class="text-color-secondary" *ngIf="assignment.status === 'SUBMITTED'">
+              {{ 'applicationManagement.mcqScore' | translate }}: {{ assignment.scorePercent }}%
+              &middot; {{ (assignment.passed ? 'mcqTestTaking.passed' : 'mcqTestTaking.notPassed') | translate }}
+            </div>
+          </div>
+          <span class="tag">{{ assignment.status }}</span>
+        </div>
+        <p-button *ngIf="assignment.status === 'SUBMITTED' || assignment.status === 'EXPIRED'"
+          [label]="'applicationManagement.viewBreakdown' | translate" icon="pi pi-list" styleClass="p-button-outlined p-button-sm"
+          (onClick)="viewMcqBreakdown(assignment)"></p-button>
+      </div>
+      <div *ngIf="!mcqAssignments.length" class="text-center text-color-secondary p-2">{{ 'applicationManagement.noMcqTests' | translate }}</div>
+    </p-card>
+
+    <p-card class="mb-3">
+      <h3 class="form-section-title flex justify-content-between align-items-center flex-wrap gap-2">
         {{ 'candidateApplication.interviews' | translate }}
         <p-button [label]="'applicationManagement.scheduleInterview' | translate" icon="pi pi-plus" styleClass="p-button-sm" (onClick)="openScheduleInterview()"></p-button>
       </h3>
@@ -190,5 +217,44 @@
   <ng-template pTemplate="footer">
     <p-button [label]="'common.cancel' | translate" styleClass="p-button-outlined p-button-secondary" (onClick)="taskDialogVisible = false"></p-button>
     <p-button [label]="'applicationManagement.addTask' | translate" icon="pi pi-check" [loading]="savingTask" (onClick)="addTask()"></p-button>
+  </ng-template>
+</p-dialog>
+
+<p-dialog [header]="'applicationManagement.assignTest' | translate" [(visible)]="assignTestDialogVisible" [modal]="true"
+  [style]="{ width: '28rem' }" [breakpoints]="{ '575px': '95vw' }">
+  <div [formGroup]="assignTestForm" class="flex flex-column gap-3">
+    <p-dropdown [options]="activeTestOptions" formControlName="mcqTestId" optionLabel="label" optionValue="value"
+      styleClass="w-full" [filter]="true" appendTo="body" [placeholder]="'applicationManagement.selectTest' | translate"></p-dropdown>
+    <small class="text-color-secondary" *ngIf="!activeTestOptions.length">{{ 'applicationManagement.noActiveTests' | translate }}</small>
+    <div>
+      <p-calendar formControlName="scheduledAt" [showTime]="true" dateFormat="dd-mm-yy" styleClass="w-full" [touchUI]="true"
+        panelStyleClass="mcq-schedule-calendar" [placeholder]="'applicationManagement.mcqOpensAtOptional' | translate"></p-calendar>
+      <small class="text-color-secondary">{{ 'applicationManagement.mcqOpensAtHint' | translate }}</small>
+    </div>
+    <div>
+      <p-calendar formControlName="scheduledEndAt" [showTime]="true" dateFormat="dd-mm-yy" styleClass="w-full" [touchUI]="true"
+        panelStyleClass="mcq-schedule-calendar" [placeholder]="'applicationManagement.mcqClosesAtOptional' | translate"></p-calendar>
+      <small class="text-color-secondary">{{ 'applicationManagement.mcqClosesAtHint' | translate }}</small>
+    </div>
+  </div>
+  <ng-template pTemplate="footer">
+    <p-button [label]="'common.cancel' | translate" styleClass="p-button-outlined p-button-secondary" (onClick)="assignTestDialogVisible = false"></p-button>
+    <p-button [label]="'applicationManagement.assignTest' | translate" icon="pi pi-check" [loading]="assigningTest" (onClick)="assignTest()"></p-button>
+  </ng-template>
+</p-dialog>
+
+<p-dialog [header]="'applicationManagement.mcqBreakdown' | translate" [(visible)]="reviewDialogVisible" [modal]="true"
+  [style]="{ width: '36rem' }" [breakpoints]="{ '575px': '95vw' }">
+  <div *ngFor="let q of reviewQuestions; let i = index" class="mb-3 p-2" style="border-bottom:1px solid #f1f5f9;">
+    <div class="mb-2"><strong>{{ i + 1 }}. {{ q.questionText }}</strong></div>
+    <div *ngFor="let opt of q.options" class="flex align-items-center gap-2 mb-1 text-sm"
+      [class.text-green-600]="opt.correct" [class.text-red-600]="!opt.correct && opt.optionKey === q.selectedOptionKey">
+      <i class="pi" [ngClass]="opt.correct ? 'pi-check-circle' : (opt.optionKey === q.selectedOptionKey ? 'pi-times-circle' : 'pi-circle')"></i>
+      <span>{{ opt.optionText }}</span>
+    </div>
+  </div>
+  <div *ngIf="!reviewQuestions.length" class="text-center text-color-secondary p-2">{{ 'mcqQuestion.noneFound' | translate }}</div>
+  <ng-template pTemplate="footer">
+    <p-button [label]="'common.close' | translate" styleClass="p-button-outlined p-button-secondary" (onClick)="reviewDialogVisible = false"></p-button>
   </ng-template>
 </p-dialog>

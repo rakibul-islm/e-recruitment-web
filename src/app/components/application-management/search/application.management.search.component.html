@@ -1,4 +1,7 @@
-<app-page-header [title]="'applicationManagement.pageTitle' | translate"></app-page-header>
+<app-page-header [title]="'applicationManagement.pageTitle' | translate">
+  <p-button *ngIf="selectedApplications.length" [label]="('applicationManagement.assignSelected' | translate) + ' (' + selectedApplications.length + ')'"
+    icon="pi pi-clock" (onClick)="openBulkAssign()"></p-button>
+</app-page-header>
 
 <div class="p-3">
   <p-accordion [(activeIndex)]="activeTabIndex">
@@ -48,6 +51,7 @@
         (onRowSelect)="viewApplication($event.data)">
         <ng-template pTemplate="header">
           <tr>
+            <th style="width:3rem"><input type="checkbox" [checked]="allSelected()" (change)="toggleSelectAll($event)" /></th>
             <th>{{ 'candidateApplication.jobTitle' | translate }}</th>
             <th>{{ 'applicationManagement.candidate' | translate }}</th>
             <th>{{ 'candidateApplication.appliedOn' | translate }}</th>
@@ -56,6 +60,7 @@
         </ng-template>
         <ng-template pTemplate="body" let-application>
           <tr class="selectable-row" [pSelectableRow]="application">
+            <td (click)="$event.stopPropagation()"><input type="checkbox" [checked]="isSelected(application)" (change)="toggleSelection(application)" /></td>
             <td>{{ application.jobTitle }}</td>
             <td>{{ application.candidateName }} ({{ application.candidateEmail }})</td>
             <td>{{ application.appliedOn | date:'dd-MM-yyyy HH:mm' }}</td>
@@ -64,10 +69,34 @@
         </ng-template>
         <ng-template pTemplate="emptymessage">
           <tr>
-            <td colspan="4" class="text-center">{{ 'applicationManagement.noneFound' | translate }}</td>
+            <td colspan="5" class="text-center">{{ 'applicationManagement.noneFound' | translate }}</td>
           </tr>
         </ng-template>
       </p-table>
     </p-accordionTab>
   </p-accordion>
 </div>
+
+<p-dialog [header]="'applicationManagement.assignSelected' | translate" [(visible)]="bulkAssignDialogVisible" [modal]="true"
+  [style]="{ width: '28rem' }" [breakpoints]="{ '575px': '95vw' }">
+  <div [formGroup]="bulkAssignForm" class="flex flex-column gap-3">
+    <p class="text-sm text-color-secondary m-0">{{ 'applicationManagement.assignToSelectedHint' | translate:{ count: selectedApplications.length } }}</p>
+    <p-dropdown [options]="activeTestOptions" formControlName="mcqTestId" optionLabel="label" optionValue="value"
+      styleClass="w-full" [filter]="true" appendTo="body" [placeholder]="'applicationManagement.selectTest' | translate"></p-dropdown>
+    <small class="text-color-secondary" *ngIf="!activeTestOptions.length">{{ 'applicationManagement.noActiveTests' | translate }}</small>
+    <div>
+      <p-calendar formControlName="scheduledAt" [showTime]="true" dateFormat="dd-mm-yy" styleClass="w-full" [touchUI]="true"
+        panelStyleClass="mcq-schedule-calendar" [placeholder]="'applicationManagement.mcqOpensAtOptional' | translate"></p-calendar>
+      <small class="text-color-secondary">{{ 'applicationManagement.mcqOpensAtHint' | translate }}</small>
+    </div>
+    <div>
+      <p-calendar formControlName="scheduledEndAt" [showTime]="true" dateFormat="dd-mm-yy" styleClass="w-full" [touchUI]="true"
+        panelStyleClass="mcq-schedule-calendar" [placeholder]="'applicationManagement.mcqClosesAtOptional' | translate"></p-calendar>
+      <small class="text-color-secondary">{{ 'applicationManagement.mcqClosesAtHint' | translate }}</small>
+    </div>
+  </div>
+  <ng-template pTemplate="footer">
+    <p-button [label]="'common.cancel' | translate" styleClass="p-button-outlined p-button-secondary" (onClick)="bulkAssignDialogVisible = false"></p-button>
+    <p-button [label]="'applicationManagement.assignSelected' | translate" icon="pi pi-check" [loading]="bulkAssigning" (onClick)="confirmBulkAssign()"></p-button>
+  </ng-template>
+</p-dialog>

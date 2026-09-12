@@ -9,7 +9,7 @@
   </div>
 </div>
 
-<app-header></app-header>
+<app-header *ngIf="!fullScreen"></app-header>
 <router-outlet></router-outlet>
 <p-confirmDialog></p-confirmDialog>
 <p-toast position="top-right" [preventOpenDuplicates]="true"

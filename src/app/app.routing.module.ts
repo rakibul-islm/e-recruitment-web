@@ -59,6 +59,14 @@ import { HomeComponent } from './components/home/home.component';
 import { RecruiterApplicationRegisterComponent } from './components/recruiter-application/register/recruiter.application.register.component';
 import { RecruiterApplicationSearchComponent } from './components/recruiter-application/search/recruiter.application.search.component';
 import { RecruiterApplicationViewComponent } from './components/recruiter-application/view/recruiter.application.view.component';
+import { McqQuestionSearchComponent } from './components/mcq-question/search/mcq.question.search.component';
+import { McqQuestionFormComponent } from './components/mcq-question/form/mcq.question.form.component';
+import { McqQuestionViewComponent } from './components/mcq-question/view/mcq.question.view.component';
+import { McqTestSearchComponent } from './components/mcq-test/search/mcq.test.search.component';
+import { McqTestFormComponent } from './components/mcq-test/form/mcq.test.form.component';
+import { McqTestViewComponent } from './components/mcq-test/view/mcq.test.view.component';
+import { McqTestTakingComponent } from './components/mcq-test-taking/mcq.test.taking.component';
+import { ReportGenerateComponent } from './components/report/generate/report.generate.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -79,11 +87,33 @@ const routes: Routes = [
   { path: 'my/applications/:id', component: CandidateApplicationDetailComponent, canActivate: [AuthGuard] },
   { path: 'my/saved-jobs', component: CandidateSavedJobsComponent, canActivate: [AuthGuard] },
   { path: 'my/job-alerts', component: CandidateJobAlertsComponent, canActivate: [AuthGuard] },
+  { path: 'my/tests/:assignmentId/take', component: McqTestTakingComponent, canActivate: [AuthGuard], data: { fullScreen: true } },
 
   { path: 'analytics',
     component: AnalyticsDashboardComponent,
     canActivate: [AuthGuard, PermissionGuard],
     data: { routeName: 'analytics-list' }
+  },
+
+  { path: 'reports/job-postings',
+    component: ReportGenerateComponent,
+    canActivate: [AuthGuard, PermissionGuard],
+    data: { routeName: 'report-job-posting-list', reportKey: 'job-posting' }
+  },
+  { path: 'reports/applications',
+    component: ReportGenerateComponent,
+    canActivate: [AuthGuard, PermissionGuard],
+    data: { routeName: 'report-application-list', reportKey: 'application' }
+  },
+  { path: 'reports/mcq-results',
+    component: ReportGenerateComponent,
+    canActivate: [AuthGuard, PermissionGuard],
+    data: { routeName: 'report-mcq-result-list', reportKey: 'mcq-result' }
+  },
+  { path: 'reports/audit-logs',
+    component: ReportGenerateComponent,
+    canActivate: [AuthGuard, PermissionGuard],
+    data: { routeName: 'report-audit-log-list', reportKey: 'audit-log' }
   },
 
   { path: 'recruiter-applications',
@@ -137,6 +167,48 @@ const routes: Routes = [
     component: JobPostingViewComponent,
     canActivate: [AuthGuard, PermissionGuard],
     data: { routeName: 'job-circular-list' }
+  },
+
+  { path: 'mcq-questions',
+    component: McqQuestionSearchComponent,
+    canActivate: [AuthGuard, PermissionGuard],
+    data: { routeName: 'mcq-question-list' }
+  },
+  { path: 'mcq-questions/create',
+    component: McqQuestionFormComponent,
+    canActivate: [AuthGuard, PermissionGuard],
+    data: { routeName: 'mcq-question-manage' }
+  },
+  { path: 'mcq-questions/:id/edit',
+    component: McqQuestionFormComponent,
+    canActivate: [AuthGuard, PermissionGuard],
+    data: { routeName: 'mcq-question-manage' }
+  },
+  { path: 'mcq-questions/:id',
+    component: McqQuestionViewComponent,
+    canActivate: [AuthGuard, PermissionGuard],
+    data: { routeName: 'mcq-question-list' }
+  },
+
+  { path: 'mcq-tests',
+    component: McqTestSearchComponent,
+    canActivate: [AuthGuard, PermissionGuard],
+    data: { routeName: 'mcq-test-list' }
+  },
+  { path: 'mcq-tests/create',
+    component: McqTestFormComponent,
+    canActivate: [AuthGuard, PermissionGuard],
+    data: { routeName: 'mcq-test-manage' }
+  },
+  { path: 'mcq-tests/:id/edit',
+    component: McqTestFormComponent,
+    canActivate: [AuthGuard, PermissionGuard],
+    data: { routeName: 'mcq-test-manage' }
+  },
+  { path: 'mcq-tests/:id',
+    component: McqTestViewComponent,
+    canActivate: [AuthGuard, PermissionGuard],
+    data: { routeName: 'mcq-test-list' }
   },
 
   // Gated on job-circular-manage (staff-only) rather than application-list, since candidates also

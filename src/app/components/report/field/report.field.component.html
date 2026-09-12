@@ -1,0 +1,26 @@
+<div [formGroup]="form" [ngSwitch]="field.type">
+
+  <p-floatLabel *ngSwitchCase="'text'">
+    <input [id]="field.key" type="text" pInputText [formControlName]="field.key" class="w-full" />
+    <label [for]="field.key">{{ field.labelKey | translate }}</label>
+  </p-floatLabel>
+
+  <p-floatLabel *ngSwitchCase="'date'">
+    <p-calendar [id]="field.key" [formControlName]="field.key" dateFormat="dd-mm-yy" [showIcon]="true"
+      [showButtonBar]="true" styleClass="w-full" inputStyleClass="w-full"></p-calendar>
+    <label [for]="field.key">{{ field.labelKey | translate }}</label>
+  </p-floatLabel>
+
+  <p-floatLabel *ngSwitchCase="'dropdown'">
+    <p-dropdown [id]="field.key" [options]="field.options || []" [formControlName]="field.key"
+      optionLabel="label" optionValue="value" styleClass="w-full" appendTo="body"></p-dropdown>
+    <label [for]="field.key">{{ field.labelKey | translate }}</label>
+  </p-floatLabel>
+
+  <p-floatLabel *ngSwitchCase="'async-dropdown'">
+    <p-dropdown [id]="field.key" [options]="field.options || []" [formControlName]="field.key"
+      optionLabel="label" optionValue="value" [filter]="true" styleClass="w-full" appendTo="body"></p-dropdown>
+    <label [for]="field.key">{{ field.labelKey | translate }}</label>
+  </p-floatLabel>
+
+</div>

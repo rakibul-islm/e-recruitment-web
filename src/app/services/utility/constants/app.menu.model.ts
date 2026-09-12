@@ -7,7 +7,6 @@ export interface AppMenuItem extends MenuItem {
 }
 
 export const MENU_ITEMS: AppMenuItem[] = [
-  { label: 'menu.dashboard', icon: 'pi pi-home', routerLink: '/dashboard', authOnly: true },
   { label: 'menu.findJobs', icon: 'pi pi-briefcase', routerLink: '/jobs' },
   {
     label: 'menu.candidate',
@@ -26,9 +25,21 @@ export const MENU_ITEMS: AppMenuItem[] = [
     items: [
       { label: 'menu.companies', icon: 'pi pi-building', routerLink: '/companies', routeName: 'company-list' },
       { label: 'menu.jobPostings', icon: 'pi pi-briefcase', routerLink: '/job-postings', routeName: 'job-circular-list' },
+      { label: 'menu.mcqQuestions', icon: 'pi pi-question-circle', routerLink: '/mcq-questions', routeName: 'mcq-question-list' },
+      { label: 'menu.mcqTests', icon: 'pi pi-list-check', routerLink: '/mcq-tests', routeName: 'mcq-test-list' },
       { label: 'menu.applicationManagement', icon: 'pi pi-users', routerLink: '/application-management', routeName: 'job-circular-manage' },
       { label: 'menu.analytics', icon: 'pi pi-chart-bar', routerLink: '/analytics', routeName: 'analytics-list' },
       { label: 'menu.recruiterApplications', icon: 'pi pi-user-plus', routerLink: '/recruiter-applications', routeName: 'recruiter-application-list' }
+    ]
+  },
+  {
+    label: 'menu.reports',
+    icon: 'pi pi-file-pdf',
+    items: [
+      { label: 'menu.jobPostingReport', icon: 'pi pi-briefcase', routerLink: '/reports/job-postings', routeName: 'report-job-posting-list' },
+      { label: 'menu.applicationReport', icon: 'pi pi-users', routerLink: '/reports/applications', routeName: 'report-application-list' },
+      { label: 'menu.mcqResultReport', icon: 'pi pi-list-check', routerLink: '/reports/mcq-results', routeName: 'report-mcq-result-list' },
+      { label: 'menu.auditLogReport', icon: 'pi pi-history', routerLink: '/reports/audit-logs', routeName: 'report-audit-log-list' }
     ]
   },
   {

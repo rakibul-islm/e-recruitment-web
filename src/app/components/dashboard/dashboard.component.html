@@ -89,6 +89,15 @@
 
   <!-- Candidate view -->
   <ng-container *ngIf="roleResolved && !isStaff">
+    <div class="exam-today-banner" *ngFor="let exam of examsToday">
+      <i class="pi pi-exclamation-circle"></i>
+      <div class="exam-today-banner-text">
+        <strong>{{ 'dashboard.examTodayBanner' | translate }}</strong>
+        <div>{{ exam.testName }} &middot; {{ exam.jobTitle }} &middot; {{ exam.scheduledAt | date:'HH:mm' }}</div>
+      </div>
+      <p-button [label]="'dashboard.examTodayView' | translate" styleClass="p-button-sm" (onClick)="goToApplication(exam.applicationId)"></p-button>
+    </div>
+
     <div class="summary-cards">
       <div class="summary-card">
         <i class="pi pi-send"></i>

@@ -22,6 +22,7 @@ A web client for the e-recruitment platform — built with Angular 17 and PrimeN
 - **Candidate self-service** (`/my/...`) — CV-style profile view/edit, submitted applications with detail view, saved jobs, and job alerts
 - **Recruiting** — company CRUD, job posting CRUD, application management (review candidate applications against a posting), and a recruiter-application queue for approving companies that registered to recruit
 - **Analytics dashboard** — permission-gated reporting view over recruiting activity
+- **Reports** — one screen per report (job posting, application, MCQ result, audit log), each independently permission-gated, with a dynamic filter form driven by a per-report field config, a PDF preview rendered in an iframe, and PDF/Excel download
 - **Role-based administration** — CRUD for users, roles, permissions, and user groups, with drag-and-drop assignment of permissions to roles and roles to users/groups
 - **System configuration** — centralized view/edit of backend system config entries and the global password policy
 - **Exception log viewer** — searchable, paginated view of server-side exception logs for diagnostics
@@ -134,6 +135,9 @@ src/app/
 │   ├── application-management/    Recruiting: review applications received for a job posting (search / view)
 │   ├── recruiter-application/     Recruiting: approve/reject companies that self-registered to recruit (register / search / view)
 │   ├── analytics/                 Permission-gated analytics/reporting dashboard
+│   ├── report/
+│   │   ├── generate/              Single generic component for all 4 report routes (route data.reportKey selects the ReportDefinition)
+│   │   └── field/                 Generic filter-field renderer (text / dropdown / date / async-dropdown) driven by a field's type
 │   ├── user/
 │   │   ├── login/                 Sign-in form (email/password + Google Sign-In)
 │   │   ├── registration/          Sign-up form with OTP email verification
@@ -160,6 +164,7 @@ src/app/
 │   ├── candidate-profile/, application/, saved-job/, job-alert/,
 │   │   company/, company-type/, job-posting/, recruiter-application/,
 │   │   analytics/, interview/, offer/, onboarding/  Recruiting/candidate feature API services + domain models
+│   ├── report/                    ReportService (Jasper report generation) + ReportDefinition/ReportFieldDef config + one const per report
 │   ├── role/, permission/, user-group/,
 │   │   system-config/, password-policy/, exception-log/,
 │   │   session/, audit-log/, archive-config/  Admin feature API services + domain models
@@ -200,6 +205,10 @@ src/assets/i18n/                   Translation files (en.json, bn.json)
 | `/my/saved-jobs`            | `CandidateSavedJobsComponent`  | `AuthGuard`  |
 | `/my/job-alerts`            | `CandidateJobAlertsComponent`  | `AuthGuard`  |
 | `/analytics`                | `AnalyticsDashboardComponent`  | `AuthGuard`, `PermissionGuard` (`analytics-list`) |
+| `/reports/job-postings`     | `ReportGenerateComponent`      | `AuthGuard`, `PermissionGuard` (`report-job-posting-list`) |
+| `/reports/applications`     | `ReportGenerateComponent`      | `AuthGuard`, `PermissionGuard` (`report-application-list`) |
+| `/reports/mcq-results`      | `ReportGenerateComponent`      | `AuthGuard`, `PermissionGuard` (`report-mcq-result-list`) |
+| `/reports/audit-logs`       | `ReportGenerateComponent`      | `AuthGuard`, `PermissionGuard` (`report-audit-log-list`) |
 | `/recruiter-applications`   | `RecruiterApplicationSearchComponent` | `AuthGuard`, `PermissionGuard` (`recruiter-application-list`) |
 | `/recruiter-applications/:id` | `RecruiterApplicationViewComponent` | `AuthGuard`, `PermissionGuard` (`recruiter-application-list`) |
 | `/companies`                | `CompanySearchComponent`       | `AuthGuard`, `PermissionGuard` (`company-list`) |
