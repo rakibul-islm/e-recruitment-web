@@ -1,16 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BaseComponent } from '../../base.component';
 import { ApplicationService } from '../../../services/application/application.service';
 import { InterviewService } from '../../../services/interview/interview.service';
 import { OfferService } from '../../../services/offer/offer.service';
 import { OnboardingTaskService } from '../../../services/onboarding/onboarding.task.service';
+import { McqTestAssignmentService } from '../../../services/mcq-test-assignment/mcq.test.assignment.service';
+import { McqTestService } from '../../../services/mcq-test/mcq.test.service';
 import { CommonConfirmDialogService } from '../../../services/utility/common.confirm.dialog.service';
 import { Application, ApplicationStatusHistory, APPLICATION_STATUS_OPTIONS } from '../../../services/application/domain/application.domain';
 import { Interview, INTERVIEW_MODE_OPTIONS } from '../../../services/interview/domain/interview.domain';
 import { Offer } from '../../../services/offer/domain/offer.domain';
 import { OnboardingTask } from '../../../services/onboarding/domain/onboarding.task.domain';
+import { McqTestAssignment } from '../../../services/mcq-test-assignment/domain/mcq.test.assignment.domain';
+import { McqTest } from '../../../services/mcq-test/domain/mcq.test.domain';
 import { triggerDownload } from '../../../services/utility/file-download.util';
 
 @Component({
@@ -41,6 +45,14 @@ export class ApplicationManagementViewComponent extends BaseComponent implements
   taskForm!: FormGroup;
   savingTask = false;
 
+  mcqAssignments: McqTestAssignment[] = [];
+  activeTestOptions: { label: string; value: number }[] = [];
+  assignTestDialogVisible = false;
+  assignTestForm!: FormGroup;
+  assigningTest = false;
+  reviewQuestions: any[] = [];
+  reviewDialogVisible = false;
+
   constructor(
     private route: ActivatedRoute,
     protected router: Router,
@@ -48,6 +60,8 @@ export class ApplicationManagementViewComponent extends BaseComponent implements
     private interviewService: InterviewService,
     private offerService: OfferService,
     private onboardingTaskService: OnboardingTaskService,
+    private mcqTestAssignmentService: McqTestAssignmentService,
+    private mcqTestService: McqTestService,
     private commonConfirmDialogService: CommonConfirmDialogService,
     private formBuilder: FormBuilder
   ) {
@@ -64,12 +78,14 @@ export class ApplicationManagementViewComponent extends BaseComponent implements
       position: [''], salaryOffered: [''], startDate: [null], expiryDate: [null], notes: ['']
     });
     this.taskForm = this.formBuilder.group({ title: [''], description: [''], dueDate: [null] });
+    this.assignTestForm = this.formBuilder.group({ mcqTestId: [null, Validators.required], scheduledAt: [null], scheduledEndAt: [null] });
 
     this.fetchApplication();
     this.fetchHistory();
     this.fetchInterviews();
     this.fetchOffers();
     this.fetchOnboardingTasks();
+    this.fetchMcqAssignments();
   }
 
   fetchApplication(): void {
@@ -261,6 +277,57 @@ export class ApplicationManagementViewComponent extends BaseComponent implements
         this.notificationService.sendSuccessMsg('applicationManagement.taskRemoveSuccess');
         this.fetchOnboardingTasks();
       });
+    });
+  }
+
+  // --- MCQ Tests ---
+
+  fetchMcqAssignments(): void {
+    this.subscribers.mcqAssignmentsSub = this.mcqTestAssignmentService.findByApplication(this.applicationId).subscribe(response => {
+      this.mcqAssignments = response?.list || [];
+    });
+  }
+
+  openAssignTest(): void {
+    this.assignTestForm.reset();
+    this.subscribers.activeTestsSub = this.mcqTestService
+      .searchTests(new Map<any, any>().set('status', 'ACTIVE').set('isPageable', false))
+      .subscribe(response => {
+        const tests: McqTest[] = response?.list || [];
+        this.activeTestOptions = tests.map(t => ({ label: t.name, value: t.id }));
+      });
+    this.assignTestDialogVisible = true;
+  }
+
+  assignTest(): void {
+    if (this.isFormInvalid(this.assignTestForm)) { return; }
+    const raw = this.assignTestForm.getRawValue();
+    if (raw.scheduledAt && raw.scheduledEndAt && new Date(raw.scheduledEndAt) <= new Date(raw.scheduledAt)) {
+      this.notificationService.sendErrorMsg('mcqTest.endBeforeStartError');
+      return;
+    }
+    this.assigningTest = true;
+    this.subscribers.assignTestSub = this.mcqTestAssignmentService.assign({
+      applicationId: this.applicationId,
+      mcqTestId: raw.mcqTestId,
+      scheduledAt: raw.scheduledAt,
+      scheduledEndAt: raw.scheduledEndAt
+    }).subscribe({
+      next: () => {
+        this.assigningTest = false;
+        this.assignTestDialogVisible = false;
+        this.notificationService.sendSuccessMsg('applicationManagement.mcqTestAssignSuccess');
+        this.fetchMcqAssignments();
+        this.fetchHistory();
+      },
+      error: () => { this.assigningTest = false; }
+    });
+  }
+
+  viewMcqBreakdown(assignment: McqTestAssignment): void {
+    this.subscribers.mcqBreakdownSub = this.mcqTestAssignmentService.getQuestions(assignment.id).subscribe(response => {
+      this.reviewQuestions = response?.list || [];
+      this.reviewDialogVisible = true;
     });
   }
 }

@@ -1,14 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BaseComponent } from '../../base.component';
 import { ApplicationService } from '../../../services/application/application.service';
 import { InterviewService } from '../../../services/interview/interview.service';
 import { OfferService } from '../../../services/offer/offer.service';
 import { OnboardingTaskService } from '../../../services/onboarding/onboarding.task.service';
+import { McqTestAssignmentService } from '../../../services/mcq-test-assignment/mcq.test.assignment.service';
 import { Application } from '../../../services/application/domain/application.domain';
 import { Interview } from '../../../services/interview/domain/interview.domain';
 import { Offer } from '../../../services/offer/domain/offer.domain';
 import { OnboardingTask } from '../../../services/onboarding/domain/onboarding.task.domain';
+import { McqTestAssignment } from '../../../services/mcq-test-assignment/domain/mcq.test.assignment.domain';
 import { CommonConfirmDialogService } from '../../../services/utility/common.confirm.dialog.service';
 import { triggerDownload } from '../../../services/utility/file-download.util';
 
@@ -22,13 +24,16 @@ export class CandidateApplicationDetailComponent extends BaseComponent implement
   interviews: Interview[] = [];
   offers: Offer[] = [];
   onboardingTasks: OnboardingTask[] = [];
+  mcqAssignments: McqTestAssignment[] = [];
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private applicationService: ApplicationService,
     private interviewService: InterviewService,
     private offerService: OfferService,
     private onboardingTaskService: OnboardingTaskService,
+    private mcqTestAssignmentService: McqTestAssignmentService,
     private commonConfirmDialogService: CommonConfirmDialogService
   ) {
     super();
@@ -40,6 +45,25 @@ export class CandidateApplicationDetailComponent extends BaseComponent implement
     this.fetchInterviews();
     this.fetchOffers();
     this.fetchOnboardingTasks();
+    this.fetchMcqAssignments();
+  }
+
+  fetchMcqAssignments(): void {
+    this.subscribers.mcqAssignmentsSub = this.mcqTestAssignmentService.findByApplication(this.applicationId).subscribe(response => {
+      this.mcqAssignments = response?.list || [];
+    });
+  }
+
+  isOpenYet(assignment: McqTestAssignment): boolean {
+    return !assignment.scheduledAt || new Date(assignment.scheduledAt) <= new Date();
+  }
+
+  isTakeable(assignment: McqTestAssignment): boolean {
+    return (assignment.status === 'ASSIGNED' || assignment.status === 'IN_PROGRESS') && this.isOpenYet(assignment);
+  }
+
+  takeTest(assignment: McqTestAssignment): void {
+    this.router.navigate(['/my/tests', assignment.id, 'take']);
   }
 
   fetchApplication(): void {

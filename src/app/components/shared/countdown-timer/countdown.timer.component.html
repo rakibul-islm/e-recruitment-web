@@ -1,0 +1,4 @@
+<span class="countdown-timer" [class.countdown-timer-low]="low">
+  <i class="pi pi-clock"></i>
+  {{ minutes }}:{{ seconds < 10 ? '0' + seconds : seconds }}
+</span>

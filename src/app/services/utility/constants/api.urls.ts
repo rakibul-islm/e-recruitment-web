@@ -119,6 +119,32 @@ export const API_URLS = {
     RESPOND_TO_OFFER: 'offer/:id/respond',
     DOWNLOAD_OFFER_LETTER: 'offer/:id/letter',
 
+    FILTER_MCQ_QUESTION: 'mcq-question/filter',
+    CREATE_MCQ_QUESTION: 'mcq-question',
+    UPDATE_MCQ_QUESTION: 'mcq-question',
+    FIND_MCQ_QUESTION_BY_ID: 'mcq-question/:id',
+    REMOVE_MCQ_QUESTION: 'mcq-question/:id',
+    GENERATE_MCQ_QUESTIONS: 'mcq-question/generate',
+
+    FILTER_MCQ_TEST: 'mcq-test/filter',
+    CREATE_MCQ_TEST: 'mcq-test',
+    UPDATE_MCQ_TEST: 'mcq-test',
+    FIND_MCQ_TEST_BY_ID: 'mcq-test/:id',
+    REMOVE_MCQ_TEST: 'mcq-test/:id',
+
+    ASSIGN_MCQ_TEST: 'mcq-test-assignment',
+    BULK_ASSIGN_MCQ_TEST: 'mcq-test-assignment/bulk',
+    MY_MCQ_TEST_ASSIGNMENTS: 'mcq-test-assignment/my',
+    MCQ_ASSIGNMENTS_BY_APPLICATION: 'mcq-test-assignment/by-application/:applicationId',
+    FIND_MCQ_ASSIGNMENT_BY_ID: 'mcq-test-assignment/:id',
+    MCQ_ASSIGNMENT_QUESTIONS: 'mcq-test-assignment/:id/questions',
+    START_MCQ_ASSIGNMENT: 'mcq-test-assignment/:id/start',
+    ADVANCE_MCQ_ASSIGNMENT: 'mcq-test-assignment/:id/advance',
+    ANSWER_MCQ_ASSIGNMENT: 'mcq-test-assignment/:id/answer',
+    SUBMIT_MCQ_ASSIGNMENT: 'mcq-test-assignment/:id/submit',
+
+    GENERATE_REPORT: 'report/:reportKey/generate',
+
     ADD_ONBOARDING_TASK: 'onboarding-task',
     ONBOARDING_TASKS_BY_APPLICATION: 'onboarding-task/by-application/:applicationId',
     COMPLETE_ONBOARDING_TASK: 'onboarding-task/:id/complete',

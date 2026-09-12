@@ -45,6 +45,31 @@
       </div>
     </p-card>
 
+    <p-card class="mb-3" *ngIf="mcqAssignments.length">
+      <h3 class="form-section-title">{{ 'candidateApplication.mcqTests' | translate }}</h3>
+      <div *ngFor="let assignment of mcqAssignments" class="mb-3 p-3" style="border:1px solid #e5e7eb;border-radius:8px;">
+        <div class="flex justify-content-between align-items-start flex-wrap gap-2 mb-2">
+          <div>
+            <strong>{{ assignment.testName }}</strong>
+            <div class="text-color-secondary" *ngIf="assignment.status === 'ASSIGNED' || assignment.status === 'IN_PROGRESS'">
+              {{ 'candidateApplication.mcqDuration' | translate }}: {{ assignment.durationMinutesSnapshot }} {{ 'candidateApplication.minutes' | translate }}
+            </div>
+            <div class="text-color-secondary" *ngIf="!isOpenYet(assignment)">
+              {{ 'candidateApplication.examOpensAt' | translate }}: {{ assignment.scheduledAt | date:'dd-MM-yyyy HH:mm' }}
+            </div>
+            <div class="text-color-secondary" *ngIf="assignment.status === 'SUBMITTED'">
+              {{ 'applicationManagement.mcqScore' | translate }}: {{ assignment.scorePercent }}%
+              &middot; {{ (assignment.passed ? 'mcqTestTaking.passed' : 'mcqTestTaking.notPassed') | translate }}
+            </div>
+          </div>
+          <span class="tag">{{ assignment.status }}</span>
+        </div>
+        <p-button *ngIf="isTakeable(assignment)"
+          [label]="(assignment.status === 'IN_PROGRESS' ? 'candidateApplication.continueTest' : 'candidateApplication.startTest') | translate"
+          icon="pi pi-pencil" styleClass="p-button-sm" (onClick)="takeTest(assignment)"></p-button>
+      </div>
+    </p-card>
+
     <p-card class="mb-3" *ngIf="interviews.length">
       <h3 class="form-section-title">{{ 'candidateApplication.interviews' | translate }}</h3>
       <div *ngFor="let interview of interviews" class="mb-3 p-3" style="border:1px solid #e5e7eb;border-radius:8px;">

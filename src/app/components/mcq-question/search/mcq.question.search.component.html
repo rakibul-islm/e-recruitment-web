@@ -1,0 +1,80 @@
+<app-page-header [title]="'mcqQuestion.searchTitle' | translate">
+  <p-button [label]="'mcqQuestion.generateWithAi' | translate" icon="pi pi-sparkles" styleClass="p-button-outlined" (onClick)="openGenerateDialog()"></p-button>
+  <p-button *appPermissionHide="'mcq-question-manage'" [label]="'mcqQuestion.createButton' | translate" icon="pi pi-plus" (onClick)="createQuestion()"></p-button>
+</app-page-header>
+
+<div class="p-3">
+  <p-accordion [(activeIndex)]="activeTabIndex">
+    <p-accordionTab [header]="'common.search' | translate">
+      <div [formGroup]="filterForm">
+        <div class="grid">
+          <div class="col-12 md:col-4 flex flex-column gap-2">
+            <label for="filterQuestionText">{{ 'mcqQuestion.questionText' | translate }}</label>
+            <input id="filterQuestionText" type="text" pInputText class="w-full" formControlName="questionText_like" />
+          </div>
+          <div class="col-12 md:col-4 flex flex-column gap-2">
+            <label for="filterSkillTag">{{ 'mcqQuestion.skillTag' | translate }}</label>
+            <input id="filterSkillTag" type="text" pInputText class="w-full" formControlName="skillTag_like" />
+          </div>
+          <div class="col-12 md:col-4 flex flex-column gap-2">
+            <label for="filterDifficulty">{{ 'mcqQuestion.difficulty' | translate }}</label>
+            <p-dropdown id="filterDifficulty" [options]="difficultyOptions" formControlName="difficulty" optionLabel="label" optionValue="value" styleClass="w-full"></p-dropdown>
+          </div>
+          <div class="col-12 md:col-4 flex flex-column gap-2">
+            <label for="filterStatus">{{ 'common.status' | translate }}</label>
+            <p-dropdown id="filterStatus" [options]="statusOptions" formControlName="status" optionLabel="label" optionValue="value" styleClass="w-full"></p-dropdown>
+          </div>
+        </div>
+        <div class="search-actions">
+          <p-button [label]="'common.search' | translate" icon="pi pi-search" (onClick)="search(dt)"></p-button>
+          <p-button [label]="'common.clear' | translate" icon="pi pi-times" styleClass="p-button-outlined p-button-secondary" (onClick)="clearFilters()"></p-button>
+        </div>
+      </div>
+    </p-accordionTab>
+
+    <p-accordionTab [header]="'company.listTab' | translate">
+      <p-table #dt [value]="questions" [lazy]="true" (onLazyLoad)="fetchQuestions($event)" [paginator]="true"
+        [rows]="rows" [totalRecords]="totalRecords" [loading]="loading" [rowsPerPageOptions]="[10, 20, 50]"
+        responsiveLayout="scroll" dataKey="id" selectionMode="single" [(selection)]="selectedQuestion"
+        (onRowSelect)="viewQuestion($event.data)">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>{{ 'mcqQuestion.questionText' | translate }}</th>
+            <th>{{ 'mcqQuestion.skillTag' | translate }}</th>
+            <th>{{ 'mcqQuestion.difficulty' | translate }}</th>
+            <th>{{ 'mcqQuestion.source' | translate }}</th>
+            <th>{{ 'common.status' | translate }}</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-question>
+          <tr class="selectable-row" [pSelectableRow]="question">
+            <td>{{ question.questionText }}</td>
+            <td>{{ question.skillTag }}</td>
+            <td>{{ question.difficulty }}</td>
+            <td>{{ question.source }}</td>
+            <td><span class="tag">{{ question.status }}</span></td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="5" class="text-center">{{ 'mcqQuestion.noneFound' | translate }}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </p-accordionTab>
+  </p-accordion>
+</div>
+
+<p-dialog [header]="'mcqQuestion.generateWithAi' | translate" [(visible)]="generateDialogVisible" [modal]="true"
+  [style]="{ width: '28rem' }" [breakpoints]="{ '575px': '95vw' }">
+  <div [formGroup]="generateForm" class="flex flex-column gap-3">
+    <p class="text-sm text-color-secondary m-0">{{ 'mcqQuestion.generateHint' | translate }}</p>
+    <input type="text" pInputText class="w-full" [placeholder]="'mcqQuestion.skillTagPlaceholder' | translate" formControlName="skillTag" />
+    <p-dropdown [options]="difficultyOptionsPlain" formControlName="difficulty" optionLabel="label" optionValue="value" styleClass="w-full" [placeholder]="'mcqQuestion.difficulty' | translate"></p-dropdown>
+    <input type="number" pInputText class="w-full" min="1" max="20" [placeholder]="'mcqQuestion.countPlaceholder' | translate" formControlName="count" />
+  </div>
+  <ng-template pTemplate="footer">
+    <p-button [label]="'common.cancel' | translate" styleClass="p-button-outlined p-button-secondary" (onClick)="generateDialogVisible = false"></p-button>
+    <p-button [label]="'mcqQuestion.generateButton' | translate" icon="pi pi-sparkles" [loading]="generating" (onClick)="generate(dt)"></p-button>
+  </ng-template>
+</p-dialog>

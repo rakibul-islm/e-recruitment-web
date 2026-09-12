@@ -69,6 +69,16 @@ import { HomeComponent } from './components/home/home.component';
 import { RecruiterApplicationRegisterComponent } from './components/recruiter-application/register/recruiter.application.register.component';
 import { RecruiterApplicationSearchComponent } from './components/recruiter-application/search/recruiter.application.search.component';
 import { RecruiterApplicationViewComponent } from './components/recruiter-application/view/recruiter.application.view.component';
+import { McqQuestionSearchComponent } from './components/mcq-question/search/mcq.question.search.component';
+import { McqQuestionFormComponent } from './components/mcq-question/form/mcq.question.form.component';
+import { McqQuestionViewComponent } from './components/mcq-question/view/mcq.question.view.component';
+import { McqTestSearchComponent } from './components/mcq-test/search/mcq.test.search.component';
+import { McqTestFormComponent } from './components/mcq-test/form/mcq.test.form.component';
+import { McqTestViewComponent } from './components/mcq-test/view/mcq.test.view.component';
+import { McqTestTakingComponent } from './components/mcq-test-taking/mcq.test.taking.component';
+import { ReportFieldComponent } from './components/report/field/report.field.component';
+import { ReportGenerateComponent } from './components/report/generate/report.generate.component';
+import { CountdownTimerComponent } from './components/shared/countdown-timer/countdown.timer.component';
 import { RequiredFieldDirective } from './directives/required.field.directive';
 import { OtpNumericKeyboardDirective } from './directives/otp.numeric.keyboard.directive';
 import { PermissionHideDirective } from './directives/permission.hide.directive';
@@ -86,6 +96,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { PasswordModule } from 'primeng/password';
 import { InputOtpModule } from 'primeng/inputotp';
 import { CheckboxModule } from 'primeng/checkbox';
+import { RadioButtonModule } from 'primeng/radiobutton';
 import { CardModule } from 'primeng/card';
 import { MenubarModule } from 'primeng/menubar';
 import { MenuModule } from 'primeng/menu';
@@ -171,6 +182,16 @@ export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
     RecruiterApplicationRegisterComponent,
     RecruiterApplicationSearchComponent,
     RecruiterApplicationViewComponent,
+    McqQuestionSearchComponent,
+    McqQuestionFormComponent,
+    McqQuestionViewComponent,
+    McqTestSearchComponent,
+    McqTestFormComponent,
+    McqTestViewComponent,
+    McqTestTakingComponent,
+    ReportFieldComponent,
+    ReportGenerateComponent,
+    CountdownTimerComponent,
     RequiredFieldDirective,
     OtpNumericKeyboardDirective,
     PermissionHideDirective,
@@ -191,6 +212,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
     PasswordModule,
     InputOtpModule,
     CheckboxModule,
+    RadioButtonModule,
     CardModule,
     MenubarModule,
     MenuModule,

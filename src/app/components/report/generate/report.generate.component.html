@@ -1,0 +1,27 @@
+<app-page-header [title]="definition.titleKey | translate"></app-page-header>
+
+<div class="p-3">
+  <p-accordion [(activeIndex)]="activeTabIndex">
+    <p-accordionTab [header]="'common.search' | translate">
+      <div class="grid row-gap-3">
+        <div class="col-12 md:col-4" *ngFor="let field of definition.fields">
+          <app-report-field [field]="field" [form]="filterForm"></app-report-field>
+        </div>
+      </div>
+
+      <div class="search-actions flex-column sm:flex-row">
+        <p-button [label]="'report.preview' | translate" icon="pi pi-eye" styleClass="w-full sm:w-auto"
+          [loading]="generatingFormat === 'PDF' && !previewUrl" (onClick)="preview()"></p-button>
+        <p-button [label]="'report.downloadPdf' | translate" icon="pi pi-file-pdf" styleClass="p-button-outlined p-button-danger w-full sm:w-auto"
+          [loading]="generatingFormat === 'PDF' && !!previewUrl" (onClick)="downloadPdf()"></p-button>
+        <p-button [label]="'report.downloadExcel' | translate" icon="pi pi-file-excel" styleClass="p-button-outlined p-button-success w-full sm:w-auto"
+          [loading]="generatingFormat === 'XLSX'" (onClick)="downloadExcel()"></p-button>
+      </div>
+    </p-accordionTab>
+  </p-accordion>
+
+  <p-card *ngIf="previewUrl" styleClass="mt-3">
+    <span class="form-section-title">{{ 'report.preview' | translate }}</span>
+    <iframe [src]="previewUrl" class="w-full" style="height:70vh; border:1px solid #e5e7eb; border-radius:6px;" title="report-preview"></iframe>
+  </p-card>
+</div>

@@ -1,0 +1,62 @@
+<app-page-header [title]="(questionId ? 'mcqQuestion.editTitle' : 'mcqQuestion.createTitle') | translate">
+  <p-button [label]="'common.back' | translate" icon="pi pi-arrow-left" styleClass="p-button-secondary" (onClick)="goBack()"></p-button>
+</app-page-header>
+
+<div class="flex justify-content-center mt-3 px-3">
+  <p-card class="page-card">
+    <form *ngIf="questionForm" [formGroup]="questionForm" (ngSubmit)="submit()">
+      <div class="flex flex-column gap-4">
+        <div>
+          <p-floatLabel>
+            <textarea id="questionText" pInputTextarea formControlName="questionText" class="w-full" rows="3"></textarea>
+            <label for="questionText">{{ 'mcqQuestion.questionText' | translate }}</label>
+          </p-floatLabel>
+          <small class="p-error" *ngIf="questionForm.controls['questionText'].touched && questionForm.controls['questionText'].errors?.['required']">
+            {{ 'mcqQuestion.questionTextRequired' | translate }}</small>
+        </div>
+
+        <div class="grid row-gap-3">
+          <div class="col-12 md:col-6">
+            <p-floatLabel>
+              <input id="skillTag" type="text" pInputText class="w-full" formControlName="skillTag" />
+              <label for="skillTag">{{ 'mcqQuestion.skillTag' | translate }}</label>
+            </p-floatLabel>
+          </div>
+          <div class="col-12 md:col-6">
+            <p-floatLabel>
+              <p-dropdown id="difficulty" [options]="difficultyOptions" formControlName="difficulty" optionLabel="label" optionValue="value" styleClass="w-full"></p-dropdown>
+              <label for="difficulty">{{ 'mcqQuestion.difficulty' | translate }}</label>
+            </p-floatLabel>
+          </div>
+        </div>
+
+        <div>
+          <p-floatLabel>
+            <textarea id="explanation" pInputTextarea formControlName="explanation" class="w-full" rows="2"></textarea>
+            <label for="explanation">{{ 'mcqQuestion.explanation' | translate }}</label>
+          </p-floatLabel>
+        </div>
+
+        <div class="flex flex-column gap-2">
+          <div class="flex justify-content-between align-items-center">
+            <span class="form-section-title">{{ 'mcqQuestion.options' | translate }}</span>
+            <p-button [label]="'mcqQuestion.addOption' | translate" icon="pi pi-plus" styleClass="p-button-outlined p-button-sm" (onClick)="addOption()"></p-button>
+          </div>
+
+          <div formArrayName="options" class="flex flex-column gap-2">
+            <div *ngFor="let group of options.controls; let i = index" [formGroupName]="i" class="cv-form-inline-row">
+              <div class="flex align-items-center gap-2 flex-1">
+                <p-radioButton [value]="true" formControlName="correct" (onClick)="markCorrect(i)"></p-radioButton>
+                <input type="text" pInputText class="w-full" [placeholder]="('mcqQuestion.optionPlaceholder' | translate) + ' ' + (i + 1)" formControlName="optionText" />
+              </div>
+              <p-button icon="pi pi-trash" styleClass="p-button-text p-button-danger p-button-sm" [disabled]="options.length <= 2" (onClick)="removeAt(i)"></p-button>
+            </div>
+          </div>
+          <small class="text-color-secondary">{{ 'mcqQuestion.correctOptionHint' | translate }}</small>
+        </div>
+
+        <p-button type="submit" [label]="'common.save' | translate" styleClass="w-full"></p-button>
+      </div>
+    </form>
+  </p-card>
+</div>

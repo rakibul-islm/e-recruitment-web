@@ -1,0 +1,71 @@
+<div class="mcq-taking-shell">
+
+  <div *ngIf="loadingTest" class="mcq-taking-center">
+    <p>{{ 'common.loading' | translate }}</p>
+  </div>
+
+  <div *ngIf="!loadingTest && startError" class="mcq-taking-center">
+    <p-card styleClass="mcq-result-card">
+      <p class="text-center">{{ startError }}</p>
+      <div class="text-center mt-3">
+        <p-button [label]="'mcqTestTaking.backToApplication' | translate" icon="pi pi-arrow-left" (onClick)="backToApplication()"></p-button>
+      </div>
+    </p-card>
+  </div>
+
+  <ng-container *ngIf="!loadingTest && !startError">
+
+    <!-- Already-completed view -->
+    <div *ngIf="assignment.status === 'SUBMITTED' || assignment.status === 'EXPIRED'" class="mcq-taking-center">
+      <p-card styleClass="mcq-result-card">
+        <h2 class="text-center m-0 mb-3">{{ 'mcqTestTaking.resultTitle' | translate }}</h2>
+        <div class="text-center mb-3">
+          <span class="mcq-score" [class.mcq-score-pass]="assignment.passed" [class.mcq-score-fail]="!assignment.passed">
+            {{ assignment.scorePercent }}%
+          </span>
+        </div>
+        <p class="text-center" [class.text-green-600]="assignment.passed" [class.text-red-600]="!assignment.passed">
+          <strong>{{ (assignment.passed ? 'mcqTestTaking.passed' : 'mcqTestTaking.notPassed') | translate }}</strong>
+        </p>
+        <p class="text-center text-color-secondary">
+          {{ 'mcqTestTaking.correctCount' | translate:{ correct: assignment.correctCount, total: assignment.totalCount } }}
+        </p>
+        <div class="text-center mt-3">
+          <p-button [label]="'mcqTestTaking.backToApplication' | translate" icon="pi pi-arrow-left" (onClick)="backToApplication()"></p-button>
+        </div>
+      </p-card>
+    </div>
+
+    <!-- Active attempt - one question at a time, forward-only (no previous/back control anywhere) -->
+    <ng-container *ngIf="assignment.status === 'IN_PROGRESS' && currentQuestion as question">
+      <div class="mcq-taking-header">
+        <div>
+          <div class="mcq-taking-test-name">{{ assignment.testName }}</div>
+          <div class="text-color-secondary text-sm">{{ 'mcqTestTaking.questionOf' | translate:{ current: currentIndex + 1, total: questions.length } }}</div>
+        </div>
+        <app-countdown-timer [deadlineAt]="activeDeadlineAt" (expired)="onTimerExpired()"></app-countdown-timer>
+      </div>
+
+      <div class="mcq-taking-body">
+        <p-card styleClass="mb-3 mcq-question-card">
+          <div class="mcq-question-index">{{ 'mcqTestTaking.question' | translate }} {{ currentIndex + 1 }}</div>
+          <div class="mcq-question-text">{{ question.questionText }}</div>
+          <div class="flex flex-column gap-2 mt-2">
+            <div *ngFor="let option of question.options" class="mcq-option-row"
+              [class.mcq-option-selected]="question.selectedOptionKey === option.optionKey"
+              (click)="selectAnswer(question, option.optionKey)">
+              <p-radioButton [value]="option.optionKey" [ngModel]="question.selectedOptionKey" [ngModelOptions]="{ standalone: true }"></p-radioButton>
+              <span>{{ option.optionText }}</span>
+            </div>
+          </div>
+        </p-card>
+      </div>
+
+      <div class="mcq-taking-footer">
+        <p-button *ngIf="!isLastQuestion" [label]="'mcqTestTaking.next' | translate" icon="pi pi-arrow-right" iconPos="right" [loading]="advancing" (onClick)="next()"></p-button>
+        <p-button *ngIf="isLastQuestion" [label]="'mcqTestTaking.submitButton' | translate" icon="pi pi-check" [loading]="submitting" (onClick)="confirmSubmit()"></p-button>
+      </div>
+    </ng-container>
+
+  </ng-container>
+</div>

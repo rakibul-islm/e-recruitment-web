@@ -1,0 +1,55 @@
+<app-page-header [title]="'mcqTest.viewTitle' | translate">
+  <p-button *ngIf="test.status === 'DRAFT'" [label]="'mcqTest.activate' | translate" icon="pi pi-check" styleClass="p-button-success" (onClick)="changeStatus('ACTIVE')"></p-button>
+  <p-button *ngIf="test.status === 'ACTIVE'" [label]="'mcqTest.archive' | translate" icon="pi pi-ban" styleClass="p-button-warning" (onClick)="changeStatus('ARCHIVED')"></p-button>
+  <p-button *appPermissionHide="'mcq-test-manage'" [label]="'common.edit' | translate" icon="pi pi-pencil" [routerLink]="['/mcq-tests', testId, 'edit']"></p-button>
+  <p-button *appPermissionHide="'mcq-test-delete'" [label]="'company.removeButton' | translate" icon="pi pi-trash" styleClass="p-button-danger" (onClick)="removeTest()"></p-button>
+  <p-button [label]="'common.back' | translate" icon="pi pi-arrow-left" styleClass="p-button-secondary" (onClick)="goBack()"></p-button>
+</app-page-header>
+
+<div class="flex justify-content-center mt-3 px-3">
+  <p-card class="page-card">
+    <table class="detail-table">
+      <tbody>
+        <tr>
+          <td class="detail-label">{{ 'mcqTest.name' | translate }}</td>
+          <td class="detail-value">{{ test.name }}</td>
+        </tr>
+        <tr *ngIf="test.description">
+          <td class="detail-label">{{ 'common.description' | translate }}</td>
+          <td class="detail-value">{{ test.description }}</td>
+        </tr>
+        <tr>
+          <td class="detail-label">{{ 'mcqTest.durationMinutes' | translate }}</td>
+          <td class="detail-value">{{ test.durationMinutes }}</td>
+        </tr>
+        <tr>
+          <td class="detail-label">{{ 'mcqTest.passingScorePercent' | translate }}</td>
+          <td class="detail-value">{{ test.passingScorePercent }}%</td>
+        </tr>
+        <tr>
+          <td class="detail-label">{{ 'mcqTest.questionSelectionCount' | translate }}</td>
+          <td class="detail-value">{{ test.questionSelectionCount || ('mcqTest.wholePool' | translate) }}</td>
+        </tr>
+        <tr>
+          <td class="detail-label">{{ 'mcqTest.shuffleQuestions' | translate }}</td>
+          <td class="detail-value">{{ (test.shuffleQuestions ? 'common.yes' : 'common.no') | translate }}</td>
+        </tr>
+        <tr>
+          <td class="detail-label">{{ 'mcqTest.shuffleOptions' | translate }}</td>
+          <td class="detail-value">{{ (test.shuffleOptions ? 'common.yes' : 'common.no') | translate }}</td>
+        </tr>
+        <tr>
+          <td class="detail-label">{{ 'common.status' | translate }}</td>
+          <td class="detail-value"><span class="tag">{{ test.status }}</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 class="form-section-title">{{ 'mcqTest.questionPool' | translate }} ({{ questions.length }})</h3>
+    <div *ngFor="let question of questions" class="mb-2 p-2" style="border-bottom:1px solid #f1f5f9;">
+      {{ question.questionText }}
+      <span class="text-color-secondary"> &middot; {{ question.difficulty }}</span>
+    </div>
+    <div *ngIf="!questions.length" class="text-center text-color-secondary p-2">{{ 'mcqQuestion.noneFound' | translate }}</div>
+  </p-card>
+</div>

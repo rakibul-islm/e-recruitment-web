@@ -11,6 +11,8 @@ import { Application } from '../../services/application/domain/application.domai
 import { OfferService } from '../../services/offer/offer.service';
 import { SavedJobService } from '../../services/saved-job/saved.job.service';
 import { JobAlertService } from '../../services/job-alert/job.alert.service';
+import { McqTestAssignmentService } from '../../services/mcq-test-assignment/mcq.test.assignment.service';
+import { McqTestAssignment } from '../../services/mcq-test-assignment/domain/mcq.test.assignment.domain';
 
 const CANDIDATE_ACTIVE_STATUSES = ['APPLIED', 'SCREENING', 'INTERVIEW', 'OFFER'];
 const RECENT_APPLICATIONS_LIMIT = 5;
@@ -36,6 +38,7 @@ export class DashboardComponent extends BaseComponent implements OnInit {
   offersToRespondCount = 0;
   savedJobsCount = 0;
   jobAlertsCount = 0;
+  examsToday: McqTestAssignment[] = [];
 
   constructor(
     private authService: AuthService,
@@ -45,6 +48,7 @@ export class DashboardComponent extends BaseComponent implements OnInit {
     private offerService: OfferService,
     private savedJobService: SavedJobService,
     private jobAlertService: JobAlertService,
+    private mcqTestAssignmentService: McqTestAssignmentService,
     private router: Router
   ) {
     super();
@@ -104,5 +108,17 @@ export class DashboardComponent extends BaseComponent implements OnInit {
     this.subscribers.myJobAlertsSub = this.jobAlertService.myList().subscribe(response => {
       this.jobAlertsCount = (response?.list || []).length;
     });
+
+    this.subscribers.myMcqAssignmentsSub = this.mcqTestAssignmentService.myAssignments().subscribe(response => {
+      const assignments: McqTestAssignment[] = response?.list || [];
+      const today = new Date().toDateString();
+      this.examsToday = assignments.filter(a =>
+        (a.status === 'ASSIGNED' || a.status === 'IN_PROGRESS') && a.scheduledAt && new Date(a.scheduledAt).toDateString() === today
+      );
+    });
+  }
+
+  goToApplication(applicationId: number): void {
+    this.router.navigate(['/my/applications', applicationId]);
   }
 }

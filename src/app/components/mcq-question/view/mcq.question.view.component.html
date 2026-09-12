@@ -1,0 +1,45 @@
+<app-page-header [title]="'mcqQuestion.viewTitle' | translate">
+  <p-button *ngIf="question.status === 'DRAFT'" [label]="'mcqQuestion.approve' | translate" icon="pi pi-check" styleClass="p-button-success" (onClick)="approve()"></p-button>
+  <p-button *appPermissionHide="'mcq-question-manage'" [label]="'common.edit' | translate" icon="pi pi-pencil" [routerLink]="['/mcq-questions', questionId, 'edit']"></p-button>
+  <p-button *appPermissionHide="'mcq-question-delete'" [label]="'company.removeButton' | translate" icon="pi pi-trash" styleClass="p-button-danger" (onClick)="removeQuestion()"></p-button>
+  <p-button [label]="'common.back' | translate" icon="pi pi-arrow-left" styleClass="p-button-secondary" (onClick)="goBack()"></p-button>
+</app-page-header>
+
+<div class="flex justify-content-center mt-3 px-3">
+  <p-card class="page-card">
+    <table class="detail-table">
+      <tbody>
+        <tr>
+          <td class="detail-label">{{ 'mcqQuestion.questionText' | translate }}</td>
+          <td class="detail-value">{{ question.questionText }}</td>
+        </tr>
+        <tr>
+          <td class="detail-label">{{ 'mcqQuestion.skillTag' | translate }}</td>
+          <td class="detail-value">{{ question.skillTag || ('common.notAvailable' | translate) }}</td>
+        </tr>
+        <tr>
+          <td class="detail-label">{{ 'mcqQuestion.difficulty' | translate }}</td>
+          <td class="detail-value">{{ question.difficulty }}</td>
+        </tr>
+        <tr>
+          <td class="detail-label">{{ 'mcqQuestion.source' | translate }}</td>
+          <td class="detail-value">{{ question.source }}</td>
+        </tr>
+        <tr>
+          <td class="detail-label">{{ 'common.status' | translate }}</td>
+          <td class="detail-value"><span class="tag">{{ question.status }}</span></td>
+        </tr>
+        <tr *ngIf="question.explanation">
+          <td class="detail-label">{{ 'mcqQuestion.explanation' | translate }}</td>
+          <td class="detail-value">{{ question.explanation }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 class="form-section-title">{{ 'mcqQuestion.options' | translate }}</h3>
+    <div *ngFor="let option of question.options" class="flex align-items-center gap-2 mb-2 p-2" style="border-bottom:1px solid #f1f5f9;">
+      <i class="pi" [ngClass]="option.correct ? 'pi-check-circle text-green-600' : 'pi-circle'"></i>
+      <span>{{ option.optionText }}</span>
+    </div>
+  </p-card>
+</div>

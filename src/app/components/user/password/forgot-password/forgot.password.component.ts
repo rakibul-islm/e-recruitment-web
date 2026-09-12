@@ -35,7 +35,7 @@ export class ForgotPasswordComponent extends BaseComponent implements OnInit {
     });
 
     this.subscribers.otpAutoSubmitSub = this.otpForm.get('otp')!.valueChanges.subscribe(value => {
-      if (value?.length === 6) { this.submitOtp(); }
+      if (value?.length === 6) { Promise.resolve().then(() => this.submitOtp()); }
     });
 
     this.resetForm = this.formBuilder.group({
