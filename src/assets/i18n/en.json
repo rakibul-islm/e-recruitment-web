@@ -43,6 +43,7 @@
     "pageTitle": "Dashboard",
     "welcomeBack": "Welcome back, {{name}}",
     "examTodayBanner": "You have a screening test scheduled today",
+    "examAssignedBanner": "A screening test has been assigned to you",
     "examTodayView": "View",
     "quickActions": "Quick Actions",
     "totalApplications": "Total Applications",

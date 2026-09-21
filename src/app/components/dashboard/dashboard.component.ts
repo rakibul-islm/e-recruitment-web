@@ -38,7 +38,7 @@ export class DashboardComponent extends BaseComponent implements OnInit {
   offersToRespondCount = 0;
   savedJobsCount = 0;
   jobAlertsCount = 0;
-  examsToday: McqTestAssignment[] = [];
+  pendingExams: McqTestAssignment[] = [];
 
   constructor(
     private authService: AuthService,
@@ -112,8 +112,8 @@ export class DashboardComponent extends BaseComponent implements OnInit {
     this.subscribers.myMcqAssignmentsSub = this.mcqTestAssignmentService.myAssignments().subscribe(response => {
       const assignments: McqTestAssignment[] = response?.list || [];
       const today = new Date().toDateString();
-      this.examsToday = assignments.filter(a =>
-        (a.status === 'ASSIGNED' || a.status === 'IN_PROGRESS') && a.scheduledAt && new Date(a.scheduledAt).toDateString() === today
+      this.pendingExams = assignments.filter(a =>
+        (a.status === 'ASSIGNED' || a.status === 'IN_PROGRESS') && (!a.scheduledAt || new Date(a.scheduledAt).toDateString() === today)
       );
     });
   }

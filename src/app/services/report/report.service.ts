@@ -13,10 +13,16 @@ export class ReportService extends BaseService {
     super(http);
   }
 
-  // Backend contract (JasperReports): GET report/:reportKey/generate?format=PDF|XLSX&<filters>
+  // Backend contract (JasperReports): GET report/:reportKey/generate?format=PDF|XLSX&timeZone=<IANA id>&<filters>
   // returns the rendered file as a blob. reportKey identifies which .jrxml template to fill.
+  // timeZone is the browser's zone so dates in the report match the viewer's local time.
   public generate(reportKey: string, params: Map<any, any>): Observable<Blob> {
     const url = this.createUrl(API_URLS.GENERATE_REPORT, { reportKey });
-    return super.getBlob(url, params);
+    const withZone = new Map(params);
+    const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    if (timeZone) {
+      withZone.set('timeZone', timeZone);
+    }
+    return super.getBlob(url, withZone);
   }
 }
