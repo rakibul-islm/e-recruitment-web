@@ -6,6 +6,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { environment } from 'src/environments/environment';
 import { NotificationService } from '../notification.service';
 import { AuthService } from '../security/auth.service';
+import { BACKGROUND_REQUEST } from './http.context.tokens';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -33,7 +34,7 @@ export class AuthInterceptor implements HttpInterceptor {
     return next.handle(clonedRequest).pipe(
       catchError((error) => {
         if (error instanceof HttpErrorResponse) {
-          this.handleError(error);
+          this.handleError(error, req.context.get(BACKGROUND_REQUEST));
         }
         return throwError(() => error);
       })
@@ -43,7 +44,11 @@ export class AuthInterceptor implements HttpInterceptor {
   // errorMessage ends up either a server-provided string or an i18n key (e.g. "errors.network") -
   // both are valid input to NotificationService.sendErrorMsg, which resolves keys itself and
   // passes already-resolved text through unchanged.
-  private handleError(error: HttpErrorResponse) {
+  private handleError(error: HttpErrorResponse, background: boolean) {
+    if (background && error.status !== 401) {
+      return;
+    }
+
     let errorMessage = error?.error?.message || 'errors.unexpected';
 
     if (error.status === 0) {

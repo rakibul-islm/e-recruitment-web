@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpContext, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 export interface PathParameters {
@@ -26,8 +26,8 @@ export abstract class BaseService {
     return url;
   }
 
-  public get<T>(url: string, paramsMap?: Map<any, any>): Observable<T> {
-    const options = paramsMap ? { params: this.getHttpParams(paramsMap) } : {};
+  public get<T>(url: string, paramsMap?: Map<any, any>, context?: HttpContext): Observable<T> {
+    const options = { params: paramsMap ? this.getHttpParams(paramsMap) : undefined, context };
     return this.http.get<T>(url, options);
   }
 

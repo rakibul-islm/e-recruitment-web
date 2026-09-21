@@ -92,6 +92,98 @@
   "header": {
     "signIn": "সাইন ইন"
   },
+  "notification": {
+    "title": "বিজ্ঞপ্তি",
+    "bellLabel": "বিজ্ঞপ্তি, {{count}}টি অপঠিত",
+    "markAllRead": "সব পঠিত হিসেবে চিহ্নিত করুন",
+    "dismiss": "সরিয়ে দিন",
+    "loadMore": "আরও দেখুন",
+    "filter": {
+      "all": "সব",
+      "unread": "অপঠিত"
+    },
+    "empty": "কোনো নতুন বিজ্ঞপ্তি নেই",
+    "time": {
+      "justNow": "এইমাত্র",
+      "minutesAgo": "{{count}} মিনিট আগে",
+      "hoursAgo": "{{count}} ঘণ্টা আগে",
+      "daysAgo": "{{count}} দিন আগে"
+    },
+    "unknown": {
+      "title": "নতুন বিজ্ঞপ্তি",
+      "message": "বিস্তারিত দেখতে খুলুন।"
+    },
+    "types": {
+      "APPLICATION_RECEIVED": {
+        "title": "আবেদন জমা হয়েছে",
+        "message": "{{jobTitle}} পদে আপনার আবেদন গ্রহণ করা হয়েছে।"
+      },
+      "NEW_APPLICATION": {
+        "title": "নতুন আবেদন",
+        "message": "{{candidateName}} {{jobTitle}} পদে আবেদন করেছেন।"
+      },
+      "APPLICATION_STATUS_CHANGED": {
+        "title": "আবেদনের অবস্থা হালনাগাদ হয়েছে",
+        "message": "{{jobTitle}} পদে আপনার আবেদনের অবস্থা এখন {{status}}।"
+      },
+      "INTERVIEW_SCHEDULED": {
+        "title": "ইন্টারভিউ নির্ধারিত হয়েছে",
+        "message": "{{jobTitle}} পদের জন্য {{interviewTitle}} — {{scheduledAt}}।"
+      },
+      "MCQ_TEST_ASSIGNED": {
+        "title": "পরীক্ষা বরাদ্দ করা হয়েছে",
+        "message": "{{jobTitle}} পদের জন্য আপনাকে {{testName}} ({{durationMinutes}} মিনিট) বরাদ্দ করা হয়েছে।"
+      },
+      "MCQ_TEST_PASSED": {
+        "title": "পরীক্ষায় উত্তীর্ণ",
+        "message": "{{jobTitle}} পদের {{testName}} পরীক্ষায় আপনি {{scorePercent}}% পেয়েছেন।"
+      },
+      "MCQ_TEST_FAILED": {
+        "title": "পরীক্ষায় উত্তীর্ণ হননি",
+        "message": "{{jobTitle}} পদের {{testName}} পরীক্ষায় আপনি {{scorePercent}}% পেয়েছেন।"
+      },
+      "OFFER_RECEIVED": {
+        "title": "আপনি একটি চাকরির অফার পেয়েছেন",
+        "message": "{{jobTitle}} পদের জন্য আপনি একটি অফার পেয়েছেন।"
+      },
+      "OFFER_ACCEPTED": {
+        "title": "অফার গ্রহণ করা হয়েছে",
+        "message": "{{candidateName}} {{jobTitle}} পদের অফার গ্রহণ করেছেন।"
+      },
+      "OFFER_DECLINED": {
+        "title": "অফার প্রত্যাখ্যাত হয়েছে",
+        "message": "{{candidateName}} {{jobTitle}} পদের অফার প্রত্যাখ্যান করেছেন।"
+      },
+      "RECRUITER_APPLICATION_SUBMITTED": {
+        "title": "নতুন রিক্রুটার অনুরোধ",
+        "message": "{{applicantName}} ({{companyName}}) প্ল্যাটফর্মে নিয়োগ দিতে অনুরোধ করেছেন।"
+      },
+      "MCQ_RESULT_RECEIVED": {
+        "title": "পরীক্ষা সম্পন্ন হয়েছে",
+        "message": "{{candidateName}} {{jobTitle}} পদের {{testName}} পরীক্ষায় {{scorePercent}}% পেয়েছেন।"
+      },
+      "JOB_ALERT_MATCH": {
+        "title": "আপনার অ্যালার্টের জন্য নতুন চাকরি",
+        "message": "আপনার সংরক্ষিত অ্যালার্টের সাথে মিলে এমন {{count}}টি নতুন চাকরি আছে।"
+      },
+      "INTERVIEW_REMINDER": {
+        "title": "ইন্টারভিউ আসছে",
+        "message": "{{jobTitle}} পদের জন্য {{interviewTitle}} — {{scheduledAt}}।"
+      },
+      "MCQ_TEST_CLOSING": {
+        "title": "পরীক্ষার সময় শেষ হয়ে আসছে",
+        "message": "{{closesAt}}-এর আগে {{jobTitle}} পদের {{testName}} শুরু করুন।"
+      },
+      "JOB_DEADLINE_SOON": {
+        "title": "চাকরির আবেদনের সময় শেষ হয়ে আসছে",
+        "message": "{{jobTitle}} পদে আবেদনের শেষ তারিখ {{deadlineDate}}।"
+      },
+      "ONBOARDING_TASK_DUE": {
+        "title": "অনবোর্ডিং কাজের সময় হয়ে এসেছে",
+        "message": "অনবোর্ডিং কাজ {{title}}-এর শেষ তারিখ {{dueDate}}।"
+      }
+    }
+  },
   "home": {
     "eyebrow": "ক্যারিয়ার পোর্টাল",
     "heroTitle": "আপনার পছন্দের চাকরি খুঁজুন",

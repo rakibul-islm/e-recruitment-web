@@ -157,6 +157,12 @@ export const API_URLS = {
     MY_JOB_ALERTS: 'job-alert/my',
     REMOVE_JOB_ALERT: 'job-alert/:id',
 
+    NOTIFICATION_POLL: 'notification/poll',
+    MY_NOTIFICATIONS: 'notification/my',
+    READ_NOTIFICATION: 'notification/:id/read',
+    READ_ALL_NOTIFICATIONS: 'notification/read-all',
+    REMOVE_NOTIFICATION: 'notification/:id',
+
     ANALYTICS_SUMMARY: 'analytics/summary',
     ANALYTICS_FUNNEL: 'analytics/funnel',
 
