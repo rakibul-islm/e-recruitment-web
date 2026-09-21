@@ -3,6 +3,7 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter, map } from 'rxjs/operators';
 import { LoadingService } from './services/utility/loading.service';
 import { LanguageService } from './services/utility/language.service';
+import { InAppNotificationService } from './services/notification-center/in.app.notification.service';
 
 @Component({
   selector: 'app-root',
@@ -16,7 +17,8 @@ export class AppComponent {
   // duplicating the header markup, since it's the only chrome-free route in the app.
   fullScreen = false;
 
-  constructor(public loadingService: LoadingService, languageService: LanguageService, router: Router, route: ActivatedRoute) {
+  constructor(public loadingService: LoadingService, languageService: LanguageService, notificationService: InAppNotificationService,
+    router: Router, route: ActivatedRoute) {
     languageService.init();
 
     router.events.pipe(
@@ -26,6 +28,9 @@ export class AppComponent {
         while (current.firstChild) { current = current.firstChild; }
         return current.snapshot.data['fullScreen'] === true;
       })
-    ).subscribe(fullScreen => this.fullScreen = fullScreen);
+    ).subscribe(fullScreen => {
+      this.fullScreen = fullScreen;
+      notificationService.setToastsSuppressed(fullScreen);
+    });
   }
 }

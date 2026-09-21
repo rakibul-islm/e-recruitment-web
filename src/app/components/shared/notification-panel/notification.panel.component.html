@@ -1,0 +1,52 @@
+<button type="button" class="notification-bell" (click)="toggle()" [attr.aria-expanded]="visible"
+  [attr.aria-label]="'notification.bellLabel' | translate: { count: (unreadCount$ | async) }">
+  <i class="pi pi-bell"></i>
+  <span class="notification-badge" *ngIf="(unreadCount$ | async) as count">{{ badgeText(count) }}</span>
+</button>
+
+<p-sidebar [visible]="visible" (visibleChange)="setVisible($event)" position="right" appendTo="body" styleClass="notification-sidebar">
+  <ng-template pTemplate="header">
+    <span class="notification-title">{{ 'notification.title' | translate }}</span>
+  </ng-template>
+
+  <ng-container *ngIf="items$ | async as items">
+    <div class="notification-toolbar">
+      <div class="notification-filter">
+        <button type="button" class="notification-filter-option" [class.active]="!(unreadOnly$ | async)"
+          [attr.aria-pressed]="!(unreadOnly$ | async)" (click)="setUnreadOnly(false)">{{ 'notification.filter.all' | translate }}</button>
+        <button type="button" class="notification-filter-option" [class.active]="unreadOnly$ | async"
+          [attr.aria-pressed]="unreadOnly$ | async" (click)="setUnreadOnly(true)">{{ 'notification.filter.unread' | translate }}</button>
+      </div>
+      <button pButton type="button" class="p-button-text p-button-sm" icon="pi pi-check"
+        [label]="'notification.markAllRead' | translate"
+        [disabled]="!(unreadCount$ | async)" (click)="markAllRead()"></button>
+    </div>
+
+    <div class="notification-empty" *ngIf="!items.length">
+      <i class="pi pi-bell-slash"></i>
+      <span>{{ 'notification.empty' | translate }}</span>
+    </div>
+
+    <ul class="notification-list">
+      <li class="notification-item" *ngFor="let notification of items; trackBy: trackById" [class.unread]="!notification.read">
+        <button type="button" class="notification-main" (click)="select(notification)">
+          <i class="pi notification-icon" [ngClass]="icon(notification)"></i>
+          <span class="notification-body">
+            <span class="notification-item-title">{{ text(notification, 'title') }}</span>
+            <span class="notification-item-message">{{ text(notification, 'message') }}</span>
+            <span class="notification-time">{{ timeAgo(notification.createdOn) }}</span>
+          </span>
+        </button>
+        <button type="button" class="notification-dismiss" (click)="dismiss(notification)"
+          [attr.aria-label]="'notification.dismiss' | translate">
+          <i class="pi pi-times"></i>
+        </button>
+      </li>
+    </ul>
+
+    <div class="notification-more" *ngIf="hasMore$ | async">
+      <button pButton type="button" class="p-button-text p-button-sm" [label]="'notification.loadMore' | translate"
+        (click)="loadMore()"></button>
+    </div>
+  </ng-container>
+</p-sidebar>

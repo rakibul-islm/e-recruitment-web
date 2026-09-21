@@ -9,6 +9,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AppHeaderComponent } from './components/shared/app-header/app.header.component';
+import { NotificationPanelComponent } from './components/shared/notification-panel/notification.panel.component';
 import { ProfileViewComponent } from './components/user/profile/view/profile.view.component';
 import { ProfileEditComponent } from './components/user/profile/edit/profile.edit.component';
 import { ChangePasswordComponent } from './components/user/password/change-password/change.password.component';
@@ -114,6 +115,7 @@ import { AccordionModule } from 'primeng/accordion';
 import { ToastModule } from 'primeng/toast';
 import { DialogModule } from 'primeng/dialog';
 import { EditorModule } from 'primeng/editor';
+import { SidebarModule } from 'primeng/sidebar';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
   return new TranslateHttpLoader(http, '/assets/i18n/', '.json');
@@ -125,6 +127,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
     LoginComponent,
     DashboardComponent,
     AppHeaderComponent,
+    NotificationPanelComponent,
     ProfileViewComponent,
     ProfileEditComponent,
     ChangePasswordComponent,
@@ -229,6 +232,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
     AccordionModule,
     DialogModule,
     EditorModule,
+    SidebarModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

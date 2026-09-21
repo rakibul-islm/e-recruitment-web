@@ -7,13 +7,16 @@
   </ng-template>
 
   <ng-template pTemplate="end">
-    <div class="app-header-account" *ngIf="isAuthenticated; else guestAction">
-      <button type="button" class="app-header-account-trigger" (click)="accountMenu.toggle($event)">
-        <span class="app-header-account-name">{{ profile.fullName }}</span>
-        <p-avatar [image]="profile.imageBase64" shape="circle" styleClass="header-avatar"></p-avatar>
-        <i class="pi pi-angle-down app-header-account-caret"></i>
-      </button>
-      <p-menu #accountMenu [model]="accountMenuItems" [popup]="true" appendTo="body"></p-menu>
+    <div class="app-header-end" *ngIf="isAuthenticated; else guestAction">
+      <app-notification-panel></app-notification-panel>
+      <div class="app-header-account">
+        <button type="button" class="app-header-account-trigger" (click)="accountMenu.toggle($event)">
+          <span class="app-header-account-name">{{ profile.fullName }}</span>
+          <p-avatar [image]="profile.imageBase64" shape="circle" styleClass="header-avatar"></p-avatar>
+          <i class="pi pi-angle-down app-header-account-caret"></i>
+        </button>
+        <p-menu #accountMenu [model]="accountMenuItems" [popup]="true" appendTo="body"></p-menu>
+      </div>
     </div>
     <ng-template #guestAction>
       <a routerLink="/login" class="app-header-signin">
