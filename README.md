@@ -19,11 +19,13 @@ A web client for the e-recruitment platform — built with Angular 17 and PrimeN
 
 - **Public job portal** — unauthenticated home page, job search/listing, and job detail view; recruiter sign-up (`/register/recruiter`) for companies wanting to post jobs
 - **Authentication** — email/password login, Google Sign-In, OTP-verified sign-up, and OTP-based forgot/change/set-password flows
+- **Real-time notifications** — an unread-count badge and slide-out panel (`NotificationPanelComponent`) fed by a live SSE stream (`@microsoft/fetch-event-source`, since the API only reads auth from a Bearer header that native `EventSource` can't send), with a 5-minute poll as a fallback; toasts for a few urgent types, per-type icons/i18n, mark-as-read / mark-all-read / dismiss
 - **Candidate self-service** (`/my/...`) — CV-style profile view/edit, submitted applications with detail view, saved jobs, and job alerts
 - **Recruiting** — company CRUD, job posting CRUD, application management (review candidate applications against a posting), and a recruiter-application queue for approving companies that registered to recruit
 - **Analytics dashboard** — permission-gated reporting view over recruiting activity
 - **Reports** — one screen per report (job posting, application, MCQ result, audit log), each independently permission-gated, with a dynamic filter form driven by a per-report field config, a PDF preview rendered in an iframe, and PDF/Excel download
 - **Role-based administration** — CRUD for users, roles, permissions, and user groups, with drag-and-drop assignment of permissions to roles and roles to users/groups
+- **Notification broadcast** — admin screen to compose and send an ad-hoc notification to all users, a role, or specific users (multi-select search), optionally also by email; permission-gated separately from ordinary notification access (`/notification-broadcast`)
 - **System configuration** — centralized view/edit of backend system config entries and the global password policy
 - **Exception log viewer** — searchable, paginated view of server-side exception logs for diagnostics
 - **Session management** — searchable, paginated view of user login sessions with detail view
@@ -42,6 +44,7 @@ A web client for the e-recruitment platform — built with Angular 17 and PrimeN
 | Layout & icons      | PrimeFlex (utility classes) + PrimeIcons |
 | Localization        | [ngx-translate](https://github.com/ngx-translate/core) (English + Bengali) |
 | Rich text editing    | [Quill](https://quilljs.com/) (via PrimeNG's `p-editor`, e.g. job posting descriptions) |
+| Real-time updates    | [@microsoft/fetch-event-source](https://github.com/Azure/fetch-event-source) (fetch-based SSE client — supports the `Authorization` header, unlike native `EventSource`) |
 | Auth                | JWT (custom backend) + Google Identity Services |
 | Reactive state       | RxJS |
 | Language            | TypeScript 5.4 |
@@ -110,7 +113,7 @@ The app is localized with [ngx-translate](https://github.com/ngx-translate/core)
 1. Add a new `<lang-code>.json` file to `src/assets/i18n/`, mirroring the key structure of `en.json`.
 2. Register the language (code + display label) in `SUPPORTED_LANGUAGES` in `language.service.ts`.
 
-**Adding new UI text:** add the key to *both* `en.json` and `bn.json` so they stay in sync. Use the `translate` pipe (`{{ 'some.key' | translate }}`) in templates, and `TranslateService.instant('some.key')` for messages built up in TypeScript (toasts, confirm dialogs, etc.). Common, reused words (Search, Save, Delete, N/A, ...) live under the `common` namespace; feature-specific text lives under a namespace per module (`role`, `permission`, `user`, `userGroup`, `systemConfig`, `passwordPolicy`, `exceptionLog`, `password`, `profile`, ...).
+**Adding new UI text:** add the key to *both* `en.json` and `bn.json` so they stay in sync. Use the `translate` pipe (`{{ 'some.key' | translate }}`) in templates, and `TranslateService.instant('some.key')` for messages built up in TypeScript (toasts, confirm dialogs, etc.). Common, reused words (Search, Save, Delete, N/A, ...) live under the `common` namespace; feature-specific text lives under a namespace per module (`role`, `permission`, `user`, `userGroup`, `systemConfig`, `passwordPolicy`, `exceptionLog`, `password`, `profile`, `notification`, `notificationBroadcast`, ...).
 
 ## Project Structure
 
@@ -120,6 +123,7 @@ src/app/
 │   ├── shared/
 │   │   ├── app-header/            Top navigation bar (PrimeNG Menubar + Avatar + Menu + language switcher)
 │   │   ├── page-header/           Reusable page title + action-buttons bar (collapses into a 3-dot menu on mobile)
+│   │   ├── notification-panel/    Unread-count badge + slide-out panel (SSE-fed, poll fallback)
 │   │   └── access-denied/         Shown when PermissionGuard blocks a route
 │   ├── home/                      Public landing page (unauthenticated)
 │   ├── dashboard/                 Landing page after login
@@ -153,6 +157,7 @@ src/app/
 │   ├── session/                   Admin search/view for user login sessions
 │   ├── audit-log/                 Admin search/view for audit trail entries
 │   ├── archive-config/            Admin CRUD for scheduled data-archiving rules (search / form / view / archived-data)
+│   ├── notification-broadcast/    Admin compose/send screen (all users / role / specific users, optional email)
 │   └── base.component.ts          Shared base class (subscription cleanup, search/pagination helpers)
 ├── directives/
 │   ├── required.field.directive.ts
@@ -165,6 +170,8 @@ src/app/
 │   │   company/, company-type/, job-posting/, recruiter-application/,
 │   │   analytics/, interview/, offer/, onboarding/  Recruiting/candidate feature API services + domain models
 │   ├── report/                    ReportService (Jasper report generation) + ReportDefinition/ReportFieldDef config + one const per report
+│   ├── notification-center/       InAppNotificationService (poll + SSE stream, unread state), NotificationTextService (i18n resolution), domain models
+│   ├── notification-broadcast/    NotificationBroadcastService (roles/users pickers + send) + domain models
 │   ├── role/, permission/, user-group/,
 │   │   system-config/, password-policy/, exception-log/,
 │   │   session/, audit-log/, archive-config/  Admin feature API services + domain models
@@ -256,6 +263,7 @@ src/assets/i18n/                   Translation files (en.json, bn.json)
 | `/archive-configs/:id/edit` | `ArchiveConfigFormComponent`   | `AuthGuard`, `PermissionGuard` (`archive-config-manage`) |
 | `/archive-configs/:id/archived-data` | `ArchiveConfigArchivedDataComponent` | `AuthGuard`, `PermissionGuard` (`archive-config-list`) |
 | `/archive-configs/:id`      | `ArchiveConfigViewComponent`   | `AuthGuard`, `PermissionGuard` (`archive-config-list`) |
+| `/notification-broadcast`   | `NotificationBroadcastFormComponent` | `AuthGuard`, `PermissionGuard` (`notification-broadcast-manage`) |
 | `**`                        | redirects to `/login`          | —            |
 
 </details>

@@ -21,6 +21,7 @@ import { UserGroupViewComponent } from './components/user-group/view/user.group.
 import { PermissionSearchComponent } from './components/permission/search/permission.search.component';
 import { PermissionFormComponent } from './components/permission/form/permission.form.component';
 import { PermissionViewComponent } from './components/permission/view/permission.view.component';
+import { NotificationBroadcastFormComponent } from './components/notification-broadcast/notification.broadcast.form.component';
 import { SystemConfigSearchComponent } from './components/system-config/search/system.config.search.component';
 import { SystemConfigFormComponent } from './components/system-config/form/system.config.form.component';
 import { SystemConfigViewComponent } from './components/system-config/view/system.config.view.component';
@@ -244,6 +245,11 @@ const routes: Routes = [
     component: RoleFormComponent,
     canActivate: [AuthGuard, PermissionGuard],
     data: { routeName: 'role-manage' }
+  },
+  { path: 'notification-broadcast',
+    component: NotificationBroadcastFormComponent,
+    canActivate: [AuthGuard, PermissionGuard],
+    data: { routeName: 'notification-broadcast-manage' }
   },
   { path: 'roles/:id/edit',
     component: RoleFormComponent,

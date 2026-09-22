@@ -10,7 +10,7 @@ import { NotificationTextService } from './notification.text.service';
 import { API_URLS } from '../utility/constants/api.urls';
 import { BACKGROUND_REQUEST } from '../utility/interceptors/http.context.tokens';
 
-const POLL_INTERVAL_MS = 60000;
+const POLL_INTERVAL_MS = 300000;
 
 function notification(id: number, read = false, type = 'OFFER_RECEIVED'): AppNotification {
   return { id, type, actionRoute: '/my/applications/1', params: {}, read, createdOn: new Date().toISOString() };
@@ -35,7 +35,7 @@ describe('InAppNotificationService', () => {
       providers: [
         provideHttpClient(),
         provideHttpClientTesting(),
-        { provide: AuthService, useValue: { isLoggedIn: () => loggedIn$.asObservable() } },
+        { provide: AuthService, useValue: { isLoggedIn: () => loggedIn$.asObservable(), getToken: () => 'test-token' } },
         { provide: NotificationService, useValue: toast },
         { provide: NotificationTextService, useValue: text }
       ]

@@ -1,0 +1,81 @@
+<app-page-header [title]="'notificationBroadcast.title' | translate">
+  <p-button *appPermissionHide="'notification-broadcast-manage'" [label]="'notificationBroadcast.send' | translate" icon="pi pi-send" (onClick)="submit()"></p-button>
+</app-page-header>
+
+<div class="flex justify-content-center mt-3 px-3">
+  <p-card class="page-card">
+    <form *ngIf="broadcastForm" [formGroup]="broadcastForm" (ngSubmit)="submit()">
+      <div class="flex flex-column gap-4 mt-3">
+        <h3 class="form-section-title">{{ 'notificationBroadcast.target' | translate }}</h3>
+
+        <div class="flex flex-wrap gap-4">
+          <label class="flex align-items-center gap-2">
+            <p-radioButton name="targetType" value="ALL" formControlName="targetType"></p-radioButton>
+            {{ 'notificationBroadcast.targetAll' | translate }}
+          </label>
+          <label class="flex align-items-center gap-2">
+            <p-radioButton name="targetType" value="ROLE" formControlName="targetType"></p-radioButton>
+            {{ 'notificationBroadcast.targetRole' | translate }}
+          </label>
+          <label class="flex align-items-center gap-2">
+            <p-radioButton name="targetType" value="USER" formControlName="targetType"></p-radioButton>
+            {{ 'notificationBroadcast.targetUser' | translate }}
+          </label>
+        </div>
+
+        <div class="grid" *ngIf="broadcastForm.get('targetType')?.value === 'ROLE'">
+          <div class="col-12">
+            <p-floatLabel>
+              <p-dropdown id="roleId" formControlName="roleId" [options]="roles" optionLabel="name" optionValue="id" styleClass="w-full"></p-dropdown>
+              <label for="roleId">{{ 'notificationBroadcast.role' | translate }}</label>
+            </p-floatLabel>
+          </div>
+        </div>
+
+        <div class="grid" *ngIf="broadcastForm.get('targetType')?.value === 'USER'">
+          <div class="col-12 flex flex-column gap-2">
+            <label>{{ 'notificationBroadcast.user' | translate }}</label>
+            <p-autoComplete id="userIds" [(ngModel)]="selectedUsers" [ngModelOptions]="{standalone: true}"
+              [suggestions]="userSuggestions" optionLabel="fullName" [multiple]="true" [dropdown]="false"
+              [placeholder]="'notificationBroadcast.userSearchPlaceholder' | translate"
+              (completeMethod)="searchUsers($event)" (onSelect)="onUsersChanged()" (onUnselect)="onUsersChanged()"
+              (onClear)="onUsersChanged()" styleClass="w-full">
+              <ng-template let-user pTemplate="item">
+                <div>{{ user.fullName }} <span class="text-color-secondary">({{ user.email }})</span></div>
+              </ng-template>
+            </p-autoComplete>
+          </div>
+        </div>
+
+        <h3 class="form-section-title">{{ 'notificationBroadcast.message' | translate }}</h3>
+
+        <div class="grid">
+          <div class="col-12">
+            <p-floatLabel>
+              <input id="broadcastTitle" type="text" formControlName="title" pInputText class="w-full" />
+              <label for="broadcastTitle">{{ 'notificationBroadcast.messageTitle' | translate }}</label>
+            </p-floatLabel>
+            <small class="p-error" *ngIf="broadcastForm.controls['title'].touched && broadcastForm.controls['title'].errors?.['required']">
+              {{ 'notificationBroadcast.messageTitleRequired' | translate }}</small>
+          </div>
+
+          <div class="col-12">
+            <p-floatLabel>
+              <textarea id="broadcastMessage" rows="5" formControlName="message" pInputTextarea class="w-full"></textarea>
+              <label for="broadcastMessage">{{ 'notificationBroadcast.messageBody' | translate }}</label>
+            </p-floatLabel>
+            <small class="p-error" *ngIf="broadcastForm.controls['message'].touched && broadcastForm.controls['message'].errors?.['required']">
+              {{ 'notificationBroadcast.messageBodyRequired' | translate }}</small>
+          </div>
+
+          <div class="col-12">
+            <div class="flex align-items-center gap-2">
+              <p-checkbox formControlName="sendEmail" [binary]="true" inputId="sendEmail"></p-checkbox>
+              <label for="sendEmail">{{ 'notificationBroadcast.sendEmail' | translate }}</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </p-card>
+</div>

@@ -80,6 +80,7 @@ import { McqTestTakingComponent } from './components/mcq-test-taking/mcq.test.ta
 import { ReportFieldComponent } from './components/report/field/report.field.component';
 import { ReportGenerateComponent } from './components/report/generate/report.generate.component';
 import { CountdownTimerComponent } from './components/shared/countdown-timer/countdown.timer.component';
+import { NotificationBroadcastFormComponent } from './components/notification-broadcast/notification.broadcast.form.component';
 import { RequiredFieldDirective } from './directives/required.field.directive';
 import { OtpNumericKeyboardDirective } from './directives/otp.numeric.keyboard.directive';
 import { PermissionHideDirective } from './directives/permission.hide.directive';
@@ -109,6 +110,7 @@ import { PaginatorModule } from 'primeng/paginator';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { PickListModule } from 'primeng/picklist';
 import { DropdownModule } from 'primeng/dropdown';
+import { AutoCompleteModule } from 'primeng/autocomplete';
 import { CalendarModule } from 'primeng/calendar';
 import { TooltipModule } from 'primeng/tooltip';
 import { AccordionModule } from 'primeng/accordion';
@@ -195,6 +197,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
     ReportFieldComponent,
     ReportGenerateComponent,
     CountdownTimerComponent,
+    NotificationBroadcastFormComponent,
     RequiredFieldDirective,
     OtpNumericKeyboardDirective,
     PermissionHideDirective,
@@ -227,6 +230,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
     MultiSelectModule,
     PickListModule,
     DropdownModule,
+    AutoCompleteModule,
     CalendarModule,
     TooltipModule,
     AccordionModule,
