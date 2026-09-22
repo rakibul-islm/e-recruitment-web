@@ -78,6 +78,7 @@
     "userGroup": "User Group",
     "role": "Role",
     "permission": "Permission",
+    "notificationBroadcast": "Send Notification",
     "systemConfig": "System Config",
     "passwordPolicy": "Password Policy",
     "exceptionLog": "Exception Log",
@@ -182,6 +183,10 @@
       "ONBOARDING_TASK_DUE": {
         "title": "Onboarding task due",
         "message": "Onboarding task {{title}} is due on {{dueDate}}."
+      },
+      "ADMIN_MESSAGE": {
+        "title": "{{title}}",
+        "message": "{{message}}"
       }
     }
   },
@@ -446,6 +451,27 @@
     "deleteSuccess": "Role deleted successfully!",
     "createSuccess": "Role created successfully!",
     "updateSuccess": "Role updated successfully!"
+  },
+  "notificationBroadcast": {
+    "title": "Send Notification",
+    "send": "Send",
+    "target": "Send To",
+    "targetAll": "All Users",
+    "targetRole": "By Role",
+    "targetUser": "Specific User",
+    "role": "Role",
+    "roleRequired": "Please select a role.",
+    "user": "User",
+    "userRequired": "Please select a user.",
+    "userSearchPlaceholder": "Search user...",
+    "message": "Message",
+    "messageTitle": "Title",
+    "messageTitleRequired": "Title is required.",
+    "messageBody": "Message",
+    "messageBodyRequired": "Message is required.",
+    "sendEmail": "Also send by email",
+    "confirmAll": "This will send a notification to every active user. Continue?",
+    "sendSuccess": "Notification sent successfully!"
   },
   "session": {
     "searchTitle": "Who's logged in? Search sessions here!",

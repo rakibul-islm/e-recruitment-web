@@ -1,0 +1,12 @@
+// p-autoComplete's root is inline-flex and its multi-select container doesn't inherit that width,
+// so "w-full" on the component alone isn't enough to make it match a full-width p-dropdown/input.
+:host ::ng-deep {
+  .p-autocomplete {
+    display: flex;
+    width: 100%;
+  }
+
+  .p-autocomplete-multiple-container {
+    width: 100%;
+  }
+}

@@ -30,7 +30,8 @@ export const NOTIFICATION_TYPE_ICONS: Record<string, string> = {
     INTERVIEW_REMINDER: 'pi-clock',
     MCQ_TEST_CLOSING: 'pi-clock',
     JOB_DEADLINE_SOON: 'pi-hourglass',
-    ONBOARDING_TASK_DUE: 'pi-check-square'
+    ONBOARDING_TASK_DUE: 'pi-check-square',
+    ADMIN_MESSAGE: 'pi-megaphone'
 };
 
 export const TOAST_NOTIFICATION_TYPES = ['OFFER_RECEIVED', 'INTERVIEW_SCHEDULED', 'MCQ_TEST_ASSIGNED'];

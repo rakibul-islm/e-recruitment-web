@@ -76,6 +76,7 @@
     "userGroup": "ব্যবহারকারী গ্রুপ",
     "role": "রোল",
     "permission": "পারমিশন",
+    "notificationBroadcast": "নোটিফিকেশন পাঠান",
     "systemConfig": "সিস্টেম কনফিগ",
     "passwordPolicy": "পাসওয়ার্ড পলিসি",
     "exceptionLog": "এক্সেপশন লগ",
@@ -182,6 +183,10 @@
       "ONBOARDING_TASK_DUE": {
         "title": "অনবোর্ডিং কাজের সময় হয়ে এসেছে",
         "message": "অনবোর্ডিং কাজ {{title}}-এর শেষ তারিখ {{dueDate}}।"
+      },
+      "ADMIN_MESSAGE": {
+        "title": "{{title}}",
+        "message": "{{message}}"
       }
     }
   },
@@ -446,6 +451,27 @@
     "deleteSuccess": "রোলটি সফলভাবে মুছে ফেলা হয়েছে!",
     "createSuccess": "রোলটি সফলভাবে তৈরি করা হয়েছে!",
     "updateSuccess": "রোলটি সফলভাবে আপডেট করা হয়েছে!"
+  },
+  "notificationBroadcast": {
+    "title": "নোটিফিকেশন পাঠান",
+    "send": "পাঠান",
+    "target": "প্রাপক",
+    "targetAll": "সকল ব্যবহারকারী",
+    "targetRole": "রোল অনুযায়ী",
+    "targetUser": "নির্দিষ্ট ব্যবহারকারী",
+    "role": "রোল",
+    "roleRequired": "দয়া করে একটি রোল নির্বাচন করুন।",
+    "user": "ব্যবহারকারী",
+    "userRequired": "দয়া করে একজন ব্যবহারকারী নির্বাচন করুন।",
+    "userSearchPlaceholder": "ব্যবহারকারী খুঁজুন...",
+    "message": "বার্তা",
+    "messageTitle": "শিরোনাম",
+    "messageTitleRequired": "শিরোনাম আবশ্যক।",
+    "messageBody": "বার্তা",
+    "messageBodyRequired": "বার্তা আবশ্যক।",
+    "sendEmail": "ইমেইলেও পাঠান",
+    "confirmAll": "এটি প্রতিটি সক্রিয় ব্যবহারকারীর কাছে একটি নোটিফিকেশন পাঠাবে। চালিয়ে যাবেন?",
+    "sendSuccess": "নোটিফিকেশন সফলভাবে পাঠানো হয়েছে!"
   },
   "session": {
     "searchTitle": "কারা লগ ইন আছেন? এখানে সেশন সার্চ করুন!",

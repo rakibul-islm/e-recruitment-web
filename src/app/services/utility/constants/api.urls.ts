@@ -158,10 +158,15 @@ export const API_URLS = {
     REMOVE_JOB_ALERT: 'job-alert/:id',
 
     NOTIFICATION_POLL: 'notification/poll',
+    NOTIFICATION_STREAM: 'notification/stream',
     MY_NOTIFICATIONS: 'notification/my',
     READ_NOTIFICATION: 'notification/:id/read',
     READ_ALL_NOTIFICATIONS: 'notification/read-all',
     REMOVE_NOTIFICATION: 'notification/:id',
+
+    NOTIFICATION_BROADCAST_ROLES: 'notification-broadcast/roles',
+    NOTIFICATION_BROADCAST_USERS: 'notification-broadcast/users',
+    SEND_NOTIFICATION_BROADCAST: 'notification-broadcast',
 
     ANALYTICS_SUMMARY: 'analytics/summary',
     ANALYTICS_FUNNEL: 'analytics/funnel',

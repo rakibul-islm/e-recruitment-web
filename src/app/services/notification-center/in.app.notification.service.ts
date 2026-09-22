@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpContext } from '@angular/common/http';
+import { fetchEventSource } from '@microsoft/fetch-event-source';
 import { BehaviorSubject, EMPTY, Observable, Subscription, catchError, exhaustMap, filter, fromEvent, map, merge, timer } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { BaseService } from '../base.service';
 import { API_URLS } from '../utility/constants/api.urls';
 import { BACKGROUND_REQUEST } from '../utility/interceptors/http.context.tokens';
@@ -9,7 +11,10 @@ import { NotificationService } from '../utility/notification.service';
 import { AppNotification, NotificationPoll, TOAST_NOTIFICATION_TYPES } from './domain/notification.domain';
 import { NotificationTextService } from './notification.text.service';
 
-const POLL_INTERVAL_MS = 60000;
+// SSE (via connectStream) delivers live updates; this is now just a safety-net poll in case the
+// stream silently drops (visibilitychange already triggers an immediate resync on tab refocus).
+const FALLBACK_POLL_INTERVAL_MS = 300000;
+const STREAM_RETRY_MS = 5000;
 const PAGE_SIZE = 20;
 const MAX_TOASTS = 3;
 
@@ -22,6 +27,7 @@ export class InAppNotificationService extends BaseService {
   private readonly hasMoreSubject = new BehaviorSubject<boolean>(false);
   private readonly unreadOnlySubject = new BehaviorSubject<boolean>(false);
   private pollSubscription?: Subscription;
+  private streamController?: AbortController;
   private latestId: number | null = null;
   private itemsLoaded = false;
   private panelOpen = false;
@@ -32,7 +38,7 @@ export class InAppNotificationService extends BaseService {
   readonly hasMore$ = this.hasMoreSubject.asObservable();
   readonly unreadOnly$ = this.unreadOnlySubject.asObservable();
 
-  constructor(http: HttpClient, authService: AuthService, private toast: NotificationService, private text: NotificationTextService) {
+  constructor(http: HttpClient, private authService: AuthService, private toast: NotificationService, private text: NotificationTextService) {
     super(http);
     authService.isLoggedIn().subscribe(loggedIn => loggedIn ? this.startPolling() : this.reset());
   }
@@ -99,15 +105,42 @@ export class InAppNotificationService extends BaseService {
 
   private startPolling(): void {
     this.stopPolling();
-    this.pollSubscription = merge(timer(0, POLL_INTERVAL_MS), fromEvent(document, 'visibilitychange')).pipe(
+    this.pollSubscription = merge(timer(0, FALLBACK_POLL_INTERVAL_MS), fromEvent(document, 'visibilitychange')).pipe(
       filter(() => !document.hidden),
       exhaustMap(() => this.fetchPoll())
     ).subscribe(poll => this.applyPoll(poll));
+
+    // SSE is a best-effort enhancement on top of the poll above; a failure here must never stop
+    // that fallback from being wired up.
+    try { this.connectStream(); } catch { /* fallback poll still covers us */ }
   }
 
   private stopPolling(): void {
     this.pollSubscription?.unsubscribe();
     this.pollSubscription = undefined;
+    this.disconnectStream();
+  }
+
+  // Fetch-based (not native EventSource) because the API only reads the auth token from an
+  // Authorization header, which EventSource can't set. onerror always returns a retry delay
+  // (never throws) so the connection keeps reconnecting indefinitely.
+  private connectStream(): void {
+    this.streamController = new AbortController();
+    fetchEventSource(`${environment.baseUrl}${API_URLS.NOTIFICATION_STREAM}`, {
+      headers: { Authorization: `Bearer ${this.authService.getToken()}` },
+      signal: this.streamController.signal,
+      openWhenHidden: true,
+      onmessage: (event) => {
+        if (event.event !== 'sync' || !event.data) { return; }
+        try { this.applyPoll(JSON.parse(event.data)); } catch { /* ignore malformed frame */ }
+      },
+      onerror: () => STREAM_RETRY_MS
+    }).catch(() => { /* aborted on logout/reset, or permanently failed - the fallback poll still covers us */ });
+  }
+
+  private disconnectStream(): void {
+    this.streamController?.abort();
+    this.streamController = undefined;
   }
 
   private reset(): void {
