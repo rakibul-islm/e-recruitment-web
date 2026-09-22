@@ -9,7 +9,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AppHeaderComponent } from './components/shared/app-header/app.header.component';
-import { NotificationPanelComponent } from './components/shared/notification-panel/notification.panel.component';
+import { NotificationPanelComponent } from './components/shared/notification/panel/notification.panel.component';
+import { NotificationViewComponent } from './components/shared/notification/view/notification.view.component';
 import { ProfileViewComponent } from './components/user/profile/view/profile.view.component';
 import { ProfileEditComponent } from './components/user/profile/edit/profile.edit.component';
 import { ChangePasswordComponent } from './components/user/password/change-password/change.password.component';
@@ -80,7 +81,7 @@ import { McqTestTakingComponent } from './components/mcq-test-taking/mcq.test.ta
 import { ReportFieldComponent } from './components/report/field/report.field.component';
 import { ReportGenerateComponent } from './components/report/generate/report.generate.component';
 import { CountdownTimerComponent } from './components/shared/countdown-timer/countdown.timer.component';
-import { NotificationBroadcastFormComponent } from './components/notification-broadcast/notification.broadcast.form.component';
+import { NotificationBroadcastFormComponent } from './components/shared/notification/broadcast/notification.broadcast.form.component';
 import { RequiredFieldDirective } from './directives/required.field.directive';
 import { OtpNumericKeyboardDirective } from './directives/otp.numeric.keyboard.directive';
 import { PermissionHideDirective } from './directives/permission.hide.directive';
@@ -130,6 +131,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
     DashboardComponent,
     AppHeaderComponent,
     NotificationPanelComponent,
+    NotificationViewComponent,
     ProfileViewComponent,
     ProfileEditComponent,
     ChangePasswordComponent,

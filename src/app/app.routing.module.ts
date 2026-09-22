@@ -21,7 +21,7 @@ import { UserGroupViewComponent } from './components/user-group/view/user.group.
 import { PermissionSearchComponent } from './components/permission/search/permission.search.component';
 import { PermissionFormComponent } from './components/permission/form/permission.form.component';
 import { PermissionViewComponent } from './components/permission/view/permission.view.component';
-import { NotificationBroadcastFormComponent } from './components/notification-broadcast/notification.broadcast.form.component';
+import { NotificationBroadcastFormComponent } from './components/shared/notification/broadcast/notification.broadcast.form.component';
 import { SystemConfigSearchComponent } from './components/system-config/search/system.config.search.component';
 import { SystemConfigFormComponent } from './components/system-config/form/system.config.form.component';
 import { SystemConfigViewComponent } from './components/system-config/view/system.config.view.component';
@@ -68,6 +68,7 @@ import { McqTestFormComponent } from './components/mcq-test/form/mcq.test.form.c
 import { McqTestViewComponent } from './components/mcq-test/view/mcq.test.view.component';
 import { McqTestTakingComponent } from './components/mcq-test-taking/mcq.test.taking.component';
 import { ReportGenerateComponent } from './components/report/generate/report.generate.component';
+import { NotificationViewComponent } from './components/shared/notification/view/notification.view.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -89,6 +90,8 @@ const routes: Routes = [
   { path: 'my/saved-jobs', component: CandidateSavedJobsComponent, canActivate: [AuthGuard] },
   { path: 'my/job-alerts', component: CandidateJobAlertsComponent, canActivate: [AuthGuard] },
   { path: 'my/tests/:assignmentId/take', component: McqTestTakingComponent, canActivate: [AuthGuard], data: { fullScreen: true } },
+
+  { path: 'notifications/:id', component: NotificationViewComponent, canActivate: [AuthGuard] },
 
   { path: 'analytics',
     component: AnalyticsDashboardComponent,

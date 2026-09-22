@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { BaseComponent } from '../base.component';
-import { NotificationBroadcastService } from '../../services/notification-broadcast/notification.broadcast.service';
-import { CommonConfirmDialogService } from '../../services/utility/common.confirm.dialog.service';
-import { RoleOption, UserOption } from '../../services/notification-broadcast/domain/notification.broadcast.domain';
+import { BaseComponent } from '../../../base.component';
+import { NotificationBroadcastService } from '../../../../services/notification-broadcast/notification.broadcast.service';
+import { CommonConfirmDialogService } from '../../../../services/utility/common.confirm.dialog.service';
+import { RoleOption, UserOption } from '../../../../services/notification-broadcast/domain/notification.broadcast.domain';
 
 @Component({
   selector: 'app-notification-broadcast-form',

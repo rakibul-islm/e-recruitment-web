@@ -1,0 +1,55 @@
+.notification-view-card {
+  width: 100%;
+  max-width: 40rem;
+}
+
+.notification-view-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 3rem 1rem;
+  color: #6b7280;
+
+  .pi {
+    font-size: 2rem;
+  }
+}
+
+.notification-view-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.notification-view-icon {
+  margin-top: 0.2rem;
+  color: #145dae;
+  font-size: 1.4rem;
+}
+
+.notification-view-title {
+  margin: 0 0 0.2rem;
+  color: #111827;
+}
+
+.notification-view-time {
+  color: #6b7280;
+  font-size: 0.8rem;
+}
+
+.notification-view-message {
+  color: #374151;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+
+  ::ng-deep p {
+    margin: 0;
+
+    & + p {
+      margin-top: 0.6rem;
+    }
+  }
+}

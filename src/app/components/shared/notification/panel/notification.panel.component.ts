@@ -1,14 +1,11 @@
 import { Component, OnDestroy } from '@angular/core';
-import { formatDate } from '@angular/common';
 import { Router } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
-import { InAppNotificationService } from '../../../services/notification-center/in.app.notification.service';
-import { NotificationTextService } from '../../../services/notification-center/notification.text.service';
-import { AppNotification, DEFAULT_NOTIFICATION_ICON, NOTIFICATION_TYPE_ICONS } from '../../../services/notification-center/domain/notification.domain';
+import { InAppNotificationService } from '../../../../services/notification-center/in.app.notification.service';
+import { NotificationTextService } from '../../../../services/notification-center/notification.text.service';
+import { AppNotification, DEFAULT_NOTIFICATION_ICON, NOTIFICATION_TYPE_ICONS } from '../../../../services/notification-center/domain/notification.domain';
 
 const MAX_BADGE_COUNT = 99;
-const DATE_LOCALE = 'en-US';
 
 @Component({
   selector: 'app-notification-panel',
@@ -25,7 +22,6 @@ export class NotificationPanelComponent implements OnDestroy {
   constructor(
     private notificationService: InAppNotificationService,
     private notificationText: NotificationTextService,
-    private translate: TranslateService,
     private router: Router) {
     this.unreadCount$ = notificationService.unreadCount$;
     this.items$ = notificationService.items$;
@@ -62,7 +58,10 @@ export class NotificationPanelComponent implements OnDestroy {
     const route = notification.actionRoute;
     if (route && route.startsWith('/') && !route.startsWith('//')) {
       this.router.navigateByUrl(route);
+      return;
     }
+
+    this.router.navigate(['/notifications', notification.id]);
   }
 
   setUnreadOnly(unreadOnly: boolean): void {
@@ -98,16 +97,6 @@ export class NotificationPanelComponent implements OnDestroy {
   }
 
   timeAgo(createdOn: string): string {
-    const minutes = Math.floor((Date.now() - new Date(createdOn).getTime()) / 60000);
-    if (minutes < 1) { return this.translate.instant('notification.time.justNow'); }
-    if (minutes < 60) { return this.translate.instant('notification.time.minutesAgo', { count: minutes }); }
-
-    const hours = Math.floor(minutes / 60);
-    if (hours < 24) { return this.translate.instant('notification.time.hoursAgo', { count: hours }); }
-
-    const days = Math.floor(hours / 24);
-    if (days < 7) { return this.translate.instant('notification.time.daysAgo', { count: days }); }
-
-    return formatDate(createdOn, 'd MMM y', DATE_LOCALE);
+    return this.notificationText.timeAgo(createdOn);
   }
 }

@@ -59,11 +59,9 @@
               {{ 'notificationBroadcast.messageTitleRequired' | translate }}</small>
           </div>
 
-          <div class="col-12">
-            <p-floatLabel>
-              <textarea id="broadcastMessage" rows="5" formControlName="message" pInputTextarea class="w-full"></textarea>
-              <label for="broadcastMessage">{{ 'notificationBroadcast.messageBody' | translate }}</label>
-            </p-floatLabel>
+          <div class="col-12 flex flex-column gap-2">
+            <label for="broadcastMessage">{{ 'notificationBroadcast.messageBody' | translate }}</label>
+            <p-editor id="broadcastMessage" formControlName="message" [style]="{ height: '200px' }"></p-editor>
             <small class="p-error" *ngIf="broadcastForm.controls['message'].touched && broadcastForm.controls['message'].errors?.['required']">
               {{ 'notificationBroadcast.messageBodyRequired' | translate }}</small>
           </div>

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpContext } from '@angular/common/http';
 import { fetchEventSource } from '@microsoft/fetch-event-source';
-import { BehaviorSubject, EMPTY, Observable, Subscription, catchError, exhaustMap, filter, fromEvent, map, merge, timer } from 'rxjs';
+import { BehaviorSubject, EMPTY, Observable, Subscription, catchError, exhaustMap, filter, fromEvent, map, merge, of, timer } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { BaseService } from '../base.service';
 import { API_URLS } from '../utility/constants/api.urls';
@@ -68,6 +68,13 @@ export class InAppNotificationService extends BaseService {
       this.itemsSubject.next([...items, ...page]);
       this.hasMoreSubject.next(page.length >= PAGE_SIZE);
     });
+  }
+
+  public findById(id: number): Observable<AppNotification | null> {
+    return this.get<any>(this.createUrl(API_URLS.NOTIFICATION_BY_ID, { id })).pipe(
+      map(response => (response?.obj as AppNotification) || null),
+      catchError(() => of(null))
+    );
   }
 
   public markRead(notification: AppNotification): void {
