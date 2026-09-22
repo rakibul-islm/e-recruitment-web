@@ -1,0 +1,23 @@
+<app-page-header [title]="'notification.title' | translate">
+  <p-button [label]="'common.back' | translate" icon="pi pi-arrow-left" styleClass="p-button-secondary" (onClick)="goBack()"></p-button>
+</app-page-header>
+
+<div class="flex justify-content-center mt-3 px-3">
+  <p-card class="page-card notification-view-card">
+    <div class="notification-view-empty" *ngIf="notFound">
+      <i class="pi pi-bell-slash"></i>
+      <span>{{ 'notification.notFound' | translate }}</span>
+    </div>
+
+    <ng-container *ngIf="notification">
+      <div class="notification-view-header">
+        <i class="pi notification-view-icon" [ngClass]="icon()"></i>
+        <div>
+          <h3 class="notification-view-title">{{ title() }}</h3>
+          <span class="notification-view-time">{{ timeAgo() }}</span>
+        </div>
+      </div>
+      <div class="notification-view-message" [innerHTML]="message()"></div>
+    </ng-container>
+  </p-card>
+</div>

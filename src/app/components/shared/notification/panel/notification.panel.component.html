@@ -33,7 +33,7 @@
           <i class="pi notification-icon" [ngClass]="icon(notification)"></i>
           <span class="notification-body">
             <span class="notification-item-title">{{ text(notification, 'title') }}</span>
-            <span class="notification-item-message">{{ text(notification, 'message') }}</span>
+            <div class="notification-item-message" [innerHTML]="text(notification, 'message')"></div>
             <span class="notification-time">{{ timeAgo(notification.createdOn) }}</span>
           </span>
         </button>

@@ -96,6 +96,7 @@
   },
   "notification": {
     "title": "Notifications",
+    "notFound": "This notification could not be found.",
     "bellLabel": "Notifications, {{count}} unread",
     "markAllRead": "Mark all as read",
     "dismiss": "Dismiss",

@@ -160,6 +160,7 @@ export const API_URLS = {
     NOTIFICATION_POLL: 'notification/poll',
     NOTIFICATION_STREAM: 'notification/stream',
     MY_NOTIFICATIONS: 'notification/my',
+    NOTIFICATION_BY_ID: 'notification/:id',
     READ_NOTIFICATION: 'notification/:id/read',
     READ_ALL_NOTIFICATIONS: 'notification/read-all',
     REMOVE_NOTIFICATION: 'notification/:id',

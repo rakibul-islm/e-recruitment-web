@@ -21,6 +21,20 @@ export class NotificationTextService {
     return this.text(notification, 'message');
   }
 
+  timeAgo(createdOn: string): string {
+    const minutes = Math.floor((Date.now() - new Date(createdOn).getTime()) / 60000);
+    if (minutes < 1) { return this.translate.instant('notification.time.justNow'); }
+    if (minutes < 60) { return this.translate.instant('notification.time.minutesAgo', { count: minutes }); }
+
+    const hours = Math.floor(minutes / 60);
+    if (hours < 24) { return this.translate.instant('notification.time.hoursAgo', { count: hours }); }
+
+    const days = Math.floor(hours / 24);
+    if (days < 7) { return this.translate.instant('notification.time.daysAgo', { count: days }); }
+
+    return formatDate(createdOn, DATE_FORMAT, DATE_LOCALE);
+  }
+
   private text(notification: AppNotification, part: 'title' | 'message'): string {
     const key = `notification.types.${notification.type}.${part}`;
     const translated = this.translate.instant(key, this.displayParams(notification.params));
