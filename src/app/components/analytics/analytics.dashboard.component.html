@@ -1,4 +1,6 @@
-<app-page-header [title]="'analyticsPage.pageTitle' | translate"></app-page-header>
+<app-page-header [title]="'analyticsPage.pageTitle' | translate">
+  <p-button [label]="'common.back' | translate" icon="pi pi-arrow-left" styleClass="p-button-secondary" (onClick)="goToDashboard()"></p-button>
+</app-page-header>
 
 <div class="p-3">
   <div class="summary-cards">

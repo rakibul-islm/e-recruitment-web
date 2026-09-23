@@ -1,5 +1,6 @@
 <app-page-header [title]="'archiveConfig.searchTitle' | translate">
   <p-button *appPermissionHide="'archive-config-manage'" [label]="'archiveConfig.createButton' | translate" icon="pi pi-plus" (onClick)="createArchiveConfig()"></p-button>
+  <p-button [label]="'common.back' | translate" icon="pi pi-arrow-left" styleClass="p-button-secondary" (onClick)="goToDashboard()"></p-button>
 </app-page-header>
 
 <div class="p-3">

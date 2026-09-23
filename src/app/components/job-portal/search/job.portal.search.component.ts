@@ -91,6 +91,10 @@ export class JobPortalSearchComponent extends BaseComponent implements OnInit {
     this.router.navigate(['/jobs', job.id]);
   }
 
+  goBackFromJobs(): void {
+    this.router.navigate([this.isAuthenticated ? '/dashboard' : '/']);
+  }
+
   toggleSave(job: JobPosting, event: Event): void {
     event.stopPropagation();
     if (!this.isAuthenticated) {

@@ -1,5 +1,6 @@
 <app-page-header [title]="'profile.viewTitle' | translate:{ name: profile.fullName || ('profile.defaultName' | translate) }">
   <p-button [label]="'common.edit' | translate" icon="pi pi-pencil" routerLink="/profile/edit"></p-button>
+  <p-button [label]="'common.back' | translate" icon="pi pi-arrow-left" styleClass="p-button-secondary" (onClick)="goToDashboard()"></p-button>
 </app-page-header>
 
 <div class="flex justify-content-center mt-6 px-3">
