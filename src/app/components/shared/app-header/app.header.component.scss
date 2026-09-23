@@ -95,8 +95,10 @@
 }
 
 @media (min-width: 360px) and (max-width: 575px) {
-  ::ng-deep .app-header-title {
+  ::ng-deep .app-header-brand .app-header-title {
     white-space: nowrap;
+    font-size: 0.8rem;
+    letter-spacing: 0.01em;
   }
 }
 
