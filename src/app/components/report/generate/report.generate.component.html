@@ -1,4 +1,6 @@
-<app-page-header [title]="definition.titleKey | translate"></app-page-header>
+<app-page-header [title]="definition.titleKey | translate">
+  <p-button [label]="'common.back' | translate" icon="pi pi-arrow-left" styleClass="p-button-secondary" (onClick)="goToDashboard()"></p-button>
+</app-page-header>
 
 <div class="p-3">
   <p-accordion [(activeIndex)]="activeTabIndex">

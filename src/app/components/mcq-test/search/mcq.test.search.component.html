@@ -1,5 +1,6 @@
 <app-page-header [title]="'mcqTest.searchTitle' | translate">
   <p-button *appPermissionHide="'mcq-test-manage'" [label]="'mcqTest.createButton' | translate" icon="pi pi-plus" (onClick)="createTest()"></p-button>
+  <p-button [label]="'common.back' | translate" icon="pi pi-arrow-left" styleClass="p-button-secondary" (onClick)="goToDashboard()"></p-button>
 </app-page-header>
 
 <div class="p-3">

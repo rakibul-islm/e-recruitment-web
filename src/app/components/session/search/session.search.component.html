@@ -1,6 +1,7 @@
 <app-page-header [title]="'session.searchTitle' | translate">
   <p-button *appPermissionHide="'session-delete'" [label]="'session.forceLogoutAll' | translate" icon="pi pi-power-off"
     styleClass="p-button-danger" (onClick)="forceLogoutAll()"></p-button>
+  <p-button [label]="'common.back' | translate" icon="pi pi-arrow-left" styleClass="p-button-secondary" (onClick)="goToDashboard()"></p-button>
 </app-page-header>
 
 <div class="p-3">

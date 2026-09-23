@@ -2,6 +2,7 @@
   <ng-container *appPermissionHide="'company-manage'">
     <p-button *ngIf="!isCompanyScoped" [label]="'company.createButton' | translate" icon="pi pi-plus" (onClick)="createCompany()"></p-button>
   </ng-container>
+  <p-button [label]="'common.back' | translate" icon="pi pi-arrow-left" styleClass="p-button-secondary" (onClick)="goToDashboard()"></p-button>
 </app-page-header>
 
 <div class="p-3">

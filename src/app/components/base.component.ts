@@ -10,6 +10,7 @@ export abstract class BaseComponent implements OnDestroy {
   subscribers: any = {};
   protected notificationService = inject(NotificationService);
   private location = inject(Location);
+  private navRouter = inject(Router);
 
   totalRecords: number = 0;
   loading: boolean = false;
@@ -58,6 +59,10 @@ export abstract class BaseComponent implements OnDestroy {
 
   goBack(): void {
     this.location.back();
+  }
+
+  goToDashboard(): void {
+    this.navRouter.navigate(['/dashboard']);
   }
 
   protected buildSearchParams(form: FormGroup, event: TableLazyLoadEvent): Map<any, any> {

@@ -505,7 +505,8 @@
     "forceLogoutConfirm": "Are you sure you want to force logout this session for \"{{name}}\"?",
     "forceLogoutSuccess": "Session logged out successfully!",
     "forceLogoutAllConfirm": "Are you sure you want to force logout EVERY active session in the system? All logged-in users will be signed out.",
-    "forceLogoutAllSuccess": "All active sessions logged out successfully!"
+    "forceLogoutAllSuccess": "All active sessions logged out successfully!",
+    "forceLogoutNotice": "You have been logged out by an administrator."
   },
   "permission": {
     "searchTitle": "Looking for Permission? Search here!",

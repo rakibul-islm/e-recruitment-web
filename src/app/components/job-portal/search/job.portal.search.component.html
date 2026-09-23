@@ -1,4 +1,6 @@
-<app-page-header [title]="'jobPortal.pageTitle' | translate"></app-page-header>
+<app-page-header [title]="'jobPortal.pageTitle' | translate">
+  <p-button [label]="'common.back' | translate" icon="pi pi-arrow-left" styleClass="p-button-secondary" (onClick)="goBackFromJobs()"></p-button>
+</app-page-header>
 
 <div class="job-portal-page">
   <p-card class="job-filter-card">
