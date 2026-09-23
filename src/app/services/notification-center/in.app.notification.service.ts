@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpContext } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { fetchEventSource } from '@microsoft/fetch-event-source';
 import { BehaviorSubject, EMPTY, Observable, Subscription, catchError, exhaustMap, filter, fromEvent, map, merge, of, timer } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -38,7 +39,7 @@ export class InAppNotificationService extends BaseService {
   readonly hasMore$ = this.hasMoreSubject.asObservable();
   readonly unreadOnly$ = this.unreadOnlySubject.asObservable();
 
-  constructor(http: HttpClient, private authService: AuthService, private toast: NotificationService, private text: NotificationTextService) {
+  constructor(http: HttpClient, private authService: AuthService, private toast: NotificationService, private text: NotificationTextService, private router: Router) {
     super(http);
     authService.isLoggedIn().subscribe(loggedIn => loggedIn ? this.startPolling() : this.reset());
   }
@@ -138,11 +139,22 @@ export class InAppNotificationService extends BaseService {
       signal: this.streamController.signal,
       openWhenHidden: true,
       onmessage: (event) => {
+        if (event.event === 'force-logout') {
+          this.handleForceLogout();
+          return;
+        }
         if (event.event !== 'sync' || !event.data) { return; }
         try { this.applyPoll(JSON.parse(event.data)); } catch { /* ignore malformed frame */ }
       },
       onerror: () => STREAM_RETRY_MS
     }).catch(() => { /* aborted on logout/reset, or permanently failed - the fallback poll still covers us */ });
+  }
+
+  private handleForceLogout(): void {
+    this.reset();
+    this.authService.logout();
+    this.toast.sendInfoMsg('session.forceLogoutNotice');
+    this.router.navigate(['/login']);
   }
 
   private disconnectStream(): void {
