@@ -38,6 +38,7 @@ export class SessionSearchComponent extends BaseComponent implements OnInit {
     this.prepareForm();
     this.registerFilterForm('session-search-filters', this.filterForm);
     this.fetchSummary();
+    this.subscribers.summaryStreamSub = this.sessionService.streamSummary().subscribe(summary => this.summary = summary);
   }
 
   prepareForm(): void {
