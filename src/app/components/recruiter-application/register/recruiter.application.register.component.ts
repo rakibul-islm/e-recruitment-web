@@ -41,7 +41,7 @@ export class RecruiterApplicationRegisterComponent extends BaseComponent impleme
       phone: ['', [Validators.required, Validators.pattern('^[0-9+ -]{7,20}$')]],
       organizationName: ['', Validators.required],
       organizationWebsite: [''],
-      organizationSector: [null, Validators.required],
+      organizationType: [null, Validators.required],
       organizationSize: [''],
       organizationAddress: ['', Validators.required],
       organizationPhone: ['', [Validators.required, Validators.pattern('^[0-9+ -]{7,20}$')]],
@@ -71,7 +71,7 @@ export class RecruiterApplicationRegisterComponent extends BaseComponent impleme
       next: () => {
         this.savingType = false;
         this.newTypeDialogVisible = false;
-        this.registerForm.patchValue({ organizationSector: name });
+        this.registerForm.patchValue({ organizationType: name });
         this.fetchOrganizationTypes();
       },
       error: () => { this.savingType = false; }

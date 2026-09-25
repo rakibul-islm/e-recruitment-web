@@ -3,7 +3,7 @@ export class Organization {
     name!: string;
     logoFileId?: number;
     website?: string;
-    sector?: string;
+    organizationType?: string;
     phone?: string;
     email?: string;
     description?: string;
@@ -16,7 +16,7 @@ export class OrganizationRequest {
     name!: string;
     logoFileId?: number;
     website?: string;
-    sector?: string;
+    organizationType?: string;
     phone?: string;
     email?: string;
     description?: string;

@@ -19,9 +19,9 @@
           <div class="col-12 md:col-6">
             <div class="flex gap-2 align-items-start">
               <p-floatLabel class="flex-1">
-                <p-dropdown id="organizationSector" formControlName="sector" [options]="organizationTypes" optionLabel="name" optionValue="name"
+                <p-dropdown id="organizationType" formControlName="organizationType" [options]="organizationTypes" optionLabel="name" optionValue="name"
                   [filter]="true" [showClear]="true" styleClass="w-full" appendTo="body"></p-dropdown>
-                <label for="organizationSector">{{ 'organization.sector' | translate }}</label>
+                <label for="organizationType">{{ 'organization.organizationType' | translate }}</label>
               </p-floatLabel>
               <p-button icon="pi pi-plus" styleClass="p-button-outlined" [pTooltip]="'organization.addNewType' | translate" (onClick)="openNewTypeDialog()"></p-button>
             </div>

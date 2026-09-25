@@ -30,14 +30,14 @@
         <ng-template pTemplate="header">
           <tr>
             <th>{{ 'common.name' | translate }}</th>
-            <th>{{ 'organization.sector' | translate }}</th>
+            <th>{{ 'organization.organizationType' | translate }}</th>
             <th>{{ 'organization.website' | translate }}</th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-organization>
           <tr class="selectable-row" [pSelectableRow]="organization">
             <td>{{ organization.name }}</td>
-            <td>{{ organization.sector }}</td>
+            <td>{{ organization.organizationType }}</td>
             <td>{{ organization.website }}</td>
           </tr>
         </ng-template>

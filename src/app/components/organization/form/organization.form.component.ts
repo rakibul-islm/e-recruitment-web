@@ -62,7 +62,7 @@ export class OrganizationFormComponent extends BaseComponent implements OnInit {
       next: () => {
         this.savingType = false;
         this.newTypeDialogVisible = false;
-        this.organizationForm.patchValue({ sector: name });
+        this.organizationForm.patchValue({ organizationType: name });
         this.fetchOrganizationTypes();
       },
       error: () => { this.savingType = false; }
@@ -74,7 +74,7 @@ export class OrganizationFormComponent extends BaseComponent implements OnInit {
 
     this.organizationForm = this.formBuilder.group({
       name: [formData.name, Validators.required],
-      sector: [formData.sector],
+      organizationType: [formData.organizationType],
       website: [formData.website],
       phone: [formData.phone],
       email: [formData.email],
