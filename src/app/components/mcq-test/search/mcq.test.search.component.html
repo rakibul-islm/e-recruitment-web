@@ -24,7 +24,7 @@
       </div>
     </p-accordionTab>
 
-    <p-accordionTab [header]="'company.listTab' | translate">
+    <p-accordionTab [header]="'organization.listTab' | translate">
       <p-table #dt [value]="tests" [lazy]="true" (onLazyLoad)="fetchTests($event)" [paginator]="true"
         [rows]="rows" [totalRecords]="totalRecords" [loading]="loading" [rowsPerPageOptions]="[10, 20, 50]"
         responsiveLayout="scroll" dataKey="id" selectionMode="single" [(selection)]="selectedTest"

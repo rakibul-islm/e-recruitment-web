@@ -3,7 +3,7 @@
   <p-button *ngIf="jobPosting.status === 'DRAFT'" [label]="'jobPosting.publish' | translate" icon="pi pi-check" styleClass="p-button-success" (onClick)="changeStatus('PUBLISHED')"></p-button>
   <p-button *ngIf="jobPosting.status === 'PUBLISHED'" [label]="'jobPosting.close' | translate" icon="pi pi-ban" styleClass="p-button-warning" (onClick)="changeStatus('CLOSED')"></p-button>
   <p-button *appPermissionHide="'job-circular-manage'" [label]="'common.edit' | translate" icon="pi pi-pencil" [routerLink]="['/job-postings', jobPostingId, 'edit']"></p-button>
-  <p-button *appPermissionHide="'job-circular-delete'" [label]="'company.removeButton' | translate" icon="pi pi-trash" styleClass="p-button-danger" (onClick)="deleteJobPosting()"></p-button>
+  <p-button *appPermissionHide="'job-circular-delete'" [label]="'organization.removeButton' | translate" icon="pi pi-trash" styleClass="p-button-danger" (onClick)="deleteJobPosting()"></p-button>
   <p-button *appPermissionHide="'audit-log-list'" [label]="'auditLog.viewForEntity' | translate" icon="pi pi-history" styleClass="p-button-secondary" (onClick)="navigateToAuditLog(router, 'JobCircular', jobPostingId)"></p-button>
   <p-button [label]="'common.back' | translate" icon="pi pi-arrow-left" styleClass="p-button-secondary" (onClick)="goBack()"></p-button>
 </app-page-header>
@@ -25,8 +25,8 @@
           <td class="detail-value"><span class="tag">{{ jobPosting.status }}</span></td>
         </tr>
         <tr>
-          <td class="detail-label">{{ 'jobPortal.company' | translate }}</td>
-          <td class="detail-value">{{ jobPosting.companyName }}</td>
+          <td class="detail-label">{{ 'jobPortal.organization' | translate }}</td>
+          <td class="detail-value">{{ jobPosting.organizationName }}</td>
         </tr>
         <tr>
           <td class="detail-label">{{ 'jobPortal.vacancy' | translate }}</td>

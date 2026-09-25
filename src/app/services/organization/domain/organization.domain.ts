@@ -1,9 +1,9 @@
-export class Company {
+export class Organization {
     id!: number;
     name!: string;
     logoFileId?: number;
     website?: string;
-    industry?: string;
+    sector?: string;
     phone?: string;
     email?: string;
     description?: string;
@@ -11,12 +11,12 @@ export class Company {
     size?: string;
 }
 
-export class CompanyRequest {
+export class OrganizationRequest {
     id?: number;
     name!: string;
     logoFileId?: number;
     website?: string;
-    industry?: string;
+    sector?: string;
     phone?: string;
     email?: string;
     description?: string;

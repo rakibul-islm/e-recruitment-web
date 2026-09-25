@@ -3,8 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BaseComponent } from '../../base.component';
 import { RecruiterApplicationService } from '../../../services/recruiter-application/recruiter.application.service';
 import { RecruiterApplicationRequest } from '../../../services/recruiter-application/domain/recruiter.application.domain';
-import { CompanyTypeService } from '../../../services/company-type/company.type.service';
-import { CompanyType } from '../../../services/company-type/domain/company.type.domain';
+import { OrganizationTypeService } from '../../../services/organization-type/organization.type.service';
+import { OrganizationType } from '../../../services/organization-type/domain/organization.type.domain';
 
 @Component({
   selector: 'app-recruiter-application-register',
@@ -15,7 +15,7 @@ export class RecruiterApplicationRegisterComponent extends BaseComponent impleme
   submitted = false;
   registerForm!: FormGroup;
 
-  companyTypes: CompanyType[] = [];
+  organizationTypes: OrganizationType[] = [];
   newTypeDialogVisible = false;
   newTypeForm!: FormGroup;
   savingType = false;
@@ -23,7 +23,7 @@ export class RecruiterApplicationRegisterComponent extends BaseComponent impleme
   constructor(
     private formBuilder: FormBuilder,
     private recruiterApplicationService: RecruiterApplicationService,
-    private companyTypeService: CompanyTypeService
+    private organizationTypeService: OrganizationTypeService
   ) {
     super();
   }
@@ -31,7 +31,7 @@ export class RecruiterApplicationRegisterComponent extends BaseComponent impleme
   ngOnInit(): void {
     this.prepareForm();
     this.newTypeForm = this.formBuilder.group({ name: ['', Validators.required] });
-    this.fetchCompanyTypes();
+    this.fetchOrganizationTypes();
   }
 
   prepareForm(): void {
@@ -39,21 +39,21 @@ export class RecruiterApplicationRegisterComponent extends BaseComponent impleme
       fullName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       phone: ['', [Validators.required, Validators.pattern('^[0-9+ -]{7,20}$')]],
-      companyName: ['', Validators.required],
-      companyWebsite: [''],
-      companyIndustry: [''],
-      companySize: [''],
-      companyAddress: [''],
-      companyPhone: [''],
-      companyEmail: ['', Validators.email],
-      jobTitle: [''],
+      organizationName: ['', Validators.required],
+      organizationWebsite: [''],
+      organizationSector: [null, Validators.required],
+      organizationSize: [''],
+      organizationAddress: ['', Validators.required],
+      organizationPhone: ['', [Validators.required, Validators.pattern('^[0-9+ -]{7,20}$')]],
+      organizationEmail: ['', [Validators.required, Validators.email]],
+      jobTitle: ['', Validators.required],
       message: ['']
     });
   }
 
-  fetchCompanyTypes(): void {
-    this.subscribers.companyTypesSub = this.companyTypeService.list().subscribe(response => {
-      this.companyTypes = response?.list || [];
+  fetchOrganizationTypes(): void {
+    this.subscribers.organizationTypesSub = this.organizationTypeService.list().subscribe(response => {
+      this.organizationTypes = response?.list || [];
     });
   }
 
@@ -62,17 +62,17 @@ export class RecruiterApplicationRegisterComponent extends BaseComponent impleme
     this.newTypeDialogVisible = true;
   }
 
-  createCompanyType(): void {
+  createOrganizationType(): void {
     if (this.isFormInvalid(this.newTypeForm)) { return; }
 
     this.savingType = true;
     const name = this.newTypeForm.value.name;
-    this.subscribers.createTypeSub = this.companyTypeService.create(name).subscribe({
+    this.subscribers.createTypeSub = this.organizationTypeService.create(name).subscribe({
       next: () => {
         this.savingType = false;
         this.newTypeDialogVisible = false;
-        this.registerForm.patchValue({ companyIndustry: name });
-        this.fetchCompanyTypes();
+        this.registerForm.patchValue({ organizationSector: name });
+        this.fetchOrganizationTypes();
       },
       error: () => { this.savingType = false; }
     });

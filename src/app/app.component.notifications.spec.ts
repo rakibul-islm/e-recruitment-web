@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { LanguageService } from './services/utility/language.service';
 import { LoadingService } from './services/utility/loading.service';
 import { InAppNotificationService } from './services/notification-center/in.app.notification.service';
+import { GuestPresenceService } from './services/presence/guest.presence.service';
 
 @Component({ template: '' })
 class BlankComponent {}
@@ -27,6 +28,7 @@ describe('AppComponent and notification toasts', () => {
       ])],
       providers: [
         { provide: InAppNotificationService, useValue: notifications },
+        { provide: GuestPresenceService, useValue: {} },
         { provide: LanguageService, useValue: jasmine.createSpyObj('LanguageService', ['init']) },
         { provide: LoadingService, useValue: { loading$: of(false) } }
       ],

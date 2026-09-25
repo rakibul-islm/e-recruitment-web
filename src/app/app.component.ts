@@ -4,6 +4,7 @@ import { filter, map } from 'rxjs/operators';
 import { LoadingService } from './services/utility/loading.service';
 import { LanguageService } from './services/utility/language.service';
 import { InAppNotificationService } from './services/notification-center/in.app.notification.service';
+import { GuestPresenceService } from './services/presence/guest.presence.service';
 
 @Component({
   selector: 'app-root',
@@ -18,7 +19,7 @@ export class AppComponent {
   fullScreen = false;
 
   constructor(public loadingService: LoadingService, languageService: LanguageService, notificationService: InAppNotificationService,
-    router: Router, route: ActivatedRoute) {
+    guestPresenceService: GuestPresenceService, router: Router, route: ActivatedRoute) {
     languageService.init();
 
     router.events.pipe(

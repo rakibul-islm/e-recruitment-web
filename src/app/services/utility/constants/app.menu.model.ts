@@ -23,7 +23,7 @@ export const MENU_ITEMS: AppMenuItem[] = [
     label: 'menu.recruiting',
     icon: 'pi pi-building',
     items: [
-      { label: 'menu.companies', icon: 'pi pi-building', routerLink: '/companies', routeName: 'company-list' },
+      { label: 'menu.organizations', icon: 'pi pi-building', routerLink: '/organizations', routeName: 'organization-list' },
       { label: 'menu.jobPostings', icon: 'pi pi-briefcase', routerLink: '/job-postings', routeName: 'job-circular-list' },
       { label: 'menu.mcqQuestions', icon: 'pi pi-question-circle', routerLink: '/mcq-questions', routeName: 'mcq-question-list' },
       { label: 'menu.mcqTests', icon: 'pi pi-list-check', routerLink: '/mcq-tests', routeName: 'mcq-test-list' },

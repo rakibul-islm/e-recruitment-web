@@ -58,7 +58,7 @@
             <div class="cv-timeline-header">
               <div>
                 <div class="cv-timeline-title">{{ item.title }}</div>
-                <div class="cv-timeline-subtitle">{{ item.companyName }}<span *ngIf="item.location"> &middot; {{ item.location }}</span></div>
+                <div class="cv-timeline-subtitle">{{ item.organizationName }}<span *ngIf="item.location"> &middot; {{ item.location }}</span></div>
               </div>
               <span class="cv-date-badge">{{ item.startDate | date:'MMM yyyy' }} - {{ item.current ? ('candidateProfile.present' | translate) : (item.endDate | date:'MMM yyyy') }}</span>
             </div>

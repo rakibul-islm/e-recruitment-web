@@ -41,7 +41,7 @@
             styleClass="p-button-text p-button-rounded flex-shrink-0" (onClick)="toggleSave(job, $event)"></p-button>
         </div>
         <h3 class="job-card-title">{{ job.jobTitle }}</h3>
-        <div class="job-card-company">{{ job.companyName }} &middot; {{ job.jobLocation || ('jobPortal.notSpecified' | translate) }}</div>
+        <div class="job-card-organization">{{ job.organizationName }} &middot; {{ job.jobLocation || ('jobPortal.notSpecified' | translate) }}</div>
         <div class="flex flex-wrap gap-2 my-2" *ngIf="job.skills">
           <span class="tag" *ngFor="let skill of job.skills.split(',').slice(0, 4)">{{ skill.trim() }}</span>
         </div>

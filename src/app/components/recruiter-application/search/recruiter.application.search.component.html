@@ -12,8 +12,8 @@
             <input id="filterRecruiterFullName" type="text" pInputText formControlName="fullName_like" (keyup.enter)="search(dt)" />
           </div>
           <div class="col-12 md:col-4 flex flex-column gap-2">
-            <label for="filterRecruiterCompanyName">{{ 'recruiterApplication.companyName' | translate }}</label>
-            <input id="filterRecruiterCompanyName" type="text" pInputText formControlName="companyName_like" (keyup.enter)="search(dt)" />
+            <label for="filterRecruiterOrganizationName">{{ 'recruiterApplication.organizationName' | translate }}</label>
+            <input id="filterRecruiterOrganizationName" type="text" pInputText formControlName="organizationName_like" (keyup.enter)="search(dt)" />
           </div>
           <div class="col-12 md:col-4 flex flex-column gap-2">
             <label for="filterRecruiterStatus">{{ 'common.status' | translate }}</label>
@@ -36,7 +36,7 @@
         <ng-template pTemplate="header">
           <tr>
             <th>{{ 'recruiterApplication.fullName' | translate }}</th>
-            <th>{{ 'recruiterApplication.companyName' | translate }}</th>
+            <th>{{ 'recruiterApplication.organizationName' | translate }}</th>
             <th>{{ 'recruiterApplication.email' | translate }}</th>
             <th>{{ 'common.status' | translate }}</th>
             <th>{{ 'recruiterApplication.submittedOn' | translate }}</th>
@@ -45,7 +45,7 @@
         <ng-template pTemplate="body" let-application>
           <tr class="selectable-row" [pSelectableRow]="application">
             <td>{{ application.fullName }}</td>
-            <td>{{ application.companyName }}</td>
+            <td>{{ application.organizationName }}</td>
             <td>{{ application.email }}</td>
             <td><span class="tag">{{ ('recruiterApplication.status' + application.status.charAt(0) + application.status.slice(1).toLowerCase()) | translate }}</span></td>
             <td>{{ application.createdOn | date:'dd-MM-yyyy HH:mm' }}</td>

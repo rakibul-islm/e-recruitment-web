@@ -36,7 +36,7 @@ export class RecruiterApplicationSearchComponent extends BaseComponent implement
   prepareForm(): void {
     this.filterForm = this.formBuilder.group({
       fullName_like: [''],
-      companyName_like: [''],
+      organizationName_like: [''],
       status: ['PENDING']
     });
   }

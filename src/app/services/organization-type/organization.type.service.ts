@@ -7,17 +7,17 @@ import { API_URLS } from '../utility/constants/api.urls';
 @Injectable({
   providedIn: 'root'
 })
-export class CompanyTypeService extends BaseService {
+export class OrganizationTypeService extends BaseService {
 
   constructor(http: HttpClient) {
     super(http);
   }
 
   public list(): Observable<any> {
-    return super.get(API_URLS.FILTER_COMPANY_TYPE, new Map().set('isPageable', false));
+    return super.get(API_URLS.FILTER_ORGANIZATION_TYPE, new Map().set('isPageable', false));
   }
 
   public create(name: string): Observable<any> {
-    return super.post(API_URLS.CREATE_COMPANY_TYPE, { name });
+    return super.post(API_URLS.CREATE_ORGANIZATION_TYPE, { name });
   }
 }

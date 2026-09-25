@@ -62,9 +62,9 @@
         <div class="grid align-items-center">
           <div class="col-12 md:col-4">
             <p-floatLabel>
-              <p-dropdown id="userCompany" [options]="companies" formControlName="companyId"
+              <p-dropdown id="userOrganization" [options]="organizations" formControlName="organizationId"
                 optionLabel="name" optionValue="id" styleClass="w-full" [filter]="true" [showClear]="true"></p-dropdown>
-              <label for="userCompany">{{ 'user.company' | translate }}</label>
+              <label for="userOrganization">{{ 'user.organization' | translate }}</label>
             </p-floatLabel>
           </div>
           <div class="col-12 md:col-4">

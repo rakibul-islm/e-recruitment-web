@@ -2,7 +2,7 @@
   <p-button *ngIf="test.status === 'DRAFT'" [label]="'mcqTest.activate' | translate" icon="pi pi-check" styleClass="p-button-success" (onClick)="changeStatus('ACTIVE')"></p-button>
   <p-button *ngIf="test.status === 'ACTIVE'" [label]="'mcqTest.archive' | translate" icon="pi pi-ban" styleClass="p-button-warning" (onClick)="changeStatus('ARCHIVED')"></p-button>
   <p-button *appPermissionHide="'mcq-test-manage'" [label]="'common.edit' | translate" icon="pi pi-pencil" [routerLink]="['/mcq-tests', testId, 'edit']"></p-button>
-  <p-button *appPermissionHide="'mcq-test-delete'" [label]="'company.removeButton' | translate" icon="pi pi-trash" styleClass="p-button-danger" (onClick)="removeTest()"></p-button>
+  <p-button *appPermissionHide="'mcq-test-delete'" [label]="'organization.removeButton' | translate" icon="pi pi-trash" styleClass="p-button-danger" (onClick)="removeTest()"></p-button>
   <p-button [label]="'common.back' | translate" icon="pi pi-arrow-left" styleClass="p-button-secondary" (onClick)="goBack()"></p-button>
 </app-page-header>
 

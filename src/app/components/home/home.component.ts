@@ -5,7 +5,7 @@ import { BaseComponent } from '../base.component';
 import { AuthService } from '../../services/utility/security/auth.service';
 import { JobPostingService } from '../../services/job-posting/job.posting.service';
 import { JobPosting } from '../../services/job-posting/domain/job.posting.domain';
-import { CompanyService } from '../../services/company/company.service';
+import { OrganizationService } from '../../services/organization/organization.service';
 
 const FEATURED_JOBS_LIMIT = 6;
 
@@ -18,13 +18,13 @@ export class HomeComponent extends BaseComponent implements OnInit {
   searchForm!: FormGroup;
   featuredJobs: JobPosting[] = [];
   openJobsCount = 0;
-  companiesCount = 0;
+  organizationsCount = 0;
 
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private jobPostingService: JobPostingService,
-    private companyService: CompanyService,
+    private organizationService: OrganizationService,
     private router: Router
   ) {
     super();
@@ -64,9 +64,9 @@ export class HomeComponent extends BaseComponent implements OnInit {
       this.openJobsCount = response?.page?.totalElements || 0;
     });
 
-    const companiesParams = new Map<any, any>().set('isPageable', true).set('page', 0).set('size', 1);
-    this.subscribers.companiesCountSub = this.companyService.searchCompanies(companiesParams).subscribe(response => {
-      this.companiesCount = response?.page?.totalElements || 0;
+    const organizationsParams = new Map<any, any>().set('isPageable', true).set('page', 0).set('size', 1);
+    this.subscribers.organizationsCountSub = this.organizationService.searchOrganizations(organizationsParams).subscribe(response => {
+      this.organizationsCount = response?.page?.totalElements || 0;
     });
   }
 

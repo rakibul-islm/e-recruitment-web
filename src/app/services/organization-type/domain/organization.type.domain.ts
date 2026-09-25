@@ -1,4 +1,4 @@
-export class CompanyType {
+export class OrganizationType {
     id!: number;
     name!: string;
 }

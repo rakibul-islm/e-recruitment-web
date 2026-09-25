@@ -13,7 +13,7 @@ export class NotificationService {
     private translate: TranslateService
   ) {}
 
-  // `message` is an i18n key (e.g. "company.createSuccess"), translated here so callers never need
+  // `message` is an i18n key (e.g. "organization.createSuccess"), translated here so callers never need
   // to inject TranslateService just to resolve a toast string. `params` interpolates into the key
   // (e.g. { count: 3 }). A plain, already-resolved string (a server error message, say) also works
   // unchanged - translate.instant() falls back to returning its input as-is when it isn't a known key.

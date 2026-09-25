@@ -17,7 +17,7 @@ function job(id: number, overrides: Partial<JobPosting> = {}): JobPosting {
   return {
     id,
     jobTitle: 'Senior Java Developer',
-    companyName: 'Acme Ltd',
+    organizationName: 'Acme Ltd',
     jobLocation: 'Dhaka',
     skills: 'Java,Spring Boot,SQL',
     employmentStatus: 'Full-time',
@@ -28,9 +28,9 @@ function job(id: number, overrides: Partial<JobPosting> = {}): JobPosting {
 
 const UNEVEN_JOBS: JobPosting[] = [
   job(1),
-  job(2, { jobTitle: 'QA', companyName: 'Tiny Co', jobLocation: '', skills: '', employmentStatus: '' }),
+  job(2, { jobTitle: 'QA', organizationName: 'Tiny Co', jobLocation: '', skills: '', employmentStatus: '' }),
   job(3, { jobTitle: 'Principal Distributed Systems Engineer for the Global Payments Platform and Reconciliation Services',
-    companyName: 'Bangladesh International Financial Technology Holdings Limited', jobLocation: 'Chattogram Export Processing Zone, Bangladesh', skills: 'Go' }),
+    organizationName: 'Bangladesh International Financial Technology Holdings Limited', jobLocation: 'Chattogram Export Processing Zone, Bangladesh', skills: 'Go' }),
   job(4, { jobTitle: 'Support Engineer', skills: 'Linux', employmentStatus: '' }),
   job(5, { jobTitle: 'Product Designer', skills: 'Figma,Sketch,Prototyping,User Research,Accessibility,Design Systems' }),
   job(6, { jobTitle: 'Data Analyst', skills: '', employmentStatus: 'Part-time' }),
@@ -98,7 +98,7 @@ describe('JobPortalSearchComponent card layout', () => {
   it('lets a very long title wrap inside its card instead of overflowing it', () => {
     cards().forEach(card => {
       expect(rect(card, '.job-card-title').right).toBeLessThanOrEqual(card.getBoundingClientRect().right);
-      expect(rect(card, '.job-card-company').right).toBeLessThanOrEqual(card.getBoundingClientRect().right);
+      expect(rect(card, '.job-card-organization').right).toBeLessThanOrEqual(card.getBoundingClientRect().right);
     });
   });
 });

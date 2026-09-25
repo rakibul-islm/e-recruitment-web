@@ -1,0 +1,52 @@
+<app-page-header [title]="'organization.searchTitle' | translate">
+  <ng-container *appPermissionHide="'organization-manage'">
+    <p-button *ngIf="!isOrganizationScoped" [label]="'organization.createButton' | translate" icon="pi pi-plus" (onClick)="createOrganization()"></p-button>
+  </ng-container>
+  <p-button [label]="'common.back' | translate" icon="pi pi-arrow-left" styleClass="p-button-secondary" (onClick)="goToDashboard()"></p-button>
+</app-page-header>
+
+<div class="p-3">
+  <p-accordion [(activeIndex)]="activeTabIndex">
+    <p-accordionTab *ngIf="!isOrganizationScoped" [header]="'common.search' | translate">
+      <div [formGroup]="filterForm">
+        <div class="grid">
+          <div class="col-12 md:col-4 flex flex-column gap-2">
+            <label for="filterOrganizationName">{{ 'organization.organizationName' | translate }}</label>
+            <input id="filterOrganizationName" type="text" pInputText class="w-full" formControlName="name_like" />
+          </div>
+        </div>
+        <div class="search-actions">
+          <p-button [label]="'common.search' | translate" icon="pi pi-search" (onClick)="search(dt)"></p-button>
+          <p-button [label]="'common.clear' | translate" icon="pi pi-times" styleClass="p-button-outlined p-button-secondary" (onClick)="clearFilters()"></p-button>
+        </div>
+      </div>
+    </p-accordionTab>
+
+    <p-accordionTab [header]="'organization.listTab' | translate">
+      <p-table #dt [value]="organizations" [lazy]="true" (onLazyLoad)="fetchOrganizations($event)" [paginator]="true"
+        [rows]="rows" [totalRecords]="totalRecords" [loading]="loading" [rowsPerPageOptions]="[10, 20, 50]"
+        responsiveLayout="scroll" dataKey="id" selectionMode="single" [(selection)]="selectedOrganization"
+        (onRowSelect)="viewOrganization($event.data)">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>{{ 'common.name' | translate }}</th>
+            <th>{{ 'organization.sector' | translate }}</th>
+            <th>{{ 'organization.website' | translate }}</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-organization>
+          <tr class="selectable-row" [pSelectableRow]="organization">
+            <td>{{ organization.name }}</td>
+            <td>{{ organization.sector }}</td>
+            <td>{{ organization.website }}</td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="3" class="text-center">{{ 'organization.noneFound' | translate }}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </p-accordionTab>
+  </p-accordion>
+</div>

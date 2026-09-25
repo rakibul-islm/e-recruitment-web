@@ -8,13 +8,13 @@ export const JOB_STATUS_OPTIONS = [
 export class JobPosting {
     id!: number;
     jobTitle!: string;
-    companyId?: number;
-    companyName?: string;
-    companyAddress?: string;
-    companyPhone?: string;
-    companyEmail?: string;
-    companyWebsite?: string;
-    companyBusiness?: string;
+    organizationId?: number;
+    organizationName?: string;
+    organizationAddress?: string;
+    organizationPhone?: string;
+    organizationEmail?: string;
+    organizationWebsite?: string;
+    organizationBusiness?: string;
     applicationDeadLine!: Date | string;
     vacancy!: number;
     experience?: string;
@@ -35,13 +35,13 @@ export class JobPosting {
 export class JobPostingRequest {
     id?: number;
     jobTitle!: string;
-    companyId?: number;
-    companyName?: string;
-    companyAddress?: string;
-    companyPhone?: string;
-    companyEmail?: string;
-    companyWebsite?: string;
-    companyBusiness?: string;
+    organizationId?: number;
+    organizationName?: string;
+    organizationAddress?: string;
+    organizationPhone?: string;
+    organizationEmail?: string;
+    organizationWebsite?: string;
+    organizationBusiness?: string;
     applicationDeadLine!: Date | string;
     vacancy!: number;
     experience?: string;

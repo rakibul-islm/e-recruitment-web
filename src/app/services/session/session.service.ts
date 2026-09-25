@@ -3,13 +3,16 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { BaseService } from '../base.service';
 import { API_URLS } from '../utility/constants/api.urls';
+import { openEventStream } from '../utility/event.stream';
+import { AuthService } from '../utility/security/auth.service';
+import { SessionSummary } from './domain/session.domain';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SessionService extends BaseService {
 
-  constructor(http: HttpClient) {
+  constructor(http: HttpClient, private authService: AuthService) {
     super(http);
   }
 
@@ -19,6 +22,13 @@ export class SessionService extends BaseService {
 
   public getSummary(): Observable<any> {
     return super.get(API_URLS.SESSION_SUMMARY);
+  }
+
+  public streamSummary(): Observable<SessionSummary> {
+    return new Observable<SessionSummary>(subscriber => openEventStream(API_URLS.SESSION_STREAM, this.authService.getToken(), (event) => {
+      if (event.event !== 'presence' || !event.data) { return; }
+      try { subscriber.next(JSON.parse(event.data)); } catch { /* ignore malformed frame */ }
+    }));
   }
 
   public findSessionById(id: number): Observable<any> {
