@@ -9,8 +9,8 @@ import { CommonConfirmDialogService } from '../../../../services/utility/common.
 import { UserAccount } from '../../../../services/user/domain/user.domain';
 import { Role } from '../../../../services/role/domain/role.domain';
 import { UserGroup } from '../../../../services/user-group/domain/user.group.domain';
-import { CompanyService } from '../../../../services/company/company.service';
-import { Company } from '../../../../services/company/domain/company.domain';
+import { OrganizationService } from '../../../../services/organization/organization.service';
+import { Organization } from '../../../../services/organization/domain/organization.domain';
 
 @Component({
   selector: 'app-user-form',
@@ -20,7 +20,7 @@ export class UserFormComponent extends BaseComponent implements OnInit {
   userForm!: FormGroup;
   roles: Role[] = [];
   userGroups: UserGroup[] = [];
-  companies: Company[] = [];
+  organizations: Organization[] = [];
   userId?: number;
   availableRoles: Role[] = [];
   assignedRoles: Role[] = [];
@@ -32,7 +32,7 @@ export class UserFormComponent extends BaseComponent implements OnInit {
     private userService: UserService,
     private roleService: RoleService,
     private userGroupService: UserGroupService,
-    private companyService: CompanyService,
+    private organizationService: OrganizationService,
     private commonConfirmDialogService: CommonConfirmDialogService
   ) {
     super();
@@ -41,7 +41,7 @@ export class UserFormComponent extends BaseComponent implements OnInit {
   ngOnInit(): void {
     this.fetchRoles();
     this.fetchUserGroups();
-    this.fetchCompanies();
+    this.fetchOrganizations();
 
     this.subscribers.paramMapSub = this.route.paramMap.subscribe(paramMap => {
       this.userId = Number(paramMap.get('id'));
@@ -63,7 +63,7 @@ export class UserFormComponent extends BaseComponent implements OnInit {
       expiryDate: [formData.expiryDate ? new Date(formData.expiryDate) : null, Validators.required],
       roleIds: [formData.roles ? formData.roles.map(role => role.id) : []],
       userGroupId: [formData.userGroupId ?? null],
-      companyId: [formData.companyId ?? null]
+      organizationId: [formData.organizationId ?? null]
     });
 
     this.subscribers.userGroupChangeSub = this.userForm.get('userGroupId')!.valueChanges
@@ -117,11 +117,11 @@ export class UserFormComponent extends BaseComponent implements OnInit {
     });
   }
 
-  fetchCompanies(): void {
+  fetchOrganizations(): void {
     const params = new Map<any, any>();
     params.set('isPageable', false);
-    this.subscribers.fetchCompaniesSub = this.companyService.searchCompanies(params).subscribe(response => {
-      this.companies = response?.list || [];
+    this.subscribers.fetchOrganizationsSub = this.organizationService.searchOrganizations(params).subscribe(response => {
+      this.organizations = response?.list || [];
     });
   }
 

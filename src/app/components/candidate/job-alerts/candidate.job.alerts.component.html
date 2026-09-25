@@ -35,7 +35,7 @@
 </div>
 
 <p-dialog [header]="'jobAlert.createNew' | translate" [(visible)]="createDialogVisible" [modal]="true"
-  [style]="{ width: '32rem' }" [breakpoints]="{ '575px': '95vw' }">
+  [style]="{ width: '32rem' }" [breakpoints]="{ '575px': '95vw' }" styleClass="branded-dialog">
   <form [formGroup]="alertForm" class="flex flex-column gap-3">
     <div class="flex flex-column gap-2">
       <label for="jobAlertKeyword">{{ 'jobPortal.keyword' | translate }}</label>

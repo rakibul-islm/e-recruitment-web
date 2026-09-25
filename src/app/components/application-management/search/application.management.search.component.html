@@ -45,7 +45,7 @@
       </div>
     </p-accordionTab>
 
-    <p-accordionTab [header]="'company.listTab' | translate">
+    <p-accordionTab [header]="'organization.listTab' | translate">
       <p-table #dt [value]="applications" [lazy]="true" (onLazyLoad)="fetchApplications($event)" [paginator]="true"
         [rows]="rows" [totalRecords]="totalRecords" [loading]="loading" [rowsPerPageOptions]="[10, 20, 50]"
         responsiveLayout="scroll" dataKey="id" selectionMode="single" [(selection)]="selectedApplication"
@@ -79,7 +79,7 @@
 </div>
 
 <p-dialog [header]="'applicationManagement.assignSelected' | translate" [(visible)]="bulkAssignDialogVisible" [modal]="true"
-  [style]="{ width: '28rem' }" [breakpoints]="{ '575px': '95vw' }">
+  [style]="{ width: '28rem' }" [breakpoints]="{ '575px': '95vw' }" styleClass="branded-dialog">
   <div [formGroup]="bulkAssignForm" class="flex flex-column gap-3">
     <p class="text-sm text-color-secondary m-0">{{ 'applicationManagement.assignToSelectedHint' | translate:{ count: selectedApplications.length } }}</p>
     <p-dropdown [options]="activeTestOptions" formControlName="mcqTestId" optionLabel="label" optionValue="value"

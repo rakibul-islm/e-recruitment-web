@@ -28,7 +28,7 @@
       </div>
     </p-accordionTab>
 
-    <p-accordionTab [header]="'company.listTab' | translate">
+    <p-accordionTab [header]="'organization.listTab' | translate">
       <p-table #dt [value]="jobPostings" [lazy]="true" (onLazyLoad)="fetchJobPostings($event)" [paginator]="true"
         [rows]="rows" [totalRecords]="totalRecords" [loading]="loading" [rowsPerPageOptions]="[10, 20, 50]"
         responsiveLayout="scroll" dataKey="id" selectionMode="single" [(selection)]="selectedJobPosting"
@@ -36,7 +36,7 @@
         <ng-template pTemplate="header">
           <tr>
             <th>{{ 'candidateApplication.jobTitle' | translate }}</th>
-            <th>{{ 'jobPortal.company' | translate }}</th>
+            <th>{{ 'jobPortal.organization' | translate }}</th>
             <th>{{ 'jobPortal.vacancy' | translate }}</th>
             <th>{{ 'jobPortal.deadline' | translate }}</th>
             <th>{{ 'common.status' | translate }}</th>
@@ -45,7 +45,7 @@
         <ng-template pTemplate="body" let-jobPosting>
           <tr class="selectable-row" [pSelectableRow]="jobPosting">
             <td>{{ jobPosting.jobTitle }}</td>
-            <td>{{ jobPosting.companyName }}</td>
+            <td>{{ jobPosting.organizationName }}</td>
             <td>{{ jobPosting.vacancy }}</td>
             <td>{{ jobPosting.applicationDeadLine | date:'dd-MM-yyyy' }}</td>
             <td><span class="tag">{{ jobPosting.status }}</span></td>

@@ -34,7 +34,7 @@ export class McqQuestionSearchComponent extends BaseComponent implements OnInit 
   ngOnInit(): void {
     this.prepareForm();
     this.registerFilterForm('mcq-question-search-filters', this.filterForm);
-    this.generateForm = this.formBuilder.group({ skillTag: ['', Validators.required], difficulty: [''], count: [5] });
+    this.generateForm = this.formBuilder.group({ skillTag: ['', Validators.required], difficulty: [null], count: [5] });
   }
 
   prepareForm(): void {

@@ -33,7 +33,7 @@
       </div>
     </p-accordionTab>
 
-    <p-accordionTab [header]="'company.listTab' | translate">
+    <p-accordionTab [header]="'organization.listTab' | translate">
       <p-table #dt [value]="questions" [lazy]="true" (onLazyLoad)="fetchQuestions($event)" [paginator]="true"
         [rows]="rows" [totalRecords]="totalRecords" [loading]="loading" [rowsPerPageOptions]="[10, 20, 50]"
         responsiveLayout="scroll" dataKey="id" selectionMode="single" [(selection)]="selectedQuestion"
@@ -67,12 +67,21 @@
 </div>
 
 <p-dialog [header]="'mcqQuestion.generateWithAi' | translate" [(visible)]="generateDialogVisible" [modal]="true"
-  [style]="{ width: '28rem' }" [breakpoints]="{ '575px': '95vw' }">
-  <div [formGroup]="generateForm" class="flex flex-column gap-3">
+  [style]="{ width: '28rem' }" [breakpoints]="{ '575px': '95vw' }" styleClass="branded-dialog">
+  <div [formGroup]="generateForm" class="flex flex-column gap-5">
     <p class="text-sm text-color-secondary m-0">{{ 'mcqQuestion.generateHint' | translate }}</p>
-    <input type="text" pInputText class="w-full" [placeholder]="'mcqQuestion.skillTagPlaceholder' | translate" formControlName="skillTag" />
-    <p-dropdown [options]="difficultyOptionsPlain" formControlName="difficulty" optionLabel="label" optionValue="value" styleClass="w-full" [placeholder]="'mcqQuestion.difficulty' | translate"></p-dropdown>
-    <input type="number" pInputText class="w-full" min="1" max="20" [placeholder]="'mcqQuestion.countPlaceholder' | translate" formControlName="count" />
+    <p-floatLabel>
+      <input id="generateSkillTag" type="text" pInputText class="w-full" formControlName="skillTag" />
+      <label for="generateSkillTag">{{ 'mcqQuestion.skillTag' | translate }}</label>
+    </p-floatLabel>
+    <p-floatLabel>
+      <p-dropdown id="generateDifficulty" [options]="difficultyOptionsPlain" formControlName="difficulty" optionLabel="label" optionValue="value" styleClass="w-full" appendTo="body"></p-dropdown>
+      <label for="generateDifficulty">{{ 'mcqQuestion.difficulty' | translate }}</label>
+    </p-floatLabel>
+    <p-floatLabel>
+      <input id="generateCount" type="number" pInputText class="w-full" min="1" max="20" formControlName="count" />
+      <label for="generateCount">{{ 'mcqQuestion.countPlaceholder' | translate }}</label>
+    </p-floatLabel>
   </div>
   <ng-template pTemplate="footer">
     <p-button [label]="'common.cancel' | translate" styleClass="p-button-outlined p-button-secondary" (onClick)="generateDialogVisible = false"></p-button>

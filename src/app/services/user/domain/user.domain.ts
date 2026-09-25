@@ -9,7 +9,7 @@ export class Profile {
     mobile!: string;
     imageBase64!: string;
     roles?: Role[];
-    companyId?: number;
+    organizationId?: number;
 }
 
 export class Register {
@@ -32,5 +32,5 @@ export class UserAccount {
     imageBase64!: string;
     roles?: Role[];
     userGroupId!: number;
-    companyId?: number;
+    organizationId?: number;
 }

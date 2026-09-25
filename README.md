@@ -17,11 +17,11 @@ A web client for the e-recruitment platform — built with Angular 17 and PrimeN
 
 ## Features
 
-- **Public job portal** — unauthenticated home page, job search/listing, and job detail view; recruiter sign-up (`/register/recruiter`) for companies wanting to post jobs
+- **Public job portal** — unauthenticated home page, job search/listing, and job detail view; recruiter sign-up (`/register/recruiter`) for organizations wanting to post jobs
 - **Authentication** — email/password login, Google Sign-In, OTP-verified sign-up, and OTP-based forgot/change/set-password flows
 - **Real-time notifications** — an unread-count badge and slide-out panel (`NotificationPanelComponent`) fed by a live SSE stream (`@microsoft/fetch-event-source`, since the API only reads auth from a Bearer header that native `EventSource` can't send), with a 5-minute poll as a fallback; toasts for a few urgent types, per-type icons/i18n, mark-as-read / mark-all-read / dismiss
 - **Candidate self-service** (`/my/...`) — CV-style profile view/edit, submitted applications with detail view, saved jobs, and job alerts
-- **Recruiting** — company CRUD, job posting CRUD, application management (review candidate applications against a posting), and a recruiter-application queue for approving companies that registered to recruit
+- **Recruiting** — organization CRUD, job posting CRUD, application management (review candidate applications against a posting), and a recruiter-application queue for approving organizations that registered to recruit
 - **Analytics dashboard** — permission-gated reporting view over recruiting activity
 - **Reports** — one screen per report (job posting, application, MCQ result, audit log), each independently permission-gated, with a dynamic filter form driven by a per-report field config, a PDF preview rendered in an iframe, and PDF/Excel download
 - **Role-based administration** — CRUD for users, roles, permissions, and user groups, with drag-and-drop assignment of permissions to roles and roles to users/groups
@@ -134,10 +134,10 @@ src/app/
 │   │   ├── application-detail/    Detail view of a single submitted application
 │   │   ├── saved-jobs/            Jobs the candidate has bookmarked
 │   │   └── job-alerts/            Candidate's saved search alerts
-│   ├── company/                   Recruiting: company CRUD (search / form / view)
+│   ├── organization/                   Recruiting: organization CRUD (search / form / view)
 │   ├── job-posting/               Recruiting: job posting CRUD (search / form / view)
 │   ├── application-management/    Recruiting: review applications received for a job posting (search / view)
-│   ├── recruiter-application/     Recruiting: approve/reject companies that self-registered to recruit (register / search / view)
+│   ├── recruiter-application/     Recruiting: approve/reject organizations that self-registered to recruit (register / search / view)
 │   ├── analytics/                 Permission-gated analytics/reporting dashboard
 │   ├── report/
 │   │   ├── generate/              Single generic component for all 4 report routes (route data.reportKey selects the ReportDefinition)
@@ -167,7 +167,7 @@ src/app/
 ├── services/
 │   ├── user/                      User/profile API service + domain models
 │   ├── candidate-profile/, application/, saved-job/, job-alert/,
-│   │   company/, company-type/, job-posting/, recruiter-application/,
+│   │   organization/, organization-type/, job-posting/, recruiter-application/,
 │   │   analytics/, interview/, offer/, onboarding/  Recruiting/candidate feature API services + domain models
 │   ├── report/                    ReportService (Jasper report generation) + ReportDefinition/ReportFieldDef config + one const per report
 │   ├── notification-center/       InAppNotificationService (poll + SSE stream, unread state), NotificationTextService (i18n resolution), domain models
@@ -218,10 +218,10 @@ src/assets/i18n/                   Translation files (en.json, bn.json)
 | `/reports/audit-logs`       | `ReportGenerateComponent`      | `AuthGuard`, `PermissionGuard` (`report-audit-log-list`) |
 | `/recruiter-applications`   | `RecruiterApplicationSearchComponent` | `AuthGuard`, `PermissionGuard` (`recruiter-application-list`) |
 | `/recruiter-applications/:id` | `RecruiterApplicationViewComponent` | `AuthGuard`, `PermissionGuard` (`recruiter-application-list`) |
-| `/companies`                | `CompanySearchComponent`       | `AuthGuard`, `PermissionGuard` (`company-list`) |
-| `/companies/create`         | `CompanyFormComponent`         | `AuthGuard`, `PermissionGuard` (`company-manage`) |
-| `/companies/:id/edit`       | `CompanyFormComponent`         | `AuthGuard`, `PermissionGuard` (`company-manage`) |
-| `/companies/:id`            | `CompanyViewComponent`         | `AuthGuard`, `PermissionGuard` (`company-list`) |
+| `/organizations`                | `OrganizationSearchComponent`       | `AuthGuard`, `PermissionGuard` (`organization-list`) |
+| `/organizations/create`         | `OrganizationFormComponent`         | `AuthGuard`, `PermissionGuard` (`organization-manage`) |
+| `/organizations/:id/edit`       | `OrganizationFormComponent`         | `AuthGuard`, `PermissionGuard` (`organization-manage`) |
+| `/organizations/:id`            | `OrganizationViewComponent`         | `AuthGuard`, `PermissionGuard` (`organization-list`) |
 | `/job-postings`             | `JobPostingSearchComponent`    | `AuthGuard`, `PermissionGuard` (`job-circular-list`) |
 | `/job-postings/create`      | `JobPostingFormComponent`      | `AuthGuard`, `PermissionGuard` (`job-circular-manage`) |
 | `/job-postings/:id/edit`    | `JobPostingFormComponent`      | `AuthGuard`, `PermissionGuard` (`job-circular-manage`) |

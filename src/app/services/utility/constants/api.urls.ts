@@ -75,14 +75,14 @@ export const API_URLS = {
     ARCHIVE_CONFIG_ARCHIVE_NOW: 'archive-config/:id/archive-now',
     FIND_ARCHIVE_CONFIG_ARCHIVED_DATA: 'archive-config/:id/archived-data',
 
-    FILTER_COMPANY: 'company/filter',
-    CREATE_COMPANY: 'company',
-    UPDATE_COMPANY: 'company',
-    FIND_COMPANY_BY_ID: 'company/:id',
-    REMOVE_COMPANY: 'company/:id',
+    FILTER_ORGANIZATION: 'organization/filter',
+    CREATE_ORGANIZATION: 'organization',
+    UPDATE_ORGANIZATION: 'organization',
+    FIND_ORGANIZATION_BY_ID: 'organization/:id',
+    REMOVE_ORGANIZATION: 'organization/:id',
 
-    FILTER_COMPANY_TYPE: 'company-type/filter',
-    CREATE_COMPANY_TYPE: 'company-type',
+    FILTER_ORGANIZATION_TYPE: 'organization-type/filter',
+    CREATE_ORGANIZATION_TYPE: 'organization-type',
 
     FILTER_JOB_POSTING: 'job-circular/filter',
     CREATE_JOB_POSTING: 'job-circular',

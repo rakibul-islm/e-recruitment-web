@@ -55,59 +55,69 @@
 
           <div class="col-12 md:col-6">
             <p-floatLabel>
-              <input id="recruiterCompanyName" type="text" formControlName="companyName" pInputText class="w-full" />
-              <label for="recruiterCompanyName">{{ 'recruiterApplication.companyName' | translate }}</label>
+              <input id="recruiterOrganizationName" type="text" formControlName="organizationName" pInputText class="w-full" />
+              <label for="recruiterOrganizationName">{{ 'recruiterApplication.organizationName' | translate }}</label>
             </p-floatLabel>
-            <small class="p-error" *ngIf="registerForm.controls['companyName'].touched && registerForm.controls['companyName'].errors?.['required']">
-              {{ 'recruiterApplication.companyNameRequired' | translate }}</small>
+            <small class="p-error" *ngIf="registerForm.controls['organizationName'].touched && registerForm.controls['organizationName'].errors?.['required']">
+              {{ 'recruiterApplication.organizationNameRequired' | translate }}</small>
           </div>
 
           <div class="col-12 md:col-6">
             <div class="flex gap-2 align-items-start">
               <p-floatLabel class="flex-1">
-                <p-dropdown id="recruiterCompanyIndustry" formControlName="companyIndustry" [options]="companyTypes" optionLabel="name" optionValue="name"
+                <p-dropdown id="recruiterOrganizationSector" formControlName="organizationSector" [options]="organizationTypes" optionLabel="name" optionValue="name"
                   [filter]="true" [showClear]="true" styleClass="w-full" appendTo="body"></p-dropdown>
-                <label for="recruiterCompanyIndustry">{{ 'company.industry' | translate }}</label>
+                <label for="recruiterOrganizationSector">{{ 'organization.sector' | translate }}</label>
               </p-floatLabel>
-              <p-button icon="pi pi-plus" styleClass="p-button-outlined" [pTooltip]="'company.addNewType' | translate" (onClick)="openNewTypeDialog()"></p-button>
+              <p-button icon="pi pi-plus" styleClass="p-button-outlined" [pTooltip]="'organization.addNewType' | translate" (onClick)="openNewTypeDialog()"></p-button>
             </div>
+            <small class="p-error" *ngIf="registerForm.controls['organizationSector'].touched && registerForm.controls['organizationSector'].errors?.['required']">
+              {{ 'recruiterApplication.organizationSectorRequired' | translate }}</small>
           </div>
 
           <div class="col-12 md:col-6">
             <p-floatLabel>
-              <input id="recruiterCompanyWebsite" type="text" formControlName="companyWebsite" pInputText class="w-full" />
-              <label for="recruiterCompanyWebsite">{{ 'recruiterApplication.companyWebsite' | translate }}</label>
+              <input id="recruiterOrganizationWebsite" type="text" formControlName="organizationWebsite" pInputText class="w-full" />
+              <label for="recruiterOrganizationWebsite">{{ 'recruiterApplication.organizationWebsite' | translate }}</label>
             </p-floatLabel>
           </div>
 
           <div class="col-12 md:col-6">
             <p-floatLabel>
-              <input id="recruiterCompanySize" type="text" formControlName="companySize" pInputText class="w-full" />
-              <label for="recruiterCompanySize">{{ 'company.size' | translate }}</label>
+              <input id="recruiterOrganizationSize" type="text" formControlName="organizationSize" pInputText class="w-full" />
+              <label for="recruiterOrganizationSize">{{ 'organization.size' | translate }}</label>
             </p-floatLabel>
           </div>
 
           <div class="col-12 md:col-6">
             <p-floatLabel>
-              <input id="recruiterCompanyAddress" type="text" formControlName="companyAddress" pInputText class="w-full" />
-              <label for="recruiterCompanyAddress">{{ 'recruiterApplication.companyAddress' | translate }}</label>
+              <input id="recruiterOrganizationAddress" type="text" formControlName="organizationAddress" pInputText class="w-full" />
+              <label for="recruiterOrganizationAddress">{{ 'recruiterApplication.organizationAddress' | translate }}</label>
             </p-floatLabel>
+            <small class="p-error" *ngIf="registerForm.controls['organizationAddress'].touched && registerForm.controls['organizationAddress'].errors?.['required']">
+              {{ 'recruiterApplication.organizationAddressRequired' | translate }}</small>
           </div>
 
           <div class="col-12 md:col-6">
             <p-floatLabel>
-              <input id="recruiterCompanyPhone" type="text" formControlName="companyPhone" pInputText class="w-full" />
-              <label for="recruiterCompanyPhone">{{ 'recruiterApplication.companyPhone' | translate }}</label>
+              <input id="recruiterOrganizationPhone" type="text" formControlName="organizationPhone" pInputText class="w-full" />
+              <label for="recruiterOrganizationPhone">{{ 'recruiterApplication.organizationPhone' | translate }}</label>
             </p-floatLabel>
+            <ng-container *ngIf="registerForm.controls['organizationPhone'].touched">
+              <small class="p-error" *ngIf="registerForm.controls['organizationPhone'].errors?.['required']">{{ 'recruiterApplication.organizationPhoneRequired' | translate }}</small>
+              <small class="p-error" *ngIf="registerForm.controls['organizationPhone'].errors?.['pattern']">{{ 'recruiterApplication.organizationPhoneInvalid' | translate }}</small>
+            </ng-container>
           </div>
 
           <div class="col-12 md:col-6">
             <p-floatLabel>
-              <input id="recruiterCompanyEmail" type="email" formControlName="companyEmail" pInputText class="w-full" />
-              <label for="recruiterCompanyEmail">{{ 'recruiterApplication.companyEmail' | translate }}</label>
+              <input id="recruiterOrganizationEmail" type="email" formControlName="organizationEmail" pInputText class="w-full" />
+              <label for="recruiterOrganizationEmail">{{ 'recruiterApplication.organizationEmail' | translate }}</label>
             </p-floatLabel>
-            <small class="p-error" *ngIf="registerForm.controls['companyEmail'].touched && registerForm.controls['companyEmail'].errors?.['email']">
-              {{ 'recruiterApplication.emailInvalid' | translate }}</small>
+            <ng-container *ngIf="registerForm.controls['organizationEmail'].touched">
+              <small class="p-error" *ngIf="registerForm.controls['organizationEmail'].errors?.['required']">{{ 'recruiterApplication.organizationEmailRequired' | translate }}</small>
+              <small class="p-error" *ngIf="registerForm.controls['organizationEmail'].errors?.['email']">{{ 'recruiterApplication.emailInvalid' | translate }}</small>
+            </ng-container>
           </div>
 
           <div class="col-12">
@@ -115,6 +125,8 @@
               <input id="recruiterJobTitle" type="text" formControlName="jobTitle" pInputText class="w-full" />
               <label for="recruiterJobTitle">{{ 'recruiterApplication.jobTitle' | translate }}</label>
             </p-floatLabel>
+            <small class="p-error" *ngIf="registerForm.controls['jobTitle'].touched && registerForm.controls['jobTitle'].errors?.['required']">
+              {{ 'recruiterApplication.jobTitleRequired' | translate }}</small>
           </div>
 
           <div class="col-12">
@@ -150,16 +162,16 @@
   </div>
 </div>
 
-<p-dialog [header]="'company.addNewType' | translate" [(visible)]="newTypeDialogVisible" [modal]="true"
-  [style]="{ width: '26rem' }" [breakpoints]="{ '575px': '95vw' }">
+<p-dialog [header]="'organization.addNewType' | translate" [(visible)]="newTypeDialogVisible" [modal]="true"
+  [style]="{ width: '26rem' }" [breakpoints]="{ '575px': '95vw' }" styleClass="branded-dialog">
   <div [formGroup]="newTypeForm" class="flex flex-column gap-2">
-    <label for="newRecruiterCompanyTypeName">{{ 'company.newTypeName' | translate }}</label>
-    <input id="newRecruiterCompanyTypeName" type="text" pInputText class="w-full" formControlName="name" />
+    <label for="newRecruiterOrganizationTypeName">{{ 'organization.newTypeName' | translate }}</label>
+    <input id="newRecruiterOrganizationTypeName" type="text" pInputText class="w-full" formControlName="name" />
     <small class="p-error" *ngIf="newTypeForm.controls['name'].touched && newTypeForm.controls['name'].errors?.['required']">
-      {{ 'company.newTypeNameRequired' | translate }}</small>
+      {{ 'organization.newTypeNameRequired' | translate }}</small>
   </div>
   <ng-template pTemplate="footer">
     <p-button [label]="'common.cancel' | translate" styleClass="p-button-outlined p-button-secondary" (onClick)="newTypeDialogVisible = false"></p-button>
-    <p-button [label]="'common.save' | translate" icon="pi pi-check" [loading]="savingType" (onClick)="createCompanyType()"></p-button>
+    <p-button [label]="'common.save' | translate" icon="pi pi-check" [loading]="savingType" (onClick)="createOrganizationType()"></p-button>
   </ng-template>
 </p-dialog>

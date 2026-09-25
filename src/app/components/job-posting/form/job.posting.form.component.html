@@ -23,9 +23,9 @@
           </div>
           <div class="col-12 md:col-6">
             <p-floatLabel>
-              <p-dropdown id="jobCompany" [options]="companyOptions" formControlName="companyId" optionLabel="label" optionValue="value"
+              <p-dropdown id="jobOrganization" [options]="organizationOptions" formControlName="organizationId" optionLabel="label" optionValue="value"
                 styleClass="w-full" appendTo="body" [filter]="true" filterBy="label"></p-dropdown>
-              <label for="jobCompany">{{ 'jobPortal.company' | translate }}</label>
+              <label for="jobOrganization">{{ 'jobPortal.organization' | translate }}</label>
             </p-floatLabel>
           </div>
           <div class="col-12 md:col-4">
@@ -122,30 +122,30 @@
           </div>
         </div>
 
-        <h3 class="form-section-title">{{ 'jobPosting.companyContact' | translate }}</h3>
+        <h3 class="form-section-title">{{ 'jobPosting.organizationContact' | translate }}</h3>
         <div class="grid row-gap-3">
           <div class="col-12 md:col-6">
             <p-floatLabel>
-              <input id="jobCompanyPhone" type="text" formControlName="companyPhone" pInputText class="w-full" />
-              <label for="jobCompanyPhone">{{ 'jobPosting.companyPhone' | translate }}</label>
+              <input id="jobOrganizationPhone" type="text" formControlName="organizationPhone" pInputText class="w-full" />
+              <label for="jobOrganizationPhone">{{ 'jobPosting.organizationPhone' | translate }}</label>
             </p-floatLabel>
           </div>
           <div class="col-12 md:col-6">
             <p-floatLabel>
-              <input id="jobCompanyEmail" type="text" formControlName="companyEmail" pInputText class="w-full" />
-              <label for="jobCompanyEmail">{{ 'jobPosting.companyEmail' | translate }}</label>
+              <input id="jobOrganizationEmail" type="text" formControlName="organizationEmail" pInputText class="w-full" />
+              <label for="jobOrganizationEmail">{{ 'jobPosting.organizationEmail' | translate }}</label>
             </p-floatLabel>
           </div>
           <div class="col-12 md:col-6">
             <p-floatLabel>
-              <input id="jobCompanyWebsite" type="text" formControlName="companyWebsite" pInputText class="w-full" />
-              <label for="jobCompanyWebsite">{{ 'jobPosting.companyWebsite' | translate }}</label>
+              <input id="jobOrganizationWebsite" type="text" formControlName="organizationWebsite" pInputText class="w-full" />
+              <label for="jobOrganizationWebsite">{{ 'jobPosting.organizationWebsite' | translate }}</label>
             </p-floatLabel>
           </div>
           <div class="col-12 md:col-6">
             <p-floatLabel>
-              <input id="jobCompanyAddress" type="text" formControlName="companyAddress" pInputText class="w-full" />
-              <label for="jobCompanyAddress">{{ 'jobPosting.companyAddress' | translate }}</label>
+              <input id="jobOrganizationAddress" type="text" formControlName="organizationAddress" pInputText class="w-full" />
+              <label for="jobOrganizationAddress">{{ 'jobPosting.organizationAddress' | translate }}</label>
             </p-floatLabel>
           </div>
         </div>

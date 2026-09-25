@@ -1,6 +1,6 @@
 export class WorkExperienceItem {
     title!: string;
-    companyName!: string;
+    organizationName!: string;
     location?: string;
     startDate?: Date | string;
     endDate?: Date | string;

@@ -3,10 +3,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BaseComponent } from '../../base.component';
 import { JobPostingService } from '../../../services/job-posting/job.posting.service';
-import { CompanyService } from '../../../services/company/company.service';
+import { OrganizationService } from '../../../services/organization/organization.service';
 import { CommonConfirmDialogService } from '../../../services/utility/common.confirm.dialog.service';
 import { JobPosting, JobPostingRequest, JOB_STATUS_OPTIONS } from '../../../services/job-posting/domain/job.posting.domain';
-import { Company } from '../../../services/company/domain/company.domain';
+import { Organization } from '../../../services/organization/domain/organization.domain';
 import { AuthService } from '../../../services/utility/security/auth.service';
 
 @Component({
@@ -16,19 +16,19 @@ import { AuthService } from '../../../services/utility/security/auth.service';
 export class JobPostingFormComponent extends BaseComponent implements OnInit {
   jobPostingForm!: FormGroup;
   jobPostingId?: number;
-  companyOptions: { label: string; value: number; website?: string; address?: string; phone?: string; email?: string }[] = [];
+  organizationOptions: { label: string; value: number; website?: string; address?: string; phone?: string; email?: string }[] = [];
   statusOptions = JOB_STATUS_OPTIONS;
   aiSuggesting = false;
-  // Set once from the logged-in user's own profile - a recruiter scoped to one company (backend
-  // enforces this regardless) gets the company field pre-filled and locked instead of a real choice.
-  scopedCompanyId: number | null = null;
+  // Set once from the logged-in user's own profile - a recruiter scoped to one organization (backend
+  // enforces this regardless) gets the organization field pre-filled and locked instead of a real choice.
+  scopedOrganizationId: number | null = null;
 
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private jobPostingService: JobPostingService,
-    private companyService: CompanyService,
+    private organizationService: OrganizationService,
     private authService: AuthService,
     private commonConfirmDialogService: CommonConfirmDialogService
   ) {
@@ -37,10 +37,10 @@ export class JobPostingFormComponent extends BaseComponent implements OnInit {
 
   ngOnInit(): void {
     this.subscribers.profileSub = this.authService.getProfileData().subscribe(profile => {
-      this.scopedCompanyId = profile?.companyId ?? null;
-      this.applyCompanyScope();
+      this.scopedOrganizationId = profile?.organizationId ?? null;
+      this.applyOrganizationScope();
     });
-    this.fetchCompanyOptions();
+    this.fetchOrganizationOptions();
 
     this.subscribers.paramMapSub = this.route.paramMap.subscribe(paramMap => {
       this.jobPostingId = Number(paramMap.get('id')) || undefined;
@@ -48,39 +48,39 @@ export class JobPostingFormComponent extends BaseComponent implements OnInit {
     });
   }
 
-  fetchCompanyOptions(): void {
-    this.subscribers.companyOptionsSub = this.companyService.searchCompanies(new Map().set('isPageable', false))
+  fetchOrganizationOptions(): void {
+    this.subscribers.organizationOptionsSub = this.organizationService.searchOrganizations(new Map().set('isPageable', false))
       .subscribe(response => {
-        const companies: Company[] = response?.list || [];
-        this.companyOptions = companies.map(c => ({ label: c.name, value: c.id, website: c.website, address: c.address, phone: c.phone, email: c.email }));
-        this.applyCompanyScope();
+        const organizations: Organization[] = response?.list || [];
+        this.organizationOptions = organizations.map(c => ({ label: c.name, value: c.id, website: c.website, address: c.address, phone: c.phone, email: c.email }));
+        this.applyOrganizationScope();
       });
   }
 
-  // Idempotent - safe to call again as profile/companyOptions/form each become available in any order.
-  applyCompanyScope(): void {
-    if (!this.scopedCompanyId || !this.jobPostingForm) { return; }
+  // Idempotent - safe to call again as profile/organizationOptions/form each become available in any order.
+  applyOrganizationScope(): void {
+    if (!this.scopedOrganizationId || !this.jobPostingForm) { return; }
 
-    const companyIdControl = this.jobPostingForm.get('companyId')!;
-    if (!companyIdControl.value) { companyIdControl.setValue(this.scopedCompanyId); }
+    const organizationIdControl = this.jobPostingForm.get('organizationId')!;
+    if (!organizationIdControl.value) { organizationIdControl.setValue(this.scopedOrganizationId); }
 
-    const company = this.companyOptions.find(c => c.value === this.scopedCompanyId);
-    if (company) {
-      this.jobPostingForm.get('companyName')!.setValue(company.label, { emitEvent: false });
-      this.jobPostingForm.get('companyWebsite')!.setValue(company.website || '', { emitEvent: false });
-      this.jobPostingForm.get('companyAddress')!.setValue(company.address || '', { emitEvent: false });
-      this.jobPostingForm.get('companyPhone')!.setValue(company.phone || '', { emitEvent: false });
-      this.jobPostingForm.get('companyEmail')!.setValue(company.email || '', { emitEvent: false });
+    const organization = this.organizationOptions.find(c => c.value === this.scopedOrganizationId);
+    if (organization) {
+      this.jobPostingForm.get('organizationName')!.setValue(organization.label, { emitEvent: false });
+      this.jobPostingForm.get('organizationWebsite')!.setValue(organization.website || '', { emitEvent: false });
+      this.jobPostingForm.get('organizationAddress')!.setValue(organization.address || '', { emitEvent: false });
+      this.jobPostingForm.get('organizationPhone')!.setValue(organization.phone || '', { emitEvent: false });
+      this.jobPostingForm.get('organizationEmail')!.setValue(organization.email || '', { emitEvent: false });
     }
 
-    companyIdControl.disable();
-    this.jobPostingForm.get('companyName')!.disable();
-    // The backend re-derives these from the recruiter's own Company record regardless (see
-    // JobCircularServiceImpl.applyOwnCompany), so leaving them editable here would just be confusing.
-    this.jobPostingForm.get('companyWebsite')!.disable();
-    this.jobPostingForm.get('companyAddress')!.disable();
-    this.jobPostingForm.get('companyPhone')!.disable();
-    this.jobPostingForm.get('companyEmail')!.disable();
+    organizationIdControl.disable();
+    this.jobPostingForm.get('organizationName')!.disable();
+    // The backend re-derives these from the recruiter's own Organization record regardless (see
+    // JobCircularServiceImpl.applyOwnOrganization), so leaving them editable here would just be confusing.
+    this.jobPostingForm.get('organizationWebsite')!.disable();
+    this.jobPostingForm.get('organizationAddress')!.disable();
+    this.jobPostingForm.get('organizationPhone')!.disable();
+    this.jobPostingForm.get('organizationEmail')!.disable();
   }
 
   prepareForm(formData?: JobPosting): void {
@@ -88,12 +88,12 @@ export class JobPostingFormComponent extends BaseComponent implements OnInit {
 
     this.jobPostingForm = this.formBuilder.group({
       jobTitle: [formData.jobTitle, Validators.required],
-      companyId: [formData.companyId],
-      companyName: [formData.companyName, Validators.required],
-      companyAddress: [formData.companyAddress],
-      companyPhone: [formData.companyPhone, Validators.required],
-      companyEmail: [formData.companyEmail, Validators.required],
-      companyWebsite: [formData.companyWebsite],
+      organizationId: [formData.organizationId],
+      organizationName: [formData.organizationName, Validators.required],
+      organizationAddress: [formData.organizationAddress],
+      organizationPhone: [formData.organizationPhone, Validators.required],
+      organizationEmail: [formData.organizationEmail, Validators.required],
+      organizationWebsite: [formData.organizationWebsite],
       applicationDeadLine: [formData.applicationDeadLine ? new Date(formData.applicationDeadLine) : null, Validators.required],
       vacancy: [formData.vacancy, [Validators.required, Validators.min(1)]],
       experience: [formData.experience],
@@ -111,19 +111,19 @@ export class JobPostingFormComponent extends BaseComponent implements OnInit {
       status: [formData.status || 'DRAFT', Validators.required]
     });
 
-    // Selecting a company fills in the contact fields it has on file.
-    this.subscribers.companyChangeSub = this.jobPostingForm.get('companyId')!.valueChanges.subscribe(companyId => {
-      const company = this.companyOptions.find(c => c.value === companyId);
-      if (company) {
-        this.jobPostingForm.get('companyName')!.setValue(company.label, { emitEvent: false });
-        this.jobPostingForm.get('companyWebsite')!.setValue(company.website || '', { emitEvent: false });
-        this.jobPostingForm.get('companyAddress')!.setValue(company.address || '', { emitEvent: false });
-        this.jobPostingForm.get('companyPhone')!.setValue(company.phone || '', { emitEvent: false });
-        this.jobPostingForm.get('companyEmail')!.setValue(company.email || '', { emitEvent: false });
+    // Selecting an organization fills in the contact fields it has on file.
+    this.subscribers.organizationChangeSub = this.jobPostingForm.get('organizationId')!.valueChanges.subscribe(organizationId => {
+      const organization = this.organizationOptions.find(c => c.value === organizationId);
+      if (organization) {
+        this.jobPostingForm.get('organizationName')!.setValue(organization.label, { emitEvent: false });
+        this.jobPostingForm.get('organizationWebsite')!.setValue(organization.website || '', { emitEvent: false });
+        this.jobPostingForm.get('organizationAddress')!.setValue(organization.address || '', { emitEvent: false });
+        this.jobPostingForm.get('organizationPhone')!.setValue(organization.phone || '', { emitEvent: false });
+        this.jobPostingForm.get('organizationEmail')!.setValue(organization.email || '', { emitEvent: false });
       }
     });
 
-    this.applyCompanyScope();
+    this.applyOrganizationScope();
   }
 
   fetchJobPosting(id: number): void {
@@ -169,7 +169,7 @@ export class JobPostingFormComponent extends BaseComponent implements OnInit {
 
     const context = {
       jobTitle,
-      companyName: this.jobPostingForm.get('companyName')!.value,
+      organizationName: this.jobPostingForm.get('organizationName')!.value,
       jobLocation: this.jobPostingForm.get('jobLocation')!.value,
       employmentStatus: this.jobPostingForm.get('employmentStatus')!.value,
       experience: this.jobPostingForm.get('experience')!.value,

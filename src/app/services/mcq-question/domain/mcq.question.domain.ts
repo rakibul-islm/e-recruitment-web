@@ -17,7 +17,7 @@ export class McqOption {
 
 export class McqQuestion {
     id!: number;
-    companyId?: number;
+    organizationId?: number;
     questionText!: string;
     skillTag?: string;
     difficulty!: string;

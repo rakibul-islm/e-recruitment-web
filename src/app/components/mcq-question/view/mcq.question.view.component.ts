@@ -38,7 +38,7 @@ export class McqQuestionViewComponent extends BaseComponent implements OnInit {
       this.subscribers.approveSub = this.mcqQuestionService.updateQuestion({ ...this.question, status: 'APPROVED' })
         .subscribe(() => {
           this.notificationService.sendSuccessMsg('mcqQuestion.approveSuccess');
-          this.fetchQuestion();
+          this.router.navigate(['/mcq-questions']);
         });
     });
   }

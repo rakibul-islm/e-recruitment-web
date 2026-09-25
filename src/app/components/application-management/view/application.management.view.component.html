@@ -177,7 +177,7 @@
 </div>
 
 <p-dialog [header]="'applicationManagement.scheduleInterview' | translate" [(visible)]="interviewDialogVisible" [modal]="true"
-  [style]="{ width: '32rem' }" [breakpoints]="{ '575px': '95vw' }">
+  [style]="{ width: '32rem' }" [breakpoints]="{ '575px': '95vw' }" styleClass="branded-dialog">
   <div [formGroup]="interviewForm" class="flex flex-column gap-3">
     <input type="text" pInputText class="w-full" [placeholder]="'applicationManagement.interviewTitlePlaceholder' | translate" formControlName="title" />
     <p-calendar [placeholder]="'applicationManagement.scheduledAt' | translate" formControlName="scheduledAt" [showTime]="true" dateFormat="dd-mm-yy" styleClass="w-full" appendTo="body"></p-calendar>
@@ -193,7 +193,7 @@
 </p-dialog>
 
 <p-dialog [header]="'applicationManagement.createOffer' | translate" [(visible)]="offerDialogVisible" [modal]="true"
-  [style]="{ width: '32rem' }" [breakpoints]="{ '575px': '95vw' }">
+  [style]="{ width: '32rem' }" [breakpoints]="{ '575px': '95vw' }" styleClass="branded-dialog">
   <div [formGroup]="offerForm" class="flex flex-column gap-3">
     <input type="text" pInputText class="w-full" [placeholder]="'applicationManagement.position' | translate" formControlName="position" />
     <input type="text" pInputText class="w-full" [placeholder]="'applicationManagement.salaryOfferedPlaceholder' | translate" formControlName="salaryOffered" />
@@ -208,7 +208,7 @@
 </p-dialog>
 
 <p-dialog [header]="'applicationManagement.addTask' | translate" [(visible)]="taskDialogVisible" [modal]="true"
-  [style]="{ width: '28rem' }" [breakpoints]="{ '575px': '95vw' }">
+  [style]="{ width: '28rem' }" [breakpoints]="{ '575px': '95vw' }" styleClass="branded-dialog">
   <div [formGroup]="taskForm" class="flex flex-column gap-3">
     <input type="text" pInputText class="w-full" [placeholder]="'applicationManagement.taskTitlePlaceholder' | translate" formControlName="title" />
     <textarea pInputTextarea class="w-full" rows="2" [placeholder]="'common.description' | translate" formControlName="description"></textarea>
@@ -221,7 +221,7 @@
 </p-dialog>
 
 <p-dialog [header]="'applicationManagement.assignTest' | translate" [(visible)]="assignTestDialogVisible" [modal]="true"
-  [style]="{ width: '28rem' }" [breakpoints]="{ '575px': '95vw' }">
+  [style]="{ width: '28rem' }" [breakpoints]="{ '575px': '95vw' }" styleClass="branded-dialog">
   <div [formGroup]="assignTestForm" class="flex flex-column gap-3">
     <p-dropdown [options]="activeTestOptions" formControlName="mcqTestId" optionLabel="label" optionValue="value"
       styleClass="w-full" [filter]="true" appendTo="body" [placeholder]="'applicationManagement.selectTest' | translate"></p-dropdown>
@@ -244,7 +244,7 @@
 </p-dialog>
 
 <p-dialog [header]="'applicationManagement.mcqBreakdown' | translate" [(visible)]="reviewDialogVisible" [modal]="true"
-  [style]="{ width: '36rem' }" [breakpoints]="{ '575px': '95vw' }">
+  [style]="{ width: '36rem' }" [breakpoints]="{ '575px': '95vw' }" styleClass="branded-dialog">
   <div *ngFor="let q of reviewQuestions; let i = index" class="mb-3 p-2" style="border-bottom:1px solid #f1f5f9;">
     <div class="mb-2"><strong>{{ i + 1 }}. {{ q.questionText }}</strong></div>
     <div *ngFor="let opt of q.options" class="flex align-items-center gap-2 mb-1 text-sm"

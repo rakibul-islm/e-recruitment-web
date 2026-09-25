@@ -1,0 +1,49 @@
+<app-page-header [title]="'organization.viewTitle' | translate">
+  <p-button *appPermissionHide="'organization-manage'" [label]="'common.edit' | translate" icon="pi pi-pencil" [routerLink]="['/organizations', organizationId, 'edit']"></p-button>
+  <ng-container *appPermissionHide="'organization-manage'">
+    <p-button *ngIf="!isOrganizationScoped" [label]="'organization.removeButton' | translate" icon="pi pi-trash" styleClass="p-button-danger" (onClick)="deleteOrganization()"></p-button>
+  </ng-container>
+  <p-button *appPermissionHide="'audit-log-list'" [label]="'auditLog.viewForEntity' | translate" icon="pi pi-history" styleClass="p-button-secondary" (onClick)="navigateToAuditLog(router, 'Organization', organizationId)"></p-button>
+  <p-button [label]="'common.back' | translate" icon="pi pi-arrow-left" styleClass="p-button-secondary" (onClick)="goBack()"></p-button>
+</app-page-header>
+
+<div class="flex justify-content-center mt-3 px-3">
+  <p-card class="page-card">
+    <table class="detail-table">
+      <tbody>
+        <tr>
+          <td class="detail-label">{{ 'common.name' | translate }}</td>
+          <td class="detail-value">{{ organization.name }}</td>
+        </tr>
+        <tr>
+          <td class="detail-label">{{ 'organization.sector' | translate }}</td>
+          <td class="detail-value">{{ organization.sector || ('common.notAvailable' | translate) }}</td>
+        </tr>
+        <tr>
+          <td class="detail-label">{{ 'organization.website' | translate }}</td>
+          <td class="detail-value">{{ organization.website || ('common.notAvailable' | translate) }}</td>
+        </tr>
+        <tr>
+          <td class="detail-label">{{ 'organization.phone' | translate }}</td>
+          <td class="detail-value">{{ organization.phone || ('common.notAvailable' | translate) }}</td>
+        </tr>
+        <tr>
+          <td class="detail-label">{{ 'organization.email' | translate }}</td>
+          <td class="detail-value">{{ organization.email || ('common.notAvailable' | translate) }}</td>
+        </tr>
+        <tr>
+          <td class="detail-label">{{ 'organization.size' | translate }}</td>
+          <td class="detail-value">{{ organization.size || ('common.notAvailable' | translate) }}</td>
+        </tr>
+        <tr>
+          <td class="detail-label">{{ 'organization.address' | translate }}</td>
+          <td class="detail-value">{{ organization.address || ('common.notAvailable' | translate) }}</td>
+        </tr>
+        <tr>
+          <td class="detail-label">{{ 'common.description' | translate }}</td>
+          <td class="detail-value">{{ organization.description || ('common.notAvailable' | translate) }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </p-card>
+</div>

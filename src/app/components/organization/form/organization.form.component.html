@@ -1,0 +1,83 @@
+<app-page-header [title]="(organizationId ? 'organization.formTitleUpdate' : 'organization.formTitleCreate') | translate">
+  <p-button [label]="'common.save' | translate" icon="pi pi-save" (onClick)="submit()"></p-button>
+  <p-button [label]="'common.back' | translate" icon="pi pi-arrow-left" styleClass="p-button-secondary" (onClick)="goBack()"></p-button>
+</app-page-header>
+
+<div class="flex justify-content-center mt-3 px-3">
+  <p-card class="page-card">
+    <form *ngIf="organizationForm" [formGroup]="organizationForm" (ngSubmit)="submit()">
+      <div class="flex flex-column gap-4 mt-3">
+        <div class="grid row-gap-3">
+          <div class="col-12 md:col-6">
+            <p-floatLabel>
+              <input id="organizationName" type="text" formControlName="name" pInputText class="w-full" />
+              <label for="organizationName">{{ 'organization.organizationName' | translate }}</label>
+            </p-floatLabel>
+            <small class="p-error" *ngIf="organizationForm.controls['name'].touched && organizationForm.controls['name'].errors?.['required']">
+              {{ 'organization.organizationNameRequired' | translate }}</small>
+          </div>
+          <div class="col-12 md:col-6">
+            <div class="flex gap-2 align-items-start">
+              <p-floatLabel class="flex-1">
+                <p-dropdown id="organizationSector" formControlName="sector" [options]="organizationTypes" optionLabel="name" optionValue="name"
+                  [filter]="true" [showClear]="true" styleClass="w-full" appendTo="body"></p-dropdown>
+                <label for="organizationSector">{{ 'organization.sector' | translate }}</label>
+              </p-floatLabel>
+              <p-button icon="pi pi-plus" styleClass="p-button-outlined" [pTooltip]="'organization.addNewType' | translate" (onClick)="openNewTypeDialog()"></p-button>
+            </div>
+          </div>
+          <div class="col-12 md:col-6">
+            <p-floatLabel>
+              <input id="organizationWebsite" type="text" formControlName="website" pInputText class="w-full" />
+              <label for="organizationWebsite">{{ 'organization.website' | translate }}</label>
+            </p-floatLabel>
+          </div>
+          <div class="col-12 md:col-6">
+            <p-floatLabel>
+              <input id="organizationSize" type="text" formControlName="size" pInputText class="w-full" />
+              <label for="organizationSize">{{ 'organization.size' | translate }}</label>
+            </p-floatLabel>
+          </div>
+          <div class="col-12 md:col-6">
+            <p-floatLabel>
+              <input id="organizationPhone" type="text" formControlName="phone" pInputText class="w-full" />
+              <label for="organizationPhone">{{ 'organization.phone' | translate }}</label>
+            </p-floatLabel>
+          </div>
+          <div class="col-12 md:col-6">
+            <p-floatLabel>
+              <input id="organizationEmail" type="text" formControlName="email" pInputText class="w-full" />
+              <label for="organizationEmail">{{ 'organization.email' | translate }}</label>
+            </p-floatLabel>
+          </div>
+          <div class="col-12">
+            <p-floatLabel>
+              <input id="organizationAddress" type="text" formControlName="address" pInputText class="w-full" />
+              <label for="organizationAddress">{{ 'organization.address' | translate }}</label>
+            </p-floatLabel>
+          </div>
+          <div class="col-12">
+            <p-floatLabel>
+              <textarea id="organizationDescription" pInputTextarea formControlName="description" class="w-full" rows="4"></textarea>
+              <label for="organizationDescription">{{ 'common.description' | translate }}</label>
+            </p-floatLabel>
+          </div>
+        </div>
+      </div>
+    </form>
+  </p-card>
+</div>
+
+<p-dialog [header]="'organization.addNewType' | translate" [(visible)]="newTypeDialogVisible" [modal]="true"
+  [style]="{ width: '26rem' }" [breakpoints]="{ '575px': '95vw' }" styleClass="branded-dialog">
+  <div [formGroup]="newTypeForm" class="flex flex-column gap-2">
+    <label for="newOrganizationTypeName">{{ 'organization.newTypeName' | translate }}</label>
+    <input id="newOrganizationTypeName" type="text" pInputText class="w-full" formControlName="name" />
+    <small class="p-error" *ngIf="newTypeForm.controls['name'].touched && newTypeForm.controls['name'].errors?.['required']">
+      {{ 'organization.newTypeNameRequired' | translate }}</small>
+  </div>
+  <ng-template pTemplate="footer">
+    <p-button [label]="'common.cancel' | translate" styleClass="p-button-outlined p-button-secondary" (onClick)="newTypeDialogVisible = false"></p-button>
+    <p-button [label]="'common.save' | translate" icon="pi pi-check" [loading]="savingType" (onClick)="createOrganizationType()"></p-button>
+  </ng-template>
+</p-dialog>

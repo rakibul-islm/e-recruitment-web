@@ -44,9 +44,9 @@ import { JobPortalViewComponent } from './components/job-portal/view/job.portal.
 import { CandidateProfileFormComponent } from './components/candidate/profile/candidate.profile.form.component';
 import { CandidateProfileViewComponent } from './components/candidate/profile/view/candidate.profile.view.component';
 import { CandidateApplicationsComponent } from './components/candidate/applications/candidate.applications.component';
-import { CompanySearchComponent } from './components/company/search/company.search.component';
-import { CompanyFormComponent } from './components/company/form/company.form.component';
-import { CompanyViewComponent } from './components/company/view/company.view.component';
+import { OrganizationSearchComponent } from './components/organization/search/organization.search.component';
+import { OrganizationFormComponent } from './components/organization/form/organization.form.component';
+import { OrganizationViewComponent } from './components/organization/view/organization.view.component';
 import { JobPostingSearchComponent } from './components/job-posting/search/job.posting.search.component';
 import { JobPostingFormComponent } from './components/job-posting/form/job.posting.form.component';
 import { JobPostingViewComponent } from './components/job-posting/view/job.posting.view.component';
@@ -131,25 +131,25 @@ const routes: Routes = [
     data: { routeName: 'recruiter-application-list' }
   },
 
-  { path: 'companies',
-    component: CompanySearchComponent,
+  { path: 'organizations',
+    component: OrganizationSearchComponent,
     canActivate: [AuthGuard, PermissionGuard],
-    data: { routeName: 'company-list' }
+    data: { routeName: 'organization-list' }
   },
-  { path: 'companies/create',
-    component: CompanyFormComponent,
+  { path: 'organizations/create',
+    component: OrganizationFormComponent,
     canActivate: [AuthGuard, PermissionGuard],
-    data: { routeName: 'company-manage' }
+    data: { routeName: 'organization-manage' }
   },
-  { path: 'companies/:id/edit',
-    component: CompanyFormComponent,
+  { path: 'organizations/:id/edit',
+    component: OrganizationFormComponent,
     canActivate: [AuthGuard, PermissionGuard],
-    data: { routeName: 'company-manage' }
+    data: { routeName: 'organization-manage' }
   },
-  { path: 'companies/:id',
-    component: CompanyViewComponent,
+  { path: 'organizations/:id',
+    component: OrganizationViewComponent,
     canActivate: [AuthGuard, PermissionGuard],
-    data: { routeName: 'company-list' }
+    data: { routeName: 'organization-list' }
   },
 
   { path: 'job-postings',

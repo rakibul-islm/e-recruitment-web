@@ -6,7 +6,7 @@ export const MCQ_TEST_STATUS_OPTIONS = [
 
 export class McqTest {
     id!: number;
-    companyId?: number;
+    organizationId?: number;
     name!: string;
     description?: string;
     durationMinutes!: number;

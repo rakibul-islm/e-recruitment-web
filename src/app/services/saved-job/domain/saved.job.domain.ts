@@ -3,6 +3,6 @@ export class SavedJob {
     jobCircularId!: number;
     savedOn!: Date | string;
     jobTitle?: string;
-    companyName?: string;
+    organizationName?: string;
     jobStatus?: string;
 }

@@ -66,7 +66,7 @@ export class CandidateProfileFormComponent extends BaseComponent implements OnIn
   buildWorkExperienceGroup(item: any = {}): FormGroup {
     return this.formBuilder.group({
       title: [item.title],
-      companyName: [item.companyName],
+      organizationName: [item.organizationName],
       location: [item.location],
       startDate: [item.startDate ? new Date(item.startDate) : null],
       endDate: [item.endDate ? new Date(item.endDate) : null],

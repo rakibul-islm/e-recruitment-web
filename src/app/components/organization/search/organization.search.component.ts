@@ -3,26 +3,26 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Table, TableLazyLoadEvent } from 'primeng/table';
 import { BaseComponent } from '../../base.component';
-import { CompanyService } from '../../../services/company/company.service';
-import { Company } from '../../../services/company/domain/company.domain';
+import { OrganizationService } from '../../../services/organization/organization.service';
+import { Organization } from '../../../services/organization/domain/organization.domain';
 import { AuthService } from '../../../services/utility/security/auth.service';
 
 @Component({
-  selector: 'app-company-search',
-  templateUrl: './company.search.component.html'
+  selector: 'app-organization-search',
+  templateUrl: './organization.search.component.html'
 })
-export class CompanySearchComponent extends BaseComponent implements OnInit {
-  companies: Company[] = [];
-  selectedCompany: Company | null = null;
-  // A recruiter scoped to one company (backend enforces this regardless) can't create additional
-  // companies - hide the button rather than let them hit the confirm-then-error round trip.
-  isCompanyScoped = false;
+export class OrganizationSearchComponent extends BaseComponent implements OnInit {
+  organizations: Organization[] = [];
+  selectedOrganization: Organization | null = null;
+  // A recruiter scoped to one organization (backend enforces this regardless) can't create additional
+  // organizations - hide the button rather than let them hit the confirm-then-error round trip.
+  isOrganizationScoped = false;
 
   filterForm!: FormGroup;
 
   constructor(
     private formBuilder: FormBuilder,
-    private companyService: CompanyService,
+    private organizationService: OrganizationService,
     private authService: AuthService,
     private router: Router
   ) {
@@ -31,10 +31,10 @@ export class CompanySearchComponent extends BaseComponent implements OnInit {
 
   ngOnInit(): void {
     this.subscribers.profileSub = this.authService.getProfileData().subscribe(profile => {
-      this.isCompanyScoped = !!profile?.companyId;
+      this.isOrganizationScoped = !!profile?.organizationId;
     });
     this.prepareForm();
-    this.registerFilterForm('company-search-filters', this.filterForm);
+    this.registerFilterForm('organization-search-filters', this.filterForm);
   }
 
   prepareForm(): void {
@@ -43,18 +43,18 @@ export class CompanySearchComponent extends BaseComponent implements OnInit {
     });
   }
 
-  fetchCompanies(event: TableLazyLoadEvent): void {
+  fetchOrganizations(event: TableLazyLoadEvent): void {
     this.loading = true;
     const params = this.buildSearchParams(this.filterForm, event);
 
-    this.subscribers.searchCompaniesSub = this.companyService.searchCompanies(params).subscribe({
+    this.subscribers.searchOrganizationsSub = this.organizationService.searchOrganizations(params).subscribe({
       next: (response) => {
-        this.companies = response?.page?.content || [];
+        this.organizations = response?.page?.content || [];
         this.totalRecords = response?.page?.totalElements || 0;
         this.loading = false;
         // The Search tab (index 0) is hidden entirely for a scoped recruiter, so Results is index
         // 0 there instead of the usual 1 - jumping to a nonexistent index 1 left nothing open.
-        this.activeTabIndex = this.isCompanyScoped ? 0 : 1;
+        this.activeTabIndex = this.isOrganizationScoped ? 0 : 1;
       },
       error: () => {
         this.loading = false;
@@ -64,20 +64,20 @@ export class CompanySearchComponent extends BaseComponent implements OnInit {
 
   search(table: Table): void {
     table.first = 0;
-    this.fetchCompanies({ first: 0, rows: this.rows });
+    this.fetchOrganizations({ first: 0, rows: this.rows });
   }
 
   clearFilters(): void {
     this.clearFilterForm(this.filterForm);
   }
 
-  createCompany(): void {
+  createOrganization(): void {
     this.clearFilters();
-    this.router.navigate(['/companies/create']);
+    this.router.navigate(['/organizations/create']);
   }
 
-  viewCompany(company: Company): void {
+  viewOrganization(organization: Organization): void {
     this.preserveFiltersOnNavigate();
-    this.router.navigate(['/companies', company.id]);
+    this.router.navigate(['/organizations', organization.id]);
   }
 }

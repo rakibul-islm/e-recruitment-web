@@ -8,7 +8,7 @@
     <div class="job-view-hero-info">
       <h1>{{ job.jobTitle }}</h1>
       <div class="job-view-hero-meta">
-        <span><i class="pi pi-building"></i> {{ job.companyName }}</span>
+        <span><i class="pi pi-building"></i> {{ job.organizationName }}</span>
         <span><i class="pi pi-map-marker"></i> {{ job.jobLocation || ('jobPortal.notSpecified' | translate) }}</span>
         <span *ngIf="job.employmentStatus"><i class="pi pi-briefcase"></i> {{ job.employmentStatus }}</span>
       </div>
@@ -94,22 +94,22 @@
       </p-card>
 
       <p-card class="page-card">
-        <h3 class="form-section-title">{{ 'jobPortal.company' | translate }}</h3>
-        <div class="job-company-name">{{ job.companyName }}</div>
-        <div class="job-company-detail" *ngIf="job.companyAddress"><i class="pi pi-map-marker"></i> {{ job.companyAddress }}</div>
-        <div class="job-company-detail" *ngIf="job.companyEmail"><i class="pi pi-envelope"></i> {{ job.companyEmail }}</div>
-        <div class="job-company-detail" *ngIf="job.companyWebsite"><i class="pi pi-globe"></i> {{ job.companyWebsite }}</div>
+        <h3 class="form-section-title">{{ 'jobPortal.organization' | translate }}</h3>
+        <div class="job-organization-name">{{ job.organizationName }}</div>
+        <div class="job-organization-detail" *ngIf="job.organizationAddress"><i class="pi pi-map-marker"></i> {{ job.organizationAddress }}</div>
+        <div class="job-organization-detail" *ngIf="job.organizationEmail"><i class="pi pi-envelope"></i> {{ job.organizationEmail }}</div>
+        <div class="job-organization-detail" *ngIf="job.organizationWebsite"><i class="pi pi-globe"></i> {{ job.organizationWebsite }}</div>
       </p-card>
     </div>
   </div>
 </div>
 
 <p-dialog [header]="('jobPortal.applyDialogTitle' | translate) + ' ' + job.jobTitle" [(visible)]="applyDialogVisible" [modal]="true"
-  [style]="{ width: '32rem' }" [breakpoints]="{ '575px': '95vw' }">
+  [style]="{ width: '32rem' }" [breakpoints]="{ '575px': '95vw' }" styleClass="branded-dialog">
   <div [formGroup]="applyForm" class="flex flex-column gap-3">
     <p>
       {{ 'jobPortal.applyDialogHintBefore' | translate }}
-      <a routerLink="/my/profile">{{ 'jobPortal.applyDialogHintLink' | translate }}</a>
+      <a routerLink="/my/profile" class="text-primary font-semibold">{{ 'jobPortal.applyDialogHintLink' | translate }}</a>
       {{ 'jobPortal.applyDialogHintAfter' | translate }}
     </p>
     <div class="flex flex-column gap-2">
