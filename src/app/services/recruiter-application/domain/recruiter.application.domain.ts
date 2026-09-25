@@ -12,7 +12,7 @@ export class RecruiterApplication {
     phone?: string;
     organizationName!: string;
     organizationWebsite?: string;
-    organizationSector?: string;
+    organizationType?: string;
     organizationSize?: string;
     organizationAddress?: string;
     organizationPhone?: string;
@@ -33,7 +33,7 @@ export class RecruiterApplicationRequest {
     phone?: string;
     organizationName!: string;
     organizationWebsite?: string;
-    organizationSector?: string;
+    organizationType?: string;
     organizationSize?: string;
     organizationAddress?: string;
     organizationPhone?: string;

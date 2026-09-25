@@ -11,7 +11,7 @@ import { OrganizationTypeService } from '../../../services/organization-type/org
 import { NotificationService } from '../../../services/utility/notification.service';
 
 const REQUIRED_FIELDS = [
-  'fullName', 'email', 'phone', 'organizationName', 'organizationSector',
+  'fullName', 'email', 'phone', 'organizationName', 'organizationType',
   'organizationAddress', 'organizationPhone', 'organizationEmail', 'jobTitle'
 ];
 
@@ -20,7 +20,7 @@ const VALID_VALUES = {
   email: 'nadia@acme.example.com',
   phone: '01700000000',
   organizationName: 'Acme Ltd',
-  organizationSector: 'Private Limited Company',
+  organizationType: 'Private Limited Company',
   organizationAddress: 'Dhaka',
   organizationPhone: '029999999',
   organizationEmail: 'hr@acme.example.com',
@@ -66,7 +66,7 @@ describe('RecruiterApplicationRegisterComponent required fields', () => {
 
     expect(service.submit).not.toHaveBeenCalled();
     const shown = Array.from<HTMLElement>(fixture.nativeElement.querySelectorAll('.p-error')).map(e => e.textContent!.trim());
-    ['fullNameRequired', 'emailRequired', 'phoneRequired', 'organizationNameRequired', 'organizationSectorRequired',
+    ['fullNameRequired', 'emailRequired', 'phoneRequired', 'organizationNameRequired', 'organizationTypeRequired',
       'organizationAddressRequired', 'organizationPhoneRequired', 'organizationEmailRequired', 'jobTitleRequired']
       .forEach(key => expect(shown).withContext(key).toContain('recruiterApplication.' + key));
   });

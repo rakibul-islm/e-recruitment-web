@@ -65,14 +65,14 @@
           <div class="col-12 md:col-6">
             <div class="flex gap-2 align-items-start">
               <p-floatLabel class="flex-1">
-                <p-dropdown id="recruiterOrganizationSector" formControlName="organizationSector" [options]="organizationTypes" optionLabel="name" optionValue="name"
+                <p-dropdown id="recruiterOrganizationType" formControlName="organizationType" [options]="organizationTypes" optionLabel="name" optionValue="name"
                   [filter]="true" [showClear]="true" styleClass="w-full" appendTo="body"></p-dropdown>
-                <label for="recruiterOrganizationSector">{{ 'organization.sector' | translate }}</label>
+                <label for="recruiterOrganizationType">{{ 'organization.organizationType' | translate }}</label>
               </p-floatLabel>
               <p-button icon="pi pi-plus" styleClass="p-button-outlined" [pTooltip]="'organization.addNewType' | translate" (onClick)="openNewTypeDialog()"></p-button>
             </div>
-            <small class="p-error" *ngIf="registerForm.controls['organizationSector'].touched && registerForm.controls['organizationSector'].errors?.['required']">
-              {{ 'recruiterApplication.organizationSectorRequired' | translate }}</small>
+            <small class="p-error" *ngIf="registerForm.controls['organizationType'].touched && registerForm.controls['organizationType'].errors?.['required']">
+              {{ 'recruiterApplication.organizationTypeRequired' | translate }}</small>
           </div>
 
           <div class="col-12 md:col-6">
