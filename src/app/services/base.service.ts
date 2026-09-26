@@ -38,8 +38,8 @@ export abstract class BaseService {
     return this.http.get(url, { responseType: 'blob', params });
   }
 
-  public post<T>(url: string, body: any): Observable<T> {
-    return this.http.post<T>(url, body);
+  public post<T>(url: string, body: any, context?: HttpContext): Observable<T> {
+    return this.http.post<T>(url, body, { context });
   }
 
   public put<T>(url: string, body: any): Observable<T> {

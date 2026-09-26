@@ -30,6 +30,9 @@
         <p class="text-center text-color-secondary">
           {{ 'mcqTestTaking.correctCount' | translate:{ correct: assignment.correctCount, total: assignment.totalCount } }}
         </p>
+        <p *ngIf="assignment.submittedVia === 'VIOLATION'" class="text-center text-red-600">
+          {{ 'mcqTestTaking.violation.endedNote' | translate }}
+        </p>
         <div class="text-center mt-3">
           <p-button [label]="'mcqTestTaking.backToApplication' | translate" icon="pi pi-arrow-left" (onClick)="backToApplication()"></p-button>
         </div>
@@ -68,4 +71,19 @@
     </ng-container>
 
   </ng-container>
+
+  <p-dialog [header]="'mcqTestTaking.violation.warningTitle' | translate" [visible]="!!violationWarning" [modal]="true"
+    [closable]="false" [closeOnEscape]="false" [draggable]="false" [style]="{ width: '28rem' }"
+    [breakpoints]="{ '575px': '95vw' }" styleClass="branded-dialog">
+    <ng-container *ngIf="violationWarning as warning">
+      <p class="m-0 mb-3"><strong>{{ 'mcqTestTaking.violation.type.' + warning.violationType | translate }}</strong></p>
+      <p class="m-0 mb-3">{{ 'mcqTestTaking.violation.count' | translate:{ count: warning.violationCount, limit: warning.limit } }}</p>
+      <p class="m-0 text-red-600">
+        {{ (warning.violationCount >= warning.limit ? 'mcqTestTaking.violation.lastWarning' : 'mcqTestTaking.violation.furtherWarning') | translate:{ remaining: warning.limit - warning.violationCount } }}
+      </p>
+    </ng-container>
+    <ng-template pTemplate="footer">
+      <p-button [label]="'mcqTestTaking.violation.understand' | translate" icon="pi pi-check" (onClick)="acknowledgeWarning()"></p-button>
+    </ng-template>
+  </p-dialog>
 </div>

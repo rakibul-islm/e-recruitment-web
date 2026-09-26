@@ -25,6 +25,17 @@ export class McqTestAssignment {
     candidateName?: string;
 }
 
+export const MCQ_VIOLATION_TYPES = ['TAB_HIDDEN', 'WINDOW_BLUR', 'FULLSCREEN_EXIT', 'COPY_OR_CUT', 'CONTEXT_MENU', 'BLOCKED_SHORTCUT'] as const;
+
+export type McqViolationType = typeof MCQ_VIOLATION_TYPES[number];
+
+export class McqViolationResult {
+    counted!: boolean;
+    violationCount!: number;
+    limit!: number;
+    action!: 'NONE' | 'WARNED' | 'TERMINATED';
+}
+
 export class McqAttemptOption {
     optionKey!: string;
     optionText!: string;

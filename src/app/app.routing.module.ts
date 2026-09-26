@@ -119,6 +119,11 @@ const routes: Routes = [
     canActivate: [AuthGuard, PermissionGuard],
     data: { routeName: 'report-audit-log-list', reportKey: 'audit-log' }
   },
+  { path: 'reports/mcq-violations',
+    component: ReportGenerateComponent,
+    canActivate: [AuthGuard, PermissionGuard],
+    data: { routeName: 'report-mcq-violation-list', reportKey: 'mcq-violation' }
+  },
 
   { path: 'recruiter-applications',
     component: RecruiterApplicationSearchComponent,

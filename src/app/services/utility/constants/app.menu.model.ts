@@ -39,6 +39,7 @@ export const MENU_ITEMS: AppMenuItem[] = [
       { label: 'menu.jobPostingReport', icon: 'pi pi-briefcase', routerLink: '/reports/job-postings', routeName: 'report-job-posting-list' },
       { label: 'menu.applicationReport', icon: 'pi pi-users', routerLink: '/reports/applications', routeName: 'report-application-list' },
       { label: 'menu.mcqResultReport', icon: 'pi pi-list-check', routerLink: '/reports/mcq-results', routeName: 'report-mcq-result-list' },
+      { label: 'menu.mcqViolationReport', icon: 'pi pi-exclamation-triangle', routerLink: '/reports/mcq-violations', routeName: 'report-mcq-violation-list' },
       { label: 'menu.auditLogReport', icon: 'pi pi-history', routerLink: '/reports/audit-logs', routeName: 'report-audit-log-list' }
     ]
   },

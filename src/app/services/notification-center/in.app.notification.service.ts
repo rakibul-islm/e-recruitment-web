@@ -130,7 +130,7 @@ export class InAppNotificationService extends BaseService {
   private connectStream(): void {
     this.closeStream = openEventStream(API_URLS.NOTIFICATION_STREAM, this.authService.getToken(), (event) => {
       if (event.event === 'force-logout') {
-        this.handleForceLogout();
+        this.handleForceLogout(this.parseLogoutReason(event.data));
         return;
       }
       if (event.event !== 'sync' || !event.data) { return; }
@@ -138,10 +138,20 @@ export class InAppNotificationService extends BaseService {
     });
   }
 
-  private handleForceLogout(): void {
+  private parseLogoutReason(data: string): string | undefined {
+    try { return JSON.parse(data)?.reason; } catch { return undefined; }
+  }
+
+  private handleForceLogout(reason?: string): void {
+    const violation = reason === 'mcq-violation';
+    if (violation && !this.authService.getToken()) { return; }
     this.reset();
     this.authService.logout();
-    this.toast.sendInfoMsg('session.forceLogoutNotice');
+    if (violation) {
+      this.toast.sendErrorMsg('mcqTestTaking.violation.terminatedNotice');
+    } else {
+      this.toast.sendInfoMsg('session.forceLogoutNotice');
+    }
     this.router.navigate(['/login']);
   }
 

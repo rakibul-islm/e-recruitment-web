@@ -29,11 +29,12 @@ export const NOTIFICATION_TYPE_ICONS: Record<string, string> = {
     JOB_ALERT_MATCH: 'pi-briefcase',
     INTERVIEW_REMINDER: 'pi-clock',
     MCQ_TEST_CLOSING: 'pi-clock',
+    MCQ_TEST_VIOLATION_TERMINATED: 'pi-exclamation-triangle',
     JOB_DEADLINE_SOON: 'pi-hourglass',
     ONBOARDING_TASK_DUE: 'pi-check-square',
     ADMIN_MESSAGE: 'pi-megaphone'
 };
 
-export const TOAST_NOTIFICATION_TYPES = ['OFFER_RECEIVED', 'INTERVIEW_SCHEDULED', 'MCQ_TEST_ASSIGNED'];
+export const TOAST_NOTIFICATION_TYPES = ['OFFER_RECEIVED', 'INTERVIEW_SCHEDULED', 'MCQ_TEST_ASSIGNED', 'MCQ_TEST_VIOLATION_TERMINATED'];
 
 export const DEFAULT_NOTIFICATION_ICON = 'pi-bell';

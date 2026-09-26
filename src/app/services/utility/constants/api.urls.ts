@@ -144,6 +144,7 @@ export const API_URLS = {
     ADVANCE_MCQ_ASSIGNMENT: 'mcq-test-assignment/:id/advance',
     ANSWER_MCQ_ASSIGNMENT: 'mcq-test-assignment/:id/answer',
     SUBMIT_MCQ_ASSIGNMENT: 'mcq-test-assignment/:id/submit',
+    MCQ_ASSIGNMENT_VIOLATION: 'mcq-test-assignment/:id/violation',
 
     GENERATE_REPORT: 'report/:reportKey/generate',
 

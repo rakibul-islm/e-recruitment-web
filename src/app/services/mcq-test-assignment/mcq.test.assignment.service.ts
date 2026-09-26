@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpContext } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { BaseService } from '../base.service';
 import { API_URLS } from '../utility/constants/api.urls';
+import { BACKGROUND_REQUEST } from '../utility/interceptors/http.context.tokens';
+import { McqViolationType } from './domain/mcq.test.assignment.domain';
 
 @Injectable({
   providedIn: 'root'
@@ -53,6 +55,11 @@ export class McqTestAssignmentService extends BaseService {
   public saveAnswer(id: number, body: any): Observable<any> {
     const url = this.createUrl(API_URLS.ANSWER_MCQ_ASSIGNMENT, { id });
     return super.put(url, body);
+  }
+
+  public reportViolation(id: number, violationType: McqViolationType, detail?: string): Observable<any> {
+    const url = this.createUrl(API_URLS.MCQ_ASSIGNMENT_VIOLATION, { id });
+    return super.post(url, { violationType, detail }, new HttpContext().set(BACKGROUND_REQUEST, true));
   }
 
   public submit(id: number): Observable<any> {
