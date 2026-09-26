@@ -71,6 +71,7 @@
     "jobPostingReport": "Job Posting Report",
     "applicationReport": "Application Report",
     "mcqResultReport": "MCQ Result Report",
+    "mcqViolationReport": "MCQ Violation Report",
     "auditLogReport": "Audit Log Report",
     "recruiterApplications": "Recruiter Applications",
     "administration": "Administration",
@@ -172,6 +173,10 @@
       "INTERVIEW_REMINDER": {
         "title": "Interview coming up",
         "message": "{{interviewTitle}} for {{jobTitle}} is on {{scheduledAt}}."
+      },
+      "MCQ_TEST_VIOLATION_TERMINATED": {
+        "title": "Test ended for violations",
+        "message": "{{candidateName}}'s {{testName}} test for {{jobTitle}} was ended and auto-submitted after {{violationCount}} violations."
       },
       "MCQ_TEST_CLOSING": {
         "title": "Test closing soon",
@@ -911,6 +916,29 @@
     "endBeforeStartError": "The exam window's close time must be after its open time."
   },
   "mcqTestTaking": {
+    "violation": {
+      "warningTitle": "Suspicious activity detected",
+      "count": "Violation {{count}} of {{limit}} allowed.",
+      "furtherWarning": "This has been recorded. {{remaining}} more allowed before your test is ended and you are logged out.",
+      "lastWarning": "This was your last allowed violation. The next one will end your test and log you out.",
+      "understand": "I understand, continue",
+      "terminatedNotice": "Your test was ended and you were logged out because of repeated violations.",
+      "endedNote": "This test was ended automatically because of repeated violations.",
+      "typeLabel": "Violation Type",
+      "actionLabel": "Action Taken",
+      "type": {
+        "TAB_HIDDEN": "Switched to another tab or minimized the window",
+        "WINDOW_BLUR": "Left the test window",
+        "FULLSCREEN_EXIT": "Exited full screen",
+        "COPY_OR_CUT": "Tried to copy or cut text",
+        "CONTEXT_MENU": "Opened the right-click menu",
+        "BLOCKED_SHORTCUT": "Used a blocked keyboard shortcut"
+      },
+      "action": {
+        "WARNED": "Warned",
+        "TERMINATED": "Test ended"
+      }
+    },
     "resultTitle": "Test Result",
     "passed": "Passed",
     "notPassed": "Not Passed",
@@ -941,6 +969,8 @@
     "applicationDescription": "Applications by job posting, status, and applied date range.",
     "mcqResultTitle": "MCQ Test Result Report",
     "mcqResultDescription": "Candidate MCQ scores and pass/fail results by test.",
+    "mcqViolationTitle": "MCQ Test Violation Report",
+    "mcqViolationDescription": "Suspicious behavior recorded during MCQ tests, with warnings and automatic terminations.",
     "auditLogTitle": "Audit Log Report",
     "auditLogDescription": "System and entity activity over a date range."
   },

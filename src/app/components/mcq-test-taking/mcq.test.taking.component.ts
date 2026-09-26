@@ -1,9 +1,16 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BaseComponent } from '../base.component';
 import { McqTestAssignmentService } from '../../services/mcq-test-assignment/mcq.test.assignment.service';
-import { McqAttemptQuestion, McqTestAssignment } from '../../services/mcq-test-assignment/domain/mcq.test.assignment.domain';
+import { McqAttemptQuestion, McqTestAssignment, McqViolationResult, McqViolationType } from '../../services/mcq-test-assignment/domain/mcq.test.assignment.domain';
 import { CommonConfirmDialogService } from '../../services/utility/common.confirm.dialog.service';
+import { AuthService } from '../../services/utility/security/auth.service';
+
+const BLOCKED_SHORTCUT_KEYS = ['a', 'c', 'x', 'p', 's', 'u'];
+
+interface ViolationWarning extends McqViolationResult {
+  violationType: McqViolationType;
+}
 
 @Component({
   selector: 'app-mcq-test-taking',
@@ -23,12 +30,15 @@ export class McqTestTakingComponent extends BaseComponent implements OnInit, OnD
   // deliberately no way to decrement this or re-render an earlier question once advanced past it.
   currentIndex = 0;
   startError: string | null = null;
+  terminated = false;
+  violationWarning: ViolationWarning | null = null;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private mcqTestAssignmentService: McqTestAssignmentService,
-    private commonConfirmDialogService: CommonConfirmDialogService
+    private commonConfirmDialogService: CommonConfirmDialogService,
+    private authService: AuthService
   ) {
     super();
   }
@@ -41,6 +51,77 @@ export class McqTestTakingComponent extends BaseComponent implements OnInit, OnD
   override ngOnDestroy(): void {
     if (document.fullscreenElement) { document.exitFullscreen(); }
     super.ngOnDestroy();
+  }
+
+  @HostListener('document:copy', ['$event'])
+  @HostListener('document:cut', ['$event'])
+  onCopyOrCut(event: Event): void {
+    event.preventDefault();
+    this.reportViolation('COPY_OR_CUT');
+  }
+
+  @HostListener('document:contextmenu', ['$event'])
+  onContextMenu(event: Event): void {
+    event.preventDefault();
+    this.reportViolation('CONTEXT_MENU');
+  }
+
+  @HostListener('document:dragstart', ['$event'])
+  blockDrag(event: Event): void {
+    event.preventDefault();
+  }
+
+  @HostListener('document:keydown', ['$event'])
+  onKeydown(event: KeyboardEvent): void {
+    if ((event.ctrlKey || event.metaKey) && BLOCKED_SHORTCUT_KEYS.includes(event.key.toLowerCase())) {
+      event.preventDefault();
+      this.reportViolation('BLOCKED_SHORTCUT', `${event.ctrlKey ? 'Ctrl' : 'Cmd'}+${event.key.toUpperCase()}`);
+    }
+  }
+
+  @HostListener('document:visibilitychange')
+  onVisibilityChange(): void {
+    if (document.hidden) { this.reportViolation('TAB_HIDDEN'); }
+  }
+
+  @HostListener('window:blur')
+  onWindowBlur(): void {
+    this.reportViolation('WINDOW_BLUR');
+  }
+
+  @HostListener('document:fullscreenchange')
+  onFullscreenChange(): void {
+    if (!document.fullscreenElement) { this.reportViolation('FULLSCREEN_EXIT'); }
+  }
+
+  private reportViolation(violationType: McqViolationType, detail?: string): void {
+    if (this.loadingTest || this.terminated || this.submitting || this.assignment.status !== 'IN_PROGRESS') { return; }
+    this.subscribers.violationSub = this.mcqTestAssignmentService.reportViolation(this.assignmentId, violationType, detail).subscribe({
+      next: (response) => this.handleViolationResult(violationType, response?.obj)
+    });
+  }
+
+  private handleViolationResult(violationType: McqViolationType, result?: McqViolationResult): void {
+    if (!result?.counted) { return; }
+    if (result.action === 'TERMINATED') {
+      this.endSessionAfterViolations();
+      return;
+    }
+    this.violationWarning = { violationType, ...result };
+  }
+
+  private endSessionAfterViolations(): void {
+    this.terminated = true;
+    this.violationWarning = null;
+    if (!this.authService.getToken()) { return; }
+    this.authService.logout();
+    this.notificationService.sendErrorMsg('mcqTestTaking.violation.terminatedNotice');
+    this.router.navigate(['/login']);
+  }
+
+  acknowledgeWarning(): void {
+    this.violationWarning = null;
+    this.requestFullscreen();
   }
 
   // Best-effort only: browsers require a live user gesture to grant fullscreen, and by the time

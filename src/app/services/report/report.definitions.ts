@@ -2,6 +2,7 @@ import { ReportDefinition } from './domain/report.definition';
 import { JOB_STATUS_OPTIONS } from '../job-posting/domain/job.posting.domain';
 import { APPLICATION_STATUS_OPTIONS } from '../application/domain/application.domain';
 import { API_URLS } from '../utility/constants/api.urls';
+import { MCQ_VIOLATION_TYPES } from '../mcq-test-assignment/domain/mcq.test.assignment.domain';
 
 export const JOB_POSTING_REPORT_DEFINITION: ReportDefinition = {
   key: 'job-posting',
@@ -95,9 +96,37 @@ export const AUDIT_LOG_REPORT_DEFINITION: ReportDefinition = {
   ]
 };
 
+export const MCQ_VIOLATION_REPORT_DEFINITION: ReportDefinition = {
+  key: 'mcq-violation',
+  titleKey: 'report.mcqViolationTitle',
+  icon: 'pi pi-exclamation-triangle',
+  fields: [
+    {
+      key: 'mcqTestId', type: 'async-dropdown', labelKey: 'applicationManagement.selectTest', options: [],
+      asyncOptions: { endpoint: API_URLS.FILTER_MCQ_TEST, labelField: 'name', valueField: 'id', params: new Map<any, any>().set('isPageable', false) }
+    },
+    {
+      key: 'violationType_eq', type: 'dropdown', labelKey: 'mcqTestTaking.violation.typeLabel', defaultValue: null, options: [
+        { label: 'jobPosting.statusAll', value: null },
+        ...MCQ_VIOLATION_TYPES.map(type => ({ label: `mcqTestTaking.violation.type.${type}`, value: type }))
+      ]
+    },
+    {
+      key: 'action_eq', type: 'dropdown', labelKey: 'mcqTestTaking.violation.actionLabel', defaultValue: null, options: [
+        { label: 'jobPosting.statusAll', value: null },
+        { label: 'mcqTestTaking.violation.action.WARNED', value: 'WARNED' },
+        { label: 'mcqTestTaking.violation.action.TERMINATED', value: 'TERMINATED' }
+      ]
+    },
+    { key: 'createdOn_gte', type: 'date', labelKey: 'report.dateFrom' },
+    { key: 'createdOn_lte', type: 'date', labelKey: 'report.dateTo' }
+  ]
+};
+
 export const REPORT_DEFINITIONS: Record<string, ReportDefinition> = {
   'job-posting': JOB_POSTING_REPORT_DEFINITION,
   'application': APPLICATION_REPORT_DEFINITION,
   'mcq-result': MCQ_RESULT_REPORT_DEFINITION,
-  'audit-log': AUDIT_LOG_REPORT_DEFINITION
+  'audit-log': AUDIT_LOG_REPORT_DEFINITION,
+  'mcq-violation': MCQ_VIOLATION_REPORT_DEFINITION
 };
