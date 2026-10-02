@@ -3,8 +3,6 @@ import { BaseComponent } from '../../base.component';
 import { SessionService } from '../../../services/session/session.service';
 import { GuestSession, SessionSummary, UserSession } from '../../../services/session/domain/session.domain';
 
-const DETAIL_PAGE_SIZE = 100;
-
 @Component({
   selector: 'app-session-presence-cards',
   templateUrl: './session.presence.cards.component.html'
@@ -13,9 +11,10 @@ export class SessionPresenceCardsComponent extends BaseComponent implements OnIn
   summary: SessionSummary = new SessionSummary();
 
   detailVisible = false;
-  detailMode: 'sessions' | 'guests' = 'sessions';
+  detailMode: 'sessions' | 'users' | 'guests' = 'sessions';
   detailLoading = false;
   activeSessions: UserSession[] = [];
+  onlineUsers: UserSession[] = [];
   guests: GuestSession[] = [];
 
   constructor(private sessionService: SessionService) {
@@ -27,12 +26,13 @@ export class SessionPresenceCardsComponent extends BaseComponent implements OnIn
       this.summary = response?.obj || new SessionSummary();
     });
     this.subscribers.summaryStreamSub = this.sessionService.streamSummary().subscribe(summary => {
+      const changed = this.hasCountChanged(summary);
       this.summary = summary;
-      if (this.detailVisible) { this.fetchDetail(); }
+      if (this.detailVisible && changed) { this.fetchDetail(); }
     });
   }
 
-  openDetail(mode: 'sessions' | 'guests'): void {
+  openDetail(mode: 'sessions' | 'users' | 'guests'): void {
     this.detailMode = mode;
     this.detailVisible = true;
     this.fetchDetail();
@@ -47,10 +47,22 @@ export class SessionPresenceCardsComponent extends BaseComponent implements OnIn
       });
       return;
     }
-    const params = new Map<any, any>([['page', 0], ['size', DETAIL_PAGE_SIZE], ['isPageable', true], ['status', 'ACTIVE']]);
-    this.subscribers.activeSessionsSub = this.sessionService.searchSessions(params).subscribe({
-      next: (response) => { this.activeSessions = response?.page?.content || []; this.detailLoading = false; },
+    if (this.detailMode === 'users') {
+      this.subscribers.onlineUsersSub = this.sessionService.getOnlineUsers().subscribe({
+        next: (response) => { this.onlineUsers = response?.list || []; this.detailLoading = false; },
+        error: () => { this.detailLoading = false; }
+      });
+      return;
+    }
+    this.subscribers.activeSessionsSub = this.sessionService.getActiveUsers().subscribe({
+      next: (response) => { this.activeSessions = response?.list || []; this.detailLoading = false; },
       error: () => { this.detailLoading = false; }
     });
+  }
+
+  private hasCountChanged(next: SessionSummary): boolean {
+    return next.activeSessions !== this.summary.activeSessions
+      || next.distinctActiveUsers !== this.summary.distinctActiveUsers
+      || next.activeGuests !== this.summary.activeGuests;
   }
 }

@@ -6,7 +6,7 @@
       <div class="summary-card-label">{{ 'session.activeSessions' | translate }}</div>
     </div>
   </div>
-  <div class="summary-card summary-card-clickable" tabindex="0" (click)="openDetail('sessions')" (keyup.enter)="openDetail('sessions')">
+  <div class="summary-card summary-card-clickable" tabindex="0" (click)="openDetail('users')" (keyup.enter)="openDetail('users')">
     <i class="pi pi-user"></i>
     <div>
       <div class="summary-card-value">{{ summary.distinctActiveUsers || 0 }}</div>
@@ -22,25 +22,27 @@
   </div>
 </div>
 
-<p-dialog [header]="(detailMode === 'guests' ? 'session.activeGuestsList' : 'session.activeSessionsList') | translate"
+<p-dialog [header]="(detailMode === 'guests' ? 'session.activeGuestsList' : detailMode === 'users' ? 'session.loggedInUsersList' : 'session.activeSessionsList') | translate"
   [(visible)]="detailVisible" [modal]="true" [style]="{ width: '75rem' }" [breakpoints]="{ '960px': '95vw' }"
   styleClass="branded-dialog" appendTo="body">
   <p-table *ngIf="detailMode === 'sessions'" [value]="activeSessions" [loading]="detailLoading" responsiveLayout="scroll" dataKey="id">
     <ng-template pTemplate="header">
       <tr>
         <th>{{ 'session.user' | translate }}</th>
+        <th>{{ 'session.sessionCount' | translate }}</th>
         <th>{{ 'session.ipAddress' | translate }}</th>
         <th>{{ 'session.city' | translate }}</th>
         <th>{{ 'session.country' | translate }}</th>
         <th>{{ 'session.device' | translate }}</th>
         <th>{{ 'session.os' | translate }}</th>
         <th>{{ 'session.browser' | translate }}</th>
-        <th>{{ 'session.loggedInOn' | translate }}</th>
+        <th>{{ 'session.lastLoggedInOn' | translate }}</th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-session>
       <tr>
         <td>{{ session.userFullName || session.userEmail || ('common.notAvailable' | translate) }}</td>
+        <td>{{ session.sessionCount }}</td>
         <td>{{ session.ipAddress || ('common.notAvailable' | translate) }}</td>
         <td>{{ session.city || ('common.notAvailable' | translate) }}</td>
         <td>{{ session.country || ('common.notAvailable' | translate) }}</td>
@@ -51,11 +53,37 @@
       </tr>
     </ng-template>
     <ng-template pTemplate="emptymessage">
-      <tr><td colspan="8" class="text-center">{{ 'session.noneFound' | translate }}</td></tr>
+      <tr><td colspan="9" class="text-center">{{ 'session.noneFound' | translate }}</td></tr>
     </ng-template>
   </p-table>
 
-  <p-table *ngIf="detailMode === 'guests'" [value]="guests" [loading]="detailLoading" responsiveLayout="scroll" dataKey="guestId">
+  <p-table *ngIf="detailMode === 'users'" [value]="onlineUsers" [loading]="detailLoading" responsiveLayout="scroll" dataKey="userId">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>{{ 'session.user' | translate }}</th>
+        <th>{{ 'session.userEmail' | translate }}</th>
+        <th>{{ 'session.ipAddress' | translate }}</th>
+        <th>{{ 'session.city' | translate }}</th>
+        <th>{{ 'session.country' | translate }}</th>
+        <th>{{ 'session.lastLoggedInOn' | translate }}</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-row>
+      <tr>
+        <td>{{ row.userFullName || ('common.notAvailable' | translate) }}</td>
+        <td>{{ row.userEmail || ('common.notAvailable' | translate) }}</td>
+        <td>{{ row.ipAddress || ('common.notAvailable' | translate) }}</td>
+        <td>{{ row.city || ('common.notAvailable' | translate) }}</td>
+        <td>{{ row.country || ('common.notAvailable' | translate) }}</td>
+        <td>{{ (row.issuedAt | date:'dd-MMM-yyyy hh:mm a') || ('common.notAvailable' | translate) }}</td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr><td colspan="6" class="text-center">{{ 'session.noUsersFound' | translate }}</td></tr>
+    </ng-template>
+  </p-table>
+
+  <p-table *ngIf="detailMode === 'guests'"[value]="guests" [loading]="detailLoading" responsiveLayout="scroll" dataKey="guestId">
     <ng-template pTemplate="header">
       <tr>
         <th>{{ 'session.guestId' | translate }}</th>
