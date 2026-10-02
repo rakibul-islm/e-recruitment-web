@@ -15,7 +15,7 @@ import { Offer } from '../../../services/offer/domain/offer.domain';
 import { OnboardingTask } from '../../../services/onboarding/domain/onboarding.task.domain';
 import { McqTestAssignment } from '../../../services/mcq-test-assignment/domain/mcq.test.assignment.domain';
 import { McqTest } from '../../../services/mcq-test/domain/mcq.test.domain';
-import { triggerDownload } from '../../../services/utility/file-download.util';
+import { triggerDownload, pdfFileName } from '../../../services/utility/file-download.util';
 
 @Component({
   selector: 'app-application-management-view',
@@ -121,7 +121,7 @@ export class ApplicationManagementViewComponent extends BaseComponent implements
 
   downloadCv(): void {
     this.subscribers.downloadCvSub = this.applicationService.downloadCv(this.applicationId).subscribe(blob => {
-      triggerDownload(blob, `CV-${this.application.candidateName}.pdf`);
+      triggerDownload(blob, pdfFileName('CV', this.application.candidateName));
     });
   }
 
@@ -230,7 +230,7 @@ export class ApplicationManagementViewComponent extends BaseComponent implements
 
   downloadOfferLetter(offer: Offer): void {
     this.subscribers.downloadLetterSub = this.offerService.downloadLetter(offer.id).subscribe(blob => {
-      triggerDownload(blob, `Offer-Letter-${offer.id}.pdf`);
+      triggerDownload(blob, pdfFileName('Offer-Letter', this.application.candidateName));
     });
   }
 

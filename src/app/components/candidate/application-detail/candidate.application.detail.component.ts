@@ -12,7 +12,9 @@ import { Offer } from '../../../services/offer/domain/offer.domain';
 import { OnboardingTask } from '../../../services/onboarding/domain/onboarding.task.domain';
 import { McqTestAssignment } from '../../../services/mcq-test-assignment/domain/mcq.test.assignment.domain';
 import { CommonConfirmDialogService } from '../../../services/utility/common.confirm.dialog.service';
-import { triggerDownload } from '../../../services/utility/file-download.util';
+import { triggerDownload, pdfFileName } from '../../../services/utility/file-download.util';
+import { AuthService } from '../../../services/utility/security/auth.service';
+import { Profile } from '../../../services/user/domain/user.domain';
 
 @Component({
   selector: 'app-candidate-application-detail',
@@ -25,6 +27,7 @@ export class CandidateApplicationDetailComponent extends BaseComponent implement
   offers: Offer[] = [];
   onboardingTasks: OnboardingTask[] = [];
   mcqAssignments: McqTestAssignment[] = [];
+  accountProfile: Profile = new Profile();
 
   constructor(
     private route: ActivatedRoute,
@@ -34,12 +37,14 @@ export class CandidateApplicationDetailComponent extends BaseComponent implement
     private offerService: OfferService,
     private onboardingTaskService: OnboardingTaskService,
     private mcqTestAssignmentService: McqTestAssignmentService,
-    private commonConfirmDialogService: CommonConfirmDialogService
+    private commonConfirmDialogService: CommonConfirmDialogService,
+    private authService: AuthService
   ) {
     super();
   }
 
   ngOnInit(): void {
+    this.subscribers.accountProfileSub = this.authService.getProfileData().subscribe(profile => this.accountProfile = profile);
     this.applicationId = Number(this.route.snapshot.paramMap.get('id'));
     this.fetchApplication();
     this.fetchInterviews();
@@ -104,7 +109,7 @@ export class CandidateApplicationDetailComponent extends BaseComponent implement
 
   downloadOfferLetter(offer: Offer): void {
     this.subscribers.downloadLetterSub = this.offerService.downloadLetter(offer.id).subscribe(blob => {
-      triggerDownload(blob, `Offer-Letter-${offer.id}.pdf`);
+      triggerDownload(blob, pdfFileName('Offer-Letter', this.accountProfile.fullName));
     });
   }
 

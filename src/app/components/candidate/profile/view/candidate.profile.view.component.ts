@@ -5,7 +5,7 @@ import { CandidateProfileService } from '../../../../services/candidate-profile/
 import { CandidateProfile, GeneratedCv } from '../../../../services/candidate-profile/domain/candidate.profile.domain';
 import { AuthService } from '../../../../services/utility/security/auth.service';
 import { Profile } from '../../../../services/user/domain/user.domain';
-import { triggerDownload, openBlobInNewTab } from '../../../../services/utility/file-download.util';
+import { triggerDownload, openBlobInNewTab, pdfFileName } from '../../../../services/utility/file-download.util';
 
 @Component({
   selector: 'app-candidate-profile-view',
@@ -65,7 +65,7 @@ export class CandidateProfileViewComponent extends BaseComponent implements OnIn
 
   downloadCv(cv: GeneratedCv): void {
     this.subscribers.downloadCvSub = this.candidateProfileService.downloadCv(cv.id).subscribe(blob => {
-      triggerDownload(blob, `CV-${cv.id}.pdf`);
+      triggerDownload(blob, pdfFileName('CV', this.accountProfile.fullName));
     });
   }
 }
