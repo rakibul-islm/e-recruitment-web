@@ -3,7 +3,9 @@ import { Router } from '@angular/router';
 import { BaseComponent } from '../../base.component';
 import { ApplicationService } from '../../../services/application/application.service';
 import { Application } from '../../../services/application/domain/application.domain';
-import { triggerDownload } from '../../../services/utility/file-download.util';
+import { triggerDownload, pdfFileName } from '../../../services/utility/file-download.util';
+import { AuthService } from '../../../services/utility/security/auth.service';
+import { Profile } from '../../../services/user/domain/user.domain';
 
 @Component({
   selector: 'app-candidate-applications',
@@ -11,8 +13,9 @@ import { triggerDownload } from '../../../services/utility/file-download.util';
 })
 export class CandidateApplicationsComponent extends BaseComponent implements OnInit {
   applications: Application[] = [];
+  accountProfile: Profile = new Profile();
 
-  constructor(private applicationService: ApplicationService, private router: Router) {
+  constructor(private applicationService: ApplicationService, private router: Router, private authService: AuthService) {
     super();
   }
 
@@ -21,6 +24,7 @@ export class CandidateApplicationsComponent extends BaseComponent implements OnI
   }
 
   ngOnInit(): void {
+    this.subscribers.accountProfileSub = this.authService.getProfileData().subscribe(profile => this.accountProfile = profile);
     this.fetchApplications();
   }
 
@@ -37,7 +41,7 @@ export class CandidateApplicationsComponent extends BaseComponent implements OnI
 
   downloadCv(application: Application): void {
     this.subscribers.downloadCvSub = this.applicationService.downloadCv(application.id).subscribe(blob => {
-      triggerDownload(blob, `CV-application-${application.id}.pdf`);
+      triggerDownload(blob, pdfFileName('CV', this.accountProfile.fullName));
     });
   }
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { finalize, map, shareReplay, tap } from 'rxjs/operators';
 import { BaseService } from '../base.service';
 import { API_URLS } from '../utility/constants/api.urls';
 import { AuthService } from '../utility/security/auth.service';
@@ -13,6 +13,7 @@ import { Permission } from './domain/permission.domain';
 export class PermissionService extends BaseService {
   private grantedRouteNamesSubject = new BehaviorSubject<Set<string>>(new Set<string>());
   private loaded = false;
+  private inFlightLoad: Observable<Set<string>> | null = null;
 
   constructor(http: HttpClient, private authService: AuthService) {
     super(http);
@@ -32,6 +33,7 @@ export class PermissionService extends BaseService {
 
   public clearGrantedRouteNames(): void {
     this.loaded = false;
+    this.inFlightLoad = null;
     this.grantedRouteNamesSubject.next(new Set<string>());
   }
 
@@ -41,14 +43,21 @@ export class PermissionService extends BaseService {
     return this.loaded ? of(this.grantedRouteNamesSubject.value) : this.loadGrantedRouteNames();
   }
 
+  // The route guard, header and dashboard all ask at bootstrap, before the first response lands; sharing the
+  // in-flight request means one fetch instead of one per caller.
   private loadGrantedRouteNames(): Observable<Set<string>> {
-    return this.searchPermissions(new Map().set('isPageable', false)).pipe(
-      map(response => this.resolveGrantedRouteNames(response?.list || [])),
-      tap(names => {
-        this.loaded = true;
-        this.grantedRouteNamesSubject.next(names);
-      })
-    );
+    if (!this.inFlightLoad) {
+      this.inFlightLoad = this.searchPermissions(new Map().set('isPageable', false)).pipe(
+        map(response => this.resolveGrantedRouteNames(response?.list || [])),
+        tap(names => {
+          this.loaded = true;
+          this.grantedRouteNamesSubject.next(names);
+        }),
+        finalize(() => { this.inFlightLoad = null; }),
+        shareReplay({ bufferSize: 1, refCount: false })
+      );
+    }
+    return this.inFlightLoad;
   }
 
   public hasRoutePermission(routeName?: string): boolean {

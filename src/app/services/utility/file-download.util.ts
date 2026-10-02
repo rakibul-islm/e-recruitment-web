@@ -10,6 +10,11 @@ export function triggerDownload(blob: Blob, filename: string): void {
   window.URL.revokeObjectURL(url);
 }
 
+// Builds "<prefix>-<name>.pdf" the same way the backend names stored files (whitespace -> underscore).
+export function pdfFileName(prefix: string, name?: string | null): string {
+  return `${prefix}-${(name || 'candidate').trim().replace(/\s+/g, '_')}.pdf`;
+}
+
 // Opens a blob (e.g. a PDF fetched via BaseService.getBlob) in a new tab for inline viewing,
 // rather than forcing a save-to-disk. The object URL is revoked after a delay since revoking it
 // immediately can race the new tab's own load of the resource.

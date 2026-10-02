@@ -59,11 +59,7 @@ export class HomeComponent extends BaseComponent implements OnInit {
   }
 
   private fetchStats(): void {
-    const openJobsParams = new Map<any, any>().set('status', 'PUBLISHED').set('isPageable', true).set('page', 0).set('size', 1);
-    this.subscribers.openJobsCountSub = this.jobPostingService.searchJobPostings(openJobsParams).subscribe(response => {
-      this.openJobsCount = response?.page?.totalElements || 0;
-    });
-
+    // The open-jobs count comes from fetchFeaturedJobs(): same status filter, and its page already carries totalElements.
     const organizationsParams = new Map<any, any>().set('isPageable', true).set('page', 0).set('size', 1);
     this.subscribers.organizationsCountSub = this.organizationService.searchOrganizations(organizationsParams).subscribe(response => {
       this.organizationsCount = response?.page?.totalElements || 0;
@@ -82,6 +78,7 @@ export class HomeComponent extends BaseComponent implements OnInit {
     this.subscribers.featuredJobsSub = this.jobPostingService.searchJobPostings(params).subscribe({
       next: (response) => {
         this.featuredJobs = response?.page?.content || [];
+        this.openJobsCount = response?.page?.totalElements || 0;
         this.loading = false;
       },
       error: () => { this.loading = false; }

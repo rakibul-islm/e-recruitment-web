@@ -75,6 +75,8 @@ export class ReportGenerateComponent extends BaseComponent implements OnInit, On
         this.previewBlob = blob;
         this.previewObjectUrl = window.URL.createObjectURL(blob);
         this.previewUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.previewObjectUrl);
+        // Collapse the search accordion (same convention as the other search pages) so the preview gets the space.
+        this.activeTabIndex = 1;
       },
       error: () => { this.generatingFormat = null; }
     });
