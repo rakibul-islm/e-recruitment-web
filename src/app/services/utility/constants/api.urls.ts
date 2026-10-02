@@ -57,6 +57,8 @@ export const API_URLS = {
     SESSION_SUMMARY: 'session/summary',
     SESSION_STREAM: 'session/stream',
     SESSION_GUESTS: 'session/guests',
+    SESSION_ACTIVE_USERS: 'session/active-users',
+    SESSION_ONLINE_USERS: 'session/online-users',
     GUEST_PRESENCE_STREAM: 'presence/guest-stream',
     SESSIONS_BY_USER: 'session/user/:userId',
     REMOVE_SESSION: 'session/:id',

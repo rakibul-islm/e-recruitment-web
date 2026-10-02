@@ -15,6 +15,7 @@ export class UserSession {
     revoked!: boolean;
     revokedAt!: Date;
     revokedBy!: string;
+    sessionCount!: number;
 }
 
 export class SessionSummary {

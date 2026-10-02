@@ -24,6 +24,14 @@ export class SessionService extends BaseService {
     return super.get(API_URLS.SESSION_SUMMARY);
   }
 
+  public getActiveUsers(): Observable<any> {
+    return super.get(API_URLS.SESSION_ACTIVE_USERS);
+  }
+
+  public getOnlineUsers(): Observable<any> {
+    return super.get(API_URLS.SESSION_ONLINE_USERS);
+  }
+
   public getActiveGuests(): Observable<any> {
     return super.get(API_URLS.SESSION_GUESTS);
   }

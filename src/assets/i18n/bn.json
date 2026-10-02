@@ -578,6 +578,10 @@
     "guestId": "গেস্ট আইডি",
     "connectedAt": "সংযুক্ত হওয়ার সময়",
     "activeSessionsList": "সক্রিয় সেশনসমূহ",
+    "loggedInUsersList": "লগ ইনকৃত ব্যবহারকারীগণ",
+    "sessionCount": "সেশন",
+    "lastLoggedInOn": "সর্বশেষ লগ ইন",
+    "noUsersFound": "কোনো লগ ইনকৃত ব্যবহারকারী পাওয়া যায়নি।",
     "activeGuestsList": "সক্রিয় গেস্টগণ",
     "noGuests": "কোনো গেস্ট অনলাইনে নেই।",
     "forceLogoutNotice": "একজন প্রশাসক আপনাকে লগ আউট করে দিয়েছেন।"
