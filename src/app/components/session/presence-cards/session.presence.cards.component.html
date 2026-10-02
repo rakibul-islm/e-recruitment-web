@@ -1,0 +1,87 @@
+<div class="summary-cards">
+  <div class="summary-card summary-card-clickable" tabindex="0" (click)="openDetail('sessions')" (keyup.enter)="openDetail('sessions')">
+    <i class="pi pi-users"></i>
+    <div>
+      <div class="summary-card-value">{{ summary.activeSessions || 0 }}</div>
+      <div class="summary-card-label">{{ 'session.activeSessions' | translate }}</div>
+    </div>
+  </div>
+  <div class="summary-card summary-card-clickable" tabindex="0" (click)="openDetail('sessions')" (keyup.enter)="openDetail('sessions')">
+    <i class="pi pi-user"></i>
+    <div>
+      <div class="summary-card-value">{{ summary.distinctActiveUsers || 0 }}</div>
+      <div class="summary-card-label">{{ 'session.distinctActiveUsers' | translate }}</div>
+    </div>
+  </div>
+  <div class="summary-card summary-card-clickable" tabindex="0" (click)="openDetail('guests')" (keyup.enter)="openDetail('guests')">
+    <i class="pi pi-eye"></i>
+    <div>
+      <div class="summary-card-value">{{ summary.activeGuests || 0 }}</div>
+      <div class="summary-card-label">{{ 'session.activeGuests' | translate }}</div>
+    </div>
+  </div>
+</div>
+
+<p-dialog [header]="(detailMode === 'guests' ? 'session.activeGuestsList' : 'session.activeSessionsList') | translate"
+  [(visible)]="detailVisible" [modal]="true" [style]="{ width: '75rem' }" [breakpoints]="{ '960px': '95vw' }"
+  styleClass="branded-dialog" appendTo="body">
+  <p-table *ngIf="detailMode === 'sessions'" [value]="activeSessions" [loading]="detailLoading" responsiveLayout="scroll" dataKey="id">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>{{ 'session.user' | translate }}</th>
+        <th>{{ 'session.ipAddress' | translate }}</th>
+        <th>{{ 'session.city' | translate }}</th>
+        <th>{{ 'session.country' | translate }}</th>
+        <th>{{ 'session.device' | translate }}</th>
+        <th>{{ 'session.os' | translate }}</th>
+        <th>{{ 'session.browser' | translate }}</th>
+        <th>{{ 'session.loggedInOn' | translate }}</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-session>
+      <tr>
+        <td>{{ session.userFullName || session.userEmail || ('common.notAvailable' | translate) }}</td>
+        <td>{{ session.ipAddress || ('common.notAvailable' | translate) }}</td>
+        <td>{{ session.city || ('common.notAvailable' | translate) }}</td>
+        <td>{{ session.country || ('common.notAvailable' | translate) }}</td>
+        <td>{{ session.deviceType || ('common.notAvailable' | translate) }}</td>
+        <td>{{ session.os || ('common.notAvailable' | translate) }}</td>
+        <td>{{ session.browser || ('common.notAvailable' | translate) }}</td>
+        <td>{{ (session.issuedAt | date:'dd-MMM-yyyy hh:mm a') || ('common.notAvailable' | translate) }}</td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr><td colspan="8" class="text-center">{{ 'session.noneFound' | translate }}</td></tr>
+    </ng-template>
+  </p-table>
+
+  <p-table *ngIf="detailMode === 'guests'" [value]="guests" [loading]="detailLoading" responsiveLayout="scroll" dataKey="guestId">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>{{ 'session.guestId' | translate }}</th>
+        <th>{{ 'session.ipAddress' | translate }}</th>
+        <th>{{ 'session.city' | translate }}</th>
+        <th>{{ 'session.country' | translate }}</th>
+        <th>{{ 'session.device' | translate }}</th>
+        <th>{{ 'session.os' | translate }}</th>
+        <th>{{ 'session.browser' | translate }}</th>
+        <th>{{ 'session.connectedAt' | translate }}</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-guest>
+      <tr>
+        <td>{{ guest.guestId | slice:0:8 }}</td>
+        <td>{{ guest.ipAddress || ('common.notAvailable' | translate) }}</td>
+        <td>{{ guest.city || ('common.notAvailable' | translate) }}</td>
+        <td>{{ guest.country || ('common.notAvailable' | translate) }}</td>
+        <td>{{ guest.deviceType || ('common.notAvailable' | translate) }}</td>
+        <td>{{ guest.os || ('common.notAvailable' | translate) }}</td>
+        <td>{{ guest.browser || ('common.notAvailable' | translate) }}</td>
+        <td>{{ (guest.connectedAt | date:'dd-MMM-yyyy hh:mm a') || ('common.notAvailable' | translate) }}</td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr><td colspan="8" class="text-center">{{ 'session.noGuests' | translate }}</td></tr>
+    </ng-template>
+  </p-table>
+</p-dialog>

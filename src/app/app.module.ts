@@ -41,7 +41,10 @@ import { PasswordPolicyViewComponent } from './components/password-policy/view/p
 import { ExceptionLogSearchComponent } from './components/exception-log/search/exception.log.search.component';
 import { ExceptionLogViewComponent } from './components/exception-log/view/exception.log.view.component';
 import { SessionSearchComponent } from './components/session/search/session.search.component';
+import { ProfileCompletenessComponent } from './components/candidate/profile/completeness/profile.completeness.component';
+import { CvMatchCardComponent } from './components/application-management/match-card/cv.match.card.component';
 import { SessionViewComponent } from './components/session/view/session.view.component';
+import { SessionPresenceCardsComponent } from './components/session/presence-cards/session.presence.cards.component';
 import { AuditLogSearchComponent } from './components/audit-log/search/audit.log.search.component';
 import { AuditLogViewComponent } from './components/audit-log/view/audit.log.view.component';
 import { ArchiveConfigSearchComponent } from './components/archive-config/search/archive.config.search.component';
@@ -160,6 +163,9 @@ export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
     ExceptionLogViewComponent,
     SessionSearchComponent,
     SessionViewComponent,
+    ProfileCompletenessComponent,
+    CvMatchCardComponent,
+    SessionPresenceCardsComponent,
     AuditLogSearchComponent,
     AuditLogViewComponent,
     ArchiveConfigSearchComponent,

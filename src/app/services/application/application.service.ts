@@ -35,6 +35,11 @@ export class ApplicationService extends BaseService {
     return super.put(url, body);
   }
 
+  public fetchMatch(id: number): Observable<any> {
+    const url = this.createUrl(API_URLS.APPLICATION_MATCH, { id });
+    return super.get(url);
+  }
+
   public fetchHistory(id: number): Observable<any> {
     const url = this.createUrl(API_URLS.APPLICATION_HISTORY, { id });
     return super.get(url);

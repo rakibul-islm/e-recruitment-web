@@ -3,7 +3,7 @@ import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BaseComponent } from '../../base.component';
 import { CandidateProfileService } from '../../../services/candidate-profile/candidate.profile.service';
-import { CandidateProfile } from '../../../services/candidate-profile/domain/candidate.profile.domain';
+import { CandidateProfile, ProfileCompleteness } from '../../../services/candidate-profile/domain/candidate.profile.domain';
 import { AuthService } from '../../../services/utility/security/auth.service';
 import { Profile } from '../../../services/user/domain/user.domain';
 
@@ -28,6 +28,8 @@ export class CandidateProfileFormComponent extends BaseComponent implements OnIn
     super();
   }
 
+  completeness?: ProfileCompleteness;
+
   ngOnInit(): void {
     this.subscribers.accountProfileSub = this.authService.getProfileData().subscribe(profile => this.accountProfile = profile);
     this.fetchProfile();
@@ -35,6 +37,7 @@ export class CandidateProfileFormComponent extends BaseComponent implements OnIn
 
   fetchProfile(): void {
     this.subscribers.fetchProfileSub = this.candidateProfileService.fetchMyProfile().subscribe(response => {
+      this.completeness = response?.obj?.completeness;
       this.prepareForm(response?.obj);
     });
   }

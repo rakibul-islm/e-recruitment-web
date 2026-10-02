@@ -24,6 +24,10 @@ export class SessionService extends BaseService {
     return super.get(API_URLS.SESSION_SUMMARY);
   }
 
+  public getActiveGuests(): Observable<any> {
+    return super.get(API_URLS.SESSION_GUESTS);
+  }
+
   public streamSummary(): Observable<SessionSummary> {
     return new Observable<SessionSummary>(subscriber => openEventStream(API_URLS.SESSION_STREAM, this.authService.getToken(), (event) => {
       if (event.event !== 'presence' || !event.data) { return; }

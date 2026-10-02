@@ -8,6 +8,7 @@ export const API_URLS = {
     LOGOUT: 'authenticate/logout',
     FETCH_PROFILE: 'profile',
     UPDATE_PROFILE: 'profile',
+    PROFILE_SESSION_LOCATION: 'profile/session-location',
     REQUEST_CHANGE_PASSWORD_OTP: 'profile/change-password/request-otp',
     VERIFY_CHANGE_PASSWORD_OTP: 'profile/change-password/verify-otp',
     CHANGE_PASSWORD: 'profile/change-password',
@@ -55,6 +56,7 @@ export const API_URLS = {
     FIND_SESSION_BY_ID: 'session/:id',
     SESSION_SUMMARY: 'session/summary',
     SESSION_STREAM: 'session/stream',
+    SESSION_GUESTS: 'session/guests',
     GUEST_PRESENCE_STREAM: 'presence/guest-stream',
     SESSIONS_BY_USER: 'session/user/:userId',
     REMOVE_SESSION: 'session/:id',
@@ -103,6 +105,7 @@ export const API_URLS = {
     FIND_APPLICATION_BY_ID: 'application/:id',
     CHANGE_APPLICATION_STATUS: 'application/:id/status',
     APPLICATION_HISTORY: 'application/:id/history',
+    APPLICATION_MATCH: 'application/:id/match',
     DOWNLOAD_APPLICATION_CV: 'application/:id/cv',
 
     SCHEDULE_INTERVIEW: 'interview',

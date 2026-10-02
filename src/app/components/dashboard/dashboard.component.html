@@ -5,6 +5,8 @@
 
   <!-- Recruiter / Admin view -->
   <ng-container *ngIf="roleResolved && isStaff">
+    <app-session-presence-cards *appPermissionHide="'session-list'"></app-session-presence-cards>
+
     <div class="summary-cards">
       <div class="summary-card">
         <i class="pi pi-briefcase"></i>

@@ -327,6 +327,17 @@ form .form-section-title:not(:first-child) {
   }
 }
 
+.summary-card-clickable {
+  cursor: pointer;
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+
+  &:hover, &:focus-visible {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 4px rgba(3, 41, 103, 0.06), 0 12px 28px rgba(3, 41, 103, 0.12);
+    outline: none;
+  }
+}
+
 .search-actions {
   display: flex;
   justify-content: flex-start;

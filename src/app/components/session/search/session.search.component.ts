@@ -5,7 +5,7 @@ import { Table, TableLazyLoadEvent } from 'primeng/table';
 import { BaseComponent } from '../../base.component';
 import { SessionService } from '../../../services/session/session.service';
 import { CommonConfirmDialogService } from '../../../services/utility/common.confirm.dialog.service';
-import { SessionSummary, UserSession } from '../../../services/session/domain/session.domain';
+import { UserSession } from '../../../services/session/domain/session.domain';
 
 @Component({
   selector: 'app-session-search',
@@ -14,7 +14,6 @@ import { SessionSummary, UserSession } from '../../../services/session/domain/se
 export class SessionSearchComponent extends BaseComponent implements OnInit {
   sessions: UserSession[] = [];
   selectedSession: UserSession | null = null;
-  summary: SessionSummary = new SessionSummary();
 
   filterForm!: FormGroup;
 
@@ -37,8 +36,6 @@ export class SessionSearchComponent extends BaseComponent implements OnInit {
   ngOnInit(): void {
     this.prepareForm();
     this.registerFilterForm('session-search-filters', this.filterForm);
-    this.fetchSummary();
-    this.subscribers.summaryStreamSub = this.sessionService.streamSummary().subscribe(summary => this.summary = summary);
   }
 
   prepareForm(): void {
@@ -48,12 +45,6 @@ export class SessionSearchComponent extends BaseComponent implements OnInit {
       ipAddress_like: [''],
       issuedAt_gte: [null],
       issuedAt_lte: [null]
-    });
-  }
-
-  fetchSummary(): void {
-    this.subscribers.summarySub = this.sessionService.getSummary().subscribe(response => {
-      this.summary = response?.obj || new SessionSummary();
     });
   }
 
@@ -99,7 +90,6 @@ export class SessionSearchComponent extends BaseComponent implements OnInit {
         this.subscribers.forceLogoutSub = this.sessionService.forceLogoutSession(session.id).subscribe(() => {
           this.notificationService.sendSuccessMsg('session.forceLogoutSuccess');
           session.revoked = true;
-          this.fetchSummary();
         });
       },
       null,
@@ -113,7 +103,6 @@ export class SessionSearchComponent extends BaseComponent implements OnInit {
         this.subscribers.forceLogoutAllSub = this.sessionService.forceLogoutAll().subscribe(() => {
           this.notificationService.sendSuccessMsg('session.forceLogoutAllSuccess');
           this.sessions.forEach(s => s.revoked = true);
-          this.fetchSummary();
         });
       },
       null,

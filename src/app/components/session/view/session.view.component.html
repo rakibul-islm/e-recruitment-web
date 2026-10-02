@@ -27,8 +27,24 @@
           <td class="detail-value">{{ session.ipAddress || ('common.notAvailable' | translate) }}</td>
         </tr>
         <tr>
-          <td class="detail-label">{{ 'session.userAgent' | translate }}</td>
-          <td class="detail-value">{{ session.userAgent || ('common.notAvailable' | translate) }}</td>
+          <td class="detail-label">{{ 'session.city' | translate }}</td>
+          <td class="detail-value">{{ session.city || ('common.notAvailable' | translate) }}</td>
+        </tr>
+        <tr>
+          <td class="detail-label">{{ 'session.country' | translate }}</td>
+          <td class="detail-value">{{ session.country || ('common.notAvailable' | translate) }}</td>
+        </tr>
+        <tr>
+          <td class="detail-label">{{ 'session.device' | translate }}</td>
+          <td class="detail-value">{{ session.deviceType || ('common.notAvailable' | translate) }}</td>
+        </tr>
+        <tr>
+          <td class="detail-label">{{ 'session.os' | translate }}</td>
+          <td class="detail-value">{{ session.os || ('common.notAvailable' | translate) }}</td>
+        </tr>
+        <tr>
+          <td class="detail-label">{{ 'session.browser' | translate }}</td>
+          <td class="detail-value">{{ session.browser || ('common.notAvailable' | translate) }}</td>
         </tr>
         <tr>
           <td class="detail-label">{{ 'session.loggedInOn' | translate }}</td>

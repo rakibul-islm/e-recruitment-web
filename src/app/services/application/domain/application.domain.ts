@@ -21,6 +21,7 @@ export class Application {
     jobTitle?: string;
     candidateName?: string;
     candidateEmail?: string;
+    matchScore?: number;
 }
 
 export class ApplyRequest {
@@ -37,4 +38,27 @@ export class ApplicationStatusHistory {
     note?: string;
     changedBy?: string;
     changedOn!: Date | string;
+}
+
+export class CvMatchComponent {
+    key!: string;
+    weight!: number;
+    applicable!: boolean;
+    score!: number;
+}
+
+export class CvMatch {
+    percent!: number;
+    level!: string;
+    scorable!: boolean;
+    matchedSkills: string[] = [];
+    missingSkills: string[] = [];
+    requiredYears?: number | null;
+    candidateYears!: number;
+    requiredEducation?: string | null;
+    candidateEducation?: string;
+    keywordsMatched!: number;
+    keywordsTotal!: number;
+    profileCompletenessPercent!: number;
+    components: CvMatchComponent[] = [];
 }

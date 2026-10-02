@@ -5,29 +5,7 @@
 </app-page-header>
 
 <div class="p-3">
-  <div class="summary-cards">
-    <div class="summary-card">
-      <i class="pi pi-users"></i>
-      <div>
-        <div class="summary-card-value">{{ summary.activeSessions || 0 }}</div>
-        <div class="summary-card-label">{{ 'session.activeSessions' | translate }}</div>
-      </div>
-    </div>
-    <div class="summary-card">
-      <i class="pi pi-user"></i>
-      <div>
-        <div class="summary-card-value">{{ summary.distinctActiveUsers || 0 }}</div>
-        <div class="summary-card-label">{{ 'session.distinctActiveUsers' | translate }}</div>
-      </div>
-    </div>
-    <div class="summary-card">
-      <i class="pi pi-eye"></i>
-      <div>
-        <div class="summary-card-value">{{ summary.activeGuests || 0 }}</div>
-        <div class="summary-card-label">{{ 'session.activeGuests' | translate }}</div>
-      </div>
-    </div>
-  </div>
+  <app-session-presence-cards></app-session-presence-cards>
 
   <p-accordion [(activeIndex)]="activeTabIndex">
     <p-accordionTab [header]="'common.search' | translate">
@@ -77,6 +55,11 @@
           <tr>
             <th>{{ 'session.user' | translate }}</th>
             <th>{{ 'session.ipAddress' | translate }}</th>
+            <th>{{ 'session.city' | translate }}</th>
+            <th>{{ 'session.country' | translate }}</th>
+            <th>{{ 'session.device' | translate }}</th>
+            <th>{{ 'session.os' | translate }}</th>
+            <th>{{ 'session.browser' | translate }}</th>
             <th>{{ 'session.loggedInOn' | translate }}</th>
             <th>{{ 'session.expiresOn' | translate }}</th>
             <th>{{ 'common.status' | translate }}</th>
@@ -87,6 +70,11 @@
           <tr class="selectable-row" [pSelectableRow]="session">
             <td>{{ session.userFullName || session.userEmail || ('common.notAvailable' | translate) }}</td>
             <td>{{ session.ipAddress || ('common.notAvailable' | translate) }}</td>
+            <td>{{ session.city || ('common.notAvailable' | translate) }}</td>
+            <td>{{ session.country || ('common.notAvailable' | translate) }}</td>
+            <td>{{ session.deviceType || ('common.notAvailable' | translate) }}</td>
+            <td>{{ session.os || ('common.notAvailable' | translate) }}</td>
+            <td>{{ session.browser || ('common.notAvailable' | translate) }}</td>
             <td>{{ (session.issuedAt | date:'dd-MMM-yyyy hh:mm a') || ('common.notAvailable' | translate) }}</td>
             <td>{{ (session.expiresAt | date:'dd-MMM-yyyy hh:mm a') || ('common.notAvailable' | translate) }}</td>
             <td>
@@ -106,7 +94,7 @@
         </ng-template>
         <ng-template pTemplate="emptymessage">
           <tr>
-            <td colspan="6" class="text-center">{{ 'session.noneFound' | translate }}</td>
+            <td colspan="11" class="text-center">{{ 'session.noneFound' | translate }}</td>
           </tr>
         </ng-template>
       </p-table>

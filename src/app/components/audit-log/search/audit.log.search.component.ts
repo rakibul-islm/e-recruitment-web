@@ -22,7 +22,8 @@ export class AuditLogSearchComponent extends BaseComponent implements OnInit {
     { label: 'auditLog.categoryAll', value: null },
     { label: 'auditLog.categoryEntity', value: 'ENTITY' },
     { label: 'auditLog.categorySecurity', value: 'SECURITY' },
-    { label: 'auditLog.categorySystem', value: 'SYSTEM' }
+    { label: 'auditLog.categorySystem', value: 'SYSTEM' },
+    { label: 'auditLog.categoryActivity', value: 'ACTIVITY' }
   ];
 
   outcomeOptions: { label: string; value: string | null }[] = [
@@ -44,7 +45,10 @@ export class AuditLogSearchComponent extends BaseComponent implements OnInit {
     { label: 'auditLog.actionPasswordReset', value: 'PASSWORD_RESET' },
     { label: 'auditLog.actionPasswordSet', value: 'PASSWORD_SET' },
     { label: 'auditLog.actionOtpVerified', value: 'OTP_VERIFIED' },
-    { label: 'auditLog.actionOtpFailed', value: 'OTP_FAILED' }
+    { label: 'auditLog.actionOtpFailed', value: 'OTP_FAILED' },
+    { label: 'auditLog.actionView', value: 'VIEW' },
+    { label: 'auditLog.actionDownload', value: 'DOWNLOAD' },
+    { label: 'auditLog.actionMarkAllRead', value: 'MARK_ALL_READ' }
   ];
 
   constructor(
@@ -83,7 +87,7 @@ export class AuditLogSearchComponent extends BaseComponent implements OnInit {
       outcome_eq: [null],
       entityType: [''],
       entityId: [''],
-      createdBy_eq: [''],
+      createdBy_like: [''],
       ipAddress_eq: [''],
       createdOn_gte: [null],
       createdOn_lte: [null]
