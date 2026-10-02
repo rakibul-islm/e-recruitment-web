@@ -60,7 +60,8 @@ export const AUDIT_LOG_REPORT_DEFINITION: ReportDefinition = {
         { label: 'auditLog.categoryAll', value: null },
         { label: 'auditLog.categoryEntity', value: 'ENTITY' },
         { label: 'auditLog.categorySecurity', value: 'SECURITY' },
-        { label: 'auditLog.categorySystem', value: 'SYSTEM' }
+        { label: 'auditLog.categorySystem', value: 'SYSTEM' },
+        { label: 'auditLog.categoryActivity', value: 'ACTIVITY' }
       ]
     },
     {
@@ -77,7 +78,10 @@ export const AUDIT_LOG_REPORT_DEFINITION: ReportDefinition = {
         { label: 'auditLog.actionPasswordReset', value: 'PASSWORD_RESET' },
         { label: 'auditLog.actionPasswordSet', value: 'PASSWORD_SET' },
         { label: 'auditLog.actionOtpVerified', value: 'OTP_VERIFIED' },
-        { label: 'auditLog.actionOtpFailed', value: 'OTP_FAILED' }
+        { label: 'auditLog.actionOtpFailed', value: 'OTP_FAILED' },
+        { label: 'auditLog.actionView', value: 'VIEW' },
+        { label: 'auditLog.actionDownload', value: 'DOWNLOAD' },
+        { label: 'auditLog.actionMarkAllRead', value: 'MARK_ALL_READ' }
       ]
     },
     {
@@ -89,7 +93,7 @@ export const AUDIT_LOG_REPORT_DEFINITION: ReportDefinition = {
     },
     { key: 'entityType', type: 'text', labelKey: 'auditLog.entityType' },
     { key: 'entityId', type: 'text', labelKey: 'auditLog.entityId' },
-    { key: 'createdBy_eq', type: 'text', labelKey: 'auditLog.createdBy' },
+    { key: 'createdBy_like', type: 'text', labelKey: 'auditLog.createdBy' },
     { key: 'ipAddress_eq', type: 'text', labelKey: 'auditLog.ipAddress' },
     { key: 'createdOn_gte', type: 'date', labelKey: 'report.dateFrom' },
     { key: 'createdOn_lte', type: 'date', labelKey: 'report.dateTo' }

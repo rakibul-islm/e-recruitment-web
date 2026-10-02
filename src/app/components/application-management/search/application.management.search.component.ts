@@ -51,6 +51,7 @@ export class ApplicationManagementSearchComponent extends BaseComponent implemen
       candidateName_like: [''],
       candidateEmail_like: [''],
       status: [''],
+      matchScore_gte: [null],
       appliedOn_gte: [null],
       appliedOn_lte: [null]
     });

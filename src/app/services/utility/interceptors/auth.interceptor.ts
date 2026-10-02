@@ -6,6 +6,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { environment } from 'src/environments/environment';
 import { NotificationService } from '../notification.service';
 import { AuthService } from '../security/auth.service';
+import { LocationService } from '../location.service';
 import { BACKGROUND_REQUEST } from './http.context.tokens';
 
 @Injectable()
@@ -14,6 +15,7 @@ export class AuthInterceptor implements HttpInterceptor {
     private notificationService: NotificationService,
     private authService: AuthService,
     private translate: TranslateService,
+    private locationService: LocationService,
     private router: Router
   ) {}
 
@@ -27,7 +29,10 @@ export class AuthInterceptor implements HttpInterceptor {
 
     const clonedRequest = req.clone({
       url: modifiedUrl,
-      setHeaders: token ? { Authorization: `Bearer ${token}` } : {},
+      setHeaders: {
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        ...this.locationService.getHeaders(),
+      },
       withCredentials: true,
     });
 

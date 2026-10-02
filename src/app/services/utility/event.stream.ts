@@ -6,11 +6,11 @@ const RETRY_MS = 5000;
 class FatalStreamError extends Error {}
 
 // fetch-based because the native EventSource cannot send the Authorization header
-export function openEventStream(path: string, token: string | null, onMessage: (event: EventSourceMessage) => void, openWhenHidden: boolean = true): () => void {
+export function openEventStream(path: string, token: string | null, onMessage: (event: EventSourceMessage) => void, openWhenHidden: boolean = true, extraHeaders: Record<string, string> = {}): () => void {
   const controller = new AbortController();
 
   fetchEventSource(`${environment.baseUrl}${path}`, {
-    headers: token ? { Authorization: `Bearer ${token}` } : {},
+    headers: { ...(token ? { Authorization: `Bearer ${token}` } : {}), ...extraHeaders },
     credentials: 'include',
     signal: controller.signal,
     openWhenHidden,

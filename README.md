@@ -20,16 +20,17 @@ A web client for the e-recruitment platform — built with Angular 17 and PrimeN
 - **Public job portal** — unauthenticated home page, job search/listing, and job detail view; recruiter sign-up (`/register/recruiter`) for organizations wanting to post jobs
 - **Authentication** — email/password login, Google Sign-In, OTP-verified sign-up, and OTP-based forgot/change/set-password flows
 - **Real-time notifications** — an unread-count badge and slide-out panel (`NotificationPanelComponent`) fed by a live SSE stream (`@microsoft/fetch-event-source`, since the API only reads auth from a Bearer header that native `EventSource` can't send), with a 5-minute poll as a fallback; toasts for a few urgent types, per-type icons/i18n, mark-as-read / mark-all-read / dismiss
-- **Candidate self-service** (`/my/...`) — CV-style profile view/edit, submitted applications with detail view, saved jobs, and job alerts
-- **Recruiting** — organization CRUD, job posting CRUD, application management (review candidate applications against a posting), and a recruiter-application queue for approving organizations that registered to recruit
+- **Candidate self-service** (`/my/...`) — CV-style profile view/edit, submitted applications with detail view, saved jobs, and job alerts. The profile pages show a **CV completeness** card (percent, level and progress bar); its "What's missing?" button opens a dialog listing each missing section with a hint and the points it adds (`ProfileCompletenessComponent`)
+- **Recruiting** — organization CRUD, job posting CRUD, application management (review candidate applications against a posting), and a recruiter-application queue for approving organizations that registered to recruit. The applications list has a **Match** column and a minimum-match filter, and the application detail page shows a **CV match** card (percent, per-part bars, matched and missing skills, required versus actual experience and education) from `GET /application/{id}/match` (`CvMatchCardComponent`)
 - **Analytics dashboard** — permission-gated reporting view over recruiting activity
 - **Reports** — one screen per report (job posting, application, MCQ result, audit log), each independently permission-gated, with a dynamic filter form driven by a per-report field config, a PDF preview rendered in an iframe, and PDF/Excel download
 - **Role-based administration** — CRUD for users, roles, permissions, and user groups, with drag-and-drop assignment of permissions to roles and roles to users/groups
 - **Notification broadcast** — admin screen to compose and send an ad-hoc notification to all users, a role, or specific users (multi-select search), optionally also by email; permission-gated separately from ordinary notification access (`/notification-broadcast`)
 - **System configuration** — centralized view/edit of backend system config entries and the global password policy
 - **Exception log viewer** — searchable, paginated view of server-side exception logs for diagnostics
-- **Session management** — searchable, paginated view of user login sessions with detail view
-- **Audit log viewer** — searchable, paginated view of audit trail entries with detail view
+- **Session management** — searchable, paginated view of user login sessions with detail view, showing each session's IP, city, country, device, OS and browser. The Active Sessions, Logged In Users and Active Guests cards are clickable and open a dialog with the details (sessions, or guests with their IP, place and device) that refreshes live; the same cards also appear at the top of the staff dashboard for anyone with `session-list` (`SessionPresenceCardsComponent`)
+- **Client location & device** — `LocationService` works out a city and country for the visitor and sends them as `X-Client-City` / `X-Client-Country` headers on every API call. Visitors and guests get an approximate place from their IP; once someone is logged in the browser's location prompt is shown, and an allowed position is turned into an address (such as "Mirpur, Dhaka") and also sent to refresh the current session (`SessionLocationSyncService`). See [Location and privacy](#location-and-privacy)
+- **Audit log viewer** — searchable, paginated view of audit trail entries with detail view (including the user's IP, city, country, device, OS and browser), filterable by category (Entity, Security, System, Activity), action and a partial user email
 - **Archive configuration** — CRUD for scheduled data-archiving rules (source table, age/date condition, optional extra WHERE clause, schedule), with an on-demand "Archive Now" trigger and a viewer for already-archived rows
 - **User profile** — self-service profile view/edit with avatar upload
 - **Internationalization** — full English and Bengali (বাংলা) translations with a live language switcher
@@ -76,7 +77,7 @@ Before running the app, point it at your backend and Google OAuth client — see
 | `npm run build`        | Runs `ng build` — build artifacts are output to `dist/e-recruitment-web/` |
 | `npm run build:prod`   | Substitutes `API_BASE_URL` / `GOOGLE_CLIENT_ID` into `environment.prod.ts`, then runs `ng build --configuration production` |
 | `npm run watch`        | Runs `ng build --watch --configuration development` |
-| `npm test`             | Runs unit tests via [Karma](https://karma-runner.github.io) |
+| `npm test`             | Runs unit tests via [Karma](https://karma-runner.github.io) (no specs at the moment) |
 
 ## Environment Variables
 
@@ -96,6 +97,17 @@ export const environment = {
 |--------------------|-------------|
 | `API_BASE_URL`      | Base URL of the e-recruitment backend API |
 | `GOOGLE_CLIENT_ID`  | OAuth 2.0 client ID used for Google Sign-In |
+
+## Location and privacy
+
+To show where a login or action came from, the browser contacts two third-party services:
+
+| Service | When | What is sent |
+|---------|------|--------------|
+| [OpenStreetMap Nominatim](https://nominatim.openstreetmap.org) | After login, if the user allows the browser's location prompt | The latitude and longitude, to get an address back. The public service is limited to about one request per second, so a busy production site should use a paid or self-hosted geocoder |
+| [ipwho.is](https://ipwho.is) | For visitors and guests, and when location is denied | The visitor's IP address, to get an approximate city and country |
+
+Results are cached in `localStorage` (the exact address per place, the IP result for one hour) so the lookups do not repeat on every page load. If either service is blocked or the user declines, the place is simply left empty. Change or remove these calls in `src/app/services/utility/location.service.ts` if your privacy policy does not allow them.
 
 ## Internationalization (i18n)
 
@@ -133,10 +145,11 @@ src/app/
 │   │   ├── applications/          List of the signed-in candidate's submitted applications
 │   │   ├── application-detail/    Detail view of a single submitted application
 │   │   ├── saved-jobs/            Jobs the candidate has bookmarked
-│   │   └── job-alerts/            Candidate's saved search alerts
+│   │   ├── job-alerts/            Candidate's saved search alerts
+│   │   └── profile/completeness/  CV completeness card and "What's missing?" dialog (shared by the profile view and edit pages)
 │   ├── organization/                   Recruiting: organization CRUD (search / form / view)
 │   ├── job-posting/               Recruiting: job posting CRUD (search / form / view)
-│   ├── application-management/    Recruiting: review applications received for a job posting (search / view)
+│   ├── application-management/    Recruiting: review applications received for a job posting (search / view / match-card)
 │   ├── recruiter-application/     Recruiting: approve/reject organizations that self-registered to recruit (register / search / view)
 │   ├── analytics/                 Permission-gated analytics/reporting dashboard
 │   ├── report/
@@ -154,7 +167,7 @@ src/app/
 │   ├── system-config/             Admin search/view/edit for system configuration entries
 │   ├── password-policy/           Admin view/edit for the global password policy
 │   ├── exception-log/             Admin search/view for server-side exception logs
-│   ├── session/                   Admin search/view for user login sessions
+│   ├── session/                   Admin search/view for user login sessions, plus presence-cards (clickable session and guest counts with detail dialogs, also used on the dashboard)
 │   ├── audit-log/                 Admin search/view for audit trail entries
 │   ├── archive-config/            Admin CRUD for scheduled data-archiving rules (search / form / view / archived-data)
 │   ├── notification-broadcast/    Admin compose/send screen (all users / role / specific users, optional email)
@@ -180,6 +193,7 @@ src/app/
 │       ├── interceptors/           Auth + loading HTTP interceptors
 │       ├── constants/              api.urls.ts (backend endpoint paths), app.menu.model.ts (sidebar menu definition)
 │       ├── language.service.ts     ngx-translate init + language switching
+│       ├── location.service.ts     Visitor city/country (IP lookup, then exact address after login) sent as request headers
 │       ├── notification.service.ts        Wrapper around PrimeNG's MessageService (<p-toast>)
 │       └── common.confirm.dialog.service.ts   Wrapper around PrimeNG's ConfirmationService
 ├── app.routing.module.ts          Route definitions
@@ -270,11 +284,7 @@ src/assets/i18n/                   Translation files (en.json, bn.json)
 
 ## Testing
 
-```bash
-npm test
-```
-
-Runs the unit test suite via [Karma](https://karma-runner.github.io) / Jasmine.
+The unit specs (`*.spec.ts`) were removed, so `npm test` currently finds nothing to run. The Karma setup (`karma.conf.js`, `src/test.ts`, `tsconfig.spec.json`) is still in place, so specs can be added back next to the code they cover.
 
 ---
 

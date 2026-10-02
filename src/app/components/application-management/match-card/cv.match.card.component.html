@@ -1,0 +1,51 @@
+<p-card class="mb-3" *ngIf="match">
+  <div class="match-header">
+    <div>
+      <h3 class="form-section-title match-title">{{ 'cvMatch.title' | translate }}</h3>
+      <p class="match-subtitle">{{ ('cvMatch.level' + match.level) | translate }}</p>
+    </div>
+    <div class="match-percent" *ngIf="match.scorable" [ngClass]="'level-' + match.level.toLowerCase()">{{ match.percent }}%</div>
+  </div>
+
+  <p class="match-note" *ngIf="!match.scorable">{{ 'cvMatch.notScorable' | translate }}</p>
+
+  <ng-container *ngIf="match.scorable">
+    <div class="match-bars">
+      <ng-container *ngFor="let component of match.components">
+        <div class="match-bar-row" *ngIf="component.applicable">
+          <span class="match-bar-label">{{ 'cvMatch.component.' + component.key | translate }}</span>
+          <div class="match-bar-track"><div class="match-bar-fill" [style.width.%]="component.score"></div></div>
+          <span class="match-bar-value">{{ component.score }}%</span>
+        </div>
+      </ng-container>
+    </div>
+
+    <table class="detail-table match-details">
+      <tbody>
+        <tr *ngIf="match.matchedSkills.length || match.missingSkills.length">
+          <td class="detail-label">{{ 'cvMatch.skills' | translate }}</td>
+          <td class="detail-value">
+            <span class="match-chip chip-ok" *ngFor="let skill of match.matchedSkills"><i class="pi pi-check"></i>{{ skill }}</span>
+            <span class="match-chip chip-missing" *ngFor="let skill of match.missingSkills"><i class="pi pi-times"></i>{{ skill }}</span>
+          </td>
+        </tr>
+        <tr *ngIf="match.requiredYears !== null && match.requiredYears !== undefined">
+          <td class="detail-label">{{ 'cvMatch.experience' | translate }}</td>
+          <td class="detail-value">{{ 'cvMatch.experienceValue' | translate: { required: match.requiredYears, candidate: match.candidateYears } }}</td>
+        </tr>
+        <tr *ngIf="match.requiredEducation">
+          <td class="detail-label">{{ 'cvMatch.education' | translate }}</td>
+          <td class="detail-value">{{ 'cvMatch.educationValue' | translate: { required: match.requiredEducation, candidate: match.candidateEducation } }}</td>
+        </tr>
+        <tr *ngIf="match.keywordsTotal >= 3">
+          <td class="detail-label">{{ 'cvMatch.keywords' | translate }}</td>
+          <td class="detail-value">{{ match.keywordsMatched }} / {{ match.keywordsTotal }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </ng-container>
+
+  <p class="match-note">
+    {{ 'cvMatch.profileCompleteness' | translate: { percent: match.profileCompletenessPercent } }}
+  </p>
+</p-card>

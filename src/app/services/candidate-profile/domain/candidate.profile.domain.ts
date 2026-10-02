@@ -56,6 +56,7 @@ export class CandidateProfile {
     certifications?: CertificationItem[] = [];
     languages?: LanguageItem[] = [];
     projects?: ProjectItem[] = [];
+    completeness?: ProfileCompleteness;
 }
 
 export class CandidateProfileRequest {
@@ -78,4 +79,17 @@ export class GeneratedCv {
     templateKey!: string;
     storedFileId!: number;
     generatedOn!: Date | string;
+}
+
+export class ProfileCompletenessSection {
+    key!: string;
+    weight!: number;
+    earned!: number;
+}
+
+export class ProfileCompleteness {
+    percent!: number;
+    level!: string;
+    ready!: boolean;
+    sections!: ProfileCompletenessSection[];
 }

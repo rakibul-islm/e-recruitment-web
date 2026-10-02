@@ -1,0 +1,38 @@
+<p-card *ngIf="completeness" styleClass="completeness-card">
+  <div class="completeness-header">
+    <div>
+      <h3 class="form-section-title completeness-title">{{ 'profileCompleteness.title' | translate }}</h3>
+      <p class="completeness-subtitle">{{ ('profileCompleteness.level' + completeness.level) | translate }}</p>
+    </div>
+    <div class="completeness-percent" [ngClass]="'level-' + completeness.level.toLowerCase()">{{ completeness.percent }}%</div>
+  </div>
+
+  <div class="completeness-track">
+    <div class="completeness-fill" [ngClass]="'level-' + completeness.level.toLowerCase()" [style.width.%]="completeness.percent"></div>
+  </div>
+
+  <p-button *ngIf="missingSections.length" [label]="'profileCompleteness.viewDetails' | translate" icon="pi pi-list"
+    styleClass="p-button-outlined p-button-sm" (onClick)="detailsVisible = true"></p-button>
+</p-card>
+
+<p-dialog *ngIf="completeness" [header]="'profileCompleteness.dialogTitle' | translate" [(visible)]="detailsVisible" [modal]="true"
+  [style]="{ width: '34rem' }" [breakpoints]="{ '575px': '95vw' }" styleClass="branded-dialog" appendTo="body">
+  <div class="completeness-dialog-summary">
+    <div class="completeness-percent" [ngClass]="'level-' + completeness.level.toLowerCase()">{{ completeness.percent }}%</div>
+    <p class="completeness-note">{{ (completeness.ready ? 'profileCompleteness.levelCOMPLETE' : 'profileCompleteness.readyNote') | translate }}</p>
+  </div>
+
+  <ul class="completeness-list">
+    <li *ngFor="let section of missingSections">
+      <div class="completeness-item-text">
+        <span class="completeness-section">{{ 'profileCompleteness.section.' + section.key | translate }}</span>
+        <span class="completeness-hint">{{ 'profileCompleteness.hint.' + section.key | translate }}</span>
+      </div>
+      <span class="completeness-points">+{{ section.weight - section.earned }}</span>
+    </li>
+  </ul>
+
+  <ng-template pTemplate="footer">
+    <p-button [label]="'common.close' | translate" styleClass="p-button-secondary" (onClick)="detailsVisible = false"></p-button>
+  </ng-template>
+</p-dialog>

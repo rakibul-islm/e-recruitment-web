@@ -7,6 +7,11 @@ export class AuditLog {
     outcome!: string;
     ipAddress!: string;
     userAgent!: string;
+    city!: string;
+    country!: string;
+    deviceType!: string;
+    os!: string;
+    browser!: string;
     correlationId!: string;
     requestUri!: string;
     httpMethod!: string;

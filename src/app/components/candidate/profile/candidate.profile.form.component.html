@@ -4,6 +4,10 @@
 </app-page-header>
 
 <div class="cv-page">
+  <div class="page-card mb-3" *ngIf="completeness">
+    <app-profile-completeness [completeness]="completeness"></app-profile-completeness>
+  </div>
+
   <p-card class="page-card" *ngIf="profileForm">
     <div class="cv-form-account">
       <p-avatar [image]="accountProfile.imageBase64" shape="circle" size="xlarge" styleClass="cv-account-avatar"></p-avatar>

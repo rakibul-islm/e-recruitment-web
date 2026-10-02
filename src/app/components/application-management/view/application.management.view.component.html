@@ -37,6 +37,8 @@
       </table>
     </p-card>
 
+    <app-cv-match-card [applicationId]="applicationId"></app-cv-match-card>
+
     <p-card class="mb-3">
       <h3 class="form-section-title">{{ 'applicationManagement.updateStatus' | translate }}</h3>
       <form [formGroup]="statusForm" class="flex flex-column gap-3">
