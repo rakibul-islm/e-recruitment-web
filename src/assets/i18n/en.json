@@ -245,6 +245,8 @@
       "registerHere": "Register here",
       "hiringPrompt": "Hiring?",
       "or": "or",
+      "googleSignIn": "Sign in with Google",
+      "googleSignInFailed": "Google sign-in failed ({{detail}})",
       "successRedirect": "Login successful! Redirecting...",
       "brandTitle": "Welcome back to your career hub",
       "brandSubtitle": "Sign in to track your applications, manage your profile, and discover new opportunities.",

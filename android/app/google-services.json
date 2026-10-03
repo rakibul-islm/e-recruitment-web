@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "252725521135",
+    "project_id": "e-recruitment-mailer",
+    "storage_bucket": "e-recruitment-mailer.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:252725521135:android:e15c18f3e33f2b3863891a",
+        "android_client_info": {
+          "package_name": "com.bd.erecruitment"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "252725521135-9pkb84ej666tne97mvfdi151kcnkccdl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bd.erecruitment",
+            "certificate_hash": "bd202c0273b36c6ebda11cddac6230e13a575d54"
+          }
+        },
+        {
+          "client_id": "252725521135-14ulsjv86ms4q88f17cgotsbbqb73n5e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3GC_i3UaECN1Ua5LwYnK1UTmmnzJLvGU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "252725521135-14ulsjv86ms4q88f17cgotsbbqb73n5e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

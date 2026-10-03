@@ -7,8 +7,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script>
+    if (window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform()) {
+      document.documentElement.classList.add('native-app');
+    }
+  </script>
+  <style>
+    .app-loader { display: none; position: fixed; inset: 0; z-index: 99999; background: #ffffff; transition: opacity 0.3s ease; }
+    .native-app .app-loader { display: block; }
+    .app-loader.app-loader-hide { opacity: 0; pointer-events: none; }
+    .app-loader-logo { position: absolute; top: 50%; left: 50%; height: 40vmin; transform: translate(-50%, -50%); }
+    .app-loader-bar { position: absolute; top: calc(50% + 23vmin); left: 50%; width: 46vmin; height: 4px; margin-left: -23vmin; border-radius: 2px; background: #e3e9f3; overflow: hidden; }
+    .app-loader-bar::before { content: ''; position: absolute; top: 0; bottom: 0; width: 40%; border-radius: 2px; background: linear-gradient(to right, #032967, #145dae); animation: app-loader-slide 1.2s ease-in-out infinite; }
+    @keyframes app-loader-slide { 0% { left: -40%; } 100% { left: 100%; } }
+  </style>
 </head>
 <body>
+  <div id="app-loader" class="app-loader">
+    <img class="app-loader-logo" src="assets/images/app.logo.png" alt="">
+    <div class="app-loader-bar"></div>
+  </div>
   <app-root></app-root>
 </body>
 </html>

@@ -5,6 +5,8 @@ import { McqTestAssignmentService } from '../../services/mcq-test-assignment/mcq
 import { McqAttemptQuestion, McqTestAssignment, McqViolationResult, McqViolationType } from '../../services/mcq-test-assignment/domain/mcq.test.assignment.domain';
 import { CommonConfirmDialogService } from '../../services/utility/common.confirm.dialog.service';
 import { AuthService } from '../../services/utility/security/auth.service';
+import { isNativeApp } from '../../services/utility/file-download.util';
+import { allowScreenCapture, blockScreenCapture } from '../../services/utility/screen.guard';
 
 const BLOCKED_SHORTCUT_KEYS = ['a', 'c', 'x', 'p', 's', 'u'];
 
@@ -45,10 +47,12 @@ export class McqTestTakingComponent extends BaseComponent implements OnInit, OnD
 
   ngOnInit(): void {
     this.assignmentId = Number(this.route.snapshot.paramMap.get('assignmentId'));
+    blockScreenCapture();
     this.beginAttempt();
   }
 
   override ngOnDestroy(): void {
+    allowScreenCapture();
     if (document.fullscreenElement) { document.exitFullscreen(); }
     super.ngOnDestroy();
   }
@@ -91,7 +95,7 @@ export class McqTestTakingComponent extends BaseComponent implements OnInit, OnD
 
   @HostListener('document:fullscreenchange')
   onFullscreenChange(): void {
-    if (!document.fullscreenElement) { this.reportViolation('FULLSCREEN_EXIT'); }
+    if (!isNativeApp() && !document.fullscreenElement) { this.reportViolation('FULLSCREEN_EXIT'); }
   }
 
   private reportViolation(violationType: McqViolationType, detail?: string): void {
@@ -129,7 +133,7 @@ export class McqTestTakingComponent extends BaseComponent implements OnInit, OnD
   // browsers allow a short window after the click that navigated to this page), so this can
   // silently no-op on some browsers/navigations. There is no reliable way around that restriction.
   private requestFullscreen(): void {
-    if (!document.fullscreenElement) {
+    if (!isNativeApp() && !document.fullscreenElement) {
       document.documentElement.requestFullscreen().catch(() => {});
     }
   }

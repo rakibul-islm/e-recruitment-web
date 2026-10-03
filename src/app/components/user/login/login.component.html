@@ -66,7 +66,8 @@
     </div>
 
     <div class="flex justify-content-center">
-      <div id="google-button"></div>
+      <div id="google-button" *ngIf="!isNative"></div>
+      <p-button *ngIf="isNative" type="button" icon="pi pi-google" [label]="'auth.login.googleSignIn' | translate" [outlined]="true" styleClass="w-full" (onClick)="nativeGoogleLogin()"></p-button>
     </div>
 
     <hr class="my-2" />
