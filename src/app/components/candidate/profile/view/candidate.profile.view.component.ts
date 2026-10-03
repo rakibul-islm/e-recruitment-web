@@ -59,7 +59,7 @@ export class CandidateProfileViewComponent extends BaseComponent implements OnIn
 
   viewCv(cv: GeneratedCv): void {
     this.subscribers.viewCvSub = this.candidateProfileService.downloadCv(cv.id).subscribe(blob => {
-      openBlobInNewTab(blob);
+      openBlobInNewTab(blob, pdfFileName('CV', this.accountProfile.fullName));
     });
   }
 

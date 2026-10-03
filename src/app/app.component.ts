@@ -6,6 +6,7 @@ import { LanguageService } from './services/utility/language.service';
 import { InAppNotificationService } from './services/notification-center/in.app.notification.service';
 import { GuestPresenceService } from './services/presence/guest.presence.service';
 import { SessionLocationSyncService } from './services/session/session.location.sync.service';
+import { PushRegistrationService } from './services/notification-center/push.registration.service';
 
 @Component({
   selector: 'app-root',
@@ -20,7 +21,8 @@ export class AppComponent {
   fullScreen = false;
 
   constructor(public loadingService: LoadingService, languageService: LanguageService, notificationService: InAppNotificationService,
-    guestPresenceService: GuestPresenceService, sessionLocationSyncService: SessionLocationSyncService, router: Router, route: ActivatedRoute) {
+    guestPresenceService: GuestPresenceService, sessionLocationSyncService: SessionLocationSyncService, pushRegistrationService: PushRegistrationService,
+    router: Router, route: ActivatedRoute) {
     languageService.init();
 
     router.events.pipe(

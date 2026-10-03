@@ -7,7 +7,7 @@ import { BaseComponent } from '../../base.component';
 import { ReportService } from '../../../services/report/report.service';
 import { ReportDefinition, ReportFieldDef, ReportFieldOption } from '../../../services/report/domain/report.definition';
 import { REPORT_DEFINITIONS } from '../../../services/report/report.definitions';
-import { triggerDownload } from '../../../services/utility/file-download.util';
+import { isNativeApp, openBlobInNewTab, triggerDownload } from '../../../services/utility/file-download.util';
 
 // Single generic component for all 4 report routes - see app.routing.module.ts's reportKey data.
 @Component({
@@ -71,6 +71,10 @@ export class ReportGenerateComponent extends BaseComponent implements OnInit, On
     this.subscribers.previewReportSub = this.reportService.generate(this.definition.key, this.buildParams('PDF')).subscribe({
       next: blob => {
         this.generatingFormat = null;
+        if (isNativeApp()) {
+          openBlobInNewTab(blob, `${this.definition.key}-report.pdf`);
+          return;
+        }
         this.revokePreviewUrl();
         this.previewBlob = blob;
         this.previewObjectUrl = window.URL.createObjectURL(blob);

@@ -171,6 +171,8 @@ export const API_URLS = {
     NOTIFICATION_BY_ID: 'notification/:id',
     READ_NOTIFICATION: 'notification/:id/read',
     READ_ALL_NOTIFICATIONS: 'notification/read-all',
+    REGISTER_DEVICE_TOKEN: 'notification/device-token',
+    UNREGISTER_DEVICE_TOKEN: 'notification/device-token/unregister',
     REMOVE_NOTIFICATION: 'notification/:id',
 
     NOTIFICATION_BROADCAST_ROLES: 'notification-broadcast/roles',
