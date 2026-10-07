@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { switchMap } from 'rxjs';
+import { PushRegistrationService } from '../../../services/notification-center/push.registration.service';
 import { UserService } from '../../../services/user/user.service';
 import { Profile } from '../../../services/user/domain/user.domain';
 import { BaseComponent } from '../../base.component';
@@ -28,6 +30,7 @@ export class AppHeaderComponent extends BaseComponent implements OnInit {
     private permissionService: PermissionService,
     private translate: TranslateService,
     private languageService: LanguageService,
+    private pushRegistration: PushRegistrationService,
     private router: Router) {
     super();
   }
@@ -100,7 +103,9 @@ export class AppHeaderComponent extends BaseComponent implements OnInit {
   }
 
   logout(): void {
-    this.subscribers.serverLogoutSub = this.authService.serverLogout().subscribe({
+    this.subscribers.serverLogoutSub = this.pushRegistration.unregisterDevice().pipe(
+      switchMap(() => this.authService.serverLogout())
+    ).subscribe({
       next: () => this.finishLogout(),
       error: () => this.finishLogout()
     });
