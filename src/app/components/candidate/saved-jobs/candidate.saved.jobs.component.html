@@ -15,12 +15,12 @@
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-savedJob>
-        <tr>
-          <td class="selectable-row" (click)="viewJob(savedJob)">{{ savedJob.jobTitle }}</td>
+        <tr class="selectable-row" (click)="viewJob(savedJob)">
+          <td>{{ savedJob.jobTitle }}</td>
           <td>{{ savedJob.organizationName }}</td>
           <td><span class="tag">{{ savedJob.jobStatus }}</span></td>
           <td>{{ savedJob.savedOn | date:'dd-MM-yyyy' }}</td>
-          <td><p-button icon="pi pi-trash" styleClass="p-button-text p-button-danger p-button-sm" (onClick)="unsave(savedJob)"></p-button></td>
+          <td><p-button icon="pi pi-trash" styleClass="p-button-text p-button-danger p-button-sm" (onClick)="$event.stopPropagation(); unsave(savedJob)"></p-button></td>
         </tr>
       </ng-template>
       <ng-template pTemplate="emptymessage">
