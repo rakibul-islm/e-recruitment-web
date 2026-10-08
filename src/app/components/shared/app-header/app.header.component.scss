@@ -192,3 +192,180 @@
     display: none;
   }
 }
+
+
+@media screen and (max-width: 960px) {
+
+  ::ng-deep .app-header.p-menubar {
+    padding: 0 0.75rem;
+
+    .p-menubar-button,
+    .p-menubar-root-list {
+      display: none !important;
+    }
+  }
+}
+
+::ng-deep .app-header-drawer.p-sidebar {
+  width: 18rem;
+  max-width: 85vw;
+
+  .p-sidebar-header {
+    background: linear-gradient(to right, #032967, #145dae 50%, #002152);
+    padding: 0.75rem 1rem;
+
+    .p-sidebar-close {
+      color: #ffffff;
+    }
+  }
+
+  .p-sidebar-content {
+    padding: 0.5rem;
+  }
+
+  .app-header-drawer-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #ffffff;
+    font-weight: 600;
+
+    .app-header-logo {
+      width: 2rem;
+      height: 2rem;
+    }
+  }
+
+  .app-header-drawer-menu .p-panelmenu-header-link,
+  .app-header-drawer-menu .p-menuitem-link {
+    color: #1f2937;
+  }
+}
+
+::ng-deep .app-header.p-menubar .p-menubar-start {
+  display: flex;
+  align-items: center;
+}
+
+
+.app-header-account-trigger {
+  height: 2.4rem;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+::ng-deep .app-header-account-trigger .header-avatar {
+  width: 1.8rem;
+  height: 1.8rem;
+}
+
+@media screen and (max-width: 960px) {
+  .app-header-account-trigger {
+    padding: 0 0.5rem;
+  }
+}
+
+
+::ng-deep .app-header-drawer.p-sidebar {
+  .p-sidebar-content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .app-header-drawer-user {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-width: 0;
+    color: #ffffff;
+  }
+
+  .app-header-drawer-user-text {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .app-header-drawer-user-name {
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .app-header-drawer-user-email {
+    font-size: 0.75rem;
+    opacity: 0.8;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+::ng-deep .app-header-drawer.p-sidebar {
+  .app-header-drawer-account {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .app-header-drawer-actions {
+    display: flex;
+    flex-direction: column;
+    margin: 0 -0.25rem;
+  }
+
+  .app-header-drawer-action {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.55rem 0.25rem;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.9rem;
+    text-decoration: none;
+    cursor: pointer;
+
+    &:active {
+      background: rgba(255, 255, 255, 0.12);
+    }
+  }
+}
+
+@media screen and (max-width: 960px) {
+  .app-header-account-trigger {
+    display: none;
+  }
+}
+
+::ng-deep .app-header-drawer.p-sidebar .p-sidebar-header {
+  align-items: flex-start;
+}
+
+.app-header-logo-wrap {
+  position: relative;
+  display: inline-flex;
+}
+
+::ng-deep .app-header-logo-badge {
+  display: none;
+  position: absolute;
+  right: -0.35rem;
+  bottom: -0.3rem;
+  width: 0.9rem;
+  height: 0.9rem;
+  align-items: center;
+  justify-content: center;
+  background: #032967;
+  color: #ffffff;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  font-size: 0.5rem;
+}
+
+@media screen and (max-width: 960px) {
+  ::ng-deep .app-header-logo-badge {
+    display: inline-flex;
+  }
+}

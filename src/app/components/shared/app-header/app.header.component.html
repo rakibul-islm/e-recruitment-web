@@ -1,7 +1,10 @@
 <p-menubar [model]="menuItems" styleClass="app-header">
   <ng-template pTemplate="start">
-    <a [routerLink]="isAuthenticated ? '/dashboard' : '/'" class="app-header-brand">
-      <img src="/assets/images/app.logo.png" alt="e-recruitment logo" class="app-header-logo" />
+    <a [routerLink]="isAuthenticated ? '/dashboard' : '/'" class="app-header-brand" (click)="onBrandClick($event)">
+      <span class="app-header-logo-wrap">
+        <img src="/assets/images/app.logo.png" alt="e-recruitment logo" class="app-header-logo" />
+        <i class="pi pi-bars app-header-logo-badge"></i>
+      </span>
       <span class="app-header-title">{{ 'app.name' | translate }}</span>
     </a>
   </ng-template>
@@ -26,3 +29,32 @@
     </ng-template>
   </ng-template>
 </p-menubar>
+
+<p-sidebar [(visible)]="drawerVisible" position="left" styleClass="app-header-drawer" appendTo="body">
+  <ng-template pTemplate="header">
+    <div class="app-header-drawer-account" *ngIf="isAuthenticated; else drawerBrand">
+      <div class="app-header-drawer-user">
+        <p-avatar [image]="profile.imageBase64" shape="circle" size="large" styleClass="header-avatar"></p-avatar>
+        <div class="app-header-drawer-user-text">
+          <span class="app-header-drawer-user-name">{{ profile.fullName }}</span>
+          <span class="app-header-drawer-user-email">{{ profile.email }}</span>
+        </div>
+      </div>
+      <div class="app-header-drawer-actions">
+        <ng-container *ngFor="let item of accountMenuItems">
+          <a *ngIf="!item.separator" class="app-header-drawer-action" [routerLink]="item.routerLink" (click)="selectAccountItem(item, $event)">
+            <i [class]="item.icon"></i>
+            <span>{{ item.label }}</span>
+          </a>
+        </ng-container>
+      </div>
+    </div>
+    <ng-template #drawerBrand>
+      <div class="app-header-drawer-brand">
+        <img src="/assets/images/app.logo.png" alt="e-recruitment logo" class="app-header-logo" />
+        <span>{{ 'app.name' | translate }}</span>
+      </div>
+    </ng-template>
+  </ng-template>
+  <p-panelMenu [model]="drawerItems" [multiple]="false" styleClass="app-header-drawer-menu"></p-panelMenu>
+</p-sidebar>

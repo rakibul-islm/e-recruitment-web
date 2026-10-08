@@ -122,6 +122,7 @@ import { ToastModule } from 'primeng/toast';
 import { DialogModule } from 'primeng/dialog';
 import { EditorModule } from 'primeng/editor';
 import { SidebarModule } from 'primeng/sidebar';
+import { PanelMenuModule } from 'primeng/panelmenu';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
   return new TranslateHttpLoader(http, '/assets/i18n/', '.json');
@@ -245,6 +246,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
     DialogModule,
     EditorModule,
     SidebarModule,
+    PanelMenuModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
