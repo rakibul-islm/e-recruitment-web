@@ -67,3 +67,15 @@
     opacity: 1;
   }
 }
+
+::ng-deep .p-toast.p-toast-top-right {
+  top: 4.5rem;
+}
+
+@media (max-width: 575px) {
+  ::ng-deep .p-toast.p-toast-top-right {
+    left: 0.5rem;
+    right: 0.5rem;
+    width: auto;
+  }
+}

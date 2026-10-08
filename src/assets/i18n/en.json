@@ -30,6 +30,7 @@
     "module": "Module",
     "confirmation": "Confirmation",
     "confirmDefaultMessage": "Are you sure that you want to perform this action?",
+    "exitAppMessage": "Are you sure you want to exit the app?",
     "formInvalidMessage": "Please fill in all required fields correctly.",
     "success": "Success",
     "error": "Error",

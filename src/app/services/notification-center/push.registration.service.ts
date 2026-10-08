@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpContext, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { Observable, catchError, of } from 'rxjs';
 import { PushNotifications } from '@capacitor/push-notifications';
 import { API_URLS } from '../utility/constants/api.urls';
 import { BACKGROUND_REQUEST } from '../utility/interceptors/http.context.tokens';
@@ -33,6 +34,16 @@ export class PushRegistrationService {
     } catch {
       return;
     }
+  }
+
+  unregisterDevice(): Observable<unknown> {
+    const deviceToken = this.deviceToken;
+    if (!deviceToken) { return of(null); }
+    this.deviceToken = null;
+    PushNotifications.unregister().catch(() => {});
+    return this.http.post(API_URLS.UNREGISTER_DEVICE_TOKEN, { token: deviceToken }, {
+      context: new HttpContext().set(BACKGROUND_REQUEST, true)
+    }).pipe(catchError(() => of(null)));
   }
 
   private onLogout(): void {

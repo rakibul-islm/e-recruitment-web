@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { switchMap } from 'rxjs';
+import { PushRegistrationService } from '../../../services/notification-center/push.registration.service';
 import { UserService } from '../../../services/user/user.service';
 import { Profile } from '../../../services/user/domain/user.domain';
 import { BaseComponent } from '../../base.component';
@@ -10,6 +12,7 @@ import { LanguageService } from '../../../services/utility/language.service';
 import { AppMenuItem, MENU_ITEMS, ACCOUNT_MENU_ITEMS } from '../../../services/utility/constants/app.menu.model';
 
 const BASE64_PREFIX = 'data:image/png;base64,';
+const MOBILE_QUERY = '(max-width: 960px)';
 
 @Component({
   selector: 'app-header',
@@ -21,6 +24,8 @@ export class AppHeaderComponent extends BaseComponent implements OnInit {
   profile: Profile = new Profile();
   menuItems: AppMenuItem[] = [];
   accountMenuItems: AppMenuItem[] = [];
+  drawerItems: AppMenuItem[] = [];
+  drawerVisible = false;
 
   constructor(
     private authService: AuthService,
@@ -28,6 +33,7 @@ export class AppHeaderComponent extends BaseComponent implements OnInit {
     private permissionService: PermissionService,
     private translate: TranslateService,
     private languageService: LanguageService,
+    private pushRegistration: PushRegistrationService,
     private router: Router) {
     super();
   }
@@ -77,11 +83,29 @@ export class AppHeaderComponent extends BaseComponent implements OnInit {
 
   renderMenuItems(): void {
     this.menuItems = [...this.translateMenuItems(this.filterMenuItems(MENU_ITEMS)), this.languageService.buildLanguageMenuItem()];
+    this.drawerItems = this.closeDrawerOnSelect(this.menuItems);
     this.accountMenuItems = !this.isAuthenticated ? [] : [
       ...this.translateMenuItems(ACCOUNT_MENU_ITEMS),
       { separator: true },
       { label: this.translate.instant('account.signOut'), icon: 'pi pi-sign-out', command: () => this.logout() }
     ];
+  }
+
+  onBrandClick(event: Event): void {
+    if (!window.matchMedia(MOBILE_QUERY).matches) { return; }
+    event.preventDefault();
+    this.drawerVisible = true;
+  }
+
+  selectAccountItem(item: AppMenuItem, originalEvent: Event): void {
+    item.command?.({ originalEvent, item });
+    this.drawerVisible = false;
+  }
+
+  private closeDrawerOnSelect(items: AppMenuItem[]): AppMenuItem[] {
+    return items.map(item => item.items
+      ? { ...item, items: this.closeDrawerOnSelect(item.items) }
+      : { ...item, command: event => { item.command?.(event); this.drawerVisible = false; } });
   }
 
   filterMenuItems(items: AppMenuItem[]): AppMenuItem[] {
@@ -100,7 +124,9 @@ export class AppHeaderComponent extends BaseComponent implements OnInit {
   }
 
   logout(): void {
-    this.subscribers.serverLogoutSub = this.authService.serverLogout().subscribe({
+    this.subscribers.serverLogoutSub = this.pushRegistration.unregisterDevice().pipe(
+      switchMap(() => this.authService.serverLogout())
+    ).subscribe({
       next: () => this.finishLogout(),
       error: () => this.finishLogout()
     });
