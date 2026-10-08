@@ -8,41 +8,46 @@
     <app-session-presence-cards *appPermissionHide="'session-list'"></app-session-presence-cards>
 
     <div class="summary-cards">
-      <div class="summary-card">
+      <a class="summary-card summary-card-clickable" routerLink="/job-postings">
         <i class="pi pi-briefcase"></i>
         <div>
           <div class="summary-card-value">{{ summary.totalJobs }}</div>
           <div class="summary-card-label">{{ 'analyticsPage.totalJobs' | translate }} ({{ summary.publishedJobs }} {{ 'jobPosting.statusPublished' | translate | lowercase }})</div>
         </div>
-      </div>
-      <div class="summary-card">
+        <i class="pi pi-angle-right summary-card-chevron"></i>
+      </a>
+      <a class="summary-card summary-card-clickable" routerLink="/application-management">
         <i class="pi pi-send"></i>
         <div>
           <div class="summary-card-value">{{ summary.totalApplications }}</div>
           <div class="summary-card-label">{{ 'analyticsPage.totalApplications' | translate }}</div>
         </div>
-      </div>
-      <div class="summary-card">
+        <i class="pi pi-angle-right summary-card-chevron"></i>
+      </a>
+      <a class="summary-card summary-card-clickable" routerLink="/application-management">
         <i class="pi pi-calendar"></i>
         <div>
           <div class="summary-card-value">{{ summary.applicationsLast30Days }}</div>
           <div class="summary-card-label">{{ 'analyticsPage.applicationsLast30Days' | translate }}</div>
         </div>
-      </div>
-      <div class="summary-card">
+        <i class="pi pi-angle-right summary-card-chevron"></i>
+      </a>
+      <a class="summary-card summary-card-clickable" routerLink="/analytics">
         <i class="pi pi-check-circle"></i>
         <div>
           <div class="summary-card-value">{{ summary.hiresLast30Days }}</div>
           <div class="summary-card-label">{{ 'analyticsPage.hiresLast30Days' | translate }}</div>
         </div>
-      </div>
-      <div class="summary-card">
+        <i class="pi pi-angle-right summary-card-chevron"></i>
+      </a>
+      <a class="summary-card summary-card-clickable" routerLink="/analytics">
         <i class="pi pi-clock"></i>
         <div>
           <div class="summary-card-value">{{ summary.avgTimeToHireDays ? (summary.avgTimeToHireDays | number:'1.0-1') : ('common.notAvailable' | translate) }}</div>
           <div class="summary-card-label">{{ 'analyticsPage.avgTimeToHire' | translate }}</div>
         </div>
-      </div>
+        <i class="pi pi-angle-right summary-card-chevron"></i>
+      </a>
     </div>
 
     <div class="grid">
@@ -101,41 +106,46 @@
     </div>
 
     <div class="summary-cards">
-      <div class="summary-card">
+      <a class="summary-card summary-card-clickable" routerLink="/my/applications">
         <i class="pi pi-send"></i>
         <div>
           <div class="summary-card-value">{{ applications.length }}</div>
           <div class="summary-card-label">{{ 'dashboard.totalApplications' | translate }}</div>
         </div>
-      </div>
-      <div class="summary-card">
+        <i class="pi pi-angle-right summary-card-chevron"></i>
+      </a>
+      <a class="summary-card summary-card-clickable" routerLink="/my/applications">
         <i class="pi pi-sync"></i>
         <div>
           <div class="summary-card-value">{{ activeApplicationsCount }}</div>
           <div class="summary-card-label">{{ 'dashboard.activeApplications' | translate }}</div>
         </div>
-      </div>
-      <div class="summary-card">
+        <i class="pi pi-angle-right summary-card-chevron"></i>
+      </a>
+      <a class="summary-card summary-card-clickable" routerLink="/my/applications">
         <i class="pi pi-file"></i>
         <div>
           <div class="summary-card-value">{{ offersToRespondCount }}</div>
           <div class="summary-card-label">{{ 'dashboard.offersToRespond' | translate }}</div>
         </div>
-      </div>
-      <div class="summary-card">
+        <i class="pi pi-angle-right summary-card-chevron"></i>
+      </a>
+      <a class="summary-card summary-card-clickable" routerLink="/my/saved-jobs">
         <i class="pi pi-bookmark"></i>
         <div>
           <div class="summary-card-value">{{ savedJobsCount }}</div>
           <div class="summary-card-label">{{ 'menu.savedJobs' | translate }}</div>
         </div>
-      </div>
-      <div class="summary-card">
+        <i class="pi pi-angle-right summary-card-chevron"></i>
+      </a>
+      <a class="summary-card summary-card-clickable" routerLink="/my/job-alerts">
         <i class="pi pi-bell"></i>
         <div>
           <div class="summary-card-value">{{ jobAlertsCount }}</div>
           <div class="summary-card-label">{{ 'menu.jobAlerts' | translate }}</div>
         </div>
-      </div>
+        <i class="pi pi-angle-right summary-card-chevron"></i>
+      </a>
     </div>
 
     <div class="grid">

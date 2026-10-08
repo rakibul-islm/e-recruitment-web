@@ -88,6 +88,7 @@ import { NotificationBroadcastFormComponent } from './components/shared/notifica
 import { RequiredFieldDirective } from './directives/required.field.directive';
 import { OtpNumericKeyboardDirective } from './directives/otp.numeric.keyboard.directive';
 import { PermissionHideDirective } from './directives/permission.hide.directive';
+import { TableCellLabelDirective } from './directives/table.cell.label.directive';
 import { PermissionDisableDirective } from './directives/permission.disable.directive';
 import { TranslateOptionsDirective } from './directives/translate.options.directive';
 
@@ -210,6 +211,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
     RequiredFieldDirective,
     OtpNumericKeyboardDirective,
     PermissionHideDirective,
+    TableCellLabelDirective,
     PermissionDisableDirective,
     TranslateOptionsDirective
   ],

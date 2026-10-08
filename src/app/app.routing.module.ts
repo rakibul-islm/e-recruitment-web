@@ -9,6 +9,7 @@ import { RegistrationFormComponent } from './components/user/registration/regist
 import { ForgotPasswordComponent } from './components/user/password/forgot-password/forgot.password.component';
 import { SetPasswordComponent } from './components/user/password/set-password/set.password.component';
 import { AuthGuard } from './services/utility/security/auth.guard';
+import { GuestGuard } from './services/utility/security/guest.guard';
 import { RoleSearchComponent } from './components/role/search/role.search.component';
 import { RoleFormComponent } from './components/role/form/role.form.component';
 import { RoleViewComponent } from './components/role/view/role.view.component';
@@ -72,10 +73,10 @@ import { NotificationViewComponent } from './components/shared/notification/view
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'signup', component: RegistrationFormComponent },
+  { path: 'login', component: LoginComponent, canActivate: [GuestGuard] },
+  { path: 'signup', component: RegistrationFormComponent, canActivate: [GuestGuard] },
   { path: 'register/recruiter', component: RecruiterApplicationRegisterComponent },
-  { path: 'forgot-password', component: ForgotPasswordComponent },
+  { path: 'forgot-password', component: ForgotPasswordComponent, canActivate: [GuestGuard] },
   { path: 'set-password', component: SetPasswordComponent },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   { path: 'access-denied', component: AccessDeniedComponent },

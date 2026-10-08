@@ -71,3 +71,114 @@
     color: #6b7280;
   }
 }
+
+.profile-hero-name,
+.profile-hero-email {
+  display: none;
+}
+
+// Native-app look on phones: gradient hero with the avatar, then a grouped list of label-over-value rows.
+@media (max-width: 576px) {
+  .profile-page {
+    margin-top: 0 !important;
+    padding: 0 !important;
+  }
+
+  ::ng-deep .profile-card.page-card {
+    width: 100%;
+    background: transparent;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    overflow: visible;
+
+    .p-card-body {
+      padding: 0 !important;
+    }
+
+    .p-card-content {
+      padding: 0 !important;
+    }
+  }
+
+  .profile-card .flex-column {
+    gap: 0 !important;
+  }
+
+  .profile-avatar-col {
+    margin: 0 !important;
+    padding: 1.25rem 1rem;
+    background: linear-gradient(160deg, #032967 0%, #1e4d8f 100%);
+    border-radius: 0 0 28px 28px;
+    gap: 0.25rem;
+  }
+
+  ::ng-deep .profile-avatar {
+    width: 6.5rem;
+    height: 6.5rem;
+    border: 3px solid rgba(255, 255, 255, 0.85);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+    margin-bottom: 0.5rem;
+  }
+
+  .profile-hero-name {
+    display: block;
+    color: #ffffff;
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-align: center;
+  }
+
+  .profile-hero-email {
+    display: block;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.85rem;
+    text-align: center;
+    overflow-wrap: anywhere;
+  }
+
+  .profile-table {
+    display: block;
+    width: auto;
+    margin: 0 1rem 1.5rem;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 2px 12px rgba(3, 41, 103, 0.1);
+    overflow: hidden;
+
+    tbody {
+      display: block;
+    }
+
+    tr {
+      display: block;
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid #f1f5f9;
+      background: #ffffff !important;
+    }
+
+    tr:last-child {
+      border-bottom: none;
+    }
+
+    td {
+      display: block;
+      width: 100% !important;
+      padding: 0;
+      border: none;
+    }
+
+    .profile-label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #6b7280;
+      margin-bottom: 0.15rem;
+    }
+
+    .profile-value {
+      font-size: 0.95rem;
+      overflow-wrap: anywhere;
+    }
+  }
+}
