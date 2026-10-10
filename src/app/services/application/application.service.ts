@@ -17,6 +17,10 @@ export class ApplicationService extends BaseService {
     return super.post(API_URLS.APPLY_TO_JOB, body);
   }
 
+  public mySummary(): Observable<any> {
+    return super.get(API_URLS.MY_DASHBOARD_SUMMARY);
+  }
+
   public fetchMyApplications(): Observable<any> {
     return super.get(API_URLS.MY_APPLICATIONS);
   }

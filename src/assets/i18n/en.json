@@ -50,6 +50,7 @@
     "totalApplications": "Total Applications",
     "activeApplications": "Active Applications",
     "offersToRespond": "Offers to Respond",
+    "noOffers": "No offers waiting for your response.",
     "recentApplications": "Recent Applications",
     "viewAll": "View All"
   },
@@ -843,6 +844,7 @@
     "pageTitle": "Saved Jobs",
     "savedOn": "Saved On",
     "noneFound": "You haven't saved any jobs yet.",
+    "deleteConfirm": "Remove saved job \"{{title}}\" from your list?",
     "removeSuccess": "Job removed from saved list."
   },
   "jobAlert": {
@@ -1135,12 +1137,17 @@
     "bulkAssignSuccess": "Test assigned to the selected candidates."
   },
   "analyticsPage": {
+    "detail": {
+      "jobs": "All Jobs",
+      "applications": "All Applications",
+      "recent": "Applications (Last 30 Days)"
+    },
     "pageTitle": "Recruitment Analytics",
     "totalJobs": "Total Jobs",
     "totalApplications": "Total Applications",
     "applicationsLast30Days": "Applications (Last 30 Days)",
-    "hiresLast30Days": "Hires (Last 30 Days)",
-    "avgTimeToHire": "Avg. Time to Hire (Days)",
+    "hiresLast30Days": "Total Hires (Last 30 Days)",
+    "avgTimeToHire": "Overall Avg. Time to Hire (Days)",
     "applicationsByStatus": "Applications by Status",
     "overallFunnel": "Overall Funnel",
     "noApplicationsYet": "No applications yet."

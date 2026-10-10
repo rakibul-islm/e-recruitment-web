@@ -13,16 +13,16 @@
           <th>{{ 'jobPortal.location' | translate }}</th>
           <th>{{ 'jobAlert.category' | translate }}</th>
           <th>{{ 'jobAlert.lastNotified' | translate }}</th>
-          <th></th>
+          <th class="action-col"></th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-alert>
-        <tr>
+        <tr class="has-action">
           <td>{{ alert.keyword || '-' }}</td>
           <td>{{ alert.location || '-' }}</td>
           <td>{{ alert.category || '-' }}</td>
           <td>{{ alert.lastNotifiedOn ? (alert.lastNotifiedOn | date:'dd-MM-yyyy') : ('jobAlert.notYet' | translate) }}</td>
-          <td><p-button icon="pi pi-trash" styleClass="p-button-text p-button-danger p-button-sm" (onClick)="removeAlert(alert)"></p-button></td>
+          <td class="action-col"><p-button icon="pi pi-trash" styleClass="p-button-text p-button-danger p-button-sm" [pTooltip]="'common.delete' | translate" [ariaLabel]="'common.delete' | translate" (onClick)="removeAlert(alert)"></p-button></td>
         </tr>
       </ng-template>
       <ng-template pTemplate="emptymessage">

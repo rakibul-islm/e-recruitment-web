@@ -103,6 +103,7 @@ export const API_URLS = {
 
     APPLY_TO_JOB: 'application',
     MY_APPLICATIONS: 'application/my',
+    MY_DASHBOARD_SUMMARY: 'application/my/summary',
     FILTER_APPLICATIONS: 'application/filter',
     FIND_APPLICATION_BY_ID: 'application/:id',
     CHANGE_APPLICATION_STATUS: 'application/:id/status',
@@ -181,6 +182,7 @@ export const API_URLS = {
 
     ANALYTICS_SUMMARY: 'analytics/summary',
     ANALYTICS_FUNNEL: 'analytics/funnel',
+    ANALYTICS_DETAILS: 'analytics/details',
 
     SUBMIT_RECRUITER_APPLICATION: 'recruiter-application',
     FILTER_RECRUITER_APPLICATION: 'recruiter-application/filter',

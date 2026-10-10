@@ -62,3 +62,19 @@ export class CvMatch {
     profileCompletenessPercent!: number;
     components: CvMatchComponent[] = [];
 }
+
+export class RecentApplication {
+    id!: number;
+    jobTitle?: string;
+    status!: string;
+    appliedOn!: Date | string;
+}
+
+export class CandidateDashboardSummary {
+    totalApplications = 0;
+    activeApplications = 0;
+    offersToRespond = 0;
+    savedJobs = 0;
+    jobAlerts = 0;
+    recentApplications: RecentApplication[] = [];
+}

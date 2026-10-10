@@ -11,16 +11,16 @@
           <th>{{ 'jobPortal.organization' | translate }}</th>
           <th>{{ 'common.status' | translate }}</th>
           <th>{{ 'savedJob.savedOn' | translate }}</th>
-          <th></th>
+          <th class="action-col"></th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-savedJob>
-        <tr class="selectable-row" (click)="viewJob(savedJob)">
+        <tr class="selectable-row has-action" (click)="viewJob(savedJob)">
           <td>{{ savedJob.jobTitle }}</td>
           <td>{{ savedJob.organizationName }}</td>
           <td><span class="tag">{{ savedJob.jobStatus }}</span></td>
           <td>{{ savedJob.savedOn | date:'dd-MM-yyyy' }}</td>
-          <td><p-button icon="pi pi-trash" styleClass="p-button-text p-button-danger p-button-sm" (onClick)="$event.stopPropagation(); unsave(savedJob)"></p-button></td>
+          <td class="action-col"><p-button icon="pi pi-trash" styleClass="p-button-text p-button-danger p-button-sm" [pTooltip]="'common.delete' | translate" [ariaLabel]="'common.delete' | translate" (onClick)="$event.stopPropagation(); unsave(savedJob)"></p-button></td>
         </tr>
       </ng-template>
       <ng-template pTemplate="emptymessage">

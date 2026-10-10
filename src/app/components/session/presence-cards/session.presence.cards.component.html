@@ -5,6 +5,7 @@
       <div class="summary-card-value">{{ summary.activeSessions || 0 }}</div>
       <div class="summary-card-label">{{ 'session.activeSessions' | translate }}</div>
     </div>
+    <i class="pi pi-angle-right summary-card-chevron"></i>
   </div>
   <div class="summary-card summary-card-clickable" tabindex="0" (click)="openDetail('users')" (keyup.enter)="openDetail('users')">
     <i class="pi pi-user"></i>
@@ -12,6 +13,7 @@
       <div class="summary-card-value">{{ summary.distinctActiveUsers || 0 }}</div>
       <div class="summary-card-label">{{ 'session.distinctActiveUsers' | translate }}</div>
     </div>
+    <i class="pi pi-angle-right summary-card-chevron"></i>
   </div>
   <div class="summary-card summary-card-clickable" tabindex="0" (click)="openDetail('guests')" (keyup.enter)="openDetail('guests')">
     <i class="pi pi-eye"></i>
@@ -19,6 +21,7 @@
       <div class="summary-card-value">{{ summary.activeGuests || 0 }}</div>
       <div class="summary-card-label">{{ 'session.activeGuests' | translate }}</div>
     </div>
+    <i class="pi pi-angle-right summary-card-chevron"></i>
   </div>
 </div>
 

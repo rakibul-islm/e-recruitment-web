@@ -63,11 +63,11 @@
             <th>{{ 'session.loggedInOn' | translate }}</th>
             <th>{{ 'session.expiresOn' | translate }}</th>
             <th>{{ 'common.status' | translate }}</th>
-            <th>{{ 'common.actions' | translate }}</th>
+            <th class="action-col">{{ 'common.actions' | translate }}</th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-session>
-          <tr class="selectable-row" [pSelectableRow]="session">
+          <tr class="selectable-row has-action" [pSelectableRow]="session">
             <td>{{ session.userFullName || session.userEmail || ('common.notAvailable' | translate) }}</td>
             <td>{{ session.ipAddress || ('common.notAvailable' | translate) }}</td>
             <td>{{ session.city || ('common.notAvailable' | translate) }}</td>
@@ -82,7 +82,7 @@
                 {{ (isSessionActive(session) ? 'session.statusActive' : (session.revoked ? 'session.statusRevoked' : 'session.statusExpired')) | translate }}
               </span>
             </td>
-            <td>
+            <td class="action-col">
               <ng-container *ngIf="isSessionActive(session)">
                 <p-button *appPermissionHide="'session-delete'" icon="pi pi-sign-out"
                   styleClass="p-button-danger p-button-sm p-button-text"
