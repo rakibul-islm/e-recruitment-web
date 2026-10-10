@@ -13,6 +13,8 @@ A web client for the e-recruitment platform — built with Angular 17 and PrimeN
 - [Internationalization (i18n)](#internationalization-i18n)
 - [Project Structure](#project-structure)
 - [Routes](#routes)
+- [Building for Web](#building-for-web)
+- [Building the Android APK](#building-the-android-apk)
 - [Testing](#testing)
 
 ## Features
@@ -281,6 +283,26 @@ src/assets/i18n/                   Translation files (en.json, bn.json)
 | `**`                        | redirects to `/login`          | —            |
 
 </details>
+
+## Building for Web
+
+```bash
+npm run build:prod
+```
+
+Needs `API_BASE_URL` and `GOOGLE_CLIENT_ID` env vars (see Environment Variables). Output: `dist/e-recruitment-web`
+
+## Building the Android APK
+
+Requires JDK 21 (set `JAVA_HOME`).
+
+```bash
+npm run build:android
+cd android
+./gradlew assembleRelease
+```
+
+Output: `android/app/build/outputs/apk/release/`
 
 ## Testing
 
