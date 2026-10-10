@@ -37,10 +37,6 @@
             <span class="notification-time">{{ timeAgo(notification.createdOn) }}</span>
           </span>
         </button>
-        <button type="button" class="notification-dismiss" (click)="dismiss(notification)"
-          [attr.aria-label]="'notification.dismiss' | translate">
-          <i class="pi pi-times"></i>
-        </button>
       </li>
     </ul>
 
