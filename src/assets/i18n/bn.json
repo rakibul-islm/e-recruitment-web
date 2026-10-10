@@ -47,6 +47,7 @@
     "totalApplications": "মোট আবেদন",
     "activeApplications": "চলমান আবেদন",
     "offersToRespond": "উত্তর প্রদানের অপেক্ষায় অফার",
+    "noOffers": "আপনার সাড়ার অপেক্ষায় কোনো অফার নেই।",
     "recentApplications": "সাম্প্রতিক আবেদনসমূহ",
     "viewAll": "সব দেখুন",
     "examTodayBanner": "আজ আপনার একটি স্ক্রিনিং টেস্ট নির্ধারিত আছে",
@@ -843,6 +844,7 @@
     "pageTitle": "সংরক্ষিত চাকরি",
     "savedOn": "সংরক্ষণের তারিখ",
     "noneFound": "আপনি এখনও কোনো চাকরি সংরক্ষণ করেননি।",
+    "deleteConfirm": "আপনি কি সংরক্ষিত তালিকা থেকে \"{{title}}\" চাকরিটি সরাতে চান?",
     "removeSuccess": "চাকরিটি সংরক্ষিত তালিকা থেকে সরানো হয়েছে।"
   },
   "jobAlert": {
@@ -1007,12 +1009,17 @@
     "bulkAssignSuccess": "নির্বাচিত প্রার্থীদের টেস্ট বরাদ্দ করা হয়েছে।"
   },
   "analyticsPage": {
+    "detail": {
+      "jobs": "সব চাকরি",
+      "applications": "সব আবেদন",
+      "recent": "আবেদন (গত ৩০ দিন)"
+    },
     "pageTitle": "নিয়োগ অ্যানালিটিক্স",
     "totalJobs": "মোট চাকরি",
     "totalApplications": "মোট আবেদন",
     "applicationsLast30Days": "আবেদন (গত ৩০ দিন)",
-    "hiresLast30Days": "নিয়োগ (গত ৩০ দিন)",
-    "avgTimeToHire": "গড় নিয়োগের সময় (দিন)",
+    "hiresLast30Days": "মোট নিয়োগ (গত ৩০ দিন)",
+    "avgTimeToHire": "সামগ্রিক গড় নিয়োগের সময় (দিন)",
     "applicationsByStatus": "অবস্থা অনুযায়ী আবেদন",
     "overallFunnel": "সামগ্রিক ফানেল",
     "noApplicationsYet": "এখনও কোনো আবেদন নেই।"

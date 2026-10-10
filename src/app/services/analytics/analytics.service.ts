@@ -21,4 +21,9 @@ export class AnalyticsService extends BaseService {
     const params = jobCircularId ? new Map<any, any>().set('jobCircularId', jobCircularId) : undefined;
     return super.get(API_URLS.ANALYTICS_FUNNEL, params);
   }
+
+  public details(mode: string, page: number, size: number): Observable<any> {
+    const params = new Map<any, any>().set('mode', mode).set('page', page).set('size', size);
+    return super.get(API_URLS.ANALYTICS_DETAILS, params);
+  }
 }

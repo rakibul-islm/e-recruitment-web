@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { BaseComponent } from '../../base.component';
 import { SavedJobService } from '../../../services/saved-job/saved.job.service';
 import { SavedJob } from '../../../services/saved-job/domain/saved.job.domain';
+import { CommonConfirmDialogService } from '../../../services/utility/common.confirm.dialog.service';
 
 @Component({
   selector: 'app-candidate-saved-jobs',
@@ -11,7 +12,11 @@ import { SavedJob } from '../../../services/saved-job/domain/saved.job.domain';
 export class CandidateSavedJobsComponent extends BaseComponent implements OnInit {
   savedJobs: SavedJob[] = [];
 
-  constructor(private savedJobService: SavedJobService, private router: Router) {
+  constructor(
+    private savedJobService: SavedJobService,
+    private router: Router,
+    private commonConfirmDialogService: CommonConfirmDialogService
+  ) {
     super();
   }
 
@@ -31,10 +36,12 @@ export class CandidateSavedJobsComponent extends BaseComponent implements OnInit
   }
 
   unsave(savedJob: SavedJob): void {
-    this.subscribers.unsaveSub = this.savedJobService.toggle(savedJob.jobCircularId).subscribe(() => {
-      this.notificationService.sendSuccessMsg('savedJob.removeSuccess');
-      this.fetchSavedJobs();
-    });
+    this.commonConfirmDialogService.confirm(() => {
+      this.subscribers.unsaveSub = this.savedJobService.toggle(savedJob.jobCircularId).subscribe(() => {
+        this.notificationService.sendSuccessMsg('savedJob.removeSuccess');
+        this.fetchSavedJobs();
+      });
+    }, null, 'savedJob.deleteConfirm', { title: savedJob.jobTitle });
   }
 
   viewJob(savedJob: SavedJob): void {

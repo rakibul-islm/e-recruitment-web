@@ -8,46 +8,44 @@
     <app-session-presence-cards *appPermissionHide="'session-list'"></app-session-presence-cards>
 
     <div class="summary-cards">
-      <a class="summary-card summary-card-clickable" routerLink="/job-postings">
+      <div class="summary-card summary-card-clickable" tabindex="0" (click)="openDetail('jobs')" (keyup.enter)="openDetail('jobs')">
         <i class="pi pi-briefcase"></i>
         <div>
           <div class="summary-card-value">{{ summary.totalJobs }}</div>
           <div class="summary-card-label">{{ 'analyticsPage.totalJobs' | translate }} ({{ summary.publishedJobs }} {{ 'jobPosting.statusPublished' | translate | lowercase }})</div>
         </div>
         <i class="pi pi-angle-right summary-card-chevron"></i>
-      </a>
-      <a class="summary-card summary-card-clickable" routerLink="/application-management">
+      </div>
+      <div class="summary-card summary-card-clickable" tabindex="0" (click)="openDetail('applications')" (keyup.enter)="openDetail('applications')">
         <i class="pi pi-send"></i>
         <div>
           <div class="summary-card-value">{{ summary.totalApplications }}</div>
           <div class="summary-card-label">{{ 'analyticsPage.totalApplications' | translate }}</div>
         </div>
         <i class="pi pi-angle-right summary-card-chevron"></i>
-      </a>
-      <a class="summary-card summary-card-clickable" routerLink="/application-management">
+      </div>
+      <div class="summary-card summary-card-clickable" tabindex="0" (click)="openDetail('recent')" (keyup.enter)="openDetail('recent')">
         <i class="pi pi-calendar"></i>
         <div>
           <div class="summary-card-value">{{ summary.applicationsLast30Days }}</div>
           <div class="summary-card-label">{{ 'analyticsPage.applicationsLast30Days' | translate }}</div>
         </div>
         <i class="pi pi-angle-right summary-card-chevron"></i>
-      </a>
-      <a class="summary-card summary-card-clickable" routerLink="/analytics">
+      </div>
+      <div class="summary-card">
         <i class="pi pi-check-circle"></i>
         <div>
           <div class="summary-card-value">{{ summary.hiresLast30Days }}</div>
           <div class="summary-card-label">{{ 'analyticsPage.hiresLast30Days' | translate }}</div>
         </div>
-        <i class="pi pi-angle-right summary-card-chevron"></i>
-      </a>
-      <a class="summary-card summary-card-clickable" routerLink="/analytics">
+      </div>
+      <div class="summary-card">
         <i class="pi pi-clock"></i>
         <div>
           <div class="summary-card-value">{{ summary.avgTimeToHireDays ? (summary.avgTimeToHireDays | number:'1.0-1') : ('common.notAvailable' | translate) }}</div>
           <div class="summary-card-label">{{ 'analyticsPage.avgTimeToHire' | translate }}</div>
         </div>
-        <i class="pi pi-angle-right summary-card-chevron"></i>
-      </a>
+      </div>
     </div>
 
     <div class="grid">
@@ -106,46 +104,46 @@
     </div>
 
     <div class="summary-cards">
-      <a class="summary-card summary-card-clickable" routerLink="/my/applications">
+      <div class="summary-card summary-card-clickable" tabindex="0" (click)="openCandidateDetail('myApplications')" (keyup.enter)="openCandidateDetail('myApplications')">
         <i class="pi pi-send"></i>
         <div>
-          <div class="summary-card-value">{{ applications.length }}</div>
+          <div class="summary-card-value">{{ totalApplicationsCount }}</div>
           <div class="summary-card-label">{{ 'dashboard.totalApplications' | translate }}</div>
         </div>
         <i class="pi pi-angle-right summary-card-chevron"></i>
-      </a>
-      <a class="summary-card summary-card-clickable" routerLink="/my/applications">
+      </div>
+      <div class="summary-card summary-card-clickable" tabindex="0" (click)="openCandidateDetail('myActive')" (keyup.enter)="openCandidateDetail('myActive')">
         <i class="pi pi-sync"></i>
         <div>
           <div class="summary-card-value">{{ activeApplicationsCount }}</div>
           <div class="summary-card-label">{{ 'dashboard.activeApplications' | translate }}</div>
         </div>
         <i class="pi pi-angle-right summary-card-chevron"></i>
-      </a>
-      <a class="summary-card summary-card-clickable" routerLink="/my/applications">
+      </div>
+      <div class="summary-card summary-card-clickable" tabindex="0" (click)="openCandidateDetail('myOffers')" (keyup.enter)="openCandidateDetail('myOffers')">
         <i class="pi pi-file"></i>
         <div>
           <div class="summary-card-value">{{ offersToRespondCount }}</div>
           <div class="summary-card-label">{{ 'dashboard.offersToRespond' | translate }}</div>
         </div>
         <i class="pi pi-angle-right summary-card-chevron"></i>
-      </a>
-      <a class="summary-card summary-card-clickable" routerLink="/my/saved-jobs">
+      </div>
+      <div class="summary-card summary-card-clickable" tabindex="0" (click)="openCandidateDetail('mySavedJobs')" (keyup.enter)="openCandidateDetail('mySavedJobs')">
         <i class="pi pi-bookmark"></i>
         <div>
           <div class="summary-card-value">{{ savedJobsCount }}</div>
           <div class="summary-card-label">{{ 'menu.savedJobs' | translate }}</div>
         </div>
         <i class="pi pi-angle-right summary-card-chevron"></i>
-      </a>
-      <a class="summary-card summary-card-clickable" routerLink="/my/job-alerts">
+      </div>
+      <div class="summary-card summary-card-clickable" tabindex="0" (click)="openCandidateDetail('myJobAlerts')" (keyup.enter)="openCandidateDetail('myJobAlerts')">
         <i class="pi pi-bell"></i>
         <div>
           <div class="summary-card-value">{{ jobAlertsCount }}</div>
           <div class="summary-card-label">{{ 'menu.jobAlerts' | translate }}</div>
         </div>
         <i class="pi pi-angle-right summary-card-chevron"></i>
-      </a>
+      </div>
     </div>
 
     <div class="grid">
@@ -203,4 +201,112 @@
       </div>
     </div>
   </ng-container>
+
+  <p-dialog [header]="detailHeader | translate" [(visible)]="detailVisible" [modal]="true" [style]="{ width: '75rem' }" [breakpoints]="{ '960px': '95vw' }" styleClass="branded-dialog" appendTo="body">
+    <p-table *ngIf="detailVisible && !isCandidateDetail" [value]="detailRows" [lazy]="true" (onLazyLoad)="fetchDetail($event)" [paginator]="true" [rows]="rows" [totalRecords]="detailTotal" [rowsPerPageOptions]="[10, 20, 50]" [loading]="detailLoading" responsiveLayout="scroll">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>{{ 'candidateApplication.jobTitle' | translate }}</th>
+          <th>{{ 'common.status' | translate }}</th>
+          <th *ngIf="detailMode !== 'jobs'">{{ 'applicationManagement.candidateName' | translate }}</th>
+          <th *ngIf="detailMode !== 'jobs'">{{ 'candidateApplication.appliedOn' | translate }}</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-row>
+        <tr>
+          <td>{{ row.jobTitle }}</td>
+          <td><span class="tag">{{ row.status }}</span></td>
+          <td *ngIf="detailMode !== 'jobs'">{{ row.candidateName }}</td>
+          <td *ngIf="detailMode !== 'jobs'">{{ row.appliedOn | date:'dd-MM-yyyy' }}</td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr><td colspan="5" class="text-center">{{ 'applicationManagement.noneFound' | translate }}</td></tr>
+      </ng-template>
+    </p-table>
+
+    <p-table *ngIf="detailVisible && (detailMode === 'myApplications' || detailMode === 'myActive')" [value]="candidateRows" [loading]="detailLoading" responsiveLayout="scroll" dataKey="id" styleClass="p-datatable-sm">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>{{ 'candidateApplication.jobTitle' | translate }}</th>
+          <th>{{ 'common.status' | translate }}</th>
+          <th>{{ 'candidateApplication.appliedOn' | translate }}</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-application>
+        <tr class="selectable-row" (click)="goToApplication(application.id)">
+          <td>{{ application.jobTitle }}</td>
+          <td><span class="tag">{{ application.status }}</span></td>
+          <td>{{ application.appliedOn | date:'dd-MM-yyyy' }}</td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr><td colspan="3" class="text-center">{{ 'candidateApplication.noneFound' | translate }}</td></tr>
+      </ng-template>
+    </p-table>
+
+    <p-table *ngIf="detailVisible && detailMode === 'myOffers'" [value]="candidateRows" [loading]="detailLoading" responsiveLayout="scroll" dataKey="id" styleClass="p-datatable-sm">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>{{ 'candidateApplication.jobTitle' | translate }}</th>
+          <th>{{ 'common.status' | translate }}</th>
+          <th>{{ 'candidateApplication.validUntil' | translate }}</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-offer>
+        <tr class="selectable-row" (click)="goToApplication(offer.applicationId)">
+          <td>{{ offer.jobTitle || offer.position }}</td>
+          <td><span class="tag">{{ offer.status }}</span></td>
+          <td>{{ offer.expiryDate ? (offer.expiryDate | date:'dd-MM-yyyy') : ('common.notAvailable' | translate) }}</td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr><td colspan="3" class="text-center">{{ 'dashboard.noOffers' | translate }}</td></tr>
+      </ng-template>
+    </p-table>
+
+    <p-table *ngIf="detailVisible && detailMode === 'mySavedJobs'" [value]="candidateRows" [loading]="detailLoading" responsiveLayout="scroll" dataKey="id" styleClass="p-datatable-sm">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>{{ 'candidateApplication.jobTitle' | translate }}</th>
+          <th>{{ 'jobPortal.organization' | translate }}</th>
+          <th>{{ 'common.status' | translate }}</th>
+          <th>{{ 'savedJob.savedOn' | translate }}</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-savedJob>
+        <tr class="selectable-row" (click)="goToJob(savedJob.jobCircularId)">
+          <td>{{ savedJob.jobTitle }}</td>
+          <td>{{ savedJob.organizationName }}</td>
+          <td><span class="tag">{{ savedJob.jobStatus }}</span></td>
+          <td>{{ savedJob.savedOn | date:'dd-MM-yyyy' }}</td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr><td colspan="4" class="text-center">{{ 'savedJob.noneFound' | translate }}</td></tr>
+      </ng-template>
+    </p-table>
+
+    <p-table *ngIf="detailVisible && detailMode === 'myJobAlerts'" [value]="candidateRows" [loading]="detailLoading" responsiveLayout="scroll" dataKey="id" styleClass="p-datatable-sm">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>{{ 'jobPortal.keyword' | translate }}</th>
+          <th>{{ 'jobPortal.location' | translate }}</th>
+          <th>{{ 'jobAlert.category' | translate }}</th>
+          <th>{{ 'jobAlert.lastNotified' | translate }}</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-alert>
+        <tr>
+          <td>{{ alert.keyword || '-' }}</td>
+          <td>{{ alert.location || '-' }}</td>
+          <td>{{ alert.category || '-' }}</td>
+          <td>{{ alert.lastNotifiedOn ? (alert.lastNotifiedOn | date:'dd-MM-yyyy') : ('jobAlert.notYet' | translate) }}</td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr><td colspan="4" class="text-center">{{ 'jobAlert.noneFound' | translate }}</td></tr>
+      </ng-template>
+    </p-table>
+  </p-dialog>
 </div>
