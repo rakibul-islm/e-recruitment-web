@@ -8,6 +8,7 @@ import { CandidateProfile, ProfileCompleteness } from '../../../services/candida
 import { AuthService } from '../../../services/utility/security/auth.service';
 import { Profile } from '../../../services/user/domain/user.domain';
 import { ProfileCompletenessComponent } from './completeness/profile.completeness.component';
+import { CvParserService, ParsedCv } from '../../../services/candidate-profile/cv.parser.service';
 
 @Component({
   selector: 'app-candidate-profile-form',
@@ -17,6 +18,7 @@ import { ProfileCompletenessComponent } from './completeness/profile.completenes
 export class CandidateProfileFormComponent extends BaseComponent implements OnInit {
   profileForm!: FormGroup;
   generating = false;
+  scanning = false;
   suggestions: string[] = [];
   headlineValues = ['Software Engineer', 'Senior Software Engineer', 'Full Stack Developer', 'Frontend Developer', 'Backend Developer', 'Mobile App Developer', 'Web Developer', 'Java Developer', 'Data Analyst', 'Data Scientist', 'DevOps Engineer', 'QA Engineer', 'UI/UX Designer', 'Graphic Designer', 'Project Manager', 'Business Analyst', 'System Analyst', 'Network Engineer', 'IT Support Officer', 'Accountant', 'Finance Officer', 'Banking Professional', 'Marketing Executive', 'Sales Executive', 'HR Executive', 'Customer Service Officer', 'Teacher', 'Civil Engineer', 'Electrical Engineer', 'Mechanical Engineer', 'Fresh Graduate', 'Student'];
   fieldOfStudyValues = ['Computer Science and Engineering', 'Information Technology', 'Software Engineering', 'Electrical and Electronic Engineering', 'Civil Engineering', 'Mechanical Engineering', 'Business Administration', 'Business Studies', 'Accounting', 'Finance', 'Marketing', 'Management', 'Economics', 'Banking and Insurance', 'Human Resource Management', 'English', 'Bangla', 'Law', 'Mathematics', 'Statistics', 'Physics', 'Chemistry', 'Biology', 'Pharmacy', 'Medicine', 'Sociology', 'Political Science', 'Public Administration', 'Psychology', 'Education', 'Architecture', 'Agriculture', 'Science', 'Commerce', 'Humanities'];
@@ -33,7 +35,8 @@ export class CandidateProfileFormComponent extends BaseComponent implements OnIn
     private candidateProfileService: CandidateProfileService,
     private authService: AuthService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private cvParser: CvParserService
   ) {
     super();
   }
@@ -123,6 +126,57 @@ export class CandidateProfileFormComponent extends BaseComponent implements OnIn
 
   buildProjectGroup(item: any = {}): FormGroup {
     return this.formBuilder.group({ name: [item.name], description: [item.description], url: [item.url] });
+  }
+
+  async onCvSelected(event: Event): Promise<void> {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+    input.value = '';
+    if (!file) return;
+    if (file.size > CvParserService.MAX_BYTES) {
+      this.notificationService.sendErrorMsg('candidateProfile.cvScanTooLarge');
+      return;
+    }
+    this.scanning = true;
+    try {
+      this.applyParsedCv(await this.cvParser.parseFile(file));
+    } catch (error: any) {
+      this.notificationService.sendErrorMsg(error?.message === 'unsupported' ? 'candidateProfile.cvScanUnsupported' : 'candidateProfile.cvScanFailed');
+    } finally {
+      this.scanning = false;
+    }
+  }
+
+  // Scanned entries are added above whatever the candidate already has, and basic fields are only filled when empty.
+  private applyParsedCv(parsed: ParsedCv): void {
+    const fillIfEmpty = (name: string, value?: string) => {
+      const control = this.profileForm.get(name);
+      if (control && value && !control.value) control.setValue(value);
+    };
+    fillIfEmpty('headline', parsed.headline);
+    fillIfEmpty('summary', parsed.summary);
+    fillIfEmpty('linkedinUrl', parsed.linkedinUrl);
+    fillIfEmpty('portfolioUrl', parsed.portfolioUrl);
+
+    const existingSkills = new Set(this.skills.controls.map(c => String(c.value.name || '').toLowerCase()));
+    const existingLanguages = new Set(this.languages.controls.map(c => String(c.value.name || '').toLowerCase()));
+    const newSkills = parsed.skills.filter(i => !existingSkills.has(i.name.toLowerCase()));
+    const newLanguages = parsed.languages.filter(i => !existingLanguages.has(i.name.toLowerCase()));
+    const prepend = (array: FormArray, items: any[], build: (item: any) => FormGroup) => items.slice().reverse().forEach(item => array.insert(0, build(item)));
+    prepend(this.workExperience, parsed.workExperience, i => this.buildWorkExperienceGroup(i));
+    prepend(this.education, parsed.education, i => this.buildEducationGroup(i));
+    prepend(this.skills, newSkills, i => this.buildSkillGroup(i));
+    prepend(this.certifications, parsed.certifications, i => this.buildCertificationGroup(i));
+    prepend(this.languages, newLanguages, i => this.buildLanguageGroup(i));
+    prepend(this.projects, parsed.projects, i => this.buildProjectGroup(i));
+    this.profileForm.markAsDirty();
+
+    const count = parsed.workExperience.length + parsed.education.length + newSkills.length + parsed.certifications.length + newLanguages.length + parsed.projects.length;
+    if (count) {
+      this.notificationService.sendSuccessMsg('candidateProfile.cvScanSuccess', { count });
+    } else {
+      this.notificationService.sendWarningMsg('candidateProfile.cvScanNothingFound');
+    }
   }
 
   suggest(event: { query: string }, source: string[]): void {

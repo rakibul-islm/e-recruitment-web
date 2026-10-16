@@ -768,6 +768,12 @@
   "candidateProfile": {
     "pageTitle": "My CV",
     "editTitle": "Edit My CV",
+    "scanCv": "Upload CV & Scan",
+    "cvScanSuccess": "Imported {{count}} entries from your CV. Please review before saving.",
+    "cvScanNothingFound": "Could not find any recognizable sections in this CV.",
+    "cvScanFailed": "Could not read this file. Try another PDF or DOCX.",
+    "cvScanUnsupported": "Only PDF and DOCX files are supported.",
+    "cvScanTooLarge": "File is too large (max 5 MB).",
     "saveProfile": "Save & Generate CV",
     "generatedOn": "Generated on",
     "noCvsYet": "No CV generated yet. Click \"Edit\" and save to create one.",
