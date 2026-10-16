@@ -24,11 +24,11 @@
           </tr>
           <tr>
             <td class="profile-label">{{ 'user.mobilePrimary' | translate }}</td>
-            <td class="profile-value">{{ profile.mobile || ('common.notAvailable' | translate) }}</td>
+            <td class="profile-value">{{ profile.mobile ? ((profile.mobileCountryCode || '') + ' ' + profile.mobile) : ('common.notAvailable' | translate) }}</td>
           </tr>
           <tr>
             <td class="profile-label">{{ 'user.mobileSecondary' | translate }}</td>
-            <td class="profile-value">{{ profile.phone || ('common.notAvailable' | translate) }}</td>
+            <td class="profile-value">{{ profile.secondaryMobile ? ((profile.secondaryMobileCountryCode || '') + ' ' + profile.secondaryMobile) : ('common.notAvailable' | translate) }}</td>
           </tr>
           <tr>
             <td class="profile-label">{{ 'user.address' | translate }}</td>

@@ -23,12 +23,13 @@
   </div>
 
   <ul class="completeness-list">
-    <li *ngFor="let section of missingSections">
+    <li *ngFor="let section of missingSections" class="completeness-item" tabindex="0" role="button" (click)="goToSection(section.key)" (keyup.enter)="goToSection(section.key)">
       <div class="completeness-item-text">
         <span class="completeness-section">{{ 'profileCompleteness.section.' + section.key | translate }}</span>
         <span class="completeness-hint">{{ 'profileCompleteness.hint.' + section.key | translate }}</span>
       </div>
       <span class="completeness-points">+{{ section.weight - section.earned }}</span>
+      <i class="pi pi-angle-right completeness-chevron"></i>
     </li>
   </ul>
 

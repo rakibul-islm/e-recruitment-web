@@ -749,3 +749,104 @@ form .form-section-title:not(:first-child) {
     }
   }
 }
+
+/* Shared entrance motion for stat tiles and page cards: transform/opacity only, played once on
+   creation (backwards fill keeps the hover/press transforms working afterwards). */
+@keyframes ui-rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+
+.summary-card,
+.page-card {
+  animation: ui-rise 0.45s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+
+.summary-card:nth-child(2) { animation-delay: 0.05s; }
+.summary-card:nth-child(3) { animation-delay: 0.1s; }
+.summary-card:nth-child(4) { animation-delay: 0.15s; }
+.summary-card:nth-child(5) { animation-delay: 0.2s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .summary-card,
+  .page-card {
+    animation: none;
+  }
+}
+
+/* MCQ test form question pool: option text is a full question, so chips truncate and overlay items wrap. */
+.question-pool-select {
+  max-width: 100%;
+  min-width: 0;
+
+  .p-multiselect-label {
+    white-space: normal;
+  }
+
+  .p-multiselect-token {
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .p-multiselect-token-label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+.question-pool-panel {
+  max-width: calc(100vw - 2rem);
+
+  .p-multiselect-item {
+    white-space: normal;
+    overflow-wrap: anywhere;
+    align-items: flex-start;
+  }
+}
+
+/* Mobile: every filled button turns outlined/transparent, matching the View CV button. */
+@media screen and (max-width: 768px) {
+  .p-button:not(.p-button-text):not(.p-button-link),
+  .page-header-actions .p-button:not(.p-button-text):not(.p-button-link) {
+    --btn-color: #1e4d8f;
+    --btn-hover-bg: #eef3fb;
+    background: transparent !important;
+    color: var(--btn-color) !important;
+    border-color: var(--btn-color) !important;
+    box-shadow: none !important;
+
+    .p-button-icon,
+    .p-button-label {
+      color: var(--btn-color) !important;
+    }
+
+    &:enabled:hover {
+      background: var(--btn-hover-bg) !important;
+      color: var(--btn-color) !important;
+      border-color: var(--btn-color) !important;
+    }
+
+    &.p-button-secondary {
+      --btn-color: #4b5563;
+      --btn-hover-bg: #f3f4f6;
+    }
+
+    &.p-button-danger {
+      --btn-color: #b91c1c;
+      --btn-hover-bg: #fef2f2;
+    }
+
+    &.p-button-success {
+      --btn-color: #15803d;
+      --btn-hover-bg: #f0fdf4;
+    }
+
+    &.p-button-warning {
+      --btn-color: #b45309;
+      --btn-hover-bg: #fffbeb;
+    }
+  }
+}

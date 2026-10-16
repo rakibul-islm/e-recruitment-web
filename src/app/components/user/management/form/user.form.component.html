@@ -32,10 +32,18 @@
           </div>
 
           <div class="col-12 md:col-4">
-            <p-floatLabel>
-              <input id="userMobile" type="text" formControlName="mobile" pInputText class="w-full" />
-              <label for="userMobile">{{ 'user.mobilePrimary' | translate }}</label>
-            </p-floatLabel>
+            <div class="flex gap-2">
+              <p-dropdown formControlName="mobileCountryCode" [options]="countryCodes" optionLabel="label" optionValue="value" [filter]="true" filterBy="label" appendTo="body" [style]="{ width: '7.5rem' }" styleClass="flex-shrink-0">
+                <ng-template pTemplate="selectedItem" let-option>{{ option.value }}</ng-template>
+              </p-dropdown>
+              <div class="flex-1" style="min-width: 0">
+                <p-floatLabel>
+                  <input id="userMobile" type="text" formControlName="mobile" pInputText class="w-full" />
+                  <label for="userMobile">{{ 'user.mobilePrimary' | translate }}</label>
+                </p-floatLabel>
+              </div>
+            </div>
+            <small class="p-error" *ngIf="userForm.controls['mobileCountryCode'].touched && userForm.controls['mobileCountryCode'].errors?.['required']">{{ 'user.countryCodeRequired' | translate }}</small>
             <ng-container *ngIf="userForm.controls['mobile'].touched">
               <small class="p-error" *ngIf="userForm.controls['mobile'].errors?.['required']">{{ 'user.mobileRequired' | translate }}</small>
               <small class="p-error" *ngIf="userForm.controls['mobile'].errors?.['pattern']">{{ 'user.mobilePattern' | translate }}</small>
@@ -43,10 +51,18 @@
           </div>
 
           <div class="col-12 md:col-4">
-            <p-floatLabel>
-              <input id="userPhone" type="text" formControlName="phone" pInputText class="w-full" />
-              <label for="userPhone">{{ 'user.mobileSecondary' | translate }}</label>
-            </p-floatLabel>
+            <div class="flex gap-2">
+              <p-dropdown formControlName="secondaryMobileCountryCode" [options]="countryCodes" optionLabel="label" optionValue="value" [filter]="true" filterBy="label" appendTo="body" [style]="{ width: '7.5rem' }" styleClass="flex-shrink-0">
+                <ng-template pTemplate="selectedItem" let-option>{{ option.value }}</ng-template>
+              </p-dropdown>
+              <div class="flex-1" style="min-width: 0">
+                <p-floatLabel>
+                  <input id="userPhone" type="text" formControlName="secondaryMobile" pInputText class="w-full" />
+                  <label for="userPhone">{{ 'user.mobileSecondary' | translate }}</label>
+                </p-floatLabel>
+              </div>
+            </div>
+            <small class="p-error" *ngIf="userForm.controls['secondaryMobile'].errors?.['pattern']">{{ 'user.mobilePattern' | translate }}</small>
           </div>
 
           <div class="col-12 md:col-8">

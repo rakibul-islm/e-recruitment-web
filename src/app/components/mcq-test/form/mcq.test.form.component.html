@@ -63,7 +63,7 @@
         <div>
           <p-floatLabel>
             <p-multiSelect id="questionIds" [options]="questionOptions" formControlName="questionIds" optionLabel="label" optionValue="value"
-              styleClass="w-full" display="chip" [filter]="true"></p-multiSelect>
+              styleClass="w-full question-pool-select" panelStyleClass="question-pool-panel" display="chip" [filter]="true"></p-multiSelect>
             <label for="questionIds">{{ 'mcqTest.questionPool' | translate }}</label>
           </p-floatLabel>
           <small class="text-color-secondary">{{ 'mcqTest.questionPoolHint' | translate }}</small>

@@ -20,11 +20,11 @@
         </tr>
         <tr>
           <td class="detail-label">{{ 'user.mobilePrimary' | translate }}</td>
-          <td class="detail-value">{{ user.mobile || ('common.notAvailable' | translate) }}</td>
+          <td class="detail-value">{{ user.mobile ? ((user.mobileCountryCode || '') + ' ' + user.mobile) : ('common.notAvailable' | translate) }}</td>
         </tr>
         <tr>
           <td class="detail-label">{{ 'user.mobileSecondary' | translate }}</td>
-          <td class="detail-value">{{ user.phone || ('common.notAvailable' | translate) }}</td>
+          <td class="detail-value">{{ user.secondaryMobile ? ((user.secondaryMobileCountryCode || '') + ' ' + user.secondaryMobile) : ('common.notAvailable' | translate) }}</td>
         </tr>
         <tr>
           <td class="detail-label">{{ 'user.address' | translate }}</td>
