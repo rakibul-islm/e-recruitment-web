@@ -15,6 +15,8 @@ describe('CV parsing', () => {
       expect(headingKeyOf('Work Experience')).toBe('workExperience');
       expect(headingKeyOf('Licenses & Certifications')).toBe('certifications');
       expect(headingKeyOf('W O R K  E X P E R I E N C E')).toBe('workExperience');
+      expect(headingKeyOf('E D U CAT I O N & T R A I N I N G')).toBe('education');
+      expect(headingKeyOf('S E L EC T E D P R OJ EC T S')).toBe('projects');
       expect(headingKeyOf('Teaching Experience')).toBe('workExperience');
       expect(headingKeyOf('EDUCATION & TRAINING')).toBe('education');
     });

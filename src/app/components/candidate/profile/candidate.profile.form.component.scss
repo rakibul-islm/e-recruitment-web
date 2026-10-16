@@ -168,3 +168,16 @@
 [id^="cv-section-"] {
   scroll-margin-top: 5rem;
 }
+
+::ng-deep .page-header-actions .cv-action-btn.p-button-outlined.p-button {
+  background: transparent !important;
+  color: #1e4d8f !important;
+  border-color: #1e4d8f !important;
+  box-shadow: none !important;
+
+  &:hover {
+    background: #eef3fb !important;
+    color: #163a6b !important;
+    border-color: #163a6b !important;
+  }
+}

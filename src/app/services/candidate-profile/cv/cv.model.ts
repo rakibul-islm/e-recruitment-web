@@ -56,7 +56,7 @@ export const EMAIL_REGEX = /[\w.+-]+@[\w-]+(?:\.[\w-]+)+/;
 export const SECTION_VOCAB: { [key: string]: string[] } = {
   summary: ['summary', 'professionalsummary', 'careersummary', 'profile', 'professionalprofile', 'objective', 'careerobjective', 'about', 'aboutme', 'personalstatement', 'executivesummary', 'profilesummary', 'summaryofqualifications'],
   workExperience: ['experience', 'workexperience', 'professionalexperience', 'employmenthistory', 'workhistory', 'employment', 'profession', 'careerhistory', 'jobexperience', 'employmentrecord', 'experiences', 'relevantexperience', 'employmentdetails', 'workingexperience', 'internship', 'internships', 'internshipexperience', 'professionalbackground', 'careerexperience', 'industrialattachment', 'teachingexperience', 'academicexperience', 'bankingexperience', 'academicpositions', 'positionsheld', 'positions', 'professionalpositions', 'facultypositions', 'teachingpositions'],
-  education: ['education', 'academicqualification', 'academicqualifications', 'educationalqualification', 'educationalqualifications', 'academicbackground', 'academicprofile', 'qualifications', 'educationalbackground', 'academics', 'academicrecord', 'educationalprofile', 'educationdetails'],
+  education: ['education', 'academicqualification', 'academicqualifications', 'educationalqualification', 'educationalqualifications', 'academicbackground', 'academicprofile', 'qualifications', 'educationalbackground', 'academics', 'academicrecord', 'educationalprofile', 'educationdetails', 'educationandtraining', 'educationandcertifications', 'educationandqualifications'],
   skills: ['skills', 'skill', 'technicalskills', 'keyskills', 'coreskills', 'professionalskills', 'personalskill', 'personalskills', 'otherskills', 'othersskill', 'othersskills', 'otherskill', 'specialization', 'fieldsofspecialization', 'technologies', 'competencies', 'expertise', 'technicalexpertise', 'computerskills', 'itskills', 'skillsandexpertise', 'techskills', 'technicalproficiency', 'corecompetencies', 'keycompetencies', 'toolsandtechnologies', 'toolsandskills', 'professionalcompetencies'],
   certifications: ['certifications', 'certification', 'certificates', 'licenses', 'licensesandcertifications', 'licensesandcertificates', 'courses', 'professionalqualification', 'professionalqualifications', 'trainingsummary', 'training', 'trainings', 'trainingandcertifications', 'workshops', 'professionalcertifications', 'coursesandcertifications', 'trainingandworkshops', 'professionaltraining', 'trainingandcourses', 'coursesandtraining', 'trainingcourses', 'trainingprograms', 'achievementsandcertifications'],
   languages: ['languages', 'language', 'languageproficiency', 'languageskill', 'languageskills', 'languagecompetency', 'spokenlanguages', 'languagesspoken', 'languageknowledge'],
@@ -123,7 +123,8 @@ export function editDistanceAtMostOne(a: string, b: string): boolean {
 export function headingKeyOf(text: string): SectionKey | null {
   const spaced = text.replace(/\([^)]*\)/g, ' ').replace(/[:：]+\s*$/, '').trim();
   const tokens = spaced.split(/\s+/).filter(t => t);
-  const letterSpaced = tokens.length >= 4 && tokens.filter(t => t.length === 1).length >= tokens.length * 0.8;
+  const singles = tokens.filter(t => t.length === 1).length;
+  const letterSpaced = tokens.length >= 4 && (singles >= tokens.length * 0.8 || (singles >= tokens.length * 0.6 && spaced === spaced.toUpperCase()));
   const stripped = spaced;
   if (!stripped || stripped.length > (letterSpaced ? 80 : 48) || tokens.length > (letterSpaced ? 40 : 6) || /[.,;]$/.test(stripped) || /\d/.test(stripped)) return null;
   const squashed = squash(stripped);

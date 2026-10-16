@@ -13,11 +13,25 @@ export class CvParserService {
   private static readonly MIN_TEXT_CHARS = 40;
 
   async parseFile(file: File): Promise<ParsedCv> {
-    const name = file.name.toLowerCase();
-    if (name.endsWith('.pdf')) return this.parsePdf(file);
-    if (name.endsWith('.docx')) return this.parseDocx(file);
-    if (file.type.startsWith('image/') || /\.(jpe?g|png|webp|bmp)$/.test(name)) return this.parseImage(file);
+    const kind = await this.detectKind(file);
+    if (kind === 'pdf') return this.parsePdf(file);
+    if (kind === 'docx') return this.parseDocx(file);
+    if (kind === 'image') return this.parseImage(file);
     throw new Error('unsupported');
+  }
+
+  private async detectKind(file: File): Promise<'pdf' | 'docx' | 'image' | null> {
+    const head = new Uint8Array(await file.slice(0, 12).arrayBuffer());
+    const startsWith = (...bytes: number[]) => bytes.every((b, i) => head[i] === b);
+    if (startsWith(0x25, 0x50, 0x44, 0x46)) return 'pdf';
+    if (startsWith(0x50, 0x4b, 0x03, 0x04)) return 'docx';
+    if (startsWith(0xff, 0xd8, 0xff) || startsWith(0x89, 0x50, 0x4e, 0x47) || startsWith(0x42, 0x4d) || (startsWith(0x52, 0x49, 0x46, 0x46) && head[8] === 0x57 && head[9] === 0x45)) return 'image';
+    const name = file.name.toLowerCase();
+    const type = file.type.toLowerCase();
+    if (name.endsWith('.pdf') || type === 'application/pdf') return 'pdf';
+    if (name.endsWith('.docx') || type.includes('wordprocessingml')) return 'docx';
+    if (type.startsWith('image/') || /\.(jpe?g|png|webp|bmp)$/.test(name)) return 'image';
+    return null;
   }
 
   private async parseImage(file: File): Promise<ParsedCv> {
