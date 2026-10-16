@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { COUNTRY_CODES, DEFAULT_COUNTRY_CODE, withMobileValidation } from '../../../utils/country.codes';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BaseComponent } from '../../base.component';
@@ -14,6 +15,7 @@ import { PasswordPolicy } from '../../../services/password-policy/domain/passwor
   styleUrls: ['./registration.form.component.scss']
 })
 export class RegistrationFormComponent extends BaseComponent implements OnInit {
+  countryCodes = COUNTRY_CODES;
   step: 'form' | 'otp' = 'form';
   registerForm!: FormGroup;
   otpForm!: FormGroup;
@@ -61,10 +63,12 @@ export class RegistrationFormComponent extends BaseComponent implements OnInit {
     this.registerForm = this.formBuilder.group({
       fullName: [formData.fullName, Validators.required],
       email: [formData.email, [Validators.required, Validators.email]],
-      mobile: [formData.mobile, [Validators.required, Validators.pattern('^[0-9]{11}$')]],
+      mobileCountryCode: [formData.mobileCountryCode || DEFAULT_COUNTRY_CODE, Validators.required],
+      mobile: [formData.mobile, [Validators.required]],
       password: [formData.password, [Validators.required]],
       confirmPassword: ['', Validators.required]
     }, { validators: this.passwordMatchValidator });
+    withMobileValidation(this.registerForm);
   }
 
   passwordMatchValidator(form: FormGroup) {

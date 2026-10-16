@@ -5,8 +5,10 @@ export class Profile {
     fullName!: string;
     email!: string;
     address!: string;
-    phone!: string;
+    secondaryMobile!: string;
+    secondaryMobileCountryCode?: string;
     mobile!: string;
+    mobileCountryCode?: string;
     imageBase64!: string;
     roles?: Role[];
     organizationId?: number;
@@ -17,6 +19,7 @@ export class Register {
     password!: string;
     email!: string;
     mobile!: string;
+    mobileCountryCode?: string;
 }
 
 export class UserAccount {
@@ -24,8 +27,10 @@ export class UserAccount {
     fullName!: string;
     email!: string;
     address!: string;
-    phone!: string;
+    secondaryMobile!: string;
+    secondaryMobileCountryCode?: string;
     mobile!: string;
+    mobileCountryCode?: string;
     active!: boolean;
     locked!: boolean;
     expiryDate!: Date;

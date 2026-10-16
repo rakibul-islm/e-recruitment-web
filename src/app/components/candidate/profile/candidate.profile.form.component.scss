@@ -164,3 +164,7 @@
     flex-wrap: wrap;
   }
 }
+
+[id^="cv-section-"] {
+  scroll-margin-top: 5rem;
+}

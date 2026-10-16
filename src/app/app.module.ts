@@ -91,6 +91,7 @@ import { PermissionHideDirective } from './directives/permission.hide.directive'
 import { TableCellLabelDirective } from './directives/table.cell.label.directive';
 import { PermissionDisableDirective } from './directives/permission.disable.directive';
 import { TranslateOptionsDirective } from './directives/translate.options.directive';
+import { CountUpDirective } from './directives/count.up.directive';
 
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -213,7 +214,8 @@ export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
     PermissionHideDirective,
     TableCellLabelDirective,
     PermissionDisableDirective,
-    TranslateOptionsDirective
+    TranslateOptionsDirective,
+    CountUpDirective
   ],
   imports: [
     BrowserModule,

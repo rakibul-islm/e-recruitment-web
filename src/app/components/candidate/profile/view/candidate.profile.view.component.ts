@@ -1,3 +1,4 @@
+import { withHttpScheme } from '../../../../utils/url.util';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BaseComponent } from '../../../base.component';
@@ -16,6 +17,10 @@ export class CandidateProfileViewComponent extends BaseComponent implements OnIn
   profile: CandidateProfile = new CandidateProfile();
   accountProfile: Profile = new Profile();
   myCvs: GeneratedCv[] = [];
+
+  toUrl(url?: string | null): string {
+    return withHttpScheme(url);
+  }
 
   constructor(
     private router: Router,

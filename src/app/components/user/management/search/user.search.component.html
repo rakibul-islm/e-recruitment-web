@@ -65,7 +65,7 @@
           <tr class="selectable-row" [pSelectableRow]="user">
             <td>{{ user.fullName }}</td>
             <td>{{ user.email }}</td>
-            <td>{{ user.mobile || ('common.notAvailable' | translate) }}</td>
+            <td>{{ user.mobile ? ((user.mobileCountryCode || '') + ' ' + user.mobile) : ('common.notAvailable' | translate) }}</td>
             <td>
               <span class="status-badge" [class.active]="user.active" [class.locked]="user.locked">
                 {{ (user.locked ? 'user.locked' : (user.active ? 'common.active' : 'common.inactive')) | translate }}

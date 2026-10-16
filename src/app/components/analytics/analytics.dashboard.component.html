@@ -7,28 +7,28 @@
     <div class="summary-card">
       <i class="pi pi-briefcase"></i>
       <div>
-        <div class="summary-card-value">{{ summary.totalJobs }}</div>
+        <div class="summary-card-value" [appCountUp]="summary.totalJobs"></div>
         <div class="summary-card-label">{{ 'analyticsPage.totalJobs' | translate }} ({{ summary.publishedJobs }} {{ 'jobPosting.statusPublished' | translate | lowercase }})</div>
       </div>
     </div>
     <div class="summary-card">
       <i class="pi pi-send"></i>
       <div>
-        <div class="summary-card-value">{{ summary.totalApplications }}</div>
+        <div class="summary-card-value" [appCountUp]="summary.totalApplications"></div>
         <div class="summary-card-label">{{ 'analyticsPage.totalApplications' | translate }}</div>
       </div>
     </div>
     <div class="summary-card">
       <i class="pi pi-calendar"></i>
       <div>
-        <div class="summary-card-value">{{ summary.applicationsLast30Days }}</div>
+        <div class="summary-card-value" [appCountUp]="summary.applicationsLast30Days"></div>
         <div class="summary-card-label">{{ 'analyticsPage.applicationsLast30Days' | translate }}</div>
       </div>
     </div>
     <div class="summary-card">
       <i class="pi pi-check-circle"></i>
       <div>
-        <div class="summary-card-value">{{ summary.hiresLast30Days }}</div>
+        <div class="summary-card-value" [appCountUp]="summary.hiresLast30Days"></div>
         <div class="summary-card-label">{{ 'analyticsPage.hiresLast30Days' | translate }}</div>
       </div>
     </div>

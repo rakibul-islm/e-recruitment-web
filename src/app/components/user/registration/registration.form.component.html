@@ -62,10 +62,18 @@
         </div>
 
         <div>
-          <p-floatLabel>
-            <input id="mobile" type="text" formControlName="mobile" pInputText class="w-full" />
-            <label for="mobile">{{ 'auth.register.mobile' | translate }}</label>
-          </p-floatLabel>
+          <div class="flex gap-2">
+            <p-dropdown formControlName="mobileCountryCode" [options]="countryCodes" optionLabel="label" optionValue="value" [filter]="true" filterBy="label" appendTo="body" [style]="{ width: '7.5rem' }" styleClass="flex-shrink-0">
+              <ng-template pTemplate="selectedItem" let-option>{{ option.value }}</ng-template>
+            </p-dropdown>
+            <div class="flex-1" style="min-width: 0">
+              <p-floatLabel>
+                <input id="mobile" type="text" formControlName="mobile" pInputText class="w-full" />
+                <label for="mobile">{{ 'auth.register.mobile' | translate }}</label>
+              </p-floatLabel>
+            </div>
+          </div>
+          <small class="p-error" *ngIf="registerForm.controls['mobileCountryCode'].touched && registerForm.controls['mobileCountryCode'].errors?.['required']">{{ 'auth.register.countryCodeRequired' | translate }}</small>
           <ng-container *ngIf="registerForm.controls['mobile'].touched">
             <small class="p-error" *ngIf="registerForm.controls['mobile'].errors?.['required']">{{ 'auth.register.mobileRequired' | translate }}</small>
             <small class="p-error" *ngIf="registerForm.controls['mobile'].errors?.['pattern']">{{ 'auth.register.mobilePattern' | translate }}</small>

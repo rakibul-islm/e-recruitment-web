@@ -91,6 +91,9 @@
   height: 100%;
   border-radius: 1rem;
   background: #1e4d8f;
+  transform-origin: left center;
+  transform: scaleX(calc(var(--fill, 0) / 100));
+  animation: dashboard-bar-grow 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.2s backwards;
 }
 
 .stat-bar-value {
@@ -186,5 +189,61 @@
   :host ::ng-deep .p-card {
     border-radius: 16px;
     box-shadow: 0 2px 10px rgba(3, 41, 103, 0.08);
+  }
+}
+
+// Entrance motion: transform/opacity only (compositor-driven), played once, no animation after load.
+@keyframes dashboard-rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+
+@keyframes dashboard-bar-grow {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+@keyframes dashboard-banner-pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.18);
+  }
+}
+
+.dashboard-welcome,
+.exam-today-banner,
+:host ::ng-deep .p-card {
+  animation: dashboard-rise 0.45s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+
+.grid > div:nth-child(1) ::ng-deep .p-card { animation-delay: 0.25s; }
+.grid > div:nth-child(2) ::ng-deep .p-card { animation-delay: 0.32s; }
+
+.quick-link-card {
+  animation: dashboard-rise 0.4s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+
+  &:nth-child(1) { animation-delay: 0.4s; }
+  &:nth-child(2) { animation-delay: 0.45s; }
+  &:nth-child(3) { animation-delay: 0.5s; }
+  &:nth-child(4) { animation-delay: 0.55s; }
+}
+
+.exam-today-banner .pi {
+  animation: dashboard-banner-pulse 1.6s ease-in-out 3;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dashboard-welcome,
+  .exam-today-banner,
+  .exam-today-banner .pi,
+  .quick-link-card,
+  .stat-bar-fill,
+  :host ::ng-deep .p-card {
+    animation: none;
   }
 }

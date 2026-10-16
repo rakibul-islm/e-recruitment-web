@@ -11,7 +11,7 @@
       <div class="summary-card summary-card-clickable" tabindex="0" (click)="openDetail('jobs')" (keyup.enter)="openDetail('jobs')">
         <i class="pi pi-briefcase"></i>
         <div>
-          <div class="summary-card-value">{{ summary.totalJobs }}</div>
+          <div class="summary-card-value" [appCountUp]="summary.totalJobs"></div>
           <div class="summary-card-label">{{ 'analyticsPage.totalJobs' | translate }} ({{ summary.publishedJobs }} {{ 'jobPosting.statusPublished' | translate | lowercase }})</div>
         </div>
         <i class="pi pi-angle-right summary-card-chevron"></i>
@@ -19,7 +19,7 @@
       <div class="summary-card summary-card-clickable" tabindex="0" (click)="openDetail('applications')" (keyup.enter)="openDetail('applications')">
         <i class="pi pi-send"></i>
         <div>
-          <div class="summary-card-value">{{ summary.totalApplications }}</div>
+          <div class="summary-card-value" [appCountUp]="summary.totalApplications"></div>
           <div class="summary-card-label">{{ 'analyticsPage.totalApplications' | translate }}</div>
         </div>
         <i class="pi pi-angle-right summary-card-chevron"></i>
@@ -27,7 +27,7 @@
       <div class="summary-card summary-card-clickable" tabindex="0" (click)="openDetail('recent')" (keyup.enter)="openDetail('recent')">
         <i class="pi pi-calendar"></i>
         <div>
-          <div class="summary-card-value">{{ summary.applicationsLast30Days }}</div>
+          <div class="summary-card-value" [appCountUp]="summary.applicationsLast30Days"></div>
           <div class="summary-card-label">{{ 'analyticsPage.applicationsLast30Days' | translate }}</div>
         </div>
         <i class="pi pi-angle-right summary-card-chevron"></i>
@@ -35,7 +35,7 @@
       <div class="summary-card">
         <i class="pi pi-check-circle"></i>
         <div>
-          <div class="summary-card-value">{{ summary.hiresLast30Days }}</div>
+          <div class="summary-card-value" [appCountUp]="summary.hiresLast30Days"></div>
           <div class="summary-card-label">{{ 'analyticsPage.hiresLast30Days' | translate }}</div>
         </div>
       </div>
@@ -56,7 +56,7 @@
             <div class="stat-bar-row" *ngFor="let entry of statusEntries">
               <span class="stat-bar-label">{{ entry.status }}</span>
               <div class="stat-bar-track">
-                <div class="stat-bar-fill" [style.width.%]="summary.totalApplications ? (entry.count / summary.totalApplications * 100) : 0"></div>
+                <div class="stat-bar-fill" [style.--fill]="summary.totalApplications ? (entry.count / summary.totalApplications * 100) : 0"></div>
               </div>
               <span class="stat-bar-value">{{ entry.count }}</span>
             </div>
@@ -107,7 +107,7 @@
       <div class="summary-card summary-card-clickable" tabindex="0" (click)="openCandidateDetail('myApplications')" (keyup.enter)="openCandidateDetail('myApplications')">
         <i class="pi pi-send"></i>
         <div>
-          <div class="summary-card-value">{{ totalApplicationsCount }}</div>
+          <div class="summary-card-value" [appCountUp]="totalApplicationsCount"></div>
           <div class="summary-card-label">{{ 'dashboard.totalApplications' | translate }}</div>
         </div>
         <i class="pi pi-angle-right summary-card-chevron"></i>
@@ -115,7 +115,7 @@
       <div class="summary-card summary-card-clickable" tabindex="0" (click)="openCandidateDetail('myActive')" (keyup.enter)="openCandidateDetail('myActive')">
         <i class="pi pi-sync"></i>
         <div>
-          <div class="summary-card-value">{{ activeApplicationsCount }}</div>
+          <div class="summary-card-value" [appCountUp]="activeApplicationsCount"></div>
           <div class="summary-card-label">{{ 'dashboard.activeApplications' | translate }}</div>
         </div>
         <i class="pi pi-angle-right summary-card-chevron"></i>
@@ -123,7 +123,7 @@
       <div class="summary-card summary-card-clickable" tabindex="0" (click)="openCandidateDetail('myOffers')" (keyup.enter)="openCandidateDetail('myOffers')">
         <i class="pi pi-file"></i>
         <div>
-          <div class="summary-card-value">{{ offersToRespondCount }}</div>
+          <div class="summary-card-value" [appCountUp]="offersToRespondCount"></div>
           <div class="summary-card-label">{{ 'dashboard.offersToRespond' | translate }}</div>
         </div>
         <i class="pi pi-angle-right summary-card-chevron"></i>
@@ -131,7 +131,7 @@
       <div class="summary-card summary-card-clickable" tabindex="0" (click)="openCandidateDetail('mySavedJobs')" (keyup.enter)="openCandidateDetail('mySavedJobs')">
         <i class="pi pi-bookmark"></i>
         <div>
-          <div class="summary-card-value">{{ savedJobsCount }}</div>
+          <div class="summary-card-value" [appCountUp]="savedJobsCount"></div>
           <div class="summary-card-label">{{ 'menu.savedJobs' | translate }}</div>
         </div>
         <i class="pi pi-angle-right summary-card-chevron"></i>
@@ -139,7 +139,7 @@
       <div class="summary-card summary-card-clickable" tabindex="0" (click)="openCandidateDetail('myJobAlerts')" (keyup.enter)="openCandidateDetail('myJobAlerts')">
         <i class="pi pi-bell"></i>
         <div>
-          <div class="summary-card-value">{{ jobAlertsCount }}</div>
+          <div class="summary-card-value" [appCountUp]="jobAlertsCount"></div>
           <div class="summary-card-label">{{ 'menu.jobAlerts' | translate }}</div>
         </div>
         <i class="pi pi-angle-right summary-card-chevron"></i>

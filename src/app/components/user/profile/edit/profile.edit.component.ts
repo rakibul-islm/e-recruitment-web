@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { COUNTRY_CODES, DEFAULT_COUNTRY_CODE, localMobile, withMobileValidation } from '../../../../utils/country.codes';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BaseComponent } from '../../../base.component';
@@ -11,6 +12,7 @@ import { UserService } from '../../../../services/user/user.service';
   styleUrls: ['./profile.edit.component.scss']
 })
 export class ProfileEditComponent extends BaseComponent implements OnInit {
+  countryCodes = COUNTRY_CODES;
   editForm!: FormGroup;
   imageBase64: string = '';
   user: any;
@@ -57,9 +59,13 @@ export class ProfileEditComponent extends BaseComponent implements OnInit {
       fullName: [user.fullName, Validators.required],
       email: [{ value: user.email, disabled: true }, [Validators.required, Validators.email]],
       address: [user.address],
-      phone: [user.phone],
-      mobile: [user.mobile, [Validators.required, Validators.pattern('^[0-9]{11}$')]]
+      secondaryMobileCountryCode: [user.secondaryMobileCountryCode || DEFAULT_COUNTRY_CODE, Validators.required],
+      secondaryMobile: [localMobile(user.secondaryMobileCountryCode, user.secondaryMobile)],
+      mobileCountryCode: [user.mobileCountryCode || DEFAULT_COUNTRY_CODE, Validators.required],
+      mobile: [localMobile(user.mobileCountryCode, user.mobile), [Validators.required]]
     });
+    withMobileValidation(this.editForm);
+    withMobileValidation(this.editForm, 'secondaryMobile', 'secondaryMobileCountryCode');
   }
 
   save() {

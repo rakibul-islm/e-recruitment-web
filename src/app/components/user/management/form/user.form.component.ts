@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { COUNTRY_CODES, DEFAULT_COUNTRY_CODE, localMobile, withMobileValidation } from '../../../../utils/country.codes';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BaseComponent } from '../../../base.component';
@@ -17,6 +18,7 @@ import { Organization } from '../../../../services/organization/domain/organizat
   templateUrl: './user.form.component.html'
 })
 export class UserFormComponent extends BaseComponent implements OnInit {
+  countryCodes = COUNTRY_CODES;
   userForm!: FormGroup;
   roles: Role[] = [];
   userGroups: UserGroup[] = [];
@@ -56,8 +58,10 @@ export class UserFormComponent extends BaseComponent implements OnInit {
       fullName: [formData.fullName, Validators.required],
       email: [formData.email, [Validators.required, Validators.email]],
       address: [formData.address],
-      phone: [formData.phone],
-      mobile: [formData.mobile, [Validators.required, Validators.pattern('^[0-9]{11}$')]],
+      secondaryMobileCountryCode: [formData.secondaryMobileCountryCode || DEFAULT_COUNTRY_CODE, Validators.required],
+      secondaryMobile: [localMobile(formData.secondaryMobileCountryCode, formData.secondaryMobile)],
+      mobileCountryCode: [formData.mobileCountryCode || DEFAULT_COUNTRY_CODE, Validators.required],
+      mobile: [localMobile(formData.mobileCountryCode, formData.mobile), [Validators.required]],
       active: [formData.active ?? true],
       locked: [formData.locked ?? false],
       expiryDate: [formData.expiryDate ? new Date(formData.expiryDate) : null, Validators.required],
@@ -65,6 +69,8 @@ export class UserFormComponent extends BaseComponent implements OnInit {
       userGroupId: [formData.userGroupId ?? null],
       organizationId: [formData.organizationId ?? null]
     });
+    withMobileValidation(this.userForm);
+    withMobileValidation(this.userForm, 'secondaryMobile', 'secondaryMobileCountryCode');
 
     this.subscribers.userGroupChangeSub = this.userForm.get('userGroupId')!.valueChanges
     .subscribe(groupId =>
