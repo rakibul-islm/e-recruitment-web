@@ -1,4 +1,6 @@
 <app-page-header [title]="'candidateProfile.editTitle' | translate">
+  <p-button [label]="'candidateProfile.scanCv' | translate" icon="pi pi-upload" styleClass="p-button-outlined" [loading]="scanning" (onClick)="cvFileInput.click()"></p-button>
+  <input #cvFileInput type="file" accept=".pdf,.docx,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document" class="hidden" (change)="onCvSelected($event)" />
   <p-button [label]="'candidateProfile.saveProfile' | translate" icon="pi pi-save" [loading]="generating" (onClick)="saveProfile()"></p-button>
   <p-button [label]="'common.back' | translate" icon="pi pi-arrow-left" styleClass="p-button-secondary" (onClick)="goBack()"></p-button>
 </app-page-header>

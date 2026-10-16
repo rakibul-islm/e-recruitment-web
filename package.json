@@ -32,6 +32,8 @@
     "@microsoft/fetch-event-source": "^2.0.1",
     "@ngx-translate/core": "^15.0.0",
     "@ngx-translate/http-loader": "^8.0.0",
+    "mammoth": "^1.8.0",
+    "pdfjs-dist": "^3.11.174",
     "primeflex": "^4.0.0",
     "primeicons": "^8.0.0",
     "primeng": "^17.18.15",
