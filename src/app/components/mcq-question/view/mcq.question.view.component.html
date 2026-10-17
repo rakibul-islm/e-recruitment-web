@@ -1,4 +1,5 @@
 <app-page-header [title]="'mcqQuestion.viewTitle' | translate">
+  <p-button *ngIf="question.status === 'DRAFT'" [label]="'mcqQuestion.reject' | translate" icon="pi pi-times" styleClass="p-button-outlined p-button-danger" (onClick)="reject()"></p-button>
   <p-button *ngIf="question.status === 'DRAFT'" [label]="'mcqQuestion.approve' | translate" icon="pi pi-check" styleClass="p-button-success" (onClick)="approve()"></p-button>
   <p-button *appPermissionHide="'mcq-question-manage'" [label]="'common.edit' | translate" icon="pi pi-pencil" [routerLink]="['/mcq-questions', questionId, 'edit']"></p-button>
   <p-button *appPermissionHide="'mcq-question-delete'" [label]="'organization.removeButton' | translate" icon="pi pi-trash" styleClass="p-button-danger" (onClick)="removeQuestion()"></p-button>

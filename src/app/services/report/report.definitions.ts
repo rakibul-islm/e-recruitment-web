@@ -11,7 +11,13 @@ export const JOB_POSTING_REPORT_DEFINITION: ReportDefinition = {
   fields: [
     { key: 'id', type: 'text', labelKey: 'applicationManagement.jobPostingId' },
     { key: 'jobTitle_like', type: 'text', labelKey: 'candidateApplication.jobTitle' },
-    { key: 'status', type: 'dropdown', labelKey: 'common.status', defaultValue: null, options: [{ label: 'jobPosting.statusAll', value: null }, ...JOB_STATUS_OPTIONS] }
+    { key: 'organizationName_like', type: 'text', labelKey: 'report.organizationName' },
+    { key: 'jobLocation_like', type: 'text', labelKey: 'jobPosting.jobLocation' },
+    { key: 'category_like', type: 'text', labelKey: 'report.category' },
+    { key: 'employmentStatus_like', type: 'text', labelKey: 'report.employmentStatus' },
+    { key: 'status', type: 'dropdown', labelKey: 'common.status', defaultValue: null, options: [{ label: 'jobPosting.statusAll', value: null }, ...JOB_STATUS_OPTIONS] },
+    { key: 'applicationDeadLine_gte', type: 'date', labelKey: 'report.deadlineFrom' },
+    { key: 'applicationDeadLine_lte', type: 'date', labelKey: 'report.deadlineTo' }
   ]
 };
 
@@ -21,9 +27,11 @@ export const APPLICATION_REPORT_DEFINITION: ReportDefinition = {
   icon: 'pi pi-users',
   fields: [
     { key: 'jobCircularId', type: 'text', labelKey: 'applicationManagement.jobPostingId' },
+    { key: 'jobTitle_like', type: 'text', labelKey: 'candidateApplication.jobTitle' },
     { key: 'candidateName_like', type: 'text', labelKey: 'applicationManagement.candidateName' },
     { key: 'candidateEmail_like', type: 'text', labelKey: 'applicationManagement.candidateEmail' },
     { key: 'status', type: 'dropdown', labelKey: 'common.status', defaultValue: null, options: [{ label: 'jobPosting.statusAll', value: null }, ...APPLICATION_STATUS_OPTIONS] },
+    { key: 'matchScore_gte', type: 'text', labelKey: 'applicationManagement.minMatch' },
     { key: 'appliedOn_gte', type: 'date', labelKey: 'applicationManagement.appliedFrom' },
     { key: 'appliedOn_lte', type: 'date', labelKey: 'applicationManagement.appliedTo' }
   ]
@@ -45,6 +53,10 @@ export const MCQ_RESULT_REPORT_DEFINITION: ReportDefinition = {
         { label: 'mcqTestTaking.notPassed', value: 'false' }
       ]
     },
+    { key: 'candidateName_like', type: 'text', labelKey: 'applicationManagement.candidateName' },
+    { key: 'candidateEmail_like', type: 'text', labelKey: 'applicationManagement.candidateEmail' },
+    { key: 'scorePercent_gte', type: 'text', labelKey: 'report.minScore' },
+    { key: 'scorePercent_lte', type: 'text', labelKey: 'report.maxScore' },
     { key: 'scheduledAt_gte', type: 'date', labelKey: 'report.dateFrom' },
     { key: 'scheduledAt_lte', type: 'date', labelKey: 'report.dateTo' }
   ]
@@ -95,6 +107,8 @@ export const AUDIT_LOG_REPORT_DEFINITION: ReportDefinition = {
     { key: 'entityId', type: 'text', labelKey: 'auditLog.entityId' },
     { key: 'createdBy_like', type: 'text', labelKey: 'auditLog.createdBy' },
     { key: 'ipAddress_eq', type: 'text', labelKey: 'auditLog.ipAddress' },
+    { key: 'country_like', type: 'text', labelKey: 'report.country' },
+    { key: 'city_like', type: 'text', labelKey: 'report.city' },
     { key: 'createdOn_gte', type: 'date', labelKey: 'report.dateFrom' },
     { key: 'createdOn_lte', type: 'date', labelKey: 'report.dateTo' }
   ]
@@ -122,6 +136,8 @@ export const MCQ_VIOLATION_REPORT_DEFINITION: ReportDefinition = {
         { label: 'mcqTestTaking.violation.action.TERMINATED', value: 'TERMINATED' }
       ]
     },
+    { key: 'candidateName_like', type: 'text', labelKey: 'applicationManagement.candidateName' },
+    { key: 'candidateEmail_like', type: 'text', labelKey: 'applicationManagement.candidateEmail' },
     { key: 'createdOn_gte', type: 'date', labelKey: 'report.dateFrom' },
     { key: 'createdOn_lte', type: 'date', labelKey: 'report.dateTo' }
   ]

@@ -7,10 +7,24 @@
     <span></span>
     <span></span>
   </div>
+  <ng-container *ngIf="elapsedSeconds$ | async as seconds">
+    <div class="app-loading-note" *ngIf="seconds >= 2">
+      <i class="pi pi-sparkles app-loading-note-icon"></i>
+      <div class="app-loading-note-body">
+        <div class="app-loading-note-title">{{ 'common.loadingLongTitle' | translate }}</div>
+        <div class="app-loading-note-hint">{{ 'common.loadingLongHint' | translate }}</div>
+      </div>
+      <span class="app-loading-note-timer">{{ formatElapsed(seconds) }}</span>
+      <span class="app-loading-note-bar"></span>
+    </div>
+  </ng-container>
 </div>
 
 <app-header *ngIf="!fullScreen"></app-header>
 <router-outlet></router-outlet>
+<button type="button" class="scroll-top-fab" *ngIf="showScrollTop && !fullScreen" (click)="scrollToTop()" aria-label="Scroll to top">
+  <i class="pi pi-arrow-up"></i>
+</button>
 <p-confirmDialog styleClass="branded-dialog"></p-confirmDialog>
 <p-toast position="top-right" [preventOpenDuplicates]="true"
   [showTransformOptions]="'translateX(100%)'" [showTransitionOptions]="'1000ms'"
