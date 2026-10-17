@@ -43,6 +43,15 @@ export class McqQuestionViewComponent extends BaseComponent implements OnInit {
     });
   }
 
+  reject(): void {
+    this.commonConfirmDialogService.confirm(() => {
+      this.subscribers.rejectSub = this.mcqQuestionService.removeQuestion(this.questionId).subscribe(() => {
+        this.notificationService.sendSuccessMsg('mcqQuestion.rejectSuccess');
+        this.router.navigate(['/mcq-questions']);
+      });
+    }, null, 'mcqQuestion.rejectConfirm');
+  }
+
   removeQuestion(): void {
     this.commonConfirmDialogService.confirm(() => {
       this.subscribers.removeSub = this.mcqQuestionService.removeQuestion(this.questionId).subscribe(() => {

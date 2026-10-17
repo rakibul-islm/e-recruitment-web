@@ -196,6 +196,28 @@
     }
   }
 
+  .google-native-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    height: 40px;
+    padding: 0 12px;
+    background: #ffffff;
+    border: 1px solid #dadce0;
+    border-radius: 4px;
+    color: #3c4043;
+    font-family: 'Google Sans', Roboto, Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+
+    &:hover {
+      background: #f8fafd;
+      border-color: #d2e3fc;
+    }
+  }
+
   hr {
     border-color: rgba(255, 255, 255, 0.15);
   }
