@@ -90,12 +90,8 @@
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    width: 1.65rem;
-    height: 1.65rem;
-    border-radius: 50%;
-    background: #032967;
-    color: #ffffff;
-    font-size: 0.75rem;
+    color: #032967;
+    font-size: 0.95rem;
   }
 }
 
@@ -359,8 +355,13 @@
 
   .cv-hero-top {
     flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
+    align-items: center;
+    text-align: center;
+  }
+
+  .cv-hero-heading {
+    flex: 0 0 auto;
+    width: 100%;
   }
 
   .cv-hero-contacts {
