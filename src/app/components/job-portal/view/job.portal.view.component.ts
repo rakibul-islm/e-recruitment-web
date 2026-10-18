@@ -44,6 +44,12 @@ export class JobPortalViewComponent extends BaseComponent implements OnInit {
     this.fetchJob();
   }
 
+  get applicationsClosed(): boolean {
+    if (!this.job?.applicationDeadLine) { return false; }
+    const deadline = new Date(this.job.applicationDeadLine);
+    return Date.now() >= new Date(deadline.getFullYear(), deadline.getMonth(), deadline.getDate() + 1).getTime();
+  }
+
   fetchJob(): void {
     this.subscribers.findJobSub = this.jobPostingService.findJobPostingById(this.jobId).subscribe(response => {
       this.job = response?.obj;

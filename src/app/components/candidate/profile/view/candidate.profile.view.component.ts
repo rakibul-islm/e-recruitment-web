@@ -1,4 +1,4 @@
-import { withHttpScheme } from '../../../../utils/url.util';
+import { displayUrl, withHttpScheme } from '../../../../utils/url.util';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BaseComponent } from '../../../base.component';
@@ -20,6 +20,10 @@ export class CandidateProfileViewComponent extends BaseComponent implements OnIn
 
   toUrl(url?: string | null): string {
     return withHttpScheme(url);
+  }
+
+  shortUrl(url?: string | null): string {
+    return displayUrl(url);
   }
 
   constructor(

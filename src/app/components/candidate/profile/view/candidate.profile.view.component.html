@@ -36,10 +36,10 @@
         <ng-container *ngIf="accountProfile.address; else addressHint">{{ accountProfile.address }}</ng-container>
       </span>
       <a class="cv-contact-item cv-contact-link" *ngIf="profile.linkedinUrl" [href]="toUrl(profile.linkedinUrl)" target="_blank" rel="noopener noreferrer">
-        <i class="pi pi-linkedin"></i>{{ profile.linkedinUrl }}
+        <i class="pi pi-linkedin"></i>{{ shortUrl(profile.linkedinUrl) }}
       </a>
       <a class="cv-contact-item cv-contact-link" *ngIf="profile.portfolioUrl" [href]="toUrl(profile.portfolioUrl)" target="_blank" rel="noopener noreferrer">
-        <i class="pi pi-globe"></i>{{ profile.portfolioUrl }}
+        <i class="pi pi-globe"></i>{{ shortUrl(profile.portfolioUrl) }}
       </a>
     </div>
 
@@ -93,7 +93,7 @@
         <div class="cv-project-grid" *ngIf="profile.projects?.length; else noProjects">
           <div class="cv-project-card" *ngFor="let item of profile.projects">
             <div class="cv-project-name">{{ item.name }}</div>
-            <a class="cv-project-link" *ngIf="item.url" [href]="toUrl(item.url)" target="_blank" rel="noopener noreferrer">{{ item.url }}</a>
+            <a class="cv-project-link" *ngIf="item.url" [href]="toUrl(item.url)" target="_blank" rel="noopener noreferrer">{{ shortUrl(item.url) }}</a>
             <div class="cv-project-desc" *ngIf="item.description">{{ item.description }}</div>
           </div>
         </div>

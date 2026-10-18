@@ -25,7 +25,7 @@
 <button type="button" class="scroll-top-fab" *ngIf="showScrollTop && !fullScreen" (click)="scrollToTop()" aria-label="Scroll to top">
   <i class="pi pi-arrow-up"></i>
 </button>
-<p-confirmDialog styleClass="branded-dialog"></p-confirmDialog>
+<p-confirmDialog styleClass="branded-dialog" [style]="{ width: '28rem' }" [breakpoints]="{ '575px': '95vw' }"></p-confirmDialog>
 <p-toast position="top-right" [preventOpenDuplicates]="true"
   [showTransformOptions]="'translateX(100%)'" [showTransitionOptions]="'1000ms'"
   [hideTransformOptions]="'translateX(100%)'" [hideTransitionOptions]="'1000ms'"></p-toast>

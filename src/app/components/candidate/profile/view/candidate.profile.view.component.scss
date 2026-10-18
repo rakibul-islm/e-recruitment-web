@@ -22,6 +22,7 @@
 
 .cv-hero {
   padding: 1.75rem;
+  border-left: 4px solid #032967;
   margin-bottom: 1.25rem;
   border-radius: 12px;
   border: 1px solid #e5e7eb;
@@ -72,7 +73,7 @@
 .cv-hero-contacts {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.6rem 1.25rem;
+  gap: 0.75rem 1.5rem;
   padding-top: 1rem;
   border-top: 1px solid #e5e7eb;
 }
@@ -80,13 +81,21 @@
 .cv-contact-item {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.5rem;
   color: #374151;
   font-size: 0.85rem;
 
-  .pi {
-    color: #1e4d8f;
-    font-size: 0.85rem;
+  > .pi {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 1.65rem;
+    height: 1.65rem;
+    border-radius: 50%;
+    background: #032967;
+    color: #ffffff;
+    font-size: 0.75rem;
   }
 }
 
