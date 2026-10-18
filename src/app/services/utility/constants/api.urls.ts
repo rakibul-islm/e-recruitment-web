@@ -8,6 +8,8 @@ export const API_URLS = {
     LOGOUT: 'authenticate/logout',
     FETCH_PROFILE: 'profile',
     UPDATE_PROFILE: 'profile',
+    FETCH_MY_COVER: 'profile/cover',
+    UPDATE_MY_COVER: 'profile/cover',
     PROFILE_SESSION_LOCATION: 'profile/session-location',
     REQUEST_CHANGE_PASSWORD_OTP: 'profile/change-password/request-otp',
     VERIFY_CHANGE_PASSWORD_OTP: 'profile/change-password/verify-otp',

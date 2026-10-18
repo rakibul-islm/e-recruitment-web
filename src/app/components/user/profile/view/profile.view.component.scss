@@ -1,20 +1,48 @@
-.profile-card {
-  width: 100%;
+.profile-page {
+  max-width: 64rem;
+  margin: 1.5rem auto 2.5rem;
+  padding: 0 1rem;
 }
 
-.profile-avatar-col {
-  flex: 0 0 auto;
-  width: 100%;
+.profile-hero {
+  position: relative;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 1px 2px rgba(3, 41, 103, 0.04), 0 8px 24px rgba(3, 41, 103, 0.07);
+}
 
-  @media (min-width: 768px) {
-    width: 20rem;
-  }
+.profile-hero-actions {
+  display: none;
+}
+
+.profile-cover {
+  height: 12rem;
+  background-color: #032967;
+  background-image: var(--cover-image);
+  background-size: cover;
+  background-position: center;
+}
+
+.profile-hero-body {
+  display: flex;
+  align-items: flex-end;
+  gap: 1.5rem;
+  padding: 0 2rem 1.5rem;
+}
+
+.profile-avatar-wrap {
+  flex: 0 0 auto;
+  margin-top: -4.5rem;
 }
 
 ::ng-deep .profile-avatar {
-  width: 10rem;
-  height: 10rem;
-  border: 2px solid #c8d8f3;
+  width: 9rem;
+  height: 9rem;
+  border: 5px solid #ffffff;
+  background: #ffffff;
+  box-shadow: 0 4px 16px rgba(3, 41, 103, 0.22);
 
   .p-avatar-icon {
     font-size: 3rem;
@@ -25,160 +53,280 @@
   }
 }
 
-.profile-table {
-  width: 100%;
-  border-collapse: collapse;
+.profile-identity {
+  flex: 1;
+  min-width: 0;
+  padding-bottom: 0.25rem;
+}
 
-  tr:nth-child(even) {
-    background: #f8fafc;
-  }
+.profile-name {
+  margin: 0;
+  color: #032967;
+  font-size: 1.65rem;
+  font-weight: 700;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
 
-  td {
-    padding: 0.85rem 1rem;
-    border-bottom: 1px solid #f1f5f9;
-  }
+.profile-email {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin: 0.4rem 0 0;
+  color: #6b7280;
+  font-size: 0.95rem;
+  overflow-wrap: anywhere;
 
-  tr:last-child td {
-    border-bottom: none;
-  }
-
-  .profile-label {
-    width: 40%;
-    color: #6b7280;
-    font-weight: 600;
+  .pi {
+    color: #1e4d8f;
     font-size: 0.9rem;
   }
+}
 
-  .profile-value {
-    color: #1f2937;
+.profile-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.8rem;
+}
+
+.profile-chip {
+  padding: 0.2rem 0.75rem;
+  border-radius: 1rem;
+  border: 1px solid #dbe4f3;
+  background: #eef3fb;
+  color: #1e4d8f;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.profile-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  gap: 1.25rem;
+  margin-top: 1.25rem;
+}
+
+.profile-panel {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 1.5rem;
+  box-shadow: 0 1px 2px rgba(3, 41, 103, 0.04), 0 8px 24px rgba(3, 41, 103, 0.07);
+}
+
+.profile-panel-title {
+  margin: 0 0 1.25rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #eef2f7;
+  color: #032967;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.profile-info-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+.profile-info-item,
+.profile-role-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  min-width: 0;
+}
+
+.profile-role-item {
+  padding: 0.85rem 0;
+  border-bottom: 1px solid #f1f5f9;
+
+  &:first-of-type {
+    padding-top: 0;
+  }
+
+  &:last-of-type {
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+}
+
+.profile-info-icon {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: #eef3fb;
+  color: #1e4d8f;
+  font-size: 1rem;
+}
+
+.profile-info-text {
+  min-width: 0;
+}
+
+.profile-info-label {
+  display: block;
+  margin-bottom: 0.15rem;
+  color: #6b7280;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.profile-info-value {
+  display: block;
+  color: #1f2937;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+
+  &.is-empty {
+    color: #9ca3af;
     font-weight: 500;
   }
+}
 
-  .profile-role {
-    &:not(:last-child) {
-      margin-bottom: 0.5rem;
-    }
-  }
+.profile-role-name {
+  display: block;
+  color: #1f2937;
+  font-weight: 700;
+}
 
-  .profile-role-name {
-    display: block;
-    font-weight: 600;
-  }
+.profile-role-description {
+  display: block;
+  margin-top: 0.15rem;
+  color: #6b7280;
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
 
-  .profile-role-description {
-    display: block;
-    font-size: 0.85rem;
-    color: #6b7280;
+@media (max-width: 900px) {
+  .profile-grid {
+    grid-template-columns: 1fr;
   }
 }
 
-.profile-hero-name,
-.profile-hero-email {
-  display: none;
-}
-
-// Native-app look on phones: gradient hero with the avatar, then a grouped list of label-over-value rows.
+// Phones: the cover becomes the hero background, then the panels stack as rounded cards.
 @media (max-width: 576px) {
   .profile-page {
-    margin-top: 0 !important;
-    padding: 0 !important;
+    max-width: none;
+    margin: 0 0 1.5rem;
+    padding: 0;
   }
 
-  ::ng-deep .profile-card.page-card {
-    width: 100%;
-    background: transparent;
-    border: none !important;
-    box-shadow: none !important;
-    border-radius: 0 !important;
-    overflow: visible;
-
-    .p-card-body {
-      padding: 0 !important;
-    }
-
-    .p-card-content {
-      padding: 0 !important;
-    }
-  }
-
-  .profile-card .flex-column {
-    gap: 0 !important;
-  }
-
-  .profile-avatar-col {
-    margin: 0 !important;
-    padding: 1.25rem 1rem;
-    background: linear-gradient(160deg, #032967 0%, #1e4d8f 100%);
+  .profile-hero {
+    border: none;
     border-radius: 0 0 28px 28px;
-    gap: 0.25rem;
+    box-shadow: none;
+    background: linear-gradient(160deg, rgba(3, 41, 103, 0.6) 0%, rgba(30, 77, 143, 0.5) 100%), var(--cover-image) center / cover no-repeat, #032967;
+  }
+
+  app-page-header {
+    display: none;
+  }
+
+  .profile-hero-actions {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    left: 0.75rem;
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  ::ng-deep .profile-hero-btn.p-button {
+    width: 2.5rem;
+    height: 2.5rem;
+    padding: 0 !important;
+    border: 1px solid rgba(255, 255, 255, 0.35) !important;
+    border-radius: 50% !important;
+    background: rgba(255, 255, 255, 0.16) !important;
+    color: #ffffff !important;
+    box-shadow: none !important;
+
+    .p-button-icon {
+      color: #ffffff !important;
+      font-size: 1rem;
+    }
+
+    &:enabled:hover {
+      background: rgba(255, 255, 255, 0.28) !important;
+    }
+  }
+
+  .profile-cover {
+    display: none;
+  }
+
+  .profile-hero-body {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 3.5rem 1rem 1.5rem;
+    text-align: center;
+  }
+
+  .profile-avatar-wrap {
+    margin-top: 0;
   }
 
   ::ng-deep .profile-avatar {
     width: 6.5rem;
     height: 6.5rem;
     border: 3px solid rgba(255, 255, 255, 0.85);
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
-    margin-bottom: 0.5rem;
   }
 
-  .profile-hero-name {
-    display: block;
+  .profile-identity {
+    padding-bottom: 0;
+  }
+
+  .profile-name {
     color: #ffffff;
-    font-size: 1.2rem;
-    font-weight: 700;
-    text-align: center;
+    font-size: 1.3rem;
   }
 
-  .profile-hero-email {
-    display: block;
-    color: rgba(255, 255, 255, 0.8);
+  .profile-email {
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.85);
     font-size: 0.85rem;
-    text-align: center;
-    overflow-wrap: anywhere;
+
+    .pi {
+      color: rgba(255, 255, 255, 0.85);
+    }
   }
 
-  .profile-table {
-    display: block;
-    width: auto;
-    margin: 0 1rem 1.5rem;
-    background: #ffffff;
+  .profile-chips {
+    justify-content: center;
+  }
+
+  .profile-chip {
+    border-color: rgba(255, 255, 255, 0.35);
+    background: rgba(255, 255, 255, 0.18);
+    color: #ffffff;
+  }
+
+  .profile-grid {
+    gap: 1rem;
+    margin: 1rem 1rem 0;
+  }
+
+  .profile-panel {
+    padding: 1.1rem;
+    border: none;
     border-radius: 16px;
     box-shadow: 0 2px 12px rgba(3, 41, 103, 0.1);
-    overflow: hidden;
+  }
 
-    tbody {
-      display: block;
-    }
-
-    tr {
-      display: block;
-      padding: 0.75rem 1rem;
-      border-bottom: 1px solid #f1f5f9;
-      background: #ffffff !important;
-    }
-
-    tr:last-child {
-      border-bottom: none;
-    }
-
-    td {
-      display: block;
-      width: 100% !important;
-      padding: 0;
-      border: none;
-    }
-
-    .profile-label {
-      font-size: 0.72rem;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      color: #6b7280;
-      margin-bottom: 0.15rem;
-    }
-
-    .profile-value {
-      font-size: 0.95rem;
-      overflow-wrap: anywhere;
-    }
+  .profile-info-list {
+    grid-template-columns: 1fr;
+    gap: 1rem;
   }
 }

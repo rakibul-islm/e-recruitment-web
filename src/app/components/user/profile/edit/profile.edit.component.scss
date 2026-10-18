@@ -2,6 +2,46 @@
   width: 100%;
 }
 
+.profile-cover {
+  position: relative;
+  height: 11rem;
+  margin: -1.75rem -1.75rem 0.5rem;
+  background-color: #032967;
+  background-size: cover;
+  background-position: center;
+
+  @media (max-width: 575px) {
+    height: 7.5rem;
+  }
+}
+
+::ng-deep .profile-cover-actions .p-button.cover-action-btn:not(.p-button-text):not(.p-button-link) {
+  background: rgba(255, 255, 255, 0.92) !important;
+  border-color: transparent !important;
+  color: #032967 !important;
+
+  .p-button-icon,
+  .p-button-label {
+    color: #032967 !important;
+  }
+
+  &:enabled:hover {
+    background: #ffffff !important;
+    border-color: transparent !important;
+    color: #032967 !important;
+  }
+}
+
+.profile-cover-actions {
+  position: absolute;
+  right: 0.75rem;
+  bottom: 0.75rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
 .profile-avatar-col {
   flex: 0 0 auto;
   width: 100%;

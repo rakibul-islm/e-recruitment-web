@@ -22,6 +22,14 @@ export class UserService extends BaseService {
     return super.put(API_URLS.UPDATE_PROFILE, body);
   }
 
+  public fetchCover(): Observable<any> {
+    return super.get(API_URLS.FETCH_MY_COVER);
+  }
+
+  public updateCover(imageBase64: string): Observable<any> {
+    return super.put(API_URLS.UPDATE_MY_COVER, { imageBase64 });
+  }
+
   public requestChangePasswordOtp(body: { oldPassword: string }): Observable<any> {
     return super.post(API_URLS.REQUEST_CHANGE_PASSWORD_OTP, body);
   }

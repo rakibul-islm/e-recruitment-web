@@ -3,51 +3,74 @@
   <p-button [label]="'common.back' | translate" icon="pi pi-arrow-left" styleClass="p-button-secondary" (onClick)="goToDashboard()"></p-button>
 </app-page-header>
 
-<div class="flex justify-content-center mt-6 px-3 profile-page">
-  <p-card class="profile-card page-card">
-    <div class="flex flex-column md:flex-row md:align-items-center gap-4 md:gap-6">
-      <div class="flex flex-column align-items-center mb-4 md:mb-0 profile-avatar-col">
-        <p-avatar [image]="profile.imageBase64" size="xlarge" shape="circle" styleClass="profile-avatar"></p-avatar>
-        <span class="profile-hero-name">{{ profile.fullName }}</span>
-        <span class="profile-hero-email">{{ profile.email }}</span>
-      </div>
-
-      <table class="profile-table flex-1">
-        <tbody>
-          <tr>
-            <td class="profile-label">{{ 'user.fullName' | translate }}</td>
-            <td class="profile-value">{{ profile.fullName || ('common.notAvailable' | translate) }}</td>
-          </tr>
-          <tr>
-            <td class="profile-label">{{ 'user.email' | translate }}</td>
-            <td class="profile-value">{{ profile.email || ('common.notAvailable' | translate) }}</td>
-          </tr>
-          <tr>
-            <td class="profile-label">{{ 'user.mobilePrimary' | translate }}</td>
-            <td class="profile-value">{{ profile.mobile ? ((profile.mobileCountryCode || '') + ' ' + profile.mobile) : ('common.notAvailable' | translate) }}</td>
-          </tr>
-          <tr>
-            <td class="profile-label">{{ 'user.mobileSecondary' | translate }}</td>
-            <td class="profile-value">{{ profile.secondaryMobile ? ((profile.secondaryMobileCountryCode || '') + ' ' + profile.secondaryMobile) : ('common.notAvailable' | translate) }}</td>
-          </tr>
-          <tr>
-            <td class="profile-label">{{ 'user.address' | translate }}</td>
-            <td class="profile-value">{{ profile.address || ('common.notAvailable' | translate) }}</td>
-          </tr>
-          <tr>
-            <td class="profile-label">{{ 'user.roles' | translate }}</td>
-            <td class="profile-value">
-              <ng-container *ngIf="profile.roles?.length; else noRoles">
-                <div class="profile-role" *ngFor="let role of profile.roles">
-                  <span class="profile-role-name">{{ role.name }}</span>
-                  <span class="profile-role-description" *ngIf="role.description">{{ role.description }}</span>
-                </div>
-              </ng-container>
-              <ng-template #noRoles>{{ 'common.notAvailable' | translate }}</ng-template>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+<div class="profile-page" [style.--cover-image]="coverStyle">
+  <section class="profile-hero">
+    <div class="profile-hero-actions">
+      <p-button icon="pi pi-arrow-left" styleClass="p-button-text profile-hero-btn" [ariaLabel]="'common.back' | translate" (onClick)="goToDashboard()"></p-button>
+      <p-button icon="pi pi-pencil" styleClass="p-button-text profile-hero-btn" [ariaLabel]="'common.edit' | translate" routerLink="/profile/edit"></p-button>
     </div>
-  </p-card>
+    <div class="profile-cover"></div>
+    <div class="profile-hero-body">
+      <div class="profile-avatar-wrap">
+        <p-avatar [image]="profile.imageBase64" shape="circle" styleClass="profile-avatar"></p-avatar>
+      </div>
+      <div class="profile-identity">
+        <h1 class="profile-name">{{ profile.fullName || ('profile.defaultName' | translate) }}</h1>
+        <p class="profile-email"><i class="pi pi-envelope"></i><span>{{ profile.email }}</span></p>
+        <div class="profile-chips" *ngIf="profile.roles?.length">
+          <span class="profile-chip" *ngFor="let role of profile.roles">{{ role.name }}</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="profile-grid">
+    <section class="profile-panel">
+      <h2 class="profile-panel-title">{{ 'profile.contactInfo' | translate }}</h2>
+      <div class="profile-info-list">
+        <div class="profile-info-item">
+          <span class="profile-info-icon"><i class="pi pi-envelope"></i></span>
+          <div class="profile-info-text">
+            <span class="profile-info-label">{{ 'user.email' | translate }}</span>
+            <span class="profile-info-value" [class.is-empty]="!profile.email">{{ profile.email || ('common.notAvailable' | translate) }}</span>
+          </div>
+        </div>
+        <div class="profile-info-item">
+          <span class="profile-info-icon"><i class="pi pi-phone"></i></span>
+          <div class="profile-info-text">
+            <span class="profile-info-label">{{ 'user.mobilePrimary' | translate }}</span>
+            <span class="profile-info-value" [class.is-empty]="!profile.mobile">{{ profile.mobile ? ((profile.mobileCountryCode || '') + ' ' + profile.mobile) : ('common.notAvailable' | translate) }}</span>
+          </div>
+        </div>
+        <div class="profile-info-item">
+          <span class="profile-info-icon"><i class="pi pi-mobile"></i></span>
+          <div class="profile-info-text">
+            <span class="profile-info-label">{{ 'user.mobileSecondary' | translate }}</span>
+            <span class="profile-info-value" [class.is-empty]="!profile.secondaryMobile">{{ profile.secondaryMobile ? ((profile.secondaryMobileCountryCode || '') + ' ' + profile.secondaryMobile) : ('common.notAvailable' | translate) }}</span>
+          </div>
+        </div>
+        <div class="profile-info-item">
+          <span class="profile-info-icon"><i class="pi pi-map-marker"></i></span>
+          <div class="profile-info-text">
+            <span class="profile-info-label">{{ 'user.address' | translate }}</span>
+            <span class="profile-info-value" [class.is-empty]="!profile.address">{{ profile.address || ('common.notAvailable' | translate) }}</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="profile-panel">
+      <h2 class="profile-panel-title">{{ 'profile.rolesAccess' | translate }}</h2>
+      <ng-container *ngIf="profile.roles?.length; else noRoles">
+        <div class="profile-role-item" *ngFor="let role of profile.roles">
+          <span class="profile-info-icon"><i class="pi pi-shield"></i></span>
+          <div class="profile-info-text">
+            <span class="profile-role-name">{{ role.name }}</span>
+            <span class="profile-role-description" *ngIf="role.description">{{ role.description }}</span>
+          </div>
+        </div>
+      </ng-container>
+      <ng-template #noRoles><span class="profile-info-value is-empty">{{ 'common.notAvailable' | translate }}</span></ng-template>
+    </section>
+  </div>
 </div>

@@ -727,6 +727,13 @@
     "viewTitle": "{{name}} এর প্রোফাইল",
     "defaultName": "ব্যবহারকারী",
     "editTitle": "প্রোফাইল আপডেট করুন",
+    "contactInfo": "যোগাযোগের তথ্য",
+    "rolesAccess": "ভূমিকা ও অ্যাক্সেস",
+    "coverPhoto": "কভার ছবি",
+    "changeCover": "কভার পরিবর্তন করুন",
+    "useDefaultCover": "ডিফল্ট কভার ব্যবহার করুন",
+    "coverHint": "চওড়া ছবি সবচেয়ে ভালো মানায় (প্রায় ১৬০০ x ৪০০)। JPG, PNG বা WebP।",
+    "coverInvalid": "অনুগ্রহ করে একটি ছবির ফাইল (JPG, PNG বা WebP) নির্বাচন করুন।",
     "removePhoto": "ছবি সরিয়ে ফেলুন",
     "updateButton": "সংরক্ষণ করুন",
     "updateSuccess": "প্রোফাইল সফলভাবে আপডেট করা হয়েছে!"

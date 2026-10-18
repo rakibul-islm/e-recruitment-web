@@ -728,6 +728,13 @@
     "defaultName": "User",
     "editTitle": "Update Profile",
     "removePhoto": "Remove Photo",
+    "contactInfo": "Contact Information",
+    "rolesAccess": "Roles & Access",
+    "coverPhoto": "Cover photo",
+    "changeCover": "Change cover",
+    "useDefaultCover": "Use default cover",
+    "coverHint": "Wide images work best (about 1600 x 400). JPG, PNG or WebP.",
+    "coverInvalid": "Please choose an image file (JPG, PNG or WebP).",
     "updateButton": "Save",
     "updateSuccess": "Profile updated successfully!"
   },
