@@ -5,6 +5,7 @@ import { AuthService } from '../../../../services/utility/security/auth.service'
 import { UserService } from '../../../../services/user/user.service';
 
 const BASE64_PREFIX = 'data:image/png;base64,';
+const DEFAULT_COVER = '/assets/images/default-cover.svg';
 
 @Component({
   selector: 'profile-view',
@@ -13,6 +14,7 @@ const BASE64_PREFIX = 'data:image/png;base64,';
 })
 export class ProfileViewComponent extends BaseComponent implements OnInit {
   profile: Profile = new Profile();
+  coverImage = '';
 
   constructor(
     protected authService: AuthService,
@@ -30,9 +32,16 @@ export class ProfileViewComponent extends BaseComponent implements OnInit {
       this.authService.setProfileData(profile);
     });
 
+    this.subscribers.fetchCoverSub = this.userService.fetchCover().subscribe(response => {
+      this.coverImage = response?.obj || '';
+    });
+
     this.subscribers.profileSub = this.authService.getProfileData().subscribe(profile => {
       this.profile = profile;
     });
   }
 
+  get coverStyle(): string {
+    return 'url("' + (this.coverImage || DEFAULT_COVER) + '")';
+  }
 }

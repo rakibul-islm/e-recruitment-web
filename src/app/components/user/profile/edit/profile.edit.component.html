@@ -6,6 +6,14 @@
 <div class="flex justify-content-center mt-6 px-3">
   <p-card class="profile-edit-card page-card">
     <form *ngIf="editForm" [formGroup]="editForm" (ngSubmit)="save()">
+      <div class="profile-cover" [style.background-image]="coverStyle">
+        <div class="profile-cover-actions">
+          <p-button type="button" [label]="'profile.changeCover' | translate" icon="pi pi-camera" size="small" styleClass="cover-action-btn" (onClick)="coverInput.click()"></p-button>
+          <p-button type="button" *ngIf="coverImage" [label]="'profile.useDefaultCover' | translate" icon="pi pi-refresh" size="small" styleClass="cover-action-btn" (onClick)="useDefaultCover()"></p-button>
+        </div>
+        <input #coverInput type="file" accept="image/jpeg,image/png,image/webp" class="hidden" (change)="onCoverChange($event)" />
+      </div>
+      <small class="text-color-secondary block mb-4">{{ 'profile.coverHint' | translate }}</small>
       <div class="flex flex-column md:flex-row md:align-items-center gap-4 md:gap-6">
         <div class="flex flex-column align-items-center gap-2 mb-4 md:mb-0 profile-avatar-col">
           <div class="profile-avatar-wrapper" (click)="fileInput.click()">

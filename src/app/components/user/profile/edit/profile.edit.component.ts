@@ -5,6 +5,10 @@ import { Router } from '@angular/router';
 import { BaseComponent } from '../../../base.component';
 import { AuthService } from '../../../../services/utility/security/auth.service';
 import { UserService } from '../../../../services/user/user.service';
+import { resizeImageToDataUrl } from '../../../../utils/image.util';
+
+const DEFAULT_COVER = '/assets/images/default-cover.svg';
+const MAX_COVER_SOURCE_BYTES = 10 * 1024 * 1024;
 
 @Component({
   selector: 'profile-edit',
@@ -15,6 +19,8 @@ export class ProfileEditComponent extends BaseComponent implements OnInit {
   countryCodes = COUNTRY_CODES;
   editForm!: FormGroup;
   imageBase64: string = '';
+  coverImage = '';
+  coverChanged = false;
   user: any;
 
   constructor(
@@ -46,11 +52,39 @@ export class ProfileEditComponent extends BaseComponent implements OnInit {
     this.imageBase64 = '';
   }
 
+  onCoverChange(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const file = input.files && input.files[0];
+    input.value = '';
+    if (!file) { return; }
+    if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type) || file.size > MAX_COVER_SOURCE_BYTES) {
+      this.notificationService.sendErrorMsg('profile.coverInvalid');
+      return;
+    }
+    resizeImageToDataUrl(file, 1600).then(dataUrl => {
+      this.coverImage = dataUrl;
+      this.coverChanged = true;
+    }).catch(() => this.notificationService.sendErrorMsg('profile.coverInvalid'));
+  }
+
+  useDefaultCover(): void {
+    this.coverImage = '';
+    this.coverChanged = true;
+  }
+
+  get coverStyle(): string {
+    return 'url("' + (this.coverImage || DEFAULT_COVER) + '")';
+  }
+
   fetchProfile() {
     this.subscribers.fetchProfileSub = this.userService.fetchProfileData(new Map()).subscribe(response => {
       this.user = response?.obj;
       this.imageBase64 = this.user?.imageBase64 ? 'data:image/png;base64,' + this.user.imageBase64 : '';
       this.prepareForm(this.user);
+    });
+
+    this.subscribers.fetchCoverSub = this.userService.fetchCover().subscribe(response => {
+      if (!this.coverChanged) { this.coverImage = response?.obj || ''; }
     });
   }
 
@@ -79,7 +113,11 @@ export class ProfileEditComponent extends BaseComponent implements OnInit {
 
     this.subscribers.updateProfileSub = this.userService.updateProfile(payload).subscribe(() => {
       this.notificationService.sendSuccessMsg('profile.updateSuccess');
-      this.refreshProfile();
+      if (!this.coverChanged) {
+        this.refreshProfile();
+        return;
+      }
+      this.subscribers.updateCoverSub = this.userService.updateCover(this.coverImage ? this.coverImage.split(',')[1] || '' : '').subscribe(() => this.refreshProfile());
     });
   }
 

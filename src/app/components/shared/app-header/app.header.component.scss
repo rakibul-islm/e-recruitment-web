@@ -1,5 +1,7 @@
 ::ng-deep .app-header.p-menubar {
-  background: linear-gradient(to right, #032967, #145dae 50%, #002152);
+  background: linear-gradient(100deg, #032967 0%, #145dae 25%, #002152 50%, #145dae 75%, #032967 100%);
+  background-size: 200% 100%;
+  animation: header-enter 0.55s cubic-bezier(0.22, 1, 0.36, 1) backwards, header-flow 22s ease-in-out infinite alternate;
   border: none;
   border-radius: 0;
   position: sticky;
@@ -8,6 +10,17 @@
   min-height: 3.5rem;
   padding: 0 1.5rem;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background: linear-gradient(105deg, transparent 38%, rgba(255, 255, 255, 0.12) 50%, transparent 62%);
+    background-size: 250% 100%;
+    animation: header-sheen 9s ease-in-out infinite;
+  }
 
   .p-menubar-button {
     color: #ffffff;
@@ -23,7 +36,8 @@
       > .p-menuitem-link {
         color: rgba(255, 255, 255, 0.85);
         padding: 0.65rem 0.85rem;
-        transition: color 0.15s, font-weight 0.15s;
+        background: linear-gradient(#ffffff, #ffffff) no-repeat 50% calc(100% - 0.3rem) / 0 2px;
+        transition: color 0.15s, font-weight 0.15s, background-size 0.25s ease;
 
         .p-menuitem-text,
         .p-menuitem-icon,
@@ -35,17 +49,15 @@
       &:hover > .p-menuitem-link {
         color: #ffffff;
         font-weight: 600;
+        background-size: 55% 2px;
       }
     }
 
-    > .p-menuitem > .p-menuitem-content > .p-menuitem-link.p-menuitem-link-active {
-      color: #ffffff;
-      font-weight: 700;
-    }
-
+    > .p-menuitem > .p-menuitem-content > .p-menuitem-link.p-menuitem-link-active,
     > .p-menuitem:has(.p-menuitem-link-active) > .p-menuitem-content > .p-menuitem-link {
       color: #ffffff;
       font-weight: 700;
+      background-size: 55% 2px;
     }
 
     .p-submenu-list .p-menuitem-link {
@@ -73,6 +85,7 @@
   .app-header-logo {
     width: 2rem;
     height: 2rem;
+    animation: logo-glow 5s ease-in-out infinite;
   }
 
   .app-header-title {
@@ -115,10 +128,12 @@
   border-radius: 999px;
   padding: 0.3rem 0.75rem 0.3rem 1rem;
   cursor: pointer;
-  transition: background-color 0.15s;
+  transition: background-color 0.15s, transform 0.15s, box-shadow 0.15s;
 
   &:hover {
     background: rgba(255, 255, 255, 0.16);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
   }
 
   &:focus-visible {
