@@ -8,6 +8,7 @@ import { CommonConfirmDialogService } from '../../../services/utility/common.con
 import { JobPosting, JobPostingRequest, JOB_STATUS_OPTIONS } from '../../../services/job-posting/domain/job.posting.domain';
 import { Organization } from '../../../services/organization/domain/organization.domain';
 import { AuthService } from '../../../services/utility/security/auth.service';
+import { BD_JOB_LOCATIONS } from '../../../utils/bd.locations';
 
 @Component({
   selector: 'app-job-posting-form',
@@ -19,6 +20,12 @@ export class JobPostingFormComponent extends BaseComponent implements OnInit {
   organizationOptions: { label: string; value: number; website?: string; address?: string; phone?: string; email?: string }[] = [];
   statusOptions = JOB_STATUS_OPTIONS;
   aiSuggesting = false;
+  suggestions: string[] = [];
+  experienceValues = ['Fresher', 'Less than 1 year', '1-2 years', '2-4 years', '3-5 years', '5-8 years', '8+ years', '10+ years'];
+  locationValues = BD_JOB_LOCATIONS;
+  workPlaceValues = ['Onsite', 'Remote', 'Hybrid'];
+  employmentStatusValues = ['Full-time', 'Part-time', 'Contractual', 'Internship', 'Freelance', 'Temporary'];
+  categoryValues = ['Engineering', 'IT/Software', 'Data & Analytics', 'Design', 'Marketing', 'Sales', 'Finance/Accounting', 'Banking', 'Human Resources', 'Administration', 'Customer Service', 'Operations', 'Education', 'Healthcare', 'Legal', 'Manufacturing'];
   // Set once from the logged-in user's own profile - a recruiter scoped to one organization (backend
   // enforces this regardless) gets the organization field pre-filled and locked instead of a real choice.
   scopedOrganizationId: number | null = null;
@@ -46,6 +53,11 @@ export class JobPostingFormComponent extends BaseComponent implements OnInit {
       this.jobPostingId = Number(paramMap.get('id')) || undefined;
       this.jobPostingId ? this.fetchJobPosting(this.jobPostingId) : this.prepareForm();
     });
+  }
+
+  suggest(event: { query: string }, source: string[]): void {
+    const query = (event.query || '').trim().toLowerCase();
+    this.suggestions = source.filter(option => option.toLowerCase().includes(query));
   }
 
   fetchOrganizationOptions(): void {

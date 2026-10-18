@@ -52,31 +52,31 @@
           </div>
           <div class="col-12 md:col-4">
             <p-floatLabel>
-              <input id="jobExperience" type="text" formControlName="experience" pInputText class="w-full" />
+              <p-autoComplete inputId="jobExperience" formControlName="experience" [suggestions]="suggestions" (completeMethod)="suggest($event, experienceValues)" [dropdown]="true" [forceSelection]="false" [minLength]="0" appendTo="body" styleClass="w-full" inputStyleClass="w-full"></p-autoComplete>
               <label for="jobExperience">{{ 'jobPortal.experience' | translate }}</label>
             </p-floatLabel>
           </div>
           <div class="col-12 md:col-4">
             <p-floatLabel>
-              <input id="jobLocation" type="text" formControlName="jobLocation" pInputText class="w-full" />
+              <p-autoComplete inputId="jobLocation" formControlName="jobLocation" [suggestions]="suggestions" (completeMethod)="suggest($event, locationValues)" [dropdown]="true" [forceSelection]="false" [minLength]="0" appendTo="body" styleClass="w-full" inputStyleClass="w-full"></p-autoComplete>
               <label for="jobLocation">{{ 'jobPosting.jobLocation' | translate }}</label>
             </p-floatLabel>
           </div>
           <div class="col-12 md:col-4">
             <p-floatLabel>
-              <input id="jobWorkPlace" type="text" formControlName="workPlace" pInputText class="w-full" />
+              <p-autoComplete inputId="jobWorkPlace" formControlName="workPlace" [suggestions]="suggestions" (completeMethod)="suggest($event, workPlaceValues)" [dropdown]="true" [forceSelection]="false" [minLength]="0" appendTo="body" styleClass="w-full" inputStyleClass="w-full"></p-autoComplete>
               <label for="jobWorkPlace">{{ 'jobPosting.workplaceHint' | translate }}</label>
             </p-floatLabel>
           </div>
           <div class="col-12 md:col-4">
             <p-floatLabel>
-              <input id="jobEmploymentStatus" type="text" formControlName="employmentStatus" pInputText class="w-full" />
+              <p-autoComplete inputId="jobEmploymentStatus" formControlName="employmentStatus" [suggestions]="suggestions" (completeMethod)="suggest($event, employmentStatusValues)" [dropdown]="true" [forceSelection]="false" [minLength]="0" appendTo="body" styleClass="w-full" inputStyleClass="w-full"></p-autoComplete>
               <label for="jobEmploymentStatus">{{ 'jobPortal.employmentType' | translate }}</label>
             </p-floatLabel>
           </div>
           <div class="col-12 md:col-4">
             <p-floatLabel>
-              <input id="jobCategory" type="text" formControlName="category" pInputText class="w-full" />
+              <p-autoComplete inputId="jobCategory" formControlName="category" [suggestions]="suggestions" (completeMethod)="suggest($event, categoryValues)" [dropdown]="true" [forceSelection]="false" [minLength]="0" appendTo="body" styleClass="w-full" inputStyleClass="w-full"></p-autoComplete>
               <label for="jobCategory">{{ 'jobAlert.category' | translate }}</label>
             </p-floatLabel>
           </div>

@@ -1,4 +1,5 @@
 <app-page-header [title]="(questionId ? 'mcqQuestion.editTitle' : 'mcqQuestion.createTitle') | translate">
+  <p-button [label]="'common.save' | translate" icon="pi pi-save" (onClick)="submit()"></p-button>
   <p-button [label]="'common.back' | translate" icon="pi pi-arrow-left" styleClass="p-button-secondary" (onClick)="goBack()"></p-button>
 </app-page-header>
 
@@ -55,7 +56,6 @@
           <small class="text-color-secondary">{{ 'mcqQuestion.correctOptionHint' | translate }}</small>
         </div>
 
-        <p-button type="submit" [label]="'common.save' | translate" styleClass="w-full"></p-button>
       </div>
     </form>
   </p-card>

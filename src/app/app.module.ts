@@ -20,6 +20,7 @@ import { ForgotPasswordComponent } from './components/user/password/forgot-passw
 import { SetPasswordComponent } from './components/user/password/set-password/set.password.component';
 import { AuthService } from './services/utility/security/auth.service';
 import { AuthInterceptor } from './services/utility/interceptors/auth.interceptor';
+import { DateInterceptor } from './services/utility/interceptors/date.interceptor';
 import { LoadingInterceptor } from './services/utility/interceptors/loading.interceptor';
 import { RoleSearchComponent } from './components/role/search/role.search.component';
 import { RoleFormComponent } from './components/role/form/role.form.component';
@@ -269,6 +270,11 @@ export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: DateInterceptor,
       multi: true
     },
     ConfirmationService,

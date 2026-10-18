@@ -14,7 +14,8 @@
       </div>
     </div>
     <div class="job-view-hero-action">
-      <p-button *ngIf="!alreadyApplied" [label]="'jobPortal.applyNow' | translate" icon="pi pi-send" styleClass="job-apply-btn" (onClick)="openApply()"></p-button>
+      <p-button *ngIf="!alreadyApplied && !applicationsClosed" [label]="'jobPortal.applyNow' | translate" icon="pi pi-send" styleClass="job-apply-btn" (onClick)="openApply()"></p-button>
+      <span *ngIf="!alreadyApplied && applicationsClosed" class="tag job-closed-tag"><i class="pi pi-lock"></i> {{ 'jobPortal.applicationsClosed' | translate }}</span>
       <span *ngIf="alreadyApplied" class="tag job-applied-tag"><i class="pi pi-check-circle"></i> {{ 'jobPortal.applicationSubmitted' | translate }}</span>
     </div>
   </div>

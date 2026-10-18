@@ -15,7 +15,7 @@ import { CommonConfirmDialogService } from '../../../services/utility/common.con
 export class McqTestFormComponent extends BaseComponent implements OnInit {
   testForm!: FormGroup;
   testId?: number;
-  questionOptions: { label: string; value: number }[] = [];
+  topicGroups: { key: string; label: string; items: { label: string; value: number }[] }[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -41,8 +41,33 @@ export class McqTestFormComponent extends BaseComponent implements OnInit {
       .searchQuestions(new Map<any, any>().set('status', 'APPROVED').set('isPageable', false))
       .subscribe(response => {
         const questions: McqQuestion[] = response?.list || [];
-        this.questionOptions = questions.map(q => ({ label: q.questionText, value: q.id }));
+        this.topicGroups = this.groupByTopic(questions);
       });
+  }
+
+  private groupByTopic(questions: McqQuestion[]): { key: string; label: string; items: { label: string; value: number }[] }[] {
+    const groups = new Map<string, { key: string; label: string; items: { label: string; value: number }[] }>();
+    questions.forEach(q => {
+      const label = (q.skillTag || '').trim();
+      const key = label.toLowerCase();
+      if (!groups.has(key)) { groups.set(key, { key, label, items: [] }); }
+      groups.get(key)!.items.push({ label: q.questionText, value: q.id });
+    });
+    return Array.from(groups.values()).sort((a, b) => (a.label ? 0 : 1) - (b.label ? 0 : 1) || a.label.localeCompare(b.label));
+  }
+
+  selectedInTopic(group: { items: { value: number }[] }): number {
+    const selected: number[] = this.testForm?.get('questionIds')?.value || [];
+    return group.items.filter(item => selected.includes(item.value)).length;
+  }
+
+  toggleTopic(group: { items: { value: number }[] }): void {
+    const control = this.testForm.get('questionIds')!;
+    const selected: number[] = control.value || [];
+    const topicIds = group.items.map(item => item.value);
+    const allSelected = this.selectedInTopic(group) === topicIds.length;
+    control.setValue(allSelected ? selected.filter(id => !topicIds.includes(id)) : [...new Set([...selected, ...topicIds])]);
+    control.markAsDirty();
   }
 
   fetchTest(id: number): void {

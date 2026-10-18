@@ -8,6 +8,7 @@ import {
 interface Segment { key: SectionKey; blocks: CvBlock[]; }
 
 const OPEN_END_REGEX = new RegExp(`^(${OPEN_END})$`, 'i');
+const LINK_LABEL_REGEX = /\s*\[[^\]\n]{1,30}\]/g;
 const LABEL_REGEX = /^([A-Za-z][A-Za-z0-9 /().'’&-]{1,38}?)\s*[:：]\s*(.*)$/;
 const DEGREE_START_REGEX = /^\(?\s*(?:ssc|s\.\s?s\.\s?c|hsc|h\.\s?s\.\s?c|psc|jsc|b\.?\s?sc|m\.?\s?sc|bsc|msc|bba|mba|b\.?\s?a|m\.?\s?a|bss|mss|b\.?\s?com|m\.?\s?com|mphil|ph\.?\s?d|mbbs|llb|post\s*graduat\w*|diploma|bachelor|master|honou?rs|higher secondary|secondary school|dakhil|alim|o-level|a-level|b\.?\s?tech|b\.?\s?e)\b/i;
 const PROFESSIONAL_START = /^\(?(?:chartered accountan(?:t|cy)|acca|aca|fca|cma|cpa)\b/i;
@@ -21,6 +22,32 @@ const BARE_DOMAIN_REGEX = /(?<![\w@./-])(?:[a-z0-9-]+\.)+(?:com|dev|io|net|org|m
 const NOISE_REGEX =/^(powered by\b|page\s+\d+(\s*(of|\/)\s*\d+)?$|\d+\s*\/\s*\d+$|curriculum vitae$|resume$|r[eé]sum[eé]$)/i;
 const TRAINING_REGEX =/\b(training|course|workshop|bootcamp|certificate course)\b/i;
 
+function singleCellHeight(block: CvBlock): number | null {
+  return !block.table && !block.separator && block.cells && block.cells.length === 1 ? block.cells[0].h : null;
+}
+
+// An unrecognised heading (e.g. "Hackathon Achievements") is set in the same type size as the known ones.
+function styledHeadingTest(blocks: CvBlock[]): (block: CvBlock, next?: CvBlock) => boolean {
+  const knownBlocks = blocks.filter(b => singleCellHeight(b) !== null && headingKeyOf(b.text));
+  const known = knownBlocks.map(b => b.cells![0].h);
+  if (known.length < 2) return () => false;
+  const heading = known.slice().sort((a, b) => a - b)[Math.floor(known.length / 2)];
+  const headingX = knownBlocks.map(b => b.cells![0].x).sort((a, b) => a - b)[Math.floor(knownBlocks.length / 2)];
+  const isCaps = (text: string) => text === text.toUpperCase();
+  const capsStyle = knownBlocks.filter(b => isCaps(b.text.trim())).length * 2 > knownBlocks.length;
+  const body = blocks.filter(b => !b.table && !b.separator).flatMap(b => (b.cells || []).map(c => c.h)).sort((a, b) => a - b);
+  const bodyHeight = body.length ? body[Math.floor(body.length / 4)] : 0;
+  if (!bodyHeight || heading < bodyHeight * 1.15) return () => false;
+  // Entry titles can share the heading size, so a heading must also match the others' case and left edge and not lead into a dated line.
+  return (block, next) => {
+    const h = singleCellHeight(block);
+    const text = block.text.trim();
+    return h !== null && Math.abs(h - heading) <= 0.6 && Math.abs(block.cells![0].x - headingX) <= 1.5 && isCaps(text) === capsStyle
+      && text.length <= 40 && words(text) <= 4 && !isBullet(text) && !/[\d.,;:!?]/.test(text) && /^[A-Za-z]/.test(text)
+      && !(next && !next.table && !isBullet(next.text) && words(next.text) <= 6 && (SINGLE_DATE_REGEX.test(next.text) || RANGE_REGEX.test(next.text)));
+  };
+}
+
 export function splitSections(blocks: CvBlock[]): Segment[] {
   const segments: Segment[] = [{ key: 'header', blocks: [] }];
   let current = segments[0];
@@ -28,7 +55,8 @@ export function splitSections(blocks: CvBlock[]): Segment[] {
     current = { key, blocks: [] };
     segments.push(current);
   };
-  for (const block of blocks) {
+  const isStyledHeading = styledHeadingTest(blocks);
+  for (const [position, block] of blocks.entries()) {
     if (block.separator) {
       open('header');
       continue;
@@ -41,6 +69,10 @@ export function splitSections(blocks: CvBlock[]): Segment[] {
     const key = headingKeyOf(block.text);
     if (key) {
       open(key);
+      continue;
+    }
+    if (current.key !== 'header' && isStyledHeading(block, blocks[position + 1])) {
+      open('other');
       continue;
     }
     const inline = inlineHeadingOf(block.text);
@@ -829,16 +861,24 @@ export function parseProjects(segments: Segment[]): any[] {
   const items: any[] = [];
   for (const segment of segments) {
     let current: any = null;
-    const entries = segment.blocks.filter(b => !b.table && !b.separator && b.text).map(b => ({ raw: b.text, weight: blockWeight(b) }));
+    const entries = segment.blocks.filter(b => !b.table && !b.separator && b.text).map(b => ({ raw: b.text, weight: blockWeight(b), cells: b.cells }));
     const lines = entries.map(e => e.raw);
     const explicit = lines.some(l => /^(\d{1,2}\s*[.)]\s*)?title\s*:/i.test(l) || NUMBERED_REGEX.test(l));
     const weights = entries.map(e => e.weight).filter((w): w is number => w !== null).sort((a, b) => a - b);
     const median = weights.length ? weights[Math.floor(weights.length / 2)] : 0;
     const emphasised = new Set(entries.filter(e => e.weight !== null && median > 0 && e.weight >= median * 1.08 && words(e.raw) <= 8 && !/[.:]$/.test(e.raw)).map(e => e.raw));
     const emphasisMode = !explicit && emphasised.size >= 2 && emphasised.size <= entries.length * 0.5;
-    for (const raw of lines) {
+    for (const [position, raw] of lines.entries()) {
       const bullet = isBullet(raw);
-      const clean = raw.replace(BULLET_REGEX, '').trim();
+      const clean = (bullet ? raw.replace(BULLET_REGEX, '') : raw.replace(LINK_LABEL_REGEX, ' ')).trim();
+      const cells = entries[position].cells?.filter(c => c.text.replace(LINK_LABEL_REGEX, '').trim());
+      if (!bullet && !explicit && cells && cells.length >= 2 && cells.every(c => words(c.text) <= 6 && !YEAR_REGEX.test(c.text) && !/[:.]$/.test(c.text.trim()))) {
+        for (const cell of cells) {
+          current = { name: cell.text.replace(LINK_LABEL_REGEX, ' ').trim().slice(0, 150), description: '', url: undefined };
+          items.push(current);
+        }
+        continue;
+      }
       const urls = clean.match(URL_REGEX);
       const titled = clean.match(/^(?:\d{1,2}\s*[.)]\s*)?title\s*:\s*(.+)$/i);
       const numbered = !bullet && NUMBERED_REGEX.test(clean);

@@ -319,4 +319,26 @@ describe('CV layout', () => {
       expect(bestScored([poor, rich])).toBe(rich);
     });
   });
+
+  describe('projects beside unrecognised headings', () => {
+    const line = (y: number, parts: [string, number][], h = 11) => parts.map(([text, x]) => item(text, x, y, undefined, h));
+    const page = [
+      ...line(800, [['Education', 45]], 14), ...line(780, [['BSc in Computer Science, SUST', 45]]),
+      ...line(750, [['Work Experience', 45]], 14), ...line(730, [['Engineer | Acme Ltd', 45], ['Apr 2026 - Present', 452]]),
+      ...line(700, [['Projects', 45]], 14),
+      ...line(680, [['Leave Management System (Spring Boot)', 45], ['[GitHub / Live]', 312]]),
+      ...line(666, [['• A JWT-secured leave management system with role-based access control', 45]]),
+      ...line(650, [['Club Management System', 45], ['[GitHub]', 181]]),
+      ...line(636, [['• Built a full-stack club management system with event scheduling', 45]]),
+      ...line(620, [['Smart-IELTS', 161], ['Research Paper RAG', 243], ['Eatery Android App', 365]]),
+      ...line(590, [['Hackathon Achievements', 45]], 14), ...line(572, [['• BUET CSE FEST 2026 - Top 20 teams out of 200+ teams', 45]]),
+      ...line(545, [['Research', 45]], 14), ...line(527, [['BanglaSentinel: Phishing Detection', 45], ['2026 - Ongoing', 470]])
+    ];
+
+    it('keeps real projects, drops link labels, and ends the section at an unknown heading', () => {
+      const cv = parseBlocks(pdfPagesToBlocks([page], true));
+      expect(cv.projects.map(p => p.name)).toEqual(['Leave Management System (Spring Boot)', 'Club Management System', 'Smart-IELTS', 'Research Paper RAG', 'Eatery Android App']);
+      expect(cv.projects[0].description).toContain('JWT-secured');
+    });
+  });
 });
