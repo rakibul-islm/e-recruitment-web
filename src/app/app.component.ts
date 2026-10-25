@@ -9,6 +9,7 @@ import { GuestPresenceService } from './services/presence/guest.presence.service
 import { SessionLocationSyncService } from './services/session/session.location.sync.service';
 import { PushRegistrationService } from './services/notification-center/push.registration.service';
 import { BackButtonService } from './services/utility/back.button.service';
+import { ScrollRestorationService } from './services/utility/scroll.restoration.service';
 
 @Component({
   selector: 'app-root',
@@ -29,7 +30,8 @@ export class AppComponent {
 
   constructor(public loadingService: LoadingService, languageService: LanguageService, notificationService: InAppNotificationService,
     guestPresenceService: GuestPresenceService, sessionLocationSyncService: SessionLocationSyncService, pushRegistrationService: PushRegistrationService,
-    backButtonService: BackButtonService, router: Router, route: ActivatedRoute) {
+    backButtonService: BackButtonService, scrollRestorationService: ScrollRestorationService,
+    router: Router, route: ActivatedRoute) {
     languageService.init();
 
     router.events.pipe(
