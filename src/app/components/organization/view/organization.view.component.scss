@@ -1,0 +1,42 @@
+.organization-view-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.organization-view-logo {
+  height: 6rem;
+  min-width: 6rem;
+  max-width: 14rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-shrink: 0;
+}
+
+.organization-view-name {
+  margin: 0;
+  color: #032967;
+  font-size: 1.5rem;
+  font-weight: 700;
+  word-break: break-word;
+}
+
+// Phones: name below the logo, left-aligned.
+@media screen and (max-width: 576px) {
+  .organization-view-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .organization-view-logo {
+    height: 4.5rem;
+    min-width: 4.5rem;
+    max-width: 10rem;
+  }
+
+  .organization-view-name {
+    font-size: 1.2rem;
+  }
+}

@@ -30,6 +30,11 @@ export class OrganizationService extends BaseService {
     return super.get(url);
   }
 
+  public updateLogo(id: number, body: { imageBase64?: string | null }): Observable<any> {
+    const url = this.createUrl(API_URLS.UPDATE_ORGANIZATION_LOGO, { id });
+    return super.put(url, body);
+  }
+
   public deleteOrganization(id: number): Observable<any> {
     return this.removeById(API_URLS.REMOVE_ORGANIZATION, { id });
   }

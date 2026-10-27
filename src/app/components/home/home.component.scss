@@ -330,3 +330,13 @@
     flex-direction: column;
   }
 }
+
+.job-card-avatar {
+  height: 3.5rem;
+  min-width: 3.5rem;
+  max-width: 8rem;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}

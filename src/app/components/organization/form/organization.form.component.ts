@@ -7,12 +7,17 @@ import { CommonConfirmDialogService } from '../../../services/utility/common.con
 import { Organization, OrganizationRequest } from '../../../services/organization/domain/organization.domain';
 import { OrganizationTypeService } from '../../../services/organization-type/organization.type.service';
 import { OrganizationType } from '../../../services/organization-type/domain/organization.type.domain';
+import { organizationLogoUrl } from '../../../services/utility/logo.util';
 
 @Component({
   selector: 'app-organization-form',
-  templateUrl: './organization.form.component.html'
+  templateUrl: './organization.form.component.html',
+  styleUrls: ['./organization.form.component.scss']
 })
 export class OrganizationFormComponent extends BaseComponent implements OnInit {
+  private static readonly LOGO_MAX_DIMENSION = 512;
+  private static readonly LOGO_MAX_RAW_BYTES = 5 * 1024 * 1024;
+
   organizationForm!: FormGroup;
   organizationId?: number;
 
@@ -20,6 +25,11 @@ export class OrganizationFormComponent extends BaseComponent implements OnInit {
   newTypeDialogVisible = false;
   newTypeForm!: FormGroup;
   savingType = false;
+
+  logoFileId?: number;
+  logoPreview: string | null = null;
+  logoRemoveRequested = false;
+  private pendingLogo: string | null = null;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -86,7 +96,66 @@ export class OrganizationFormComponent extends BaseComponent implements OnInit {
 
   fetchOrganization(id: number): void {
     this.subscribers.findOrganizationSub = this.organizationService.findOrganizationById(id).subscribe(response => {
+      this.logoFileId = response?.obj?.logoFileId;
       this.prepareForm(response?.obj);
+    });
+  }
+
+  get logoSrc(): string | null {
+    if (this.logoPreview) { return this.logoPreview; }
+    return !this.logoRemoveRequested ? organizationLogoUrl(this.logoFileId) : null;
+  }
+
+  // Resizes to fit a 512px box, aspect ratio preserved.
+  async onLogoFileSelected(event: Event): Promise<void> {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+    input.value = '';
+    if (!file) { return; }
+    if (!/^image\/(png|jpe?g|webp)$/i.test(file.type)) {
+      this.notificationService.sendErrorMsg('organization.logoInvalidType');
+      return;
+    }
+    if (file.size > OrganizationFormComponent.LOGO_MAX_RAW_BYTES) {
+      this.notificationService.sendErrorMsg('organization.logoTooLarge');
+      return;
+    }
+    try {
+      this.pendingLogo = await this.resizeLogo(file);
+      this.logoPreview = this.pendingLogo;
+      this.logoRemoveRequested = false;
+    } catch {
+      this.notificationService.sendErrorMsg('organization.logoInvalidType');
+    }
+  }
+
+  removeLogo(): void {
+    if (this.logoPreview || this.pendingLogo) {
+      this.pendingLogo = null;
+      this.logoPreview = null;
+      return;
+    }
+    if (this.logoFileId) { this.logoRemoveRequested = true; }
+  }
+
+  private resizeLogo(file: File): Promise<string> {
+    return new Promise<string>((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onerror = () => reject(new Error('read failed'));
+      reader.onload = () => {
+        const img = new Image();
+        img.onerror = () => reject(new Error('decode failed'));
+        img.onload = () => {
+          const scale = Math.min(1, OrganizationFormComponent.LOGO_MAX_DIMENSION / Math.max(img.width, img.height));
+          const canvas = document.createElement('canvas');
+          canvas.width = Math.max(1, Math.round(img.width * scale));
+          canvas.height = Math.max(1, Math.round(img.height * scale));
+          canvas.getContext('2d')?.drawImage(img, 0, 0, canvas.width, canvas.height);
+          resolve(file.type === 'image/jpeg' ? canvas.toDataURL('image/jpeg', 0.9) : canvas.toDataURL('image/png'));
+        };
+        img.src = reader.result as string;
+      };
+      reader.readAsDataURL(file);
     });
   }
 
@@ -101,16 +170,32 @@ export class OrganizationFormComponent extends BaseComponent implements OnInit {
   }
 
   createOrganization(payload: OrganizationRequest): void {
-    this.subscribers.createOrganizationSub = this.organizationService.createOrganization(payload).subscribe(() => {
+    this.subscribers.createOrganizationSub = this.organizationService.createOrganization(payload).subscribe(response => {
       this.notificationService.sendSuccessMsg('organization.createSuccess');
-      this.navigateToSearch();
+      this.saveLogoChanges(response?.obj?.id ?? undefined);
     });
   }
 
   updateOrganization(payload: OrganizationRequest): void {
     this.subscribers.updateOrganizationSub = this.organizationService.updateOrganization(payload).subscribe(() => {
       this.notificationService.sendSuccessMsg('organization.updateSuccess');
+      this.saveLogoChanges(this.organizationId);
+    });
+  }
+
+  // Runs after the organization row exists, then navigation continues.
+  private saveLogoChanges(organizationId: number | undefined): void {
+    if (!organizationId || (!this.pendingLogo && !this.logoRemoveRequested)) {
       this.navigateToSearch();
+      return;
+    }
+    const body = this.pendingLogo ? { imageBase64: this.pendingLogo } : {};
+    this.subscribers.logoSub = this.organizationService.updateLogo(organizationId, body).subscribe({
+      next: () => this.navigateToSearch(),
+      error: () => {
+        this.notificationService.sendErrorMsg('organization.logoUpdateFailed');
+        this.navigateToSearch();
+      }
     });
   }
 

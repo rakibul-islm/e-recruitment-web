@@ -19,18 +19,12 @@
 
 .job-view-hero-avatar {
   flex-shrink: 0;
-  width: 3.5rem;
-  height: 3.5rem;
-  border-radius: 12px;
-  background: #eef3fb;
+  height: 5rem;
+  min-width: 5rem;
+  max-width: 10rem;
   display: flex;
   align-items: center;
-  justify-content: center;
-
-  .pi {
-    color: #1e4d8f;
-    font-size: 1.5rem;
-  }
+  justify-content: flex-start;
 }
 
 .job-view-hero-info {

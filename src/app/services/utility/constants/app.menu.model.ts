@@ -52,6 +52,7 @@ export const MENU_ITEMS: AppMenuItem[] = [
       { label: 'menu.role', icon: 'pi pi-shield', routerLink: '/roles', routeName: 'role-list' },
       { label: 'menu.permission', icon: 'pi pi-key', routerLink: '/permissions', routeName: 'permission-list' },
       { label: 'menu.notificationBroadcast', icon: 'pi pi-send', routerLink: '/notification-broadcast', routeName: 'notification-broadcast-manage' },
+      { label: 'menu.bannerManagement', icon: 'pi pi-image', routerLink: '/banners', routeName: 'banner-manage' },
       { label: 'menu.systemConfig', icon: 'pi pi-sliders-h', routerLink: '/system-configs', routeName: 'system-config-list' },
       { label: 'menu.passwordPolicy', icon: 'pi pi-lock', routerLink: '/password-policy', routeName: 'password-policy-list' },
       { label: 'menu.exceptionLog', icon: 'pi pi-exclamation-triangle', routerLink: '/exception-logs', routeName: 'exception-log-list' },

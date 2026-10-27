@@ -1,7 +1,11 @@
 <app-page-header [title]="'dashboard.pageTitle' | translate"></app-page-header>
 
 <div class="p-3 dashboard-page">
-  <p class="dashboard-welcome">{{ 'dashboard.welcomeBack' | translate: { name: profile.fullName } }}</p>
+  <h2 class="dashboard-welcome" *ngIf="profile.fullName">{{ 'dashboard.welcomeBack' | translate: { name: profile.fullName } }}</h2>
+  <!-- Special-day banner; renders nothing when none is eligible. -->
+  <div class="dashboard-banner" *ngIf="activeBannerSrc">
+    <img [src]="activeBannerSrc" [alt]="'dashboard.pageTitle' | translate" (error)="onBannerError()" />
+  </div>
 
   <!-- Recruiter / Admin view -->
   <ng-container *ngIf="roleResolved && isStaff">

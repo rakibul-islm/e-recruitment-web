@@ -86,9 +86,18 @@ export const API_URLS = {
     UPDATE_ORGANIZATION: 'organization',
     FIND_ORGANIZATION_BY_ID: 'organization/:id',
     REMOVE_ORGANIZATION: 'organization/:id',
+    UPDATE_ORGANIZATION_LOGO: 'organization/:id/logo',
 
     FILTER_ORGANIZATION_TYPE: 'organization-type/filter',
     CREATE_ORGANIZATION_TYPE: 'organization-type',
+
+    FILTER_BANNER: 'banner/filter',
+    CREATE_BANNER: 'banner',
+    UPDATE_BANNER: 'banner',
+    FIND_BANNER_BY_ID: 'banner/:id',
+    DELETE_BANNER: 'banner/delete/:id',
+    REMOVE_BANNER: 'banner/:id',
+    ACTIVE_BANNER: 'banner/active',
 
     FILTER_JOB_POSTING: 'job-circular/filter',
     CREATE_JOB_POSTING: 'job-circular',

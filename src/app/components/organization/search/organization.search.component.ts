@@ -32,6 +32,10 @@ export class OrganizationSearchComponent extends BaseComponent implements OnInit
   ngOnInit(): void {
     this.subscribers.profileSub = this.authService.getProfileData().subscribe(profile => {
       this.isOrganizationScoped = !!profile?.organizationId;
+      // A scoped recruiter lands directly on their org's details; replaceUrl avoids a back-button loop.
+      if (this.isOrganizationScoped && profile?.organizationId) {
+        this.router.navigate(['/organizations', profile.organizationId], { replaceUrl: true });
+      }
     });
     this.prepareForm();
     this.registerFilterForm('organization-search-filters', this.filterForm);

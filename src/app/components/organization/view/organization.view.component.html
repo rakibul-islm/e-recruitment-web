@@ -9,12 +9,12 @@
 
 <div class="flex justify-content-center mt-3 px-3">
   <p-card class="page-card">
+      <div class="organization-view-header mb-3">
+        <app-org-logo class="organization-view-logo" [fileId]="organization.logoFileId" [name]="organization.name" [lazy]="false" />
+        <h2 class="organization-view-name">{{ organization.name }}</h2>
+      </div>
     <table class="detail-table">
       <tbody>
-        <tr>
-          <td class="detail-label">{{ 'common.name' | translate }}</td>
-          <td class="detail-value">{{ organization.name }}</td>
-        </tr>
         <tr>
           <td class="detail-label">{{ 'organization.organizationType' | translate }}</td>
           <td class="detail-value">{{ organization.organizationType || ('common.notAvailable' | translate) }}</td>

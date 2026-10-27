@@ -15,6 +15,7 @@ export class JobPosting {
     organizationEmail?: string;
     organizationWebsite?: string;
     organizationBusiness?: string;
+    organizationLogoFileId?: number;
     applicationDeadLine!: Date | string;
     vacancy!: number;
     experience?: string;
@@ -42,6 +43,7 @@ export class JobPostingRequest {
     organizationEmail?: string;
     organizationWebsite?: string;
     organizationBusiness?: string;
+    organizationLogoFileId?: number;
     applicationDeadLine!: Date | string;
     vacancy!: number;
     experience?: string;
