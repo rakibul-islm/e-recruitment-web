@@ -25,9 +25,44 @@
 }
 
 .dashboard-welcome {
-  margin: 0 0 1.25rem;
-  color: #6b7280;
-  font-size: 0.95rem;
+  margin: 0 0 1rem;
+  color: #032967;
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+
+// Special-day banner: pure image, natural aspect ratio, absent entirely when none is eligible.
+.dashboard-banner {
+  margin-bottom: 1.25rem;
+  border-radius: 14px;
+  overflow: hidden;
+
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 19rem;
+    object-fit: cover;
+  }
+}
+
+// Desktop: fixed-width, centered hero.
+@media screen and (min-width: 992px) {
+  .dashboard-banner {
+    width: 75rem;
+    max-width: 100%;
+    margin: 0 auto 1.25rem;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .dashboard-welcome {
+    font-size: 1.05rem;
+  }
+
+  .dashboard-banner img {
+    max-height: 10rem;
+  }
 }
 
 .dashboard-card-heading {
@@ -146,12 +181,6 @@
 
 // Native-app look on phones: tappable list-style cards with an icon tile, chevron and press feedback.
 @media screen and (max-width: 576px) {
-  .dashboard-welcome {
-    font-size: 1.05rem;
-    font-weight: 600;
-    color: #032967;
-    margin-bottom: 1rem;
-  }
 
   .quick-links {
     gap: 0.7rem;
@@ -215,7 +244,7 @@
   }
 }
 
-.dashboard-welcome,
+.dashboard-banner,
 .exam-today-banner,
 :host ::ng-deep .p-card {
   animation: dashboard-rise 0.45s cubic-bezier(0.22, 1, 0.36, 1) backwards;
@@ -238,7 +267,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .dashboard-welcome,
+  .dashboard-banner,
   .exam-today-banner,
   .exam-today-banner .pi,
   .quick-link-card,

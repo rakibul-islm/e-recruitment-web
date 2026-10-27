@@ -48,6 +48,7 @@ import { CandidateApplicationsComponent } from './components/candidate/applicati
 import { OrganizationSearchComponent } from './components/organization/search/organization.search.component';
 import { OrganizationFormComponent } from './components/organization/form/organization.form.component';
 import { OrganizationViewComponent } from './components/organization/view/organization.view.component';
+import { BannerSearchComponent } from './components/banner/search/banner.search.component';
 import { JobPostingSearchComponent } from './components/job-posting/search/job.posting.search.component';
 import { JobPostingFormComponent } from './components/job-posting/form/job.posting.form.component';
 import { JobPostingViewComponent } from './components/job-posting/view/job.posting.view.component';
@@ -156,6 +157,12 @@ const routes: Routes = [
     component: OrganizationViewComponent,
     canActivate: [AuthGuard, PermissionGuard],
     data: { routeName: 'organization-list' }
+  },
+
+  { path: 'banners',
+    component: BannerSearchComponent,
+    canActivate: [AuthGuard, PermissionGuard],
+    data: { routeName: 'banner-manage' }
   },
 
   { path: 'job-postings',

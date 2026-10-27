@@ -1,0 +1,52 @@
+.banner-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+  gap: 1rem;
+}
+
+.banner-card-image {
+  height: 8rem;
+  border-radius: 10px;
+  background-color: #eef3fb;
+  background-size: cover;
+  background-position: center;
+}
+
+.banner-card-body {
+  margin-top: 0.75rem;
+}
+
+.banner-card-name {
+  font-weight: 600;
+  color: #032967;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.banner-tag-active {
+  background: #e7f6ec;
+  color: #1e7c43;
+}
+
+.banner-preview {
+  border-radius: 10px;
+  background-color: #eef3fb;
+
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+  }
+}
+
+.banner-card-validity {
+  margin-top: 0.25rem;
+  color: #6b7280;
+  font-size: 0.82rem;
+
+  .pi {
+    margin-right: 0.3rem;
+  }
+}

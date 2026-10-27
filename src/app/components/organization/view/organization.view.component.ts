@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BaseComponent } from '../../base.component';
 import { OrganizationService } from '../../../services/organization/organization.service';
@@ -8,7 +9,8 @@ import { AuthService } from '../../../services/utility/security/auth.service';
 
 @Component({
   selector: 'app-organization-view',
-  templateUrl: './organization.view.component.html'
+  templateUrl: './organization.view.component.html',
+  styleUrls: ['./organization.view.component.scss']
 })
 export class OrganizationViewComponent extends BaseComponent implements OnInit {
   organization: Organization = new Organization();
@@ -19,6 +21,7 @@ export class OrganizationViewComponent extends BaseComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     protected router: Router,
+    private locationService: Location,
     private organizationService: OrganizationService,
     private authService: AuthService,
     private commonConfirmDialogService: CommonConfirmDialogService
@@ -55,5 +58,15 @@ export class OrganizationViewComponent extends BaseComponent implements OnInit {
 
   navigateToSearch(): void {
     this.router.navigate(['/organizations']);
+  }
+
+  // Back only when in-app history exists; else dashboard.
+  override goBack(): void {
+    const navigationId = (history as any).state?.navigationId;
+    if (navigationId && navigationId > 1) {
+      this.locationService.back();
+    } else {
+      this.router.navigate(['/dashboard']);
+    }
   }
 }

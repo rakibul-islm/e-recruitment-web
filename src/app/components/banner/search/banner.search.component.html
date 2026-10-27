@@ -1,0 +1,79 @@
+<app-page-header [title]="'banner.pageTitle' | translate">
+  <p-button [label]="'banner.addBanner' | translate" icon="pi pi-plus" (onClick)="openAddDialog()"></p-button>
+</app-page-header>
+
+<div class="p-3">
+  <div *ngIf="loading" class="text-center p-4"><i class="pi pi-spin pi-spinner"></i></div>
+  <div *ngIf="!loading && !banners.length" class="text-center p-4">{{ 'banner.noneFound' | translate }}</div>
+
+  <div class="banner-grid" *ngIf="!loading && banners.length">
+    <p-card *ngFor="let banner of banners" class="banner-card">
+      <div class="banner-card-image" [style.background-image]="bannerSrc(banner) ? 'url(' + bannerSrc(banner) + ')' : null"></div>
+      <div class="banner-card-body">
+        <div class="flex align-items-center justify-content-between gap-2">
+          <span class="banner-card-name" [pTooltip]="banner.name">{{ banner.name }}</span>
+          <span class="tag" [class.banner-tag-active]="banner.active">{{ (banner.active ? 'banner.active' : 'banner.inactive') | translate }}</span>
+        </div>
+        <div class="banner-card-validity">
+          <i class="pi pi-calendar"></i>
+          <ng-container *ngIf="validityLabel(banner) as range; else alwaysVisible">{{ range }}</ng-container>
+          <ng-template #alwaysVisible>{{ 'banner.alwaysVisible' | translate }}</ng-template>
+        </div>
+        <div class="flex gap-2 mt-2">
+          <p-button *ngIf="!banner.active" [label]="'banner.activate' | translate" icon="pi pi-check-circle"
+            styleClass="p-button-sm p-button-outlined" (onClick)="activateBanner(banner)"></p-button>
+          <p-button [label]="'banner.removeButton' | translate" icon="pi pi-trash"
+            styleClass="p-button-sm p-button-outlined p-button-danger" (onClick)="deleteBanner(banner)"></p-button>
+        </div>
+      </div>
+    </p-card>
+  </div>
+</div>
+
+<p-dialog [header]="'banner.addBanner' | translate" [(visible)]="addDialogVisible" [modal]="true"
+  [style]="{ width: '38rem' }" [breakpoints]="{ '575px': '95vw' }" styleClass="branded-dialog">
+  <div [formGroup]="addForm" class="flex flex-column gap-3">
+    <div class="flex flex-column gap-2">
+      <label for="bannerName">{{ 'banner.bannerName' | translate }}</label>
+      <input id="bannerName" type="text" pInputText class="w-full" formControlName="name" />
+      <small class="p-error" *ngIf="addForm.controls['name'].touched && addForm.controls['name'].errors?.['required']">
+        {{ 'banner.bannerNameRequired' | translate }}</small>
+    </div>
+
+    <div class="flex flex-column gap-2">
+      <label>{{ 'banner.image' | translate }}</label>
+      <div class="flex gap-2">
+        <p-button [label]="'banner.chooseImage' | translate" icon="pi pi-image" styleClass="p-button-outlined" type="button" (onClick)="bannerFileInput.click()"></p-button>
+        <p-button *ngIf="imagePreview" [label]="'banner.removeImage' | translate" icon="pi pi-times"
+          styleClass="p-button-outlined p-button-secondary" type="button" (onClick)="removeImage()"></p-button>
+      </div>
+
+      <div class="banner-preview" *ngIf="imagePreview">
+        <img [src]="imagePreview" [alt]="'banner.image' | translate" />
+      </div>
+      <small class="text-color-secondary">{{ 'banner.hint' | translate }}</small>
+    </div>
+
+    <div class="grid">
+      <div class="col-12 md:col-6 flex flex-column gap-2">
+        <label for="bannerVisibleFrom">{{ 'banner.visibleFrom' | translate }}</label>
+        <p-calendar id="bannerVisibleFrom" formControlName="visibleFrom" [showIcon]="true" [showTime]="true" appendTo="body"></p-calendar>
+      </div>
+      <div class="col-12 md:col-6 flex flex-column gap-2">
+        <label for="bannerVisibleTo">{{ 'banner.visibleTo' | translate }}</label>
+        <p-calendar id="bannerVisibleTo" formControlName="visibleTo" [showIcon]="true" [showTime]="true" appendTo="body"></p-calendar>
+      </div>
+      <div class="col-12">
+        <small class="text-color-secondary">{{ 'banner.validityHint' | translate }}</small>
+      </div>
+    </div>
+
+    <p-checkbox [binary]="true" formControlName="setActive" [label]="'banner.setActive' | translate"></p-checkbox>
+  </div>
+  <ng-template pTemplate="footer">
+    <p-button [label]="'common.cancel' | translate" styleClass="p-button-outlined p-button-secondary" (onClick)="addDialogVisible = false"></p-button>
+    <p-button [label]="'common.save' | translate" icon="pi pi-check" [loading]="saving" (onClick)="createBanner()"></p-button>
+  </ng-template>
+</p-dialog>
+
+<input #bannerFileInput type="file" hidden accept="image/jpeg,image/png,image/webp,image/gif" (change)="onImageSelected($event)" />

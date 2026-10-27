@@ -4,7 +4,7 @@
 
 <div class="job-view-page">
   <div class="job-view-hero">
-    <div class="job-view-hero-avatar"><i class="pi pi-building"></i></div>
+    <app-org-logo class="job-view-hero-avatar" [fileId]="job.organizationLogoFileId" [name]="job.organizationName" [lazy]="false" />
     <div class="job-view-hero-info">
       <h1>{{ job.jobTitle }}</h1>
       <div class="job-view-hero-meta">

@@ -15,6 +15,9 @@ import { SavedJobService } from '../../services/saved-job/saved.job.service';
 import { JobAlertService } from '../../services/job-alert/job.alert.service';
 import { McqTestAssignmentService } from '../../services/mcq-test-assignment/mcq.test.assignment.service';
 import { McqTestAssignment } from '../../services/mcq-test-assignment/domain/mcq.test.assignment.domain';
+import { BannerService } from '../../services/banner/banner.service';
+import { Banner } from '../../services/banner/domain/banner.domain';
+import { bannerUrl } from '../../services/utility/logo.util';
 
 const CANDIDATE_ACTIVE_STATUSES = ['APPLIED', 'SCREENING', 'INTERVIEW', 'OFFER'];
 const CANDIDATE_DETAIL_HEADERS: { [mode: string]: string } = {
@@ -34,6 +37,9 @@ export class DashboardComponent extends BaseComponent implements OnInit {
   profile: Profile = new Profile();
   isStaff = false;
   roleResolved = false;
+  // Admin-managed special-day banner; null when none is eligible.
+  activeBanner: Banner | null = null;
+  private bannerFailed = false;
 
   // Staff/recruiter view
   summary: RecruitmentSummary = new RecruitmentSummary();
@@ -65,6 +71,7 @@ export class DashboardComponent extends BaseComponent implements OnInit {
     private savedJobService: SavedJobService,
     private jobAlertService: JobAlertService,
     private mcqTestAssignmentService: McqTestAssignmentService,
+    private bannerService: BannerService,
     private router: Router
   ) {
     super();
@@ -72,6 +79,9 @@ export class DashboardComponent extends BaseComponent implements OnInit {
 
   ngOnInit(): void {
     this.subscribers.profileSub = this.authService.getProfileData().subscribe(profile => this.profile = profile);
+    this.subscribers.activeBannerSub = this.bannerService.activeBanner().subscribe(response => {
+      this.activeBanner = response?.obj || null;
+    });
 
     this.subscribers.permissionsSub = this.permissionService.ensureGrantedRouteNamesLoaded().subscribe(() => {
       this.isStaff = this.permissionService.hasRoutePermission('analytics-list');
@@ -82,6 +92,14 @@ export class DashboardComponent extends BaseComponent implements OnInit {
 
   goTo(path: string): void {
     this.router.navigate([path]);
+  }
+
+  get activeBannerSrc(): string | null {
+    return this.bannerFailed ? null : bannerUrl(this.activeBanner?.fileId);
+  }
+
+  onBannerError(): void {
+    this.bannerFailed = true;
   }
 
   private fetchStaffData(): void {
