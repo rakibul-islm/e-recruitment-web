@@ -9,10 +9,10 @@
       <div class="flex flex-column gap-4 mt-3">
         <div class="grid row-gap-3">
           <div class="col-12">
-            <div class="flex align-items-center gap-3">
+            <div class="logo-section flex align-items-center gap-3">
               <app-org-logo class="organization-logo-box" [srcOverride]="logoSrc" [name]="organizationForm.controls['name'].value" [lazy]="false" />
-              <div class="flex flex-column gap-2">
-                <div class="flex flex-wrap gap-2">
+              <div class="logo-details flex flex-column gap-2">
+                <div class="logo-actions flex flex-wrap gap-2">
                   <p-button [label]="'organization.logoChoose' | translate" icon="pi pi-image" styleClass="p-button-outlined" (onClick)="logoFileInput.click()"></p-button>
                   <p-button *ngIf="logoSrc" [label]="'organization.logoRemove' | translate" icon="pi pi-times"
                     styleClass="p-button-outlined p-button-secondary" (onClick)="removeLogo()"></p-button>
