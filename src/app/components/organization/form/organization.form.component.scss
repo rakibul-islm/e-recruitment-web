@@ -7,3 +7,26 @@
   justify-content: flex-start;
   flex-shrink: 0;
 }
+
+.logo-section {
+  flex-wrap: wrap;
+}
+
+.logo-details {
+  min-width: 0;
+}
+
+@media screen and (max-width: 768px) {
+  ::ng-deep .page-card .p-card-body {
+    padding: 1rem !important;
+  }
+
+  .logo-section {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .organization-logo-box {
+    max-width: 100%;
+  }
+}
