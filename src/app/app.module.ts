@@ -87,6 +87,7 @@ import { ReportGenerateComponent } from './components/report/generate/report.gen
 import { CountdownTimerComponent } from './components/shared/countdown-timer/countdown.timer.component';
 import { OrgLogoComponent } from './components/shared/org-logo/org.logo.component';
 import { BannerSearchComponent } from './components/banner/search/banner.search.component';
+import { BackupSearchComponent } from './components/backup/search/backup.search.component';
 import { NotificationBroadcastFormComponent } from './components/shared/notification/broadcast/notification.broadcast.form.component';
 import { RequiredFieldDirective } from './directives/required.field.directive';
 import { OtpNumericKeyboardDirective } from './directives/otp.numeric.keyboard.directive';
@@ -213,6 +214,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
     CountdownTimerComponent,
     OrgLogoComponent,
     BannerSearchComponent,
+    BackupSearchComponent,
     NotificationBroadcastFormComponent,
     RequiredFieldDirective,
     OtpNumericKeyboardDirective,

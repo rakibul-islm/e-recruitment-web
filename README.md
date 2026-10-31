@@ -34,6 +34,7 @@ A web client for the e-recruitment platform — built with Angular 17 and PrimeN
 - **Client location & device** — `LocationService` works out a city and country for the visitor and sends them as `X-Client-City` / `X-Client-Country` headers on every API call. Visitors and guests get an approximate place from their IP; once someone is logged in the browser's location prompt is shown, and an allowed position is turned into an address (such as "Mirpur, Dhaka") and also sent to refresh the current session (`SessionLocationSyncService`). See [Location and privacy](#location-and-privacy)
 - **Audit log viewer** — searchable, paginated view of audit trail entries with detail view (including the user's IP, city, country, device, OS and browser), filterable by category (Entity, Security, System, Activity), action and a partial user email
 - **Archive configuration** — CRUD for scheduled data-archiving rules (source table, age/date condition, optional extra WHERE clause, schedule), with an on-demand "Archive Now" trigger and a viewer for already-archived rows
+- **Database backup & restore** (`/backups`) — create a backup on demand, upload one made elsewhere, download or delete it, and restore from it. The list polls while a backup is running and shows size, table/row counts, status and a SHA-256 checksum. Restore needs the word `RESTORE` typed to confirm, shows a blocking progress dialog while the server is locked, and signs everyone out when it finishes. Scheduled backups are configured on the System Config page (`DB_BACKUP_SCHEDULE_ENABLED`, `DB_BACKUP_CRON`, `DB_BACKUP_KEEP_COUNT`), and the page links there. A **Google Drive** column shows whether each backup was copied to Drive (`DB_BACKUP_DRIVE_ENABLED`), and a cloud button uploads or retries one by hand
 - **User profile** — self-service profile view/edit with avatar upload
 - **Internationalization** — full English and Bengali (বাংলা) translations with a live language switcher
 - **Route guards** — authenticated areas are protected by `AuthGuard`, and admin/recruiting routes additionally by a permission-aware `PermissionGuard` (checked against each route's `data.routeName`) that redirects to `/access-denied` when the signed-in user lacks the route's permission; JWT is attached via an HTTP interceptor
@@ -172,6 +173,7 @@ src/app/
 │   ├── session/                   Admin search/view for user login sessions, plus presence-cards (clickable session and guest counts with detail dialogs, also used on the dashboard)
 │   ├── audit-log/                 Admin search/view for audit trail entries
 │   ├── archive-config/            Admin CRUD for scheduled data-archiving rules (search / form / view / archived-data)
+│   ├── backup/                    Admin database backup list: create, upload, download, delete, restore (typed confirmation, progress dialog)
 │   ├── notification-broadcast/    Admin compose/send screen (all users / role / specific users, optional email)
 │   └── base.component.ts          Shared base class (subscription cleanup, search/pagination helpers)
 ├── directives/
@@ -189,7 +191,7 @@ src/app/
 │   ├── notification-broadcast/    NotificationBroadcastService (roles/users pickers + send) + domain models
 │   ├── role/, permission/, user-group/,
 │   │   system-config/, password-policy/, exception-log/,
-│   │   session/, audit-log/, archive-config/  Admin feature API services + domain models
+│   │   session/, audit-log/, archive-config/, backup/  Admin feature API services + domain models
 │   └── utility/
 │       ├── security/               AuthService (login/session state), AuthGuard, PermissionGuard
 │       ├── interceptors/           Auth + loading HTTP interceptors
@@ -279,6 +281,7 @@ src/assets/i18n/                   Translation files (en.json, bn.json)
 | `/archive-configs/:id/edit` | `ArchiveConfigFormComponent`   | `AuthGuard`, `PermissionGuard` (`archive-config-manage`) |
 | `/archive-configs/:id/archived-data` | `ArchiveConfigArchivedDataComponent` | `AuthGuard`, `PermissionGuard` (`archive-config-list`) |
 | `/archive-configs/:id`      | `ArchiveConfigViewComponent`   | `AuthGuard`, `PermissionGuard` (`archive-config-list`) |
+| `/backups`                  | `BackupSearchComponent`        | `AuthGuard`, `PermissionGuard` (`backup-list`) |
 | `/notification-broadcast`   | `NotificationBroadcastFormComponent` | `AuthGuard`, `PermissionGuard` (`notification-broadcast-manage`) |
 | `**`                        | redirects to `/login`          | —            |
 

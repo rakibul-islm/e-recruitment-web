@@ -1,0 +1,127 @@
+<app-page-header [title]="'backup.pageTitle' | translate">
+  <p-button [label]="'backup.createBackup' | translate" icon="pi pi-database" [loading]="creating" [disabled]="hasRunning"
+    (onClick)="createBackup()"></p-button>
+  <p-button [label]="'backup.uploadBackup' | translate" icon="pi pi-upload" [loading]="uploading"
+    (onClick)="backupFileInput.click()"></p-button>
+  <p-button [label]="'common.back' | translate" icon="pi pi-arrow-left" styleClass="p-button-secondary" (onClick)="goToDashboard()"></p-button>
+</app-page-header>
+
+<div class="p-3">
+  <div class="backup-info">
+    <div class="backup-info-row">
+      <span class="backup-info-icon"><i class="pi pi-shield"></i></span>
+      <span class="backup-info-text">{{ 'backup.hint' | translate }}</span>
+    </div>
+    <div class="backup-info-row">
+      <span class="backup-info-icon"><i class="pi pi-clock"></i></span>
+      <span class="backup-info-text">
+        {{ 'backup.scheduleHint' | translate }}
+        <a class="backup-info-link" routerLink="/system-configs">{{ 'backup.openSystemConfig' | translate }}<i class="pi pi-arrow-right"></i></a>
+      </span>
+    </div>
+  </div>
+
+  <div *ngIf="lastRestore" class="backup-note" [ngClass]="lastRestore.phase === 'COMPLETED' ? 'success' : 'error'">
+    <i class="pi" [ngClass]="lastRestore.phase === 'COMPLETED' ? 'pi-check-circle' : 'pi-times-circle'"></i>
+    <span><strong>{{ 'backup.lastRestore' | translate }}</strong> {{ lastRestore.message }}</span>
+  </div>
+
+  <p-table [value]="backups" [loading]="loading" responsiveLayout="scroll" dataKey="id">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>{{ 'backup.createdOn' | translate }}</th>
+        <th>{{ 'backup.fileName' | translate }}</th>
+        <th>{{ 'common.status' | translate }}</th>
+        <th>{{ 'backup.drive' | translate }}</th>
+        <th>{{ 'backup.size' | translate }}</th>
+        <th>{{ 'backup.contents' | translate }}</th>
+        <th>{{ 'backup.createdBy' | translate }}</th>
+        <th>{{ 'common.actions' | translate }}</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-backup>
+      <tr>
+        <td>{{ (backup.createdOn | date:'dd-MMM-yyyy hh:mm a') || ('common.notAvailable' | translate) }}</td>
+        <td>
+          {{ backup.fileName }}
+          <div *ngIf="backup.sha256" class="text-color-secondary text-xs" [pTooltip]="backup.sha256">SHA-256 {{ backup.sha256 | slice:0:12 }}...</div>
+        </td>
+        <td>
+          <span class="status-badge" [class.active]="backup.status === 'COMPLETED'" [class.locked]="backup.status === 'FAILED'">
+            <i *ngIf="backup.status === 'RUNNING'" class="pi pi-spin pi-spinner"></i>
+            {{ 'backup.status.' + backup.status | translate }}
+          </span>
+          <div *ngIf="backup.errorMessage" class="p-error text-xs">{{ backup.errorMessage }}</div>
+        </td>
+        <td>
+          <ng-container *ngIf="backup.driveStatus; else noDrive">
+            <span class="status-badge" [class.active]="backup.driveStatus === 'UPLOADED'" [class.locked]="backup.driveStatus === 'FAILED'">
+              <i *ngIf="backup.driveStatus === 'UPLOADING'" class="pi pi-spin pi-spinner"></i>
+              {{ 'backup.driveStatus.' + backup.driveStatus | translate }}
+            </span>
+            <div *ngIf="backup.driveError" class="p-error text-xs">{{ backup.driveError }}</div>
+          </ng-container>
+          <ng-template #noDrive>{{ 'common.notAvailable' | translate }}</ng-template>
+        </td>
+        <td>{{ formatSize(backup.sizeBytes) || ('common.notAvailable' | translate) }}</td>
+        <td>
+          <ng-container *ngIf="backup.tableCount != null; else noContents">
+            {{ 'backup.contentsSummary' | translate: { tables: backup.tableCount, rows: backup.rowCount } }}
+          </ng-container>
+          <ng-template #noContents>{{ 'common.notAvailable' | translate }}</ng-template>
+        </td>
+        <td>{{ backup.createdBy }}</td>
+        <td>
+          <div class="flex gap-2">
+            <p-button *ngIf="backup.status === 'COMPLETED'" icon="pi pi-download" styleClass="p-button-sm p-button-outlined"
+              [pTooltip]="'common.download' | translate" (onClick)="download(backup)"></p-button>
+            <p-button *ngIf="backup.status === 'COMPLETED' && backup.driveStatus !== 'UPLOADED' && backup.driveStatus !== 'UPLOADING'" icon="pi pi-cloud-upload"
+              styleClass="p-button-sm p-button-outlined" [pTooltip]="'backup.uploadToDrive' | translate" (onClick)="uploadToDrive(backup)"></p-button>
+            <p-button *ngIf="backup.status === 'COMPLETED'" icon="pi pi-history" styleClass="p-button-sm p-button-outlined p-button-warning"
+              [pTooltip]="'backup.restore' | translate" (onClick)="openRestoreDialog(backup)"></p-button>
+            <p-button *ngIf="backup.status !== 'RUNNING'" icon="pi pi-trash" styleClass="p-button-sm p-button-outlined p-button-danger"
+              [pTooltip]="'common.delete' | translate" (onClick)="deleteBackup(backup)"></p-button>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="8" class="text-center">{{ 'backup.noneFound' | translate }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+<p-dialog [header]="'backup.restoreTitle' | translate" [(visible)]="restoreDialogVisible" [modal]="true"
+  [style]="{ width: '34rem' }" [breakpoints]="{ '575px': '95vw' }" styleClass="branded-dialog">
+  <div class="flex flex-column gap-3" *ngIf="restoreTarget">
+    <div class="p-3 border-round" style="border: 1px solid var(--red-500)">
+      <i class="pi pi-exclamation-triangle mr-2"></i>{{ 'backup.restoreWarning' | translate: { name: restoreTarget.fileName } }}
+    </div>
+    <ul class="m-0 pl-4 text-color-secondary">
+      <li>{{ 'backup.restoreNoteSnapshot' | translate }}</li>
+      <li>{{ 'backup.restoreNoteLogout' | translate }}</li>
+      <li>{{ 'backup.restoreNoteBlocked' | translate }}</li>
+    </ul>
+    <div class="flex flex-column gap-2">
+      <label for="restoreConfirm">{{ 'backup.restoreTypeToConfirm' | translate: { word: restoreWord } }}</label>
+      <input id="restoreConfirm" type="text" pInputText class="w-full" [(ngModel)]="confirmText" autocomplete="off" (keyup.enter)="confirmRestore()" />
+    </div>
+  </div>
+  <ng-template pTemplate="footer">
+    <p-button [label]="'common.cancel' | translate" styleClass="p-button-outlined p-button-secondary" (onClick)="restoreDialogVisible = false"></p-button>
+    <p-button [label]="'backup.restore' | translate" icon="pi pi-history" styleClass="p-button-danger" [loading]="submittingRestore"
+      [disabled]="!confirmationMatches" (onClick)="confirmRestore()"></p-button>
+  </ng-template>
+</p-dialog>
+
+<p-dialog [header]="'backup.restoringTitle' | translate" [visible]="restoring" [modal]="true" [closable]="false" [draggable]="false"
+  [style]="{ width: '28rem' }" [breakpoints]="{ '575px': '95vw' }" styleClass="branded-dialog">
+  <div class="flex align-items-center gap-3">
+    <i class="pi pi-spin pi-spinner text-3xl"></i>
+    <span>{{ 'backup.restoringText' | translate }}</span>
+  </div>
+</p-dialog>
+
+<input #backupFileInput type="file" hidden accept=".zip,application/zip" (change)="onFileSelected($event)" />

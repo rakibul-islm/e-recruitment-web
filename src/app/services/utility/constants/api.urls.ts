@@ -54,6 +54,15 @@ export const API_URLS = {
     FIND_EXCEPTION_LOG_BY_ID: 'exception-log/:id',
     REMOVE_EXCEPTION_LOG: 'exception-log/:id',
 
+    LIST_BACKUP: 'backup',
+    CREATE_BACKUP: 'backup',
+    DOWNLOAD_BACKUP: 'backup/:id/download',
+    DELETE_BACKUP: 'backup/:id',
+    UPLOAD_BACKUP: 'backup/upload',
+    DRIVE_UPLOAD_BACKUP: 'backup/:id/drive-upload',
+    RESTORE_BACKUP: 'backup-restore/:id',
+    RESTORE_STATUS: 'backup-restore/status',
+
     FILTER_SESSION: 'session/filter',
     FIND_SESSION_BY_ID: 'session/:id',
     SESSION_SUMMARY: 'session/summary',
