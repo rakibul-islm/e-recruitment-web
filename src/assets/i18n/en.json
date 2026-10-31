@@ -618,6 +618,8 @@
     "activeSessions": "Active Sessions",
     "distinctActiveUsers": "Logged In Users",
     "activeGuests": "Active Guests",
+    "totalUsers": "Total Users",
+    "totalUsersList": "All Users",
     "user": "User",
     "userEmail": "User Email",
     "userEmailPlaceholder": "Search by user email",

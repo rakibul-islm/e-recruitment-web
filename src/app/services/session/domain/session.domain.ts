@@ -22,6 +22,7 @@ export class SessionSummary {
     activeSessions!: number;
     distinctActiveUsers!: number;
     activeGuests!: number;
+    totalUsers!: number;
 }
 
 export class GuestSession {

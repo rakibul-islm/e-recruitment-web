@@ -1,4 +1,12 @@
 <div class="summary-cards">
+  <div class="summary-card summary-card-clickable" tabindex="0" *appPermissionHide="'user-list'" (click)="openDetail('total')" (keyup.enter)="openDetail('total')">
+    <i class="pi pi-id-card"></i>
+    <div>
+      <div class="summary-card-value" [appCountUp]="summary.totalUsers"></div>
+      <div class="summary-card-label">{{ 'session.totalUsers' | translate }}</div>
+    </div>
+    <i class="pi pi-angle-right summary-card-chevron"></i>
+  </div>
   <div class="summary-card summary-card-clickable" tabindex="0" (click)="openDetail('sessions')" (keyup.enter)="openDetail('sessions')">
     <i class="pi pi-users"></i>
     <div>
@@ -25,9 +33,33 @@
   </div>
 </div>
 
-<p-dialog [header]="(detailMode === 'guests' ? 'session.activeGuestsList' : detailMode === 'users' ? 'session.loggedInUsersList' : 'session.activeSessionsList') | translate"
+<p-dialog [header]="(detailMode === 'total' ? 'session.totalUsersList' : detailMode === 'guests' ? 'session.activeGuestsList' : detailMode === 'users' ? 'session.loggedInUsersList' : 'session.activeSessionsList') | translate"
   [(visible)]="detailVisible" [modal]="true" [style]="{ width: '75rem' }" [breakpoints]="{ '960px': '95vw' }"
   styleClass="branded-dialog" appendTo="body">
+  <p-table *ngIf="detailVisible && detailMode === 'total'" [value]="allUsers" [lazy]="true" (onLazyLoad)="fetchAllUsers($event)" [paginator]="true" [rows]="rows" [totalRecords]="totalUsersCount" [rowsPerPageOptions]="[10, 20, 50]" [loading]="detailLoading" responsiveLayout="scroll" dataKey="id">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>{{ 'user.fullName' | translate }}</th>
+        <th>{{ 'user.email' | translate }}</th>
+        <th>{{ 'user.mobile' | translate }}</th>
+        <th>{{ 'common.status' | translate }}</th>
+        <th>{{ 'user.expiryDate' | translate }}</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-user>
+      <tr>
+        <td>{{ user.fullName }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.mobile ? ((user.mobileCountryCode || '') + ' ' + user.mobile) : ('common.notAvailable' | translate) }}</td>
+        <td>{{ (user.locked ? 'user.locked' : (user.active ? 'common.active' : 'common.inactive')) | translate }}</td>
+        <td>{{ (user.expiryDate | date:'dd-MM-yyyy') || ('common.notAvailable' | translate) }}</td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr><td colspan="5" class="text-center">{{ 'user.noneFound' | translate }}</td></tr>
+    </ng-template>
+  </p-table>
+
   <p-table *ngIf="detailMode === 'sessions'" [value]="activeSessions" [loading]="detailLoading" responsiveLayout="scroll" dataKey="id">
     <ng-template pTemplate="header">
       <tr>
