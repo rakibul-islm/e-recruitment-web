@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { TableLazyLoadEvent } from 'primeng/table';
 import { BaseComponent } from '../../base.component';
+import { UserService } from '../../../services/user/user.service';
 import { SessionService } from '../../../services/session/session.service';
 import { GuestSession, SessionSummary, UserSession } from '../../../services/session/domain/session.domain';
 
@@ -11,13 +13,15 @@ export class SessionPresenceCardsComponent extends BaseComponent implements OnIn
   summary: SessionSummary = new SessionSummary();
 
   detailVisible = false;
-  detailMode: 'sessions' | 'users' | 'guests' = 'sessions';
+  detailMode: 'sessions' | 'users' | 'guests' | 'total' = 'sessions';
   detailLoading = false;
   activeSessions: UserSession[] = [];
   onlineUsers: UserSession[] = [];
   guests: GuestSession[] = [];
+  allUsers: any[] = [];
+  totalUsersCount = 0;
 
-  constructor(private sessionService: SessionService) {
+  constructor(private sessionService: SessionService, private userService: UserService) {
     super();
   }
 
@@ -32,13 +36,28 @@ export class SessionPresenceCardsComponent extends BaseComponent implements OnIn
     });
   }
 
-  openDetail(mode: 'sessions' | 'users' | 'guests'): void {
+  openDetail(mode: 'sessions' | 'users' | 'guests' | 'total'): void {
     this.detailMode = mode;
     this.detailVisible = true;
     this.fetchDetail();
   }
 
+  fetchAllUsers(event: TableLazyLoadEvent): void {
+    const size = event.rows || this.rows;
+    const params = new Map<any, any>([['page', Math.floor((event.first || 0) / size)], ['size', size], ['isPageable', true]]);
+    this.detailLoading = true;
+    this.subscribers.allUsersSub = this.userService.searchUsers(params).subscribe({
+      next: (response) => {
+        this.allUsers = response?.page?.content || [];
+        this.totalUsersCount = response?.page?.totalElements || 0;
+        this.detailLoading = false;
+      },
+      error: () => { this.detailLoading = false; }
+    });
+  }
+
   private fetchDetail(): void {
+    if (this.detailMode === 'total') { return; }
     this.detailLoading = true;
     if (this.detailMode === 'guests') {
       this.subscribers.guestsSub = this.sessionService.getActiveGuests().subscribe({

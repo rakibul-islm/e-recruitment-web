@@ -618,6 +618,8 @@
     "activeSessions": "সক্রিয় সেশন",
     "distinctActiveUsers": "লগ ইনকৃত ব্যবহারকারী",
     "activeGuests": "সক্রিয় গেস্ট",
+    "totalUsers": "মোট ব্যবহারকারী",
+    "totalUsersList": "সকল ব্যবহারকারী",
     "user": "ব্যবহারকারী",
     "userEmail": "ব্যবহারকারীর ইমেইল",
     "userEmailPlaceholder": "ব্যবহারকারীর ইমেইল দিয়ে সার্চ করুন",
