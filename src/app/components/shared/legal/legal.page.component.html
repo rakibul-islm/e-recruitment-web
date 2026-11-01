@@ -1,0 +1,50 @@
+<div class="legal-page">
+  <div class="legal-sticky" [style.top.px]="headerHeight">
+    <div class="legal-sticky-bar" [class.visible]="compact">
+      <div class="legal-sticky-inner">
+        <i class="pi" [ngClass]="type === 'terms' ? 'pi-file-edit' : 'pi-shield'"></i>
+        <strong>{{ baseKey + '.title' | translate }}</strong>
+        <span class="legal-sticky-date">{{ 'app.legal.lastUpdated' | translate }}: {{ baseKey + '.updated' | translate }}</span>
+        <span class="legal-sticky-spacer"></span>
+        <a routerLink="/terms" [class.active]="type === 'terms'">{{ 'app.legal.terms.title' | translate }}</a>
+        <a routerLink="/privacy" [class.active]="type === 'privacy'">{{ 'app.legal.privacy.title' | translate }}</a>
+      </div>
+    </div>
+  </div>
+
+  <header class="legal-hero">
+    <i class="pi" [ngClass]="type === 'terms' ? 'pi-file-edit' : 'pi-shield'"></i>
+    <h1>{{ baseKey + '.title' | translate }}</h1>
+    <p class="legal-updated">{{ 'app.legal.lastUpdated' | translate }}: {{ baseKey + '.updated' | translate }}</p>
+  </header>
+
+  <div class="legal-body">
+    <div class="legal-tabs">
+      <a routerLink="/terms" [class.active]="type === 'terms'"><i class="pi pi-file-edit"></i>{{ 'app.legal.terms.title' | translate }}</a>
+      <a routerLink="/privacy" [class.active]="type === 'privacy'"><i class="pi pi-shield"></i>{{ 'app.legal.privacy.title' | translate }}</a>
+    </div>
+
+    <div class="legal-layout">
+      <aside class="legal-toc">
+        <span class="legal-toc-title"><i class="pi pi-list"></i></span>
+        <a *ngFor="let section of ((baseKey + '.sections') | translate); let i = index" [href]="'#' + type + '-' + i" (click)="scrollTo($event, type + '-' + i)">{{ section.title }}</a>
+      </aside>
+
+      <article class="legal-card">
+        <p class="legal-intro">{{ baseKey + '.intro' | translate }}</p>
+
+        <section *ngFor="let section of ((baseKey + '.sections') | translate); let i = index" [id]="type + '-' + i" class="legal-section">
+          <span class="legal-num">{{ i + 1 }}</span>
+          <div>
+            <h2>{{ stripNumber(section.title) }}</h2>
+            <p>{{ section.body }}</p>
+          </div>
+        </section>
+
+        <nav class="legal-links">
+          <a routerLink="/"><i class="pi pi-arrow-left"></i>{{ 'app.legal.backHome' | translate }}</a>
+        </nav>
+      </article>
+    </div>
+  </div>
+</div>
