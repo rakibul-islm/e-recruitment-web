@@ -60,6 +60,7 @@ import { CandidateJobAlertsComponent } from './components/candidate/job-alerts/c
 import { CandidateApplicationDetailComponent } from './components/candidate/application-detail/candidate.application.detail.component';
 import { AnalyticsDashboardComponent } from './components/analytics/analytics.dashboard.component';
 import { HomeComponent } from './components/home/home.component';
+import { LegalPageComponent } from './components/shared/legal/legal.page.component';
 import { RecruiterApplicationRegisterComponent } from './components/recruiter-application/register/recruiter.application.register.component';
 import { RecruiterApplicationSearchComponent } from './components/recruiter-application/search/recruiter.application.search.component';
 import { RecruiterApplicationViewComponent } from './components/recruiter-application/view/recruiter.application.view.component';
@@ -82,6 +83,8 @@ const routes: Routes = [
   { path: 'set-password', component: SetPasswordComponent },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   { path: 'access-denied', component: AccessDeniedComponent },
+  { path: 'terms', component: LegalPageComponent, data: { legalType: 'terms' } },
+  { path: 'privacy', component: LegalPageComponent, data: { legalType: 'privacy' } },
 
   { path: 'jobs', component: JobPortalSearchComponent },
   { path: 'jobs/:id', component: JobPortalViewComponent },

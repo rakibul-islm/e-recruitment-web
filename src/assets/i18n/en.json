@@ -1,6 +1,46 @@
 {
   "app": {
-    "name": "E-RECRUITMENT"
+    "name": "E-RECRUITMENT",
+    "legal": {
+      "lastUpdated": "Last updated",
+      "backHome": "Back to home",
+      "agreePrefix": "By signing up, you agree to our",
+      "and": "and",
+      "terms": {
+        "title": "Terms and Conditions",
+        "updated": "1 November 2026",
+        "intro": "Welcome to E-RECRUITMENT. By creating an account or using this platform you agree to these Terms and Conditions. Please read them carefully.",
+        "sections": [
+          { "title": "1. Eligibility and accounts", "body": "You must be at least 18 years old and provide accurate, complete information when you register. You are responsible for keeping your password confidential and for all activity under your account." },
+          { "title": "2. Candidate responsibilities", "body": "Information in your profile, CV and applications must be true and must not mislead employers. You must not apply on behalf of another person or upload content that you do not have the right to share." },
+          { "title": "3. Employer and recruiter responsibilities", "body": "Organizations must post genuine vacancies, describe them accurately and treat candidates fairly and without unlawful discrimination. Candidate data may only be used for recruitment purposes." },
+          { "title": "4. Online tests and assessments", "body": "Tests must be taken by the candidate alone, without outside assistance. Leaving the test screen, switching tabs or similar activity may be recorded and can lead to automatic submission or logout of the test session." },
+          { "title": "5. Acceptable use", "body": "You must not misuse the platform, attempt to gain unauthorized access, interfere with its operation, post unlawful or offensive content, or collect other users' data without permission." },
+          { "title": "6. Content and intellectual property", "body": "You keep ownership of the content you submit and grant us a limited licence to store, process and display it to employers as needed to provide the service. The platform, its design and software remain our property." },
+          { "title": "7. Suspension and termination", "body": "We may suspend or close accounts that breach these terms or the law. You may stop using the platform at any time and request deletion of your account." },
+          { "title": "8. Disclaimer and limitation of liability", "body": "The platform does not guarantee employment, candidates or any hiring outcome. The service is provided as available, and to the extent permitted by law we are not liable for indirect or consequential loss." },
+          { "title": "9. Changes to these terms", "body": "We may update these terms from time to time. Continued use of the platform after a change means you accept the updated terms." },
+          { "title": "10. Contact", "body": "For questions about these terms, please contact the platform administrator through the details provided by your organization." }
+        ]
+      },
+      "privacy": {
+        "title": "Privacy Policy",
+        "updated": "1 November 2026",
+        "intro": "This policy explains what personal data E-RECRUITMENT collects, how it is used and the choices you have.",
+        "sections": [
+          { "title": "1. Information we collect", "body": "We collect account details (name, email, mobile number), profile and CV information (education, experience, skills, documents), application and test activity, and technical data such as IP address, device and session information." },
+          { "title": "2. How we use your information", "body": "We use it to create and secure your account, match and submit your applications, run online tests, send notifications and one-time passwords, prevent misuse, and improve the platform." },
+          { "title": "3. Sharing your information", "body": "Your profile and applications are shared with the organizations you apply to. We do not sell your personal data. We may disclose data to service providers who operate the platform for us, or where required by law." },
+          { "title": "4. Test monitoring", "body": "During online tests we record events such as leaving the test screen to protect the fairness of the assessment. These records are visible to authorized staff only." },
+          { "title": "5. Cookies and sessions", "body": "We use essential cookies and session storage to keep you signed in and remember your preferences such as language. We do not use them for advertising." },
+          { "title": "6. Data security", "body": "We protect data with access controls, encrypted passwords, audit logs and session management. No system is completely secure, so please keep your credentials private." },
+          { "title": "7. Data retention", "body": "We keep your data while your account is active and for as long as needed for recruitment, legal and audit purposes. Older records may be archived or deleted according to our retention rules." },
+          { "title": "8. Your rights", "body": "You can view and update your profile at any time, and you may ask for a copy of your data, correction, or deletion of your account, subject to legal obligations." },
+          { "title": "9. Changes to this policy", "body": "We may update this policy from time to time. The date at the top shows when it was last changed." },
+          { "title": "10. Contact", "body": "For privacy questions or requests, please contact the platform administrator through the details provided by your organization." }
+        ]
+      }
+    }
   },
   "common": {
     "search": "Search",

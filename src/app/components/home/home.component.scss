@@ -340,3 +340,24 @@
   align-items: center;
   justify-content: flex-start;
 }
+
+.home-footer {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  padding: 1rem;
+  background: #f8fafc;
+  border-top: 1px solid #e5e7eb;
+
+  a {
+    color: #1e4d8f;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

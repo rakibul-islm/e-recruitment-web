@@ -5,6 +5,10 @@ html, body {
   margin: 0;
 }
 
+app-root {
+  display: block;
+}
+
 a {
   text-decoration-color: rgba(59, 130, 246, 0.35);
 }
@@ -634,6 +638,14 @@ form .form-section-title:not(:first-child) {
 /* Mobile: every p-table row becomes a card of "label | value" lines. Labels come from the
    column headers via TableCellLabelDirective (data-label on each td). */
 @media screen and (max-width: 576px) {
+  .p-accordion .p-accordion-content {
+    padding: 0.5rem !important;
+  }
+
+  .page-card .p-card-body {
+    padding: 0.75rem !important;
+  }
+
   .p-datatable .p-datatable-wrapper {
     overflow-x: visible;
   }
@@ -656,10 +668,6 @@ form .form-section-title:not(:first-child) {
 
       > td:first-child {
         padding-right: 3rem !important;
-
-        &::before {
-          flex: 0 0 calc(40% + 0.9rem) !important;
-        }
       }
 
       > td.action-col {
@@ -712,22 +720,32 @@ form .form-section-title:not(:first-child) {
 
     > tr {
       display: block;
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.5rem;
       border: 1px solid #e5e7eb;
+      border-left: 3px solid #032967;
       border-radius: 8px;
       background: #fff !important;
       overflow: hidden;
-      box-shadow: 0 1px 3px rgba(3, 41, 103, 0.08);
+      box-shadow: 0 2px 8px rgba(3, 41, 103, 0.1);
 
       > td {
         display: flex;
+        flex-direction: column;
         align-items: flex-start;
+        gap: 0.1rem;
         width: 100% !important;
-        padding: 0.5rem 0.75rem !important;
+        padding: 0.4rem 0.75rem !important;
         border: none !important;
-        border-bottom: 1px solid #e5e7eb !important;
+        border-bottom: 1px solid #f1f5f9 !important;
         text-align: left;
         word-break: break-word;
+        font-size: 0.95rem;
+        font-weight: 500;
+        color: #0f172a;
+
+        &:first-child {
+          background: #f8fafc;
+        }
 
         &:last-child {
           border-bottom: none !important;
@@ -735,15 +753,11 @@ form .form-section-title:not(:first-child) {
 
         &[data-label]:not([data-label=""])::before {
           content: attr(data-label);
-          flex: 0 0 40%;
-          align-self: stretch;
-          box-sizing: border-box;
-          margin: -0.5rem 0.75rem -0.5rem -0.75rem;
-          padding: 0.5rem 0.75rem;
-          border-right: 1px solid #cbd5e1;
-          background: #f8fafc;
+          font-size: 0.68rem;
           font-weight: 600;
-          color: #032967;
+          letter-spacing: 0.06em;
+          text-transform: uppercase;
+          color: #64748b;
         }
       }
     }

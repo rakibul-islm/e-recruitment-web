@@ -1,3 +1,10 @@
+:host {
+  display: block;
+  position: sticky;
+  top: 0;
+  z-index: 200;
+}
+
 ::ng-deep .app-header.p-menubar {
   background: linear-gradient(100deg, #032967 0%, #145dae 25%, #002152 50%, #145dae 75%, #032967 100%);
   background-size: 200% 100%;
