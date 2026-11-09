@@ -35,11 +35,11 @@
         (onRowSelect)="viewApplication($event.data)">
         <ng-template pTemplate="header">
           <tr>
-            <th>{{ 'recruiterApplication.fullName' | translate }}</th>
-            <th>{{ 'recruiterApplication.organizationName' | translate }}</th>
-            <th>{{ 'recruiterApplication.email' | translate }}</th>
-            <th>{{ 'common.status' | translate }}</th>
-            <th>{{ 'recruiterApplication.submittedOn' | translate }}</th>
+            <th pSortableColumn="fullName">{{ 'recruiterApplication.fullName' | translate }} <p-sortIcon field="fullName"></p-sortIcon></th>
+            <th pSortableColumn="organizationName">{{ 'recruiterApplication.organizationName' | translate }} <p-sortIcon field="organizationName"></p-sortIcon></th>
+            <th pSortableColumn="email">{{ 'recruiterApplication.email' | translate }} <p-sortIcon field="email"></p-sortIcon></th>
+            <th pSortableColumn="status">{{ 'common.status' | translate }} <p-sortIcon field="status"></p-sortIcon></th>
+            <th pSortableColumn="createdOn">{{ 'recruiterApplication.submittedOn' | translate }} <p-sortIcon field="createdOn"></p-sortIcon></th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-application>

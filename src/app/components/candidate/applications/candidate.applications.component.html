@@ -7,10 +7,10 @@
     <p-table [value]="applications" [loading]="loading" responsiveLayout="scroll" dataKey="id">
       <ng-template pTemplate="header">
         <tr>
-          <th>{{ 'candidateApplication.jobTitle' | translate }}</th>
-          <th>{{ 'candidateApplication.appliedOn' | translate }}</th>
-          <th>{{ 'common.status' | translate }}</th>
-          <th>{{ 'candidateApplication.lastUpdated' | translate }}</th>
+          <th pSortableColumn="jobTitle">{{ 'candidateApplication.jobTitle' | translate }} <p-sortIcon field="jobTitle"></p-sortIcon></th>
+          <th pSortableColumn="appliedOn">{{ 'candidateApplication.appliedOn' | translate }} <p-sortIcon field="appliedOn"></p-sortIcon></th>
+          <th pSortableColumn="status">{{ 'common.status' | translate }} <p-sortIcon field="status"></p-sortIcon></th>
+          <th pSortableColumn="statusUpdatedOn">{{ 'candidateApplication.lastUpdated' | translate }} <p-sortIcon field="statusUpdatedOn"></p-sortIcon></th>
           <th>{{ 'candidateApplication.cv' | translate }}</th>
         </tr>
       </ng-template>

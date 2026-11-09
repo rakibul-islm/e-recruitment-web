@@ -42,7 +42,7 @@ import { PasswordPolicyViewComponent } from './components/password-policy/view/p
 import { ExceptionLogSearchComponent } from './components/exception-log/search/exception.log.search.component';
 import { ExceptionLogViewComponent } from './components/exception-log/view/exception.log.view.component';
 import { SessionSearchComponent } from './components/session/search/session.search.component';
-import { ProfileCompletenessComponent } from './components/candidate/profile/completeness/profile.completeness.component';
+import { CvCompletenessComponent } from './components/candidate/cv/completeness/cv.completeness.component';
 import { CvMatchCardComponent } from './components/application-management/match-card/cv.match.card.component';
 import { SessionViewComponent } from './components/session/view/session.view.component';
 import { SessionPresenceCardsComponent } from './components/session/presence-cards/session.presence.cards.component';
@@ -56,8 +56,8 @@ import { ArchiveConfigWhereConditionBuilderComponent } from './components/archiv
 import { AccessDeniedComponent } from './components/shared/access-denied/access.denied.component';
 import { JobPortalSearchComponent } from './components/job-portal/search/job.portal.search.component';
 import { JobPortalViewComponent } from './components/job-portal/view/job.portal.view.component';
-import { CandidateProfileFormComponent } from './components/candidate/profile/candidate.profile.form.component';
-import { CandidateProfileViewComponent } from './components/candidate/profile/view/candidate.profile.view.component';
+import { CandidateCvFormComponent } from './components/candidate/cv/candidate.cv.form.component';
+import { CandidateCvViewComponent } from './components/candidate/cv/view/candidate.cv.view.component';
 import { CandidateApplicationsComponent } from './components/candidate/applications/candidate.applications.component';
 import { OrganizationSearchComponent } from './components/organization/search/organization.search.component';
 import { OrganizationFormComponent } from './components/organization/form/organization.form.component';
@@ -171,7 +171,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
     ExceptionLogViewComponent,
     SessionSearchComponent,
     SessionViewComponent,
-    ProfileCompletenessComponent,
+    CvCompletenessComponent,
     CvMatchCardComponent,
     SessionPresenceCardsComponent,
     AuditLogSearchComponent,
@@ -184,8 +184,8 @@ export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
     AccessDeniedComponent,
     JobPortalSearchComponent,
     JobPortalViewComponent,
-    CandidateProfileFormComponent,
-    CandidateProfileViewComponent,
+    CandidateCvFormComponent,
+    CandidateCvViewComponent,
     CandidateApplicationsComponent,
     OrganizationSearchComponent,
     OrganizationFormComponent,

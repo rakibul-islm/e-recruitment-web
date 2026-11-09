@@ -29,13 +29,13 @@
   <p-table [value]="backups" [loading]="loading" responsiveLayout="scroll" dataKey="id">
     <ng-template pTemplate="header">
       <tr>
-        <th>{{ 'backup.createdOn' | translate }}</th>
-        <th>{{ 'backup.fileName' | translate }}</th>
-        <th>{{ 'common.status' | translate }}</th>
-        <th>{{ 'backup.drive' | translate }}</th>
-        <th>{{ 'backup.size' | translate }}</th>
+        <th pSortableColumn="createdOn">{{ 'backup.createdOn' | translate }} <p-sortIcon field="createdOn"></p-sortIcon></th>
+        <th pSortableColumn="fileName">{{ 'backup.fileName' | translate }} <p-sortIcon field="fileName"></p-sortIcon></th>
+        <th pSortableColumn="status">{{ 'common.status' | translate }} <p-sortIcon field="status"></p-sortIcon></th>
+        <th pSortableColumn="driveStatus">{{ 'backup.drive' | translate }} <p-sortIcon field="driveStatus"></p-sortIcon></th>
+        <th pSortableColumn="sizeBytes">{{ 'backup.size' | translate }} <p-sortIcon field="sizeBytes"></p-sortIcon></th>
         <th>{{ 'backup.contents' | translate }}</th>
-        <th>{{ 'backup.createdBy' | translate }}</th>
+        <th pSortableColumn="createdBy">{{ 'backup.createdBy' | translate }} <p-sortIcon field="createdBy"></p-sortIcon></th>
         <th>{{ 'common.actions' | translate }}</th>
       </tr>
     </ng-template>

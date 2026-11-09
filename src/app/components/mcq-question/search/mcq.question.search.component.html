@@ -40,11 +40,11 @@
         (onRowSelect)="viewQuestion($event.data)">
         <ng-template pTemplate="header">
           <tr>
-            <th>{{ 'mcqQuestion.questionText' | translate }}</th>
-            <th>{{ 'mcqQuestion.skillTag' | translate }}</th>
-            <th>{{ 'mcqQuestion.difficulty' | translate }}</th>
-            <th>{{ 'mcqQuestion.source' | translate }}</th>
-            <th>{{ 'common.status' | translate }}</th>
+            <th pSortableColumn="questionText">{{ 'mcqQuestion.questionText' | translate }} <p-sortIcon field="questionText"></p-sortIcon></th>
+            <th pSortableColumn="skillTag">{{ 'mcqQuestion.skillTag' | translate }} <p-sortIcon field="skillTag"></p-sortIcon></th>
+            <th pSortableColumn="difficulty">{{ 'mcqQuestion.difficulty' | translate }} <p-sortIcon field="difficulty"></p-sortIcon></th>
+            <th pSortableColumn="source">{{ 'mcqQuestion.source' | translate }} <p-sortIcon field="source"></p-sortIcon></th>
+            <th pSortableColumn="status">{{ 'common.status' | translate }} <p-sortIcon field="status"></p-sortIcon></th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-question>

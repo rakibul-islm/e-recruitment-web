@@ -71,6 +71,6 @@ export class JobPostingSearchComponent extends BaseComponent implements OnInit {
 
   viewJobPosting(jobPosting: JobPosting): void {
     this.preserveFiltersOnNavigate();
-    this.router.navigate(['/job-postings', jobPosting.id]);
+    this.router.navigate(['/job-postings', jobPosting.uuid]);
   }
 }

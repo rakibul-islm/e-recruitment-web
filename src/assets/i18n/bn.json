@@ -57,6 +57,7 @@
     "add": "যোগ করুন",
     "basicInfo": "প্রাথমিক তথ্য",
     "notAvailable": "প্রযোজ্য নয়",
+    "selectAll": "সব নির্বাচন করুন",
     "actions": "অ্যাকশনসমূহ",
     "name": "নাম",
     "code": "কোড",
@@ -566,7 +567,7 @@
     "confirmAll": "এটি প্রতিটি সক্রিয় ব্যবহারকারীর কাছে একটি নোটিফিকেশন পাঠাবে। চালিয়ে যাবেন?",
     "sendSuccess": "নোটিফিকেশন সফলভাবে পাঠানো হয়েছে!"
   },
-  "profileCompleteness": {
+  "cvCompleteness": {
     "title": "সিভি সম্পূর্ণতা",
     "levelCOMPLETE": "আপনার সিভি রিক্রুটারদের কাছে পাঠানোর জন্য প্রস্তুত",
     "levelGOOD": "ভালো শুরু, আরও কিছু তথ্য যোগ করুন",
@@ -614,7 +615,7 @@
     "education": "শিক্ষা",
     "educationValue": "প্রয়োজন {{required}}, প্রার্থীর আছে {{candidate}}",
     "keywords": "পাওয়া প্রয়োজনীয়তার শব্দ",
-    "profileCompleteness": "প্রার্থীর সিভি সম্পূর্ণতা: {{percent}}%"
+    "cvCompleteness": "প্রার্থীর সিভি সম্পূর্ণতা: {{percent}}%"
   },
   "backup": {
     "pageTitle": "ডাটাবেস ব্যাকআপ",
@@ -884,7 +885,7 @@
     "submitApplication": "আবেদন জমা দিন",
     "applySuccess": "আবেদন সফলভাবে জমা দেওয়া হয়েছে!"
   },
-  "candidateProfile": {
+  "candidateCv": {
     "pageTitle": "আমার সিভি",
     "editTitle": "আমার সিভি সম্পাদনা করুন",
     "scanCv": "সিভি আপলোড ও স্ক্যান",

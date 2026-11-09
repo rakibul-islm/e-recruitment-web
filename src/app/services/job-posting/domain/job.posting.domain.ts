@@ -7,6 +7,7 @@ export const JOB_STATUS_OPTIONS = [
 
 export class JobPosting {
     id!: number;
+    uuid!: string;
     jobTitle!: string;
     organizationId?: number;
     organizationName?: string;

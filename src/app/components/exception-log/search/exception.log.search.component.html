@@ -54,10 +54,10 @@
         (onRowSelect)="viewExceptionLog($event.data)">
         <ng-template pTemplate="header">
           <tr>
-            <th>{{ 'exceptionLog.occurredOn' | translate }}</th>
-            <th>{{ 'common.status' | translate }}</th>
-            <th>{{ 'exceptionLog.message' | translate }}</th>
-            <th>{{ 'exceptionLog.requestUri' | translate }}</th>
+            <th pSortableColumn="createdOn">{{ 'exceptionLog.occurredOn' | translate }} <p-sortIcon field="createdOn"></p-sortIcon></th>
+            <th pSortableColumn="statusCode">{{ 'common.status' | translate }} <p-sortIcon field="statusCode"></p-sortIcon></th>
+            <th pSortableColumn="message">{{ 'exceptionLog.message' | translate }} <p-sortIcon field="message"></p-sortIcon></th>
+            <th pSortableColumn="requestUri">{{ 'exceptionLog.requestUri' | translate }} <p-sortIcon field="requestUri"></p-sortIcon></th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-exceptionLog>

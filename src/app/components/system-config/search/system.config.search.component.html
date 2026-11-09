@@ -27,9 +27,9 @@
         (onRowSelect)="viewSystemConfig($event.data)">
         <ng-template pTemplate="header">
           <tr>
-            <th>{{ 'systemConfig.configKey' | translate }}</th>
-            <th>{{ 'systemConfig.configValue' | translate }}</th>
-            <th>{{ 'common.description' | translate }}</th>
+            <th pSortableColumn="configKey">{{ 'systemConfig.configKey' | translate }} <p-sortIcon field="configKey"></p-sortIcon></th>
+            <th pSortableColumn="configValue">{{ 'systemConfig.configValue' | translate }} <p-sortIcon field="configValue"></p-sortIcon></th>
+            <th pSortableColumn="description">{{ 'common.description' | translate }} <p-sortIcon field="description"></p-sortIcon></th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-systemConfig>

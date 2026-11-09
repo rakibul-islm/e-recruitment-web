@@ -7,10 +7,10 @@
     <p-table [value]="savedJobs" [loading]="loading" responsiveLayout="scroll" dataKey="id">
       <ng-template pTemplate="header">
         <tr>
-          <th>{{ 'candidateApplication.jobTitle' | translate }}</th>
-          <th>{{ 'jobPortal.organization' | translate }}</th>
-          <th>{{ 'common.status' | translate }}</th>
-          <th>{{ 'savedJob.savedOn' | translate }}</th>
+          <th pSortableColumn="jobTitle">{{ 'candidateApplication.jobTitle' | translate }} <p-sortIcon field="jobTitle"></p-sortIcon></th>
+          <th pSortableColumn="organizationName">{{ 'jobPortal.organization' | translate }} <p-sortIcon field="organizationName"></p-sortIcon></th>
+          <th pSortableColumn="jobStatus">{{ 'common.status' | translate }} <p-sortIcon field="jobStatus"></p-sortIcon></th>
+          <th pSortableColumn="savedOn">{{ 'savedJob.savedOn' | translate }} <p-sortIcon field="savedOn"></p-sortIcon></th>
           <th class="action-col"></th>
         </tr>
       </ng-template>

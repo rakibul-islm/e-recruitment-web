@@ -74,6 +74,10 @@ export abstract class BaseComponent implements OnDestroy {
     params.set('size', rows);
     params.set('isPageable', true);
 
+    if (typeof event.sortField === 'string' && event.sortField) {
+      params.set('sort', `${event.sortField},${event.sortOrder === -1 ? 'desc' : 'asc'}`);
+    }
+
     Object.entries(form.value).forEach(([key, value]) => {
       if (value !== null && value !== undefined && value !== '') {
         params.set(key, value instanceof Date ? this.formatDateParam(value) : value);

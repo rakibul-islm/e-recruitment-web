@@ -7,18 +7,18 @@ import { API_URLS } from '../utility/constants/api.urls';
 @Injectable({
   providedIn: 'root'
 })
-export class CandidateProfileService extends BaseService {
+export class CandidateCvService extends BaseService {
 
   constructor(http: HttpClient) {
     super(http);
   }
 
   public fetchMyProfile(): Observable<any> {
-    return super.get(API_URLS.FETCH_CANDIDATE_PROFILE);
+    return super.get(API_URLS.FETCH_CANDIDATE_CV);
   }
 
   public updateMyProfile(body: any): Observable<any> {
-    return super.put(API_URLS.UPDATE_CANDIDATE_PROFILE, body);
+    return super.put(API_URLS.UPDATE_CANDIDATE_CV, body);
   }
 
   public generateCv(): Observable<any> {

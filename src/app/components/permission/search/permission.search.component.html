@@ -43,10 +43,10 @@
         (onRowSelect)="viewPermission($event.data)">
         <ng-template pTemplate="header">
           <tr>
-            <th>{{ 'common.name' | translate }}</th>
-            <th>{{ 'common.authority' | translate }}</th>
-            <th>{{ 'common.module' | translate }}</th>
-            <th>{{ 'permission.routeName' | translate }}</th>
+            <th pSortableColumn="name">{{ 'common.name' | translate }} <p-sortIcon field="name"></p-sortIcon></th>
+            <th pSortableColumn="authority">{{ 'common.authority' | translate }} <p-sortIcon field="authority"></p-sortIcon></th>
+            <th pSortableColumn="module">{{ 'common.module' | translate }} <p-sortIcon field="module"></p-sortIcon></th>
+            <th pSortableColumn="routeName">{{ 'permission.routeName' | translate }} <p-sortIcon field="routeName"></p-sortIcon></th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-permission>

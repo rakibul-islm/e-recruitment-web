@@ -25,6 +25,11 @@ export class JobPostingService extends BaseService {
     return super.put(API_URLS.UPDATE_JOB_POSTING, body);
   }
 
+  public findJobPostingByUuid(uuid: string): Observable<any> {
+    const url = this.createUrl(API_URLS.FIND_JOB_POSTING_BY_UUID, { uuid });
+    return super.get(url);
+  }
+
   public findJobPostingById(id: number): Observable<any> {
     const url = this.createUrl(API_URLS.FIND_JOB_POSTING_BY_ID, { id });
     return super.get(url);
