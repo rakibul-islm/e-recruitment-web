@@ -12,6 +12,7 @@ import { JobPosting } from '../../../services/job-posting/domain/job.posting.dom
 export class JobPostingViewComponent extends BaseComponent implements OnInit {
   jobPosting: JobPosting = new JobPosting();
   jobPostingId!: number;
+  jobPostingUuid!: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -23,13 +24,14 @@ export class JobPostingViewComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.jobPostingId = Number(this.route.snapshot.paramMap.get('id'));
+    this.jobPostingUuid = this.route.snapshot.paramMap.get('uuid') || '';
     this.fetchJobPosting();
   }
 
   fetchJobPosting(): void {
-    this.subscribers.findJobPostingSub = this.jobPostingService.findJobPostingById(this.jobPostingId).subscribe(response => {
+    this.subscribers.findJobPostingSub = this.jobPostingService.findJobPostingByUuid(this.jobPostingUuid).subscribe(response => {
       this.jobPosting = response?.obj;
+      this.jobPostingId = this.jobPosting?.id;
     });
   }
 

@@ -59,7 +59,7 @@ export class CvMatch {
     candidateEducation?: string;
     keywordsMatched!: number;
     keywordsTotal!: number;
-    profileCompletenessPercent!: number;
+    cvCompletenessPercent!: number;
     components: CvMatchComponent[] = [];
 }
 

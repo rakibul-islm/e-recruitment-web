@@ -9,10 +9,10 @@
     <p-table [value]="alerts" [loading]="loading" responsiveLayout="scroll" dataKey="id">
       <ng-template pTemplate="header">
         <tr>
-          <th>{{ 'jobPortal.keyword' | translate }}</th>
-          <th>{{ 'jobPortal.location' | translate }}</th>
-          <th>{{ 'jobAlert.category' | translate }}</th>
-          <th>{{ 'jobAlert.lastNotified' | translate }}</th>
+          <th pSortableColumn="keyword">{{ 'jobPortal.keyword' | translate }} <p-sortIcon field="keyword"></p-sortIcon></th>
+          <th pSortableColumn="location">{{ 'jobPortal.location' | translate }} <p-sortIcon field="location"></p-sortIcon></th>
+          <th pSortableColumn="category">{{ 'jobAlert.category' | translate }} <p-sortIcon field="category"></p-sortIcon></th>
+          <th pSortableColumn="lastNotifiedOn">{{ 'jobAlert.lastNotified' | translate }} <p-sortIcon field="lastNotifiedOn"></p-sortIcon></th>
           <th class="action-col"></th>
         </tr>
       </ng-template>

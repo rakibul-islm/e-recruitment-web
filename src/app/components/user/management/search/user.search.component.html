@@ -54,11 +54,11 @@
         (onRowSelect)="viewUser($event.data)">
         <ng-template pTemplate="header">
           <tr>
-            <th>{{ 'user.fullName' | translate }}</th>
-            <th>{{ 'user.email' | translate }}</th>
-            <th>{{ 'user.mobile' | translate }}</th>
+            <th pSortableColumn="fullName">{{ 'user.fullName' | translate }} <p-sortIcon field="fullName"></p-sortIcon></th>
+            <th pSortableColumn="email">{{ 'user.email' | translate }} <p-sortIcon field="email"></p-sortIcon></th>
+            <th pSortableColumn="mobile">{{ 'user.mobile' | translate }} <p-sortIcon field="mobile"></p-sortIcon></th>
             <th>{{ 'common.status' | translate }}</th>
-            <th>{{ 'user.expiryDate' | translate }}</th>
+            <th pSortableColumn="expiryDate">{{ 'user.expiryDate' | translate }} <p-sortIcon field="expiryDate"></p-sortIcon></th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-user>

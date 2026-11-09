@@ -1,22 +1,22 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { ProfileCompleteness, ProfileCompletenessSection } from '../../../../services/candidate-profile/domain/candidate.profile.domain';
+import { CvCompleteness, CvCompletenessSection } from '../../../../services/candidate-cv/domain/candidate.cv.domain';
 
-const EDIT_PATH = '/my/profile/edit';
+const EDIT_PATH = '/my/cv/edit';
 
 @Component({
-  selector: 'app-profile-completeness',
-  templateUrl: './profile.completeness.component.html',
-  styleUrls: ['./profile.completeness.component.scss']
+  selector: 'app-cv-completeness',
+  templateUrl: './cv.completeness.component.html',
+  styleUrls: ['./cv.completeness.component.scss']
 })
-export class ProfileCompletenessComponent {
-  @Input() completeness?: ProfileCompleteness | null;
+export class CvCompletenessComponent {
+  @Input() completeness?: CvCompleteness | null;
 
   detailsVisible = false;
 
   constructor(private router: Router) {}
 
-  get missingSections(): ProfileCompletenessSection[] {
+  get missingSections(): CvCompletenessSection[] {
     return (this.completeness?.sections || []).filter(section => section.earned < section.weight);
   }
 
@@ -24,7 +24,7 @@ export class ProfileCompletenessComponent {
     this.detailsVisible = false;
 
     if (this.router.url.split('?')[0] === EDIT_PATH) {
-      setTimeout(() => ProfileCompletenessComponent.scrollToSection(key));
+      setTimeout(() => CvCompletenessComponent.scrollToSection(key));
     } else {
       this.router.navigate([EDIT_PATH], { queryParams: { section: key } });
     }

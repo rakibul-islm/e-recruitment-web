@@ -188,7 +188,7 @@
               <i class="pi pi-search"></i>
               <span>{{ 'menu.findJobs' | translate }}</span>
             </a>
-            <a class="quick-link-card" routerLink="/my/profile">
+            <a class="quick-link-card" routerLink="/my/cv">
               <i class="pi pi-user"></i>
               <span>{{ 'menu.myCv' | translate }}</span>
             </a>
@@ -279,7 +279,7 @@
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-savedJob>
-        <tr class="selectable-row" (click)="goToJob(savedJob.jobCircularId)">
+        <tr class="selectable-row" (click)="goToJob(savedJob.jobUuid)">
           <td>{{ savedJob.jobTitle }}</td>
           <td>{{ savedJob.organizationName }}</td>
           <td><span class="tag">{{ savedJob.jobStatus }}</span></td>

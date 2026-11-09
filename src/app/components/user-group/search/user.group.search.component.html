@@ -28,8 +28,8 @@
         (onRowSelect)="viewUserGroup($event.data)">
         <ng-template pTemplate="header">
           <tr>
-            <th>{{ 'common.name' | translate }}</th>
-            <th>{{ 'common.description' | translate }}</th>
+            <th pSortableColumn="name">{{ 'common.name' | translate }} <p-sortIcon field="name"></p-sortIcon></th>
+            <th pSortableColumn="description">{{ 'common.description' | translate }} <p-sortIcon field="description"></p-sortIcon></th>
             <th>{{ 'user.roles' | translate }}</th>
           </tr>
         </ng-template>

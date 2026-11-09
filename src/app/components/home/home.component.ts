@@ -55,7 +55,7 @@ export class HomeComponent extends BaseComponent implements OnInit {
   }
 
   viewJob(job: JobPosting): void {
-    this.router.navigate(['/jobs', job.id]);
+    this.router.navigate(['/jobs', job.uuid]);
   }
 
   private fetchStats(): void {

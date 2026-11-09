@@ -179,8 +179,8 @@ export class DashboardComponent extends BaseComponent implements OnInit {
     }
   }
 
-  goToJob(jobCircularId: number): void {
-    this.router.navigate(['/jobs', jobCircularId]);
+  goToJob(jobUuid: string): void {
+    this.router.navigate(['/jobs', jobUuid]);
   }
 
   openDetail(mode: string): void {

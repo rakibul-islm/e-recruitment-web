@@ -54,14 +54,14 @@
         <ng-template pTemplate="header">
           <tr>
             <th>{{ 'session.user' | translate }}</th>
-            <th>{{ 'session.ipAddress' | translate }}</th>
-            <th>{{ 'session.city' | translate }}</th>
-            <th>{{ 'session.country' | translate }}</th>
-            <th>{{ 'session.device' | translate }}</th>
-            <th>{{ 'session.os' | translate }}</th>
-            <th>{{ 'session.browser' | translate }}</th>
-            <th>{{ 'session.loggedInOn' | translate }}</th>
-            <th>{{ 'session.expiresOn' | translate }}</th>
+            <th pSortableColumn="ipAddress">{{ 'session.ipAddress' | translate }} <p-sortIcon field="ipAddress"></p-sortIcon></th>
+            <th pSortableColumn="city">{{ 'session.city' | translate }} <p-sortIcon field="city"></p-sortIcon></th>
+            <th pSortableColumn="country">{{ 'session.country' | translate }} <p-sortIcon field="country"></p-sortIcon></th>
+            <th pSortableColumn="deviceType">{{ 'session.device' | translate }} <p-sortIcon field="deviceType"></p-sortIcon></th>
+            <th pSortableColumn="os">{{ 'session.os' | translate }} <p-sortIcon field="os"></p-sortIcon></th>
+            <th pSortableColumn="browser">{{ 'session.browser' | translate }} <p-sortIcon field="browser"></p-sortIcon></th>
+            <th pSortableColumn="issuedAt">{{ 'session.loggedInOn' | translate }} <p-sortIcon field="issuedAt"></p-sortIcon></th>
+            <th pSortableColumn="expiresAt">{{ 'session.expiresOn' | translate }} <p-sortIcon field="expiresAt"></p-sortIcon></th>
             <th>{{ 'common.status' | translate }}</th>
             <th class="action-col">{{ 'common.actions' | translate }}</th>
           </tr>

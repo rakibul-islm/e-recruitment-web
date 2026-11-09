@@ -56,12 +56,12 @@
         (onRowSelect)="viewApplication($event.data)">
         <ng-template pTemplate="header">
           <tr>
-            <th style="width:3rem"><input type="checkbox" [checked]="allSelected()" (change)="toggleSelectAll($event)" /></th>
+            <th class="select-all-col" style="width:3rem" [attr.data-text]="'common.selectAll' | translate"><input type="checkbox" [checked]="allSelected()" (change)="toggleSelectAll($event)" /></th>
             <th>{{ 'candidateApplication.jobTitle' | translate }}</th>
             <th>{{ 'applicationManagement.candidate' | translate }}</th>
-            <th>{{ 'candidateApplication.appliedOn' | translate }}</th>
-            <th>{{ 'common.status' | translate }}</th>
-            <th>{{ 'applicationManagement.matchScore' | translate }}</th>
+            <th pSortableColumn="appliedOn">{{ 'candidateApplication.appliedOn' | translate }} <p-sortIcon field="appliedOn"></p-sortIcon></th>
+            <th pSortableColumn="status">{{ 'common.status' | translate }} <p-sortIcon field="status"></p-sortIcon></th>
+            <th pSortableColumn="matchScore">{{ 'applicationManagement.matchScore' | translate }} <p-sortIcon field="matchScore"></p-sortIcon></th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-application>

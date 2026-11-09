@@ -28,11 +28,11 @@
         (onRowSelect)="viewArchiveConfig($event.data)">
         <ng-template pTemplate="header">
           <tr>
-            <th>{{ 'archiveConfig.sourceTable' | translate }}</th>
-            <th>{{ 'archiveConfig.archiveSchema' | translate }}</th>
-            <th>{{ 'archiveConfig.archiveTable' | translate }}</th>
-            <th>{{ 'archiveConfig.retentionDays' | translate }}</th>
-            <th>{{ 'common.status' | translate }}</th>
+            <th pSortableColumn="sourceTable">{{ 'archiveConfig.sourceTable' | translate }} <p-sortIcon field="sourceTable"></p-sortIcon></th>
+            <th pSortableColumn="archiveSchema">{{ 'archiveConfig.archiveSchema' | translate }} <p-sortIcon field="archiveSchema"></p-sortIcon></th>
+            <th pSortableColumn="archiveTable">{{ 'archiveConfig.archiveTable' | translate }} <p-sortIcon field="archiveTable"></p-sortIcon></th>
+            <th pSortableColumn="retentionDays">{{ 'archiveConfig.retentionDays' | translate }} <p-sortIcon field="retentionDays"></p-sortIcon></th>
+            <th pSortableColumn="enabled">{{ 'common.status' | translate }} <p-sortIcon field="enabled"></p-sortIcon></th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-archiveConfig>

@@ -29,9 +29,9 @@
         (onRowSelect)="viewOrganization($event.data)">
         <ng-template pTemplate="header">
           <tr>
-            <th>{{ 'common.name' | translate }}</th>
-            <th>{{ 'organization.organizationType' | translate }}</th>
-            <th>{{ 'organization.website' | translate }}</th>
+            <th pSortableColumn="name">{{ 'common.name' | translate }} <p-sortIcon field="name"></p-sortIcon></th>
+            <th pSortableColumn="organizationType">{{ 'organization.organizationType' | translate }} <p-sortIcon field="organizationType"></p-sortIcon></th>
+            <th pSortableColumn="website">{{ 'organization.website' | translate }} <p-sortIcon field="website"></p-sortIcon></th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-organization>

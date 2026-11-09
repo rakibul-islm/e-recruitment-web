@@ -45,6 +45,6 @@ export class CandidateSavedJobsComponent extends BaseComponent implements OnInit
   }
 
   viewJob(savedJob: SavedJob): void {
-    this.router.navigate(['/jobs', savedJob.jobCircularId]);
+    this.router.navigate(['/jobs', savedJob.jobUuid]);
   }
 }

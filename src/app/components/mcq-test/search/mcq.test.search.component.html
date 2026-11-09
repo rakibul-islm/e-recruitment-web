@@ -31,11 +31,11 @@
         (onRowSelect)="viewTest($event.data)">
         <ng-template pTemplate="header">
           <tr>
-            <th>{{ 'mcqTest.name' | translate }}</th>
-            <th>{{ 'mcqTest.durationMinutes' | translate }}</th>
+            <th pSortableColumn="name">{{ 'mcqTest.name' | translate }} <p-sortIcon field="name"></p-sortIcon></th>
+            <th pSortableColumn="durationMinutes">{{ 'mcqTest.durationMinutes' | translate }} <p-sortIcon field="durationMinutes"></p-sortIcon></th>
             <th>{{ 'mcqTest.questionCount' | translate }}</th>
-            <th>{{ 'mcqTest.passingScorePercent' | translate }}</th>
-            <th>{{ 'common.status' | translate }}</th>
+            <th pSortableColumn="passingScorePercent">{{ 'mcqTest.passingScorePercent' | translate }} <p-sortIcon field="passingScorePercent"></p-sortIcon></th>
+            <th pSortableColumn="status">{{ 'common.status' | translate }} <p-sortIcon field="status"></p-sortIcon></th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-test>

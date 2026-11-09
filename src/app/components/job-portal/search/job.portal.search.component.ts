@@ -88,7 +88,7 @@ export class JobPortalSearchComponent extends BaseComponent implements OnInit {
   }
 
   viewJob(job: JobPosting): void {
-    this.router.navigate(['/jobs', job.id]);
+    this.router.navigate(['/jobs', job.uuid]);
   }
 
   goBackFromJobs(): void {

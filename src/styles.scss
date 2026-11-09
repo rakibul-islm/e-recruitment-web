@@ -635,6 +635,47 @@ form .form-section-title:not(:first-child) {
   color: #474242;
 }
 
+/* Sortable column headers (desktop): hover tint, navy active column with a bottom accent. */
+.p-datatable .p-datatable-thead > tr > th.p-sortable-column {
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+  transition: background-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+
+  .p-sortable-column-icon {
+    width: 0.8rem;
+    height: 0.8rem;
+    margin-left: 0.4rem;
+    color: #b6c0cf;
+    vertical-align: middle;
+    transition: color 0.15s ease;
+  }
+
+  &:hover {
+    background: #f1f5fb;
+    color: #032967;
+
+    .p-sortable-column-icon {
+      color: #1e4d8f;
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid #1e4d8f;
+    outline-offset: -2px;
+  }
+
+  &.p-highlight {
+    background: #eef3fb;
+    color: #032967;
+    box-shadow: inset 0 -2px 0 #032967;
+
+    .p-sortable-column-icon {
+      color: #032967;
+    }
+  }
+}
+
 /* Mobile: every p-table row becomes a card of "label | value" lines. Labels come from the
    column headers via TableCellLabelDirective (data-label on each td). */
 @media screen and (max-width: 576px) {
@@ -657,7 +698,87 @@ form .form-section-title:not(:first-child) {
   }
 
   .p-datatable .p-datatable-thead {
-    display: none;
+    display: block;
+
+    > tr {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 0.5rem;
+      margin: 0 -0.25rem 0.5rem;
+      padding: 0.25rem 0.25rem 0.4rem;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+
+    > tr:not(:has(th.p-sortable-column, th.select-all-col)) {
+      display: none;
+    }
+
+    > tr > th {
+      display: none;
+    }
+
+    > tr > th.select-all-col {
+      order: -1;
+      cursor: pointer;
+
+      input[type='checkbox'] {
+        width: 1.1rem;
+        height: 1.1rem;
+        margin: 0;
+        accent-color: #032967;
+      }
+
+      &::after {
+        content: attr(data-text);
+      }
+    }
+
+    > tr > th.p-sortable-column,
+    > tr > th.select-all-col {
+      display: inline-flex;
+      flex: 0 0 auto;
+      align-items: center;
+      gap: 0.35rem;
+      width: auto !important;
+      min-height: 2.25rem;
+      padding: 0.35rem 0.85rem !important;
+      border: 1px solid #d5dde9 !important;
+      border-radius: 999px;
+      background: #fff !important;
+      color: #475569 !important;
+      font-size: 0.8rem;
+      font-weight: 600;
+      white-space: nowrap;
+      box-shadow: 0 1px 3px rgba(3, 41, 103, 0.08);
+      transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+
+      .p-sortable-column-icon {
+        width: 0.75rem;
+        height: 0.75rem;
+        color: #94a3b8;
+      }
+
+      &:active {
+        background: #eef3fb !important;
+      }
+
+      &.p-highlight {
+        background: #032967 !important;
+        border-color: #032967 !important;
+        color: #fff !important;
+        box-shadow: 0 2px 8px rgba(3, 41, 103, 0.3);
+
+        .p-sortable-column-icon {
+          color: #fff;
+        }
+      }
+    }
   }
 
   .p-datatable .p-datatable-tbody {

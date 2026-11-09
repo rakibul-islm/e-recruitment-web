@@ -70,12 +70,12 @@
         (onRowSelect)="viewAuditLog($event.data)">
         <ng-template pTemplate="header">
           <tr>
-            <th>{{ 'auditLog.occurredOn' | translate }}</th>
-            <th>{{ 'auditLog.category' | translate }}</th>
-            <th>{{ 'auditLog.action' | translate }}</th>
-            <th>{{ 'auditLog.entity' | translate }}</th>
-            <th>{{ 'common.status' | translate }}</th>
-            <th>{{ 'auditLog.createdBy' | translate }}</th>
+            <th pSortableColumn="createdOn">{{ 'auditLog.occurredOn' | translate }} <p-sortIcon field="createdOn"></p-sortIcon></th>
+            <th pSortableColumn="category">{{ 'auditLog.category' | translate }} <p-sortIcon field="category"></p-sortIcon></th>
+            <th pSortableColumn="action">{{ 'auditLog.action' | translate }} <p-sortIcon field="action"></p-sortIcon></th>
+            <th pSortableColumn="entityType">{{ 'auditLog.entity' | translate }} <p-sortIcon field="entityType"></p-sortIcon></th>
+            <th pSortableColumn="outcome">{{ 'common.status' | translate }} <p-sortIcon field="outcome"></p-sortIcon></th>
+            <th pSortableColumn="createdBy">{{ 'auditLog.createdBy' | translate }} <p-sortIcon field="createdBy"></p-sortIcon></th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-auditLog>

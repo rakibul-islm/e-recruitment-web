@@ -13,7 +13,7 @@ export const MENU_ITEMS: AppMenuItem[] = [
     icon: 'pi pi-user',
     authOnly: true,
     items: [
-      { label: 'menu.myCv', icon: 'pi pi-file', routerLink: '/my/profile' },
+      { label: 'menu.myCv', icon: 'pi pi-file', routerLink: '/my/cv' },
       { label: 'menu.myApplications', icon: 'pi pi-send', routerLink: '/my/applications' },
       { label: 'menu.savedJobs', icon: 'pi pi-bookmark', routerLink: '/my/saved-jobs' },
       { label: 'menu.jobAlerts', icon: 'pi pi-bell', routerLink: '/my/job-alerts' }

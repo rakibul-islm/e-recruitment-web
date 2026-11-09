@@ -3,19 +3,19 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BaseComponent } from '../../base.component';
-import { CandidateProfileService } from '../../../services/candidate-profile/candidate.profile.service';
-import { CandidateProfile, ProfileCompleteness } from '../../../services/candidate-profile/domain/candidate.profile.domain';
+import { CandidateCvService } from '../../../services/candidate-cv/candidate.cv.service';
+import { CandidateCv, CvCompleteness } from '../../../services/candidate-cv/domain/candidate.cv.domain';
 import { AuthService } from '../../../services/utility/security/auth.service';
 import { Profile } from '../../../services/user/domain/user.domain';
-import { ProfileCompletenessComponent } from './completeness/profile.completeness.component';
-import { CvParserService, ParsedCv } from '../../../services/candidate-profile/cv.parser.service';
+import { CvCompletenessComponent } from './completeness/cv.completeness.component';
+import { CvParserService, ParsedCv } from '../../../services/candidate-cv/cv.parser.service';
 
 @Component({
-  selector: 'app-candidate-profile-form',
-  templateUrl: './candidate.profile.form.component.html',
-  styleUrls: ['./candidate.profile.form.component.scss']
+  selector: 'app-candidate-cv-form',
+  templateUrl: './candidate.cv.form.component.html',
+  styleUrls: ['./candidate.cv.form.component.scss']
 })
-export class CandidateProfileFormComponent extends BaseComponent implements OnInit {
+export class CandidateCvFormComponent extends BaseComponent implements OnInit {
   profileForm!: FormGroup;
   generating = false;
   scanning = false;
@@ -32,7 +32,7 @@ export class CandidateProfileFormComponent extends BaseComponent implements OnIn
 
   constructor(
     private formBuilder: FormBuilder,
-    private candidateProfileService: CandidateProfileService,
+    private candidateCvService: CandidateCvService,
     private authService: AuthService,
     private router: Router,
     private route: ActivatedRoute,
@@ -41,7 +41,7 @@ export class CandidateProfileFormComponent extends BaseComponent implements OnIn
     super();
   }
 
-  completeness?: ProfileCompleteness;
+  completeness?: CvCompleteness;
 
   ngOnInit(): void {
     this.subscribers.accountProfileSub = this.authService.getProfileData().subscribe(profile => this.accountProfile = profile);
@@ -49,18 +49,18 @@ export class CandidateProfileFormComponent extends BaseComponent implements OnIn
   }
 
   fetchProfile(): void {
-    this.subscribers.fetchProfileSub = this.candidateProfileService.fetchMyProfile().subscribe(response => {
+    this.subscribers.fetchProfileSub = this.candidateCvService.fetchMyProfile().subscribe(response => {
       this.completeness = response?.obj?.completeness;
       this.prepareForm(response?.obj);
       const section = this.route.snapshot.queryParamMap.get('section');
       if (section) {
-        setTimeout(() => ProfileCompletenessComponent.scrollToSection(section), 100);
+        setTimeout(() => CvCompletenessComponent.scrollToSection(section), 100);
       }
     });
   }
 
-  prepareForm(formData?: CandidateProfile): void {
-    formData = formData || new CandidateProfile();
+  prepareForm(formData?: CandidateCv): void {
+    formData = formData || new CandidateCv();
 
     this.profileForm = this.formBuilder.group({
       headline: [formData.headline],
@@ -134,14 +134,14 @@ export class CandidateProfileFormComponent extends BaseComponent implements OnIn
     input.value = '';
     if (!file) return;
     if (file.size > CvParserService.MAX_BYTES) {
-      this.notificationService.sendErrorMsg('candidateProfile.cvScanTooLarge');
+      this.notificationService.sendErrorMsg('candidateCv.cvScanTooLarge');
       return;
     }
     this.scanning = true;
     try {
       this.applyParsedCv(await this.cvParser.parseFile(file));
     } catch (error: any) {
-      this.notificationService.sendErrorMsg(error?.message === 'unsupported' ? 'candidateProfile.cvScanUnsupported' : 'candidateProfile.cvScanFailed');
+      this.notificationService.sendErrorMsg(error?.message === 'unsupported' ? 'candidateCv.cvScanUnsupported' : 'candidateCv.cvScanFailed');
     } finally {
       this.scanning = false;
     }
@@ -173,9 +173,9 @@ export class CandidateProfileFormComponent extends BaseComponent implements OnIn
 
     const count = parsed.workExperience.length + parsed.education.length + newSkills.length + parsed.certifications.length + newLanguages.length + parsed.projects.length;
     if (count) {
-      this.notificationService.sendSuccessMsg('candidateProfile.cvScanSuccess', { count });
+      this.notificationService.sendSuccessMsg('candidateCv.cvScanSuccess', { count });
     } else {
-      this.notificationService.sendWarningMsg('candidateProfile.cvScanNothingFound');
+      this.notificationService.sendWarningMsg('candidateCv.cvScanNothingFound');
     }
   }
 
@@ -219,13 +219,13 @@ export class CandidateProfileFormComponent extends BaseComponent implements OnIn
 
   saveProfile(): void {
     this.generating = true;
-    this.subscribers.updateProfileSub = this.candidateProfileService.updateMyProfile(this.normalizedUrls(this.profileForm.getRawValue())).subscribe({
+    this.subscribers.updateProfileSub = this.candidateCvService.updateMyProfile(this.normalizedUrls(this.profileForm.getRawValue())).subscribe({
       next: () => {
-        this.subscribers.generateCvSub = this.candidateProfileService.generateCv().subscribe({
+        this.subscribers.generateCvSub = this.candidateCvService.generateCv().subscribe({
           next: () => {
             this.generating = false;
-            this.notificationService.sendSuccessMsg('candidateProfile.saveAndGenerateSuccess');
-            this.router.navigate(['/my/profile']);
+            this.notificationService.sendSuccessMsg('candidateCv.saveAndGenerateSuccess');
+            this.router.navigate(['/my/cv']);
           },
           error: () => { this.generating = false; }
         });

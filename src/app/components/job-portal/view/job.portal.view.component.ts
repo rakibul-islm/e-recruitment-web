@@ -15,6 +15,7 @@ import { JobPosting } from '../../../services/job-posting/domain/job.posting.dom
 export class JobPortalViewComponent extends BaseComponent implements OnInit {
   job: JobPosting = new JobPosting();
   jobId!: number;
+  jobUuid!: string;
   isAuthenticated = false;
 
   applyDialogVisible = false;
@@ -34,7 +35,7 @@ export class JobPortalViewComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.jobId = Number(this.route.snapshot.paramMap.get('id'));
+    this.jobUuid = this.route.snapshot.paramMap.get('uuid') || '';
     this.applyForm = this.formBuilder.group({ coverLetter: [''] });
 
     this.subscribers.authSub = this.authService.isLoggedIn().subscribe(authenticated => {
@@ -51,14 +52,15 @@ export class JobPortalViewComponent extends BaseComponent implements OnInit {
   }
 
   fetchJob(): void {
-    this.subscribers.findJobSub = this.jobPostingService.findJobPostingById(this.jobId).subscribe(response => {
+    this.subscribers.findJobSub = this.jobPostingService.findJobPostingByUuid(this.jobUuid).subscribe(response => {
       this.job = response?.obj;
+      this.jobId = this.job?.id;
     });
   }
 
   openApply(): void {
     if (!this.isAuthenticated) {
-      this.router.navigate(['/login'], { queryParams: { returnUrl: `/jobs/${this.jobId}` } });
+      this.router.navigate(['/login'], { queryParams: { returnUrl: `/jobs/${this.jobUuid}` } });
       return;
     }
     this.applyDialogVisible = true;

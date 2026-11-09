@@ -33,9 +33,9 @@
         (onRowSelect)="viewRole($event.data)">
         <ng-template pTemplate="header">
           <tr>
-            <th>{{ 'common.name' | translate }}</th>
-            <th>{{ 'common.code' | translate }}</th>
-            <th>{{ 'common.description' | translate }}</th>
+            <th pSortableColumn="name">{{ 'common.name' | translate }} <p-sortIcon field="name"></p-sortIcon></th>
+            <th pSortableColumn="code">{{ 'common.code' | translate }} <p-sortIcon field="code"></p-sortIcon></th>
+            <th pSortableColumn="description">{{ 'common.description' | translate }} <p-sortIcon field="description"></p-sortIcon></th>
             <th>{{ 'role.permissions' | translate }}</th>
           </tr>
         </ng-template>

@@ -57,6 +57,7 @@
     "add": "Add",
     "basicInfo": "Basic Info",
     "notAvailable": "N/A",
+    "selectAll": "Select all",
     "actions": "Actions",
     "name": "Name",
     "code": "Code",
@@ -566,7 +567,7 @@
     "confirmAll": "This will send a notification to every active user. Continue?",
     "sendSuccess": "Notification sent successfully!"
   },
-  "profileCompleteness": {
+  "cvCompleteness": {
     "title": "CV completeness",
     "levelCOMPLETE": "Your CV is ready to send to recruiters",
     "levelGOOD": "Good start, a few more details will help",
@@ -614,7 +615,7 @@
     "education": "Education",
     "educationValue": "Required {{required}}, candidate has {{candidate}}",
     "keywords": "Requirement keywords found",
-    "profileCompleteness": "Candidate's CV completeness: {{percent}}%"
+    "cvCompleteness": "Candidate's CV completeness: {{percent}}%"
   },
   "backup": {
     "pageTitle": "Database Backup",
@@ -884,7 +885,7 @@
     "submitApplication": "Submit Application",
     "applySuccess": "Application submitted successfully!"
   },
-  "candidateProfile": {
+  "candidateCv": {
     "pageTitle": "My CV",
     "editTitle": "Edit My CV",
     "scanCv": "Upload CV & Scan",

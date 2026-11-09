@@ -17,6 +17,7 @@ import { BD_JOB_LOCATIONS } from '../../../utils/bd.locations';
 export class JobPostingFormComponent extends BaseComponent implements OnInit {
   jobPostingForm!: FormGroup;
   jobPostingId?: number;
+  jobPostingUuid?: string;
   organizationOptions: { label: string; value: number; website?: string; address?: string; phone?: string; email?: string }[] = [];
   statusOptions = JOB_STATUS_OPTIONS;
   aiSuggesting = false;
@@ -50,8 +51,8 @@ export class JobPostingFormComponent extends BaseComponent implements OnInit {
     this.fetchOrganizationOptions();
 
     this.subscribers.paramMapSub = this.route.paramMap.subscribe(paramMap => {
-      this.jobPostingId = Number(paramMap.get('id')) || undefined;
-      this.jobPostingId ? this.fetchJobPosting(this.jobPostingId) : this.prepareForm();
+      this.jobPostingUuid = paramMap.get('uuid') || undefined;
+      this.jobPostingUuid ? this.fetchJobPosting(this.jobPostingUuid) : this.prepareForm();
     });
   }
 
@@ -138,8 +139,9 @@ export class JobPostingFormComponent extends BaseComponent implements OnInit {
     this.applyOrganizationScope();
   }
 
-  fetchJobPosting(id: number): void {
-    this.subscribers.findJobPostingSub = this.jobPostingService.findJobPostingById(id).subscribe(response => {
+  fetchJobPosting(uuid: string): void {
+    this.subscribers.findJobPostingSub = this.jobPostingService.findJobPostingByUuid(uuid).subscribe(response => {
+      this.jobPostingId = response?.obj?.id;
       this.prepareForm(response?.obj);
     });
   }

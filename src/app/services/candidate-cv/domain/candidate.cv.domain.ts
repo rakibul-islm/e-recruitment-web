@@ -41,7 +41,7 @@ export class ProjectItem {
     url?: string;
 }
 
-export class CandidateProfile {
+export class CandidateCv {
     id!: number;
     userId!: number;
     headline?: string;
@@ -56,10 +56,10 @@ export class CandidateProfile {
     certifications?: CertificationItem[] = [];
     languages?: LanguageItem[] = [];
     projects?: ProjectItem[] = [];
-    completeness?: ProfileCompleteness;
+    completeness?: CvCompleteness;
 }
 
-export class CandidateProfileRequest {
+export class CandidateCvRequest {
     headline?: string;
     summary?: string;
     phone?: string;
@@ -81,15 +81,15 @@ export class GeneratedCv {
     generatedOn!: Date | string;
 }
 
-export class ProfileCompletenessSection {
+export class CvCompletenessSection {
     key!: string;
     weight!: number;
     earned!: number;
 }
 
-export class ProfileCompleteness {
+export class CvCompleteness {
     percent!: number;
     level!: string;
     ready!: boolean;
-    sections!: ProfileCompletenessSection[];
+    sections!: CvCompletenessSection[];
 }

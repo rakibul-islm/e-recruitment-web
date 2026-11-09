@@ -42,8 +42,8 @@ import { AccessDeniedComponent } from './components/shared/access-denied/access.
 import { PermissionGuard } from './services/utility/security/permission.guard';
 import { JobPortalSearchComponent } from './components/job-portal/search/job.portal.search.component';
 import { JobPortalViewComponent } from './components/job-portal/view/job.portal.view.component';
-import { CandidateProfileFormComponent } from './components/candidate/profile/candidate.profile.form.component';
-import { CandidateProfileViewComponent } from './components/candidate/profile/view/candidate.profile.view.component';
+import { CandidateCvFormComponent } from './components/candidate/cv/candidate.cv.form.component';
+import { CandidateCvViewComponent } from './components/candidate/cv/view/candidate.cv.view.component';
 import { CandidateApplicationsComponent } from './components/candidate/applications/candidate.applications.component';
 import { OrganizationSearchComponent } from './components/organization/search/organization.search.component';
 import { OrganizationFormComponent } from './components/organization/form/organization.form.component';
@@ -87,10 +87,10 @@ const routes: Routes = [
   { path: 'privacy', component: LegalPageComponent, data: { legalType: 'privacy' } },
 
   { path: 'jobs', component: JobPortalSearchComponent },
-  { path: 'jobs/:id', component: JobPortalViewComponent },
+  { path: 'jobs/:uuid', component: JobPortalViewComponent },
 
-  { path: 'my/profile', component: CandidateProfileViewComponent, canActivate: [AuthGuard] },
-  { path: 'my/profile/edit', component: CandidateProfileFormComponent, canActivate: [AuthGuard] },
+  { path: 'my/cv', component: CandidateCvViewComponent, canActivate: [AuthGuard] },
+  { path: 'my/cv/edit', component: CandidateCvFormComponent, canActivate: [AuthGuard] },
   { path: 'my/applications', component: CandidateApplicationsComponent, canActivate: [AuthGuard] },
   { path: 'my/applications/:id', component: CandidateApplicationDetailComponent, canActivate: [AuthGuard] },
   { path: 'my/saved-jobs', component: CandidateSavedJobsComponent, canActivate: [AuthGuard] },
@@ -185,12 +185,12 @@ const routes: Routes = [
     canActivate: [AuthGuard, PermissionGuard],
     data: { routeName: 'job-circular-manage' }
   },
-  { path: 'job-postings/:id/edit',
+  { path: 'job-postings/:uuid/edit',
     component: JobPostingFormComponent,
     canActivate: [AuthGuard, PermissionGuard],
     data: { routeName: 'job-circular-manage' }
   },
-  { path: 'job-postings/:id',
+  { path: 'job-postings/:uuid',
     component: JobPostingViewComponent,
     canActivate: [AuthGuard, PermissionGuard],
     data: { routeName: 'job-circular-list' }

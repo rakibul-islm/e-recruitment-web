@@ -2,19 +2,19 @@ import { displayUrl, withHttpScheme } from '../../../../utils/url.util';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BaseComponent } from '../../../base.component';
-import { CandidateProfileService } from '../../../../services/candidate-profile/candidate.profile.service';
-import { CandidateProfile, GeneratedCv } from '../../../../services/candidate-profile/domain/candidate.profile.domain';
+import { CandidateCvService } from '../../../../services/candidate-cv/candidate.cv.service';
+import { CandidateCv, GeneratedCv } from '../../../../services/candidate-cv/domain/candidate.cv.domain';
 import { AuthService } from '../../../../services/utility/security/auth.service';
 import { Profile } from '../../../../services/user/domain/user.domain';
 import { triggerDownload, openBlobInNewTab, pdfFileName } from '../../../../services/utility/file-download.util';
 
 @Component({
-  selector: 'app-candidate-profile-view',
-  templateUrl: './candidate.profile.view.component.html',
-  styleUrls: ['./candidate.profile.view.component.scss']
+  selector: 'app-candidate-cv-view',
+  templateUrl: './candidate.cv.view.component.html',
+  styleUrls: ['./candidate.cv.view.component.scss']
 })
-export class CandidateProfileViewComponent extends BaseComponent implements OnInit {
-  profile: CandidateProfile = new CandidateProfile();
+export class CandidateCvViewComponent extends BaseComponent implements OnInit {
+  profile: CandidateCv = new CandidateCv();
   accountProfile: Profile = new Profile();
   myCvs: GeneratedCv[] = [];
 
@@ -28,7 +28,7 @@ export class CandidateProfileViewComponent extends BaseComponent implements OnIn
 
   constructor(
     private router: Router,
-    private candidateProfileService: CandidateProfileService,
+    private candidateCvService: CandidateCvService,
     private authService: AuthService
   ) {
     super();
@@ -42,9 +42,9 @@ export class CandidateProfileViewComponent extends BaseComponent implements OnIn
 
   fetchProfile(): void {
     this.loading = true;
-    this.subscribers.fetchProfileSub = this.candidateProfileService.fetchMyProfile().subscribe({
+    this.subscribers.fetchProfileSub = this.candidateCvService.fetchMyProfile().subscribe({
       next: (response) => {
-        this.profile = response?.obj || new CandidateProfile();
+        this.profile = response?.obj || new CandidateCv();
         this.loading = false;
       },
       error: () => { this.loading = false; }
@@ -52,7 +52,7 @@ export class CandidateProfileViewComponent extends BaseComponent implements OnIn
   }
 
   fetchMyCvs(): void {
-    this.subscribers.myCvsSub = this.candidateProfileService.listMyCvs().subscribe(response => {
+    this.subscribers.myCvsSub = this.candidateCvService.listMyCvs().subscribe(response => {
       this.myCvs = response?.list || [];
     });
   }
@@ -63,17 +63,17 @@ export class CandidateProfileViewComponent extends BaseComponent implements OnIn
   }
 
   editProfile(): void {
-    this.router.navigate(['/my/profile/edit']);
+    this.router.navigate(['/my/cv/edit']);
   }
 
   viewCv(cv: GeneratedCv): void {
-    this.subscribers.viewCvSub = this.candidateProfileService.downloadCv(cv.id).subscribe(blob => {
+    this.subscribers.viewCvSub = this.candidateCvService.downloadCv(cv.id).subscribe(blob => {
       openBlobInNewTab(blob, pdfFileName('CV', this.accountProfile.fullName));
     });
   }
 
   downloadCv(cv: GeneratedCv): void {
-    this.subscribers.downloadCvSub = this.candidateProfileService.downloadCv(cv.id).subscribe(blob => {
+    this.subscribers.downloadCvSub = this.candidateCvService.downloadCv(cv.id).subscribe(blob => {
       triggerDownload(blob, pdfFileName('CV', this.accountProfile.fullName));
     });
   }
