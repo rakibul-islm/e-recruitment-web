@@ -20,6 +20,11 @@
   .page-header {
     flex-wrap: wrap;
     row-gap: 0.5rem;
+    transition: transform 0.25s ease;
+  }
+
+  .page-header-hidden {
+    transform: translateY(-100%);
   }
 
   .page-header-actions {

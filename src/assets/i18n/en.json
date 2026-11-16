@@ -863,6 +863,8 @@
     "detailsTitle": "Job Details",
     "jobOverview": "Job Overview",
     "backToJobs": "Back",
+    "previousJob": "Previous",
+    "nextJob": "Next",
     "applyNow": "Apply Now",
     "applicationsClosed": "Applications closed",
     "applicationSubmitted": "Application submitted",

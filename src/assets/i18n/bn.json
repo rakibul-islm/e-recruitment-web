@@ -863,6 +863,8 @@
     "detailsTitle": "চাকরির বিবরণ",
     "jobOverview": "চাকরির সারসংক্ষেপ",
     "backToJobs": "ফিরে যান",
+    "previousJob": "আগের",
+    "nextJob": "পরের",
     "applyNow": "এখনই আবেদন করুন",
     "applicationsClosed": "আবেদনের সময়সীমা শেষ",
     "applicationSubmitted": "আবেদন জমা দেওয়া হয়েছে",

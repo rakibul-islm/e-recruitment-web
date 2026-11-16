@@ -1,4 +1,6 @@
 <app-page-header [title]="'jobPosting.viewTitle' | translate">
+  <p-button *ngIf="canNavigate" icon="pi pi-chevron-left" [attr.title]="'jobPortal.previousJob' | translate" [attr.aria-label]="'jobPortal.previousJob' | translate" styleClass="job-nav-btn" [disabled]="!hasPrevious" (onClick)="goToPrevious()"></p-button>
+  <p-button *ngIf="canNavigate" icon="pi pi-chevron-right" [attr.title]="'jobPortal.nextJob' | translate" [attr.aria-label]="'jobPortal.nextJob' | translate" styleClass="job-nav-btn" [disabled]="!hasNext" (onClick)="goToNext()"></p-button>
   <p-button *appPermissionHide="'application-list'" [label]="'jobPosting.viewApplications' | translate" icon="pi pi-users" styleClass="p-button-secondary" (onClick)="viewApplications()"></p-button>
   <p-button *ngIf="jobPosting.status === 'DRAFT'" [label]="'jobPosting.publish' | translate" icon="pi pi-check" styleClass="p-button-success" (onClick)="changeStatus('PUBLISHED')"></p-button>
   <p-button *ngIf="jobPosting.status === 'PUBLISHED'" [label]="'jobPosting.close' | translate" icon="pi pi-ban" styleClass="p-button-warning" (onClick)="changeStatus('CLOSED')"></p-button>
@@ -8,7 +10,9 @@
   <p-button [label]="'common.back' | translate" icon="pi pi-arrow-left" styleClass="p-button-secondary" (onClick)="goBack()"></p-button>
 </app-page-header>
 
-<div class="flex justify-content-center mt-3 px-3">
+<div class="flex justify-content-center p-5" *ngIf="loading"><i class="pi pi-spin pi-spinner text-2xl"></i></div>
+
+<div class="flex justify-content-center mt-3 px-3" *ngIf="!loading">
   <p-card class="page-card">
     <table class="detail-table">
       <tbody>

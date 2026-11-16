@@ -53,6 +53,10 @@
     </div>
   </div>
 
-  <p-paginator *ngIf="!loading && totalRecords > rows" [first]="first" [rows]="rows" [totalRecords]="totalRecords"
-    (onPageChange)="fetchJobPostings($event)" styleClass="job-paginator"></p-paginator>
+  <div *ngIf="loadingMore" class="job-portal-status">
+    <i class="pi pi-spin pi-spinner"></i>
+    <span>{{ 'jobPortal.loading' | translate }}</span>
+  </div>
+
+  <div #scrollSentinel *ngIf="!loading && !loadingMore && hasMore" style="height: 1px"></div>
 </div>
