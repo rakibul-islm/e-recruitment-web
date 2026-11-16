@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TableLazyLoadEvent } from 'primeng/table';
 import { BaseComponent } from '../../base.component';
 import { JobPostingService } from '../../../services/job-posting/job.posting.service';
 import { JobPosting } from '../../../services/job-posting/domain/job.posting.domain';
+import { JobNavigationService } from '../../../services/job-posting/job.navigation.service';
 import { SavedJobService } from '../../../services/saved-job/saved.job.service';
 import { AuthService } from '../../../services/utility/security/auth.service';
 
@@ -19,23 +19,39 @@ export class JobPortalSearchComponent extends BaseComponent implements OnInit {
   isAuthenticated = false;
   savedJobIds = new Set<number>();
   override rows = 9;
-  first = 0;
+  currentPage = 0;
+  loadingMore = false;
+  private returningFromDetail = false;
+  private searchParams: Map<any, any> | null = null;
+  private scrollObserver?: IntersectionObserver;
 
   constructor(
     private formBuilder: FormBuilder,
     private jobPostingService: JobPostingService,
     private savedJobService: SavedJobService,
+    private jobNavigationService: JobNavigationService,
     private authService: AuthService,
     private router: Router,
     private route: ActivatedRoute
   ) {
     super();
+    this.returningFromDetail = this.router.getCurrentNavigation()?.trigger === 'popstate';
   }
 
   ngOnInit(): void {
     this.prepareForm();
-    this.applyQueryParams();
-    this.fetchJobPostings({ first: 0, rows: this.rows });
+
+    const restored = this.returningFromDetail ? this.jobNavigationService.getListState() : null;
+    if (restored) {
+      this.jobPostings = restored.jobPostings;
+      this.totalRecords = restored.totalRecords;
+      this.currentPage = restored.currentPage;
+      this.searchParams = restored.searchParams;
+      this.filterForm.patchValue(restored.filterValue);
+    } else {
+      this.applyQueryParams();
+      this.fetchJobPostings();
+    }
 
     this.subscribers.authSub = this.authService.isLoggedIn().subscribe(authenticated => {
       this.isAuthenticated = authenticated;
@@ -65,16 +81,22 @@ export class JobPortalSearchComponent extends BaseComponent implements OnInit {
     }
   }
 
-  fetchJobPostings(event: TableLazyLoadEvent): void {
+  get hasMore(): boolean {
+    return this.jobPostings.length < this.totalRecords;
+  }
+
+  fetchJobPostings(): void {
     this.loading = true;
-    this.first = event.first || 0;
-    const params = this.buildSearchParams(this.filterForm, event);
+    this.currentPage = 0;
+    const params = this.buildSearchParams(this.filterForm, { first: 0, rows: this.rows });
     params.set('status', 'PUBLISHED');
+    this.searchParams = params;
 
     this.subscribers.searchJobPostingsSub = this.jobPostingService.searchJobPostings(params).subscribe({
       next: (response) => {
         this.jobPostings = response?.page?.content || [];
         this.totalRecords = response?.page?.totalElements || 0;
+        this.jobNavigationService.remember(params, this.jobPostings.map(j => j.uuid), this.totalRecords);
         this.loading = false;
       },
       error: () => {
@@ -83,11 +105,54 @@ export class JobPortalSearchComponent extends BaseComponent implements OnInit {
     });
   }
 
+  loadMore(): void {
+    if (this.loading || this.loadingMore || !this.hasMore || !this.searchParams) { return; }
+    this.loadingMore = true;
+    const page = this.currentPage + 1;
+    const params = new Map(this.searchParams);
+    params.set('page', page);
+
+    this.subscribers.loadMoreSub = this.jobPostingService.searchJobPostings(params).subscribe({
+      next: (response) => {
+        const content: JobPosting[] = response?.page?.content || [];
+        this.jobPostings = [...this.jobPostings, ...content];
+        this.totalRecords = response?.page?.totalElements || 0;
+        this.currentPage = page;
+        this.jobNavigationService.remember(params, content.map(j => j.uuid), this.totalRecords, true);
+        this.loadingMore = false;
+      },
+      error: () => {
+        this.loadingMore = false;
+      }
+    });
+  }
+
+  @ViewChild('scrollSentinel') set scrollSentinel(element: ElementRef | undefined) {
+    this.scrollObserver?.disconnect();
+    if (!element) { return; }
+    this.scrollObserver = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting) { this.loadMore(); }
+    }, { rootMargin: '300px' });
+    this.scrollObserver.observe(element.nativeElement);
+  }
+
+  override ngOnDestroy(): void {
+    this.scrollObserver?.disconnect();
+    super.ngOnDestroy();
+  }
+
   search(): void {
-    this.fetchJobPostings({ first: 0, rows: this.rows });
+    this.fetchJobPostings();
   }
 
   viewJob(job: JobPosting): void {
+    this.jobNavigationService.saveListState({
+      jobPostings: this.jobPostings,
+      totalRecords: this.totalRecords,
+      currentPage: this.currentPage,
+      searchParams: this.searchParams,
+      filterValue: this.filterForm.value
+    });
     this.router.navigate(['/jobs', job.uuid]);
   }
 

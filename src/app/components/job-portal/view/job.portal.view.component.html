@@ -1,8 +1,12 @@
 <app-page-header [title]="job.jobTitle || ('jobPortal.detailsTitle' | translate)">
+  <p-button *ngIf="canNavigate" icon="pi pi-chevron-left" [attr.title]="'jobPortal.previousJob' | translate" [attr.aria-label]="'jobPortal.previousJob' | translate" styleClass="job-nav-btn" [disabled]="!hasPrevious" (onClick)="goToPrevious()"></p-button>
+  <p-button *ngIf="canNavigate" icon="pi pi-chevron-right" [attr.title]="'jobPortal.nextJob' | translate" [attr.aria-label]="'jobPortal.nextJob' | translate" styleClass="job-nav-btn" [disabled]="!hasNext" (onClick)="goToNext()"></p-button>
   <p-button [label]="'jobPortal.backToJobs' | translate" icon="pi pi-arrow-left" styleClass="p-button-secondary" (onClick)="goBack()"></p-button>
 </app-page-header>
 
-<div class="job-view-page">
+<div class="flex justify-content-center p-5" *ngIf="loading"><i class="pi pi-spin pi-spinner text-2xl"></i></div>
+
+<div class="job-view-page" *ngIf="!loading">
   <div class="job-view-hero">
     <app-org-logo class="job-view-hero-avatar" [fileId]="job.organizationLogoFileId" [name]="job.organizationName" [lazy]="false" />
     <div class="job-view-hero-info">
