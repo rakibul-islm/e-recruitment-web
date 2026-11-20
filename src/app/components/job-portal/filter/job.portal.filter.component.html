@@ -1,0 +1,98 @@
+<div class="job-filter-card" [class.job-filter-card-unboxed]="!boxed">
+  <div [formGroup]="filterForm" class="job-filter-bar">
+    <div class="job-search-box">
+      <i class="pi pi-search"></i>
+      <input id="jobPortalTitle" type="text" pInputText [placeholder]="'jobPortal.keywordPlaceholder' | translate" formControlName="jobTitle_like" (keyup.enter)="search()" />
+      <button type="button" class="job-tune-btn" (click)="detailDialogVisible = true" [title]="'jobPortal.detailSearch' | translate" [attr.aria-label]="'jobPortal.detailSearch' | translate">
+        <i class="pi pi-sliders-h"></i>
+      </button>
+      <p-button icon="pi pi-search" [label]="'common.search' | translate" styleClass="job-search-btn" (onClick)="search()"></p-button>
+    </div>
+  </div>
+
+  <div class="job-filter-chips" *ngIf="activeFilters.length">
+    <span class="job-filter-chip" *ngFor="let filter of activeFilters">
+      <span class="job-filter-chip-label">{{ filter.labelKey | translate }}</span>
+      <span class="job-filter-chip-value">{{ filter.value }}</span>
+      <button type="button" class="job-filter-chip-remove" (click)="removeFilter(filter.key)" aria-label="Remove filter">
+        <i class="pi pi-times"></i>
+      </button>
+    </span>
+    <button type="button" class="job-filter-chips-clear" (click)="clearDetailFilters()">{{ 'jobPortal.clearFilters' | translate }}</button>
+  </div>
+</div>
+
+<p-dialog [(visible)]="detailDialogVisible" [modal]="true"
+  [style]="{ width: '42rem' }" [breakpoints]="{ '575px': '95vw' }" styleClass="job-filter-dialog">
+  <ng-template pTemplate="header">
+    <div class="job-dialog-header">
+      <span class="job-dialog-header-icon"><i class="pi pi-sliders-h"></i></span>
+      <div>
+        <div class="job-dialog-title">{{ 'jobPortal.detailSearchTitle' | translate }}</div>
+        <div class="job-dialog-subtitle">{{ 'jobPortal.detailSearchSubtitle' | translate }}</div>
+      </div>
+    </div>
+  </ng-template>
+  <div [formGroup]="filterForm" class="job-dialog-grid">
+    <div class="job-dialog-field">
+      <label for="jobPortalTitleField">{{ 'candidateApplication.jobTitle' | translate }}</label>
+      <div class="job-dialog-input">
+        <i class="pi pi-file"></i>
+        <input id="jobPortalTitleField" type="text" pInputText [placeholder]="'jobPortal.keywordPlaceholder' | translate" formControlName="jobTitle_like" />
+      </div>
+    </div>
+    <div class="job-dialog-field">
+      <label for="jobPortalSkills">{{ 'jobPortal.skills' | translate }}</label>
+      <div class="job-dialog-input">
+        <i class="pi pi-bolt"></i>
+        <input id="jobPortalSkills" type="text" pInputText [placeholder]="'jobPortal.skillsPlaceholder' | translate" formControlName="skills_like" />
+      </div>
+    </div>
+    <div class="job-dialog-field">
+      <label for="jobPortalOrganization">{{ 'jobPortal.organization' | translate }}</label>
+      <div class="job-dialog-input">
+        <i class="pi pi-building"></i>
+        <input id="jobPortalOrganization" type="text" pInputText [placeholder]="'jobPortal.organizationPlaceholder' | translate" formControlName="organizationName_like" />
+      </div>
+    </div>
+    <div class="job-dialog-field">
+      <label for="jobPortalLocation">{{ 'jobPortal.location' | translate }}</label>
+      <div class="job-dialog-input">
+        <i class="pi pi-map-marker"></i>
+        <input id="jobPortalLocation" type="text" pInputText [placeholder]="'jobPortal.locationPlaceholder' | translate" formControlName="jobLocation_like" />
+      </div>
+    </div>
+    <div class="job-dialog-field">
+      <label for="jobPortalCategory">{{ 'jobAlert.category' | translate }}</label>
+      <div class="job-dialog-input">
+        <i class="pi pi-tag"></i>
+        <input id="jobPortalCategory" type="text" pInputText [placeholder]="'jobPortal.categoryPlaceholder' | translate" formControlName="category_like" />
+      </div>
+    </div>
+    <div class="job-dialog-field">
+      <label for="jobPortalEmploymentStatus">{{ 'jobPortal.employmentType' | translate }}</label>
+      <div class="job-dialog-input">
+        <i class="pi pi-briefcase"></i>
+        <input id="jobPortalEmploymentStatus" type="text" pInputText [placeholder]="'jobPortal.employmentTypePlaceholder' | translate" formControlName="employmentStatus_like" />
+      </div>
+    </div>
+    <div class="job-dialog-field">
+      <label for="jobPortalExperience">{{ 'jobPortal.experience' | translate }}</label>
+      <div class="job-dialog-input">
+        <i class="pi pi-chart-line"></i>
+        <input id="jobPortalExperience" type="text" pInputText [placeholder]="'jobPortal.experiencePlaceholder' | translate" formControlName="experience_like" />
+      </div>
+    </div>
+    <div class="job-dialog-field">
+      <label for="jobPortalWorkPlace">{{ 'jobPortal.workplace' | translate }}</label>
+      <div class="job-dialog-input">
+        <i class="pi pi-home"></i>
+        <input id="jobPortalWorkPlace" type="text" pInputText [placeholder]="'jobPortal.workplacePlaceholder' | translate" formControlName="workPlace_like" />
+      </div>
+    </div>
+  </div>
+  <ng-template pTemplate="footer">
+    <p-button [label]="'jobPortal.clearFilters' | translate" icon="pi pi-times" styleClass="job-dialog-clear-btn" (onClick)="clearDetailFilters()"></p-button>
+    <p-button [label]="'common.search' | translate" icon="pi pi-search" styleClass="job-dialog-search-btn" (onClick)="applyDetailSearch()"></p-button>
+  </ng-template>
+</p-dialog>

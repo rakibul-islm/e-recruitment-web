@@ -5,17 +5,7 @@
     <h1 class="hero-title">{{ 'home.heroTitle' | translate }}</h1>
     <p class="hero-subtitle">{{ 'home.heroSubtitle' | translate }}</p>
 
-    <div class="hero-search" [formGroup]="searchForm">
-      <div class="hero-search-field">
-        <i class="pi pi-search"></i>
-        <input type="text" pInputText [placeholder]="'jobPortal.keywordPlaceholder' | translate" formControlName="keyword" (keyup.enter)="searchJobs()" />
-      </div>
-      <div class="hero-search-field">
-        <i class="pi pi-map-marker"></i>
-        <input type="text" pInputText [placeholder]="'jobPortal.locationPlaceholder' | translate" formControlName="location" (keyup.enter)="searchJobs()" />
-      </div>
-      <p-button [label]="'common.search' | translate" icon="pi pi-search" styleClass="hero-search-btn" (onClick)="searchJobs()"></p-button>
-    </div>
+    <app-job-portal-filter [boxed]="false" (filtersChanged)="searchJobs($event)"></app-job-portal-filter>
 
     <div class="hero-actions">
       <a routerLink="/jobs" class="hero-btn hero-btn-secondary">{{ 'home.browseJobs' | translate }}</a>

@@ -57,50 +57,11 @@
   font-size: 1.05rem;
 }
 
-.hero-search {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.6rem;
-  padding: 0.6rem;
-  background: rgba(255, 255, 255, 0.97);
-  border-radius: 14px;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
-  margin-bottom: 1.5rem;
-}
-
-.hero-search-field {
-  flex: 1 1 12rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0 0.75rem;
-
-  .pi {
-    color: #6b7280;
-  }
-
-  input {
-    border: none;
-    outline: none;
-    width: 100%;
-    padding: 0.65rem 0;
-    font-size: 0.95rem;
-    color: #1f2937;
-    background: transparent;
-  }
-}
-
-::ng-deep .hero-search-btn.p-button {
-  background: #1e4d8f !important;
-  border-color: #1e4d8f !important;
-  border-radius: 10px !important;
-  padding: 0.7rem 1.5rem !important;
-  font-weight: 700 !important;
-
-  &:hover {
-    background: #163a6b !important;
-    border-color: #163a6b !important;
-  }
+/* Shared job search filter (app-job-portal-filter) sits on the dark hero; anchor it nicely. */
+:host ::ng-deep app-job-portal-filter {
+  display: block;
+  max-width: 46rem;
+  margin: 0 auto 1.5rem;
 }
 
 .hero-actions {
@@ -278,19 +239,8 @@
     margin-bottom: 1.5rem;
   }
 
-  .hero-search {
-    padding: 0.75rem;
-    border-radius: 12px;
-  }
-
-  .hero-search-field {
-    flex-basis: 100%;
-    padding: 0.15rem 0.5rem;
-  }
-
-  ::ng-deep .hero-search-btn.p-button {
-    width: 100%;
-    justify-content: center;
+  :host ::ng-deep app-job-portal-filter {
+    margin-bottom: 1.25rem;
   }
 
   .hero-actions {

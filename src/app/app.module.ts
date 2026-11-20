@@ -56,6 +56,7 @@ import { ArchiveConfigWhereConditionBuilderComponent } from './components/archiv
 import { AccessDeniedComponent } from './components/shared/access-denied/access.denied.component';
 import { JobPortalSearchComponent } from './components/job-portal/search/job.portal.search.component';
 import { JobPortalViewComponent } from './components/job-portal/view/job.portal.view.component';
+import { JobPortalFilterComponent } from './components/job-portal/filter/job.portal.filter.component';
 import { CandidateCvFormComponent } from './components/candidate/cv/candidate.cv.form.component';
 import { CandidateCvViewComponent } from './components/candidate/cv/view/candidate.cv.view.component';
 import { CandidateApplicationsComponent } from './components/candidate/applications/candidate.applications.component';
@@ -184,6 +185,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
     AccessDeniedComponent,
     JobPortalSearchComponent,
     JobPortalViewComponent,
+    JobPortalFilterComponent,
     CandidateCvFormComponent,
     CandidateCvViewComponent,
     CandidateApplicationsComponent,
