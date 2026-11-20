@@ -4,74 +4,24 @@
   padding: 1rem 1.5rem 2.5rem;
 }
 
-.job-filter-card {
-  border-radius: 12px !important;
-  border: 1px solid #e5e7eb !important;
-  box-shadow: 0 1px 2px rgba(3, 41, 103, 0.04), 0 8px 24px rgba(3, 41, 103, 0.07) !important;
-  margin-bottom: 1rem;
-
-  ::ng-deep .p-card-body {
-    padding: 0.85rem !important;
-  }
-
-  ::ng-deep .p-card-content {
-    padding: 0 !important;
-  }
-}
-
-.job-filter-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  align-items: center;
-}
-
-.job-filter-field {
-  flex: 1 1 14rem;
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  padding: 0.55rem 0.9rem;
-  border: 1px solid #e5e7eb;
-  border-radius: 9px;
-  background: #f8fafc;
-
-  .pi {
-    color: #6b7280;
-  }
-
-  input {
-    border: none;
-    outline: none;
-    width: 100%;
-    background: transparent;
-    font-size: 0.9rem;
-    color: #1f2937;
-  }
-}
-
-::ng-deep .job-filter-btn.p-button {
-  background: #1e4d8f !important;
-  border-color: #1e4d8f !important;
-  border-radius: 9px !important;
-  padding: 0.65rem 1.5rem !important;
-  font-weight: 700 !important;
-  flex: 0 0 auto;
-
-  &:hover {
-    background: #163a6b !important;
-    border-color: #163a6b !important;
-  }
-}
-
 .job-results-summary {
   margin: 0.25rem 0 1rem;
   color: #6b7280;
   font-size: 0.9rem;
   font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
 }
 
 .job-results-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.7rem;
+  padding: 0.1rem 0.55rem;
+  border-radius: 999px;
+  background: rgba(30, 77, 143, 0.1);
   color: #032967;
   font-weight: 800;
 }
@@ -80,13 +30,21 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.6rem;
+  gap: 0.9rem;
   padding: 3.5rem 1rem;
   color: #6b7280;
   font-size: 0.95rem;
 
   .pi {
-    font-size: 1.75rem;
+    width: 3.75rem;
+    height: 3.75rem;
+    border-radius: 50%;
+    background: #f1f5f9;
+    border: 1px solid #e5e7eb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
     color: #94a3b8;
   }
 }
@@ -201,19 +159,6 @@
 @media screen and (max-width: 576px) {
   .job-portal-page {
     padding: 0.75rem 1rem 2rem;
-  }
-
-  .job-filter-row {
-    gap: 0.6rem;
-  }
-
-  .job-filter-field {
-    flex-basis: 100%;
-  }
-
-  ::ng-deep .job-filter-btn.p-button {
-    width: 100%;
-    justify-content: center;
   }
 
   .job-portal-status {

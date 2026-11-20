@@ -1,0 +1,470 @@
+.job-filter-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 18px;
+  border: 1px solid #dbe4f0;
+  background: linear-gradient(135deg, #f4f8fd 0%, #e9f0f9 55%, #e3ecf8 100%);
+  box-shadow: 0 1px 2px rgba(3, 41, 103, 0.04), 0 8px 24px rgba(3, 41, 103, 0.07);
+  margin-bottom: 1.25rem;
+  padding: 1.1rem 1.25rem;
+
+  /* Soft decorative highlights in the panel corners. */
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  &::before {
+    top: -4.5rem;
+    right: -3.5rem;
+    width: 11rem;
+    height: 11rem;
+    background: radial-gradient(circle, rgba(30, 77, 143, 0.1) 0%, rgba(30, 77, 143, 0) 70%);
+  }
+
+  &::after {
+    bottom: -5rem;
+    left: -3rem;
+    width: 10rem;
+    height: 10rem;
+    background: radial-gradient(circle, rgba(3, 41, 103, 0.08) 0%, rgba(3, 41, 103, 0) 70%);
+  }
+}
+
+/* Unboxed mode (e.g. inside the home hero): just the search UI, no panel. */
+.job-filter-card-unboxed {
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+
+  &::before,
+  &::after {
+    display: none;
+  }
+}
+
+.job-filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.job-search-box {
+  flex: 1 1 18rem;
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  height: 3.1rem;
+  padding: 0 0.3rem 0 1.15rem;
+  background: #ffffff;
+  border: 1.5px solid #dbe4f0;
+  border-radius: 999px;
+  box-shadow: 0 2px 10px rgba(3, 41, 103, 0.06);
+  transition: border-color 0.18s ease, box-shadow 0.18s ease;
+
+  .pi {
+    color: #9ca3af;
+    font-size: 0.95rem;
+    transition: color 0.18s ease;
+  }
+
+  input {
+    flex: 1 1 auto;
+    min-width: 0;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 0.95rem;
+    color: #1f2937;
+
+    &::placeholder {
+      color: #9ca3af;
+    }
+
+    /* PrimeNG's pInputText focus ring must stay off inside the pill. */
+    &.p-inputtext:enabled:focus,
+    &:focus {
+      border: none !important;
+      outline: none !important;
+      box-shadow: none !important;
+      background: transparent !important;
+    }
+  }
+
+  &:focus-within {
+    .pi {
+      color: #1e4d8f;
+    }
+  }
+}
+
+.job-tune-btn {
+  flex: 0 0 auto;
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.35rem;
+  height: 2.35rem;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: #6b7280;
+  cursor: pointer;
+  transition: background-color 0.16s ease, color 0.16s ease;
+
+  .pi {
+    font-size: 0.95rem;
+  }
+
+  &:hover {
+    background: rgba(30, 77, 143, 0.1);
+    color: #1e4d8f;
+  }
+}
+
+::ng-deep .job-search-btn.p-button {
+  flex: 0 0 auto;
+  background: #1e4d8f !important;
+  border-color: #1e4d8f !important;
+  border-radius: 999px !important;
+  padding: 0.6rem 1.5rem !important;
+  font-weight: 700 !important;
+  transition: background-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+
+  .p-button-icon {
+    display: none;
+  }
+
+  &:enabled:hover {
+    background: #163a6b !important;
+    border-color: #163a6b !important;
+    box-shadow: 0 4px 14px rgba(3, 41, 103, 0.28);
+    transform: translateY(-1px);
+  }
+}
+
+::ng-deep .job-filter-btn.p-button {
+  background: #1e4d8f !important;
+  border-color: #1e4d8f !important;
+  border-radius: 11px !important;
+  padding: 0.7rem 1.5rem !important;
+  font-weight: 700 !important;
+  flex: 0 0 auto;
+  transition: background-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+
+  &:enabled:hover {
+    background: #163a6b !important;
+    border-color: #163a6b !important;
+    box-shadow: 0 6px 16px rgba(3, 41, 103, 0.22);
+    transform: translateY(-1px);
+  }
+}
+
+.job-filter-chips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.9rem;
+  padding-top: 0.9rem;
+  border-top: 1px dashed rgba(30, 77, 143, 0.22);
+}
+
+.job-filter-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.32rem 0.35rem 0.32rem 0.75rem;
+  border-radius: 999px;
+  background: #ffffff;
+  border: 1px solid rgba(30, 77, 143, 0.22);
+  box-shadow: 0 1px 4px rgba(3, 41, 103, 0.07);
+  font-size: 0.8rem;
+  animation: ui-rise 0.35s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+
+.job-filter-chip-label {
+  color: #1e4d8f;
+  font-weight: 700;
+}
+
+.job-filter-chip-value {
+  color: #1f2937;
+  font-weight: 600;
+}
+
+.job-filter-chip-remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.35rem;
+  height: 1.35rem;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(30, 77, 143, 0.1);
+  color: #1e4d8f;
+  cursor: pointer;
+  font-size: 0.62rem;
+  transition: background-color 0.15s ease, color 0.15s ease;
+
+  &:hover {
+    background: #1e4d8f;
+    color: #ffffff;
+  }
+}
+
+.job-filter-chips-clear {
+  border: 0;
+  background: transparent;
+  color: #46618a;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0.3rem 0.5rem;
+  border-radius: 8px;
+  text-decoration: underline;
+  transition: color 0.15s ease, background-color 0.15s ease;
+
+  &:hover {
+    color: #b91c1c;
+    background: #fee2e2;
+    text-decoration: none;
+  }
+}
+
+.job-dialog-header {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.job-dialog-header-icon {
+  flex-shrink: 0;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 0.85rem;
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 1rem;
+}
+
+.job-dialog-title {
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 1.08rem;
+  line-height: 1.3;
+}
+
+.job-dialog-subtitle {
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.job-dialog-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.9rem 1rem;
+}
+
+.job-dialog-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  min-width: 0;
+
+  label {
+    color: #374151;
+    font-weight: 600;
+    font-size: 0.8rem;
+    margin: 0;
+  }
+}
+
+.job-dialog-field-wide {
+  grid-column: span 2;
+}
+
+.job-dialog-input {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  height: 2.75rem;
+  padding: 0 0.85rem;
+  background: #ffffff;
+  border: 1.5px solid #dbe4f0;
+  border-radius: 11px;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease;
+
+  .pi {
+    color: #9ca3af;
+    font-size: 0.9rem;
+    transition: color 0.18s ease;
+  }
+
+  input {
+    flex: 1 1 auto;
+    min-width: 0;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 0.9rem;
+    color: #1f2937;
+
+    &::placeholder {
+      color: #9ca3af;
+    }
+
+    /* PrimeNG's pInputText focus ring must stay off inside the wrapper. */
+    &.p-inputtext:enabled:focus,
+    &:focus {
+      border: none !important;
+      outline: none !important;
+      box-shadow: none !important;
+      background: transparent !important;
+    }
+  }
+
+  &:focus-within {
+    border-color: #1e4d8f;
+    box-shadow: 0 0 0 3px rgba(30, 77, 143, 0.12);
+
+    .pi {
+      color: #1e4d8f;
+    }
+  }
+}
+
+::ng-deep .job-dialog-clear-btn.p-button {
+  border-radius: 999px !important;
+  padding: 0.62rem 1.35rem !important;
+  font-weight: 600 !important;
+}
+
+::ng-deep .job-dialog-search-btn.p-button {
+  background: #1e4d8f !important;
+  border-color: #1e4d8f !important;
+  border-radius: 999px !important;
+  padding: 0.62rem 1.6rem !important;
+  font-weight: 700 !important;
+  transition: background-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+
+  &:enabled:hover {
+    background: #163a6b !important;
+    border-color: #163a6b !important;
+    box-shadow: 0 4px 14px rgba(3, 41, 103, 0.28);
+    transform: translateY(-1px);
+  }
+}
+
+::ng-deep .job-filter-dialog.p-dialog {
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 24px 60px rgba(3, 20, 52, 0.3) !important;
+
+  .p-dialog-header {
+    padding: 1.15rem 1.4rem;
+    background: linear-gradient(120deg, #1e4d8f 0%, #12386e 60%, #032967 100%);
+    border-bottom: 0;
+
+    .p-dialog-header-icons {
+      .p-dialog-close-button {
+        background: rgba(255, 255, 255, 0.12);
+        border: 1px solid rgba(255, 255, 255, 0.22);
+        border-radius: 50%;
+        color: #ffffff;
+        width: 2.1rem;
+        height: 2.1rem;
+
+        &:hover {
+          background: rgba(255, 255, 255, 0.22);
+          color: #ffffff;
+        }
+      }
+    }
+  }
+
+  .p-dialog-content {
+    padding: 1.3rem 1.4rem;
+    background: #f8fafd;
+  }
+
+  .p-dialog-footer {
+    padding: 0.95rem 1.4rem 1.2rem;
+    background: #ffffff;
+    border-top: 1px solid #eef2f7;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .job-filter-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.6rem;
+  }
+
+  .job-search-box {
+    flex: 1 1 auto;
+    width: 100%;
+    height: 3rem;
+  }
+
+  .job-dialog-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  ::ng-deep .job-filter-dialog.p-dialog {
+    .p-dialog-header {
+      padding: 0.95rem 1rem;
+    }
+
+    .p-dialog-content {
+      padding: 1.1rem 1rem;
+    }
+
+    .p-dialog-footer {
+      display: flex;
+      gap: 0.6rem;
+      padding: 0.85rem 1rem 1.05rem;
+
+      p-button {
+        flex: 1 1 0;
+        display: flex;
+        min-width: 0;
+      }
+
+      .job-dialog-clear-btn.p-button,
+      .job-dialog-search-btn.p-button {
+        width: 100%;
+        justify-content: center;
+        padding: 0.62rem 0.5rem !important;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 420px) {
+  ::ng-deep .job-search-btn.p-button {
+    padding: 0.6rem 1rem !important;
+
+    .p-button-icon {
+      display: inline-flex;
+      margin: 0 !important;
+    }
+
+    .p-button-label {
+      display: none;
+    }
+  }
+}

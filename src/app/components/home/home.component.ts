@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BaseComponent } from '../base.component';
 import { AuthService } from '../../services/utility/security/auth.service';
 import { JobPostingService } from '../../services/job-posting/job.posting.service';
 import { JobPosting } from '../../services/job-posting/domain/job.posting.domain';
 import { OrganizationService } from '../../services/organization/organization.service';
+import { JobPortalFilterValue } from '../job-portal/filter/job.portal.filter.component';
 
 const FEATURED_JOBS_LIMIT = 6;
 
@@ -15,13 +15,11 @@ const FEATURED_JOBS_LIMIT = 6;
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent extends BaseComponent implements OnInit {
-  searchForm!: FormGroup;
   featuredJobs: JobPosting[] = [];
   openJobsCount = 0;
   organizationsCount = 0;
 
   constructor(
-    private formBuilder: FormBuilder,
     private authService: AuthService,
     private jobPostingService: JobPostingService,
     private organizationService: OrganizationService,
@@ -35,23 +33,12 @@ export class HomeComponent extends BaseComponent implements OnInit {
       if (authenticated) { this.router.navigate(['/dashboard']); }
     });
 
-    this.prepareSearchForm();
     this.fetchStats();
     this.fetchFeaturedJobs();
   }
 
-  prepareSearchForm(): void {
-    this.searchForm = this.formBuilder.group({ keyword: [''], location: [''] });
-  }
-
-  searchJobs(): void {
-    const { keyword, location } = this.searchForm.getRawValue();
-    this.router.navigate(['/jobs'], {
-      queryParams: {
-        jobTitle_like: keyword || null,
-        jobLocation_like: location || null
-      }
-    });
+  searchJobs(filters: JobPortalFilterValue): void {
+    this.router.navigate(['/jobs'], { queryParams: { ...filters } });
   }
 
   viewJob(job: JobPosting): void {

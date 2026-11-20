@@ -1,5 +1,4 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BaseComponent } from '../../base.component';
 import { JobPostingService } from '../../../services/job-posting/job.posting.service';
@@ -7,6 +6,7 @@ import { JobPosting } from '../../../services/job-posting/domain/job.posting.dom
 import { JobNavigationService } from '../../../services/job-posting/job.navigation.service';
 import { SavedJobService } from '../../../services/saved-job/saved.job.service';
 import { AuthService } from '../../../services/utility/security/auth.service';
+import { JobPortalFilterValue } from '../filter/job.portal.filter.component';
 
 @Component({
   selector: 'app-job-portal-search',
@@ -15,18 +15,18 @@ import { AuthService } from '../../../services/utility/security/auth.service';
 })
 export class JobPortalSearchComponent extends BaseComponent implements OnInit {
   jobPostings: JobPosting[] = [];
-  filterForm!: FormGroup;
+  initialFilters: JobPortalFilterValue | null = null;
   isAuthenticated = false;
   savedJobIds = new Set<number>();
   override rows = 9;
   currentPage = 0;
   loadingMore = false;
+  private currentFilters: JobPortalFilterValue = {};
   private returningFromDetail = false;
   private searchParams: Map<any, any> | null = null;
   private scrollObserver?: IntersectionObserver;
 
   constructor(
-    private formBuilder: FormBuilder,
     private jobPostingService: JobPostingService,
     private savedJobService: SavedJobService,
     private jobNavigationService: JobNavigationService,
@@ -39,17 +39,22 @@ export class JobPortalSearchComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.prepareForm();
-
     const restored = this.returningFromDetail ? this.jobNavigationService.getListState() : null;
     if (restored) {
       this.jobPostings = restored.jobPostings;
       this.totalRecords = restored.totalRecords;
       this.currentPage = restored.currentPage;
       this.searchParams = restored.searchParams;
-      this.filterForm.patchValue(restored.filterValue);
+      this.currentFilters = restored.filterValue || {};
+      this.initialFilters = { ...this.currentFilters };
     } else {
-      this.applyQueryParams();
+      // Lets the home page's search hand off any filter via query params.
+      const queryParams = this.route.snapshot.queryParams;
+      this.currentFilters = Object.keys(queryParams).reduce((acc, key) => {
+        if (queryParams[key]) { acc[key] = queryParams[key]; }
+        return acc;
+      }, {} as JobPortalFilterValue);
+      this.initialFilters = { ...this.currentFilters };
       this.fetchJobPostings();
     }
 
@@ -66,30 +71,24 @@ export class JobPortalSearchComponent extends BaseComponent implements OnInit {
     });
   }
 
-  prepareForm(): void {
-    this.filterForm = this.formBuilder.group({
-      jobTitle_like: [''],
-      jobLocation_like: ['']
-    });
-  }
-
-  // Lets the public home page's hero search hand off keyword/location via query params.
-  applyQueryParams(): void {
-    const { jobTitle_like, jobLocation_like } = this.route.snapshot.queryParams;
-    if (jobTitle_like || jobLocation_like) {
-      this.filterForm.patchValue({ jobTitle_like: jobTitle_like || '', jobLocation_like: jobLocation_like || '' });
-    }
-  }
-
   get hasMore(): boolean {
     return this.jobPostings.length < this.totalRecords;
+  }
+
+  onFiltersChanged(filters: JobPortalFilterValue): void {
+    this.currentFilters = filters;
+    this.fetchJobPostings();
   }
 
   fetchJobPostings(): void {
     this.loading = true;
     this.currentPage = 0;
-    const params = this.buildSearchParams(this.filterForm, { first: 0, rows: this.rows });
+    const params = new Map<any, any>();
+    params.set('page', 0);
+    params.set('size', this.rows);
+    params.set('isPageable', true);
     params.set('status', 'PUBLISHED');
+    Object.entries(this.currentFilters).forEach(([key, value]) => params.set(key, value));
     this.searchParams = params;
 
     this.subscribers.searchJobPostingsSub = this.jobPostingService.searchJobPostings(params).subscribe({
@@ -141,17 +140,13 @@ export class JobPortalSearchComponent extends BaseComponent implements OnInit {
     super.ngOnDestroy();
   }
 
-  search(): void {
-    this.fetchJobPostings();
-  }
-
   viewJob(job: JobPosting): void {
     this.jobNavigationService.saveListState({
       jobPostings: this.jobPostings,
       totalRecords: this.totalRecords,
       currentPage: this.currentPage,
       searchParams: this.searchParams,
-      filterValue: this.filterForm.value
+      filterValue: this.currentFilters
     });
     this.router.navigate(['/jobs', job.uuid]);
   }

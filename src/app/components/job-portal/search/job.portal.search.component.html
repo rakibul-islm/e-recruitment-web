@@ -3,19 +3,7 @@
 </app-page-header>
 
 <div class="job-portal-page">
-  <p-card class="job-filter-card">
-    <div [formGroup]="filterForm" class="job-filter-row">
-      <div class="job-filter-field">
-        <i class="pi pi-search"></i>
-        <input id="jobPortalTitle" type="text" pInputText [placeholder]="'jobPortal.keywordPlaceholder' | translate" formControlName="jobTitle_like" (keyup.enter)="search()" />
-      </div>
-      <div class="job-filter-field">
-        <i class="pi pi-map-marker"></i>
-        <input id="jobPortalLocation" type="text" pInputText [placeholder]="'jobPortal.locationPlaceholder' | translate" formControlName="jobLocation_like" (keyup.enter)="search()" />
-      </div>
-      <p-button [label]="'common.search' | translate" icon="pi pi-search" styleClass="job-filter-btn" (onClick)="search()"></p-button>
-    </div>
-  </p-card>
+  <app-job-portal-filter [initialFilters]="initialFilters" (filtersChanged)="onFiltersChanged($event)"></app-job-portal-filter>
 
   <div class="job-results-summary" *ngIf="!loading && jobPostings.length">
     <span class="job-results-count">{{ totalRecords }}</span>
