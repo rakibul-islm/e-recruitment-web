@@ -1,6 +1,6 @@
 <app-page-header [title]="'jobPosting.viewTitle' | translate">
-  <p-button *ngIf="canNavigate" icon="pi pi-chevron-left" [attr.title]="'jobPortal.previousJob' | translate" [attr.aria-label]="'jobPortal.previousJob' | translate" styleClass="job-nav-btn" [disabled]="!hasPrevious" (onClick)="goToPrevious()"></p-button>
-  <p-button *ngIf="canNavigate" icon="pi pi-chevron-right" [attr.title]="'jobPortal.nextJob' | translate" [attr.aria-label]="'jobPortal.nextJob' | translate" styleClass="job-nav-btn" [disabled]="!hasNext" (onClick)="goToNext()"></p-button>
+  <!-- <p-button *ngIf="canNavigate" [label]="'jobPortal.previousJob' | translate" icon="pi pi-chevron-left" [disabled]="!hasPrevious" (onClick)="goToPrevious()"></p-button>
+  <p-button *ngIf="canNavigate" [label]="'jobPortal.nextJob' | translate" icon="pi pi-chevron-right" [disabled]="!hasNext" (onClick)="goToNext()"></p-button> -->
   <p-button *appPermissionHide="'application-list'" [label]="'jobPosting.viewApplications' | translate" icon="pi pi-users" styleClass="p-button-secondary" (onClick)="viewApplications()"></p-button>
   <p-button *ngIf="jobPosting.status === 'DRAFT'" [label]="'jobPosting.publish' | translate" icon="pi pi-check" styleClass="p-button-success" (onClick)="changeStatus('PUBLISHED')"></p-button>
   <p-button *ngIf="jobPosting.status === 'PUBLISHED'" [label]="'jobPosting.close' | translate" icon="pi pi-ban" styleClass="p-button-warning" (onClick)="changeStatus('CLOSED')"></p-button>
@@ -86,3 +86,8 @@
     </table>
   </p-card>
 </div>
+
+<nav class="job-view-nav" *ngIf="!loading && canNavigate">
+  <p-button [label]="'jobPortal.previousJob' | translate" icon="pi pi-chevron-left" styleClass="job-nav-btn job-nav-prev" [disabled]="!hasPrevious" (onClick)="goToPrevious()"></p-button>
+  <p-button [label]="'jobPortal.nextJob' | translate" icon="pi pi-chevron-right" iconPos="right" styleClass="job-nav-btn job-nav-next" [disabled]="!hasNext" (onClick)="goToNext()"></p-button>
+</nav>
