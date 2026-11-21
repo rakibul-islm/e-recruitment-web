@@ -15,14 +15,16 @@ export class SystemConfigViewComponent extends BaseComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     protected router: Router,
-    private systemConfigService: SystemConfigService
+    protected systemConfigService: SystemConfigService
   ) {
     super();
   }
 
   ngOnInit(): void {
-    this.systemConfigId = Number(this.route.snapshot.paramMap.get('id'));
-    this.fetchSystemConfig();
+    this.subscribers.routeSub = this.route.paramMap.subscribe(params => {
+      this.systemConfigId = Number(params.get('id'));
+      this.fetchSystemConfig();
+    });
   }
 
   fetchSystemConfig(): void {

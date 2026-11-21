@@ -67,11 +67,11 @@
           </tr>
           <tr>
             <td class="detail-label">{{ 'recruiterApplication.submittedOn' | translate }}</td>
-            <td class="detail-value">{{ application.createdOn | date:'dd-MM-yyyy HH:mm' }}</td>
+            <td class="detail-value">{{ application.createdOn | date:'dd-MM-yyyy hh:mm a' }}</td>
           </tr>
           <tr *ngIf="application.status !== 'PENDING'">
             <td class="detail-label">{{ 'recruiterApplication.reviewedBy' | translate }}</td>
-            <td class="detail-value">{{ application.updatedBy }} &middot; {{ application.updatedOn | date:'dd-MM-yyyy HH:mm' }}</td>
+            <td class="detail-value">{{ application.updatedBy }} &middot; {{ application.updatedOn | date:'dd-MM-yyyy hh:mm a' }}</td>
           </tr>
           <tr *ngIf="application.status === 'REJECTED' && application.reviewNote">
             <td class="detail-label">{{ 'recruiterApplication.reviewNote' | translate }}</td>
@@ -94,3 +94,5 @@
     <p-button [label]="'recruiterApplication.reject' | translate" icon="pi pi-times" [loading]="processing" (onClick)="reject()"></p-button>
   </ng-template>
 </p-dialog>
+
+<app-page-navigation [service]="recruiterApplicationService"></app-page-navigation>

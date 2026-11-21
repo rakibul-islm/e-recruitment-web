@@ -1,0 +1,4 @@
+<nav class="job-view-nav" *ngIf="canNavigate">
+  <p-button [label]="previousLabel | translate" icon="pi pi-chevron-left" styleClass="job-nav-btn job-nav-prev" [disabled]="!hasPrevious" (onClick)="goToPrevious()"></p-button>
+  <p-button [label]="nextLabel | translate" icon="pi pi-chevron-right" iconPos="right" styleClass="job-nav-btn job-nav-next" [disabled]="!hasNext" (onClick)="goToNext()"></p-button>
+</nav>

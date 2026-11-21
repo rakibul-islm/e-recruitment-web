@@ -14,7 +14,7 @@ export class AuditLogService extends BaseService {
   }
 
   public searchAuditLogs(paramsMap: Map<any, any>): Observable<any> {
-    return super.get(API_URLS.FILTER_AUDIT_LOG, paramsMap);
+    return this.searchPage(API_URLS.FILTER_AUDIT_LOG, paramsMap);
   }
 
   public findAuditLogById(id: number): Observable<any> {

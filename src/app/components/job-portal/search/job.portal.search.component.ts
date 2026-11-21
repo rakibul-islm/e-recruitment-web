@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BaseComponent } from '../../base.component';
 import { JobPostingService } from '../../../services/job-posting/job.posting.service';
 import { JobPosting } from '../../../services/job-posting/domain/job.posting.domain';
-import { JobNavigationService } from '../../../services/job-posting/job.navigation.service';
 import { SavedJobService } from '../../../services/saved-job/saved.job.service';
 import { AuthService } from '../../../services/utility/security/auth.service';
 import { JobPortalFilterValue } from '../filter/job.portal.filter.component';
@@ -29,7 +28,6 @@ export class JobPortalSearchComponent extends BaseComponent implements OnInit {
   constructor(
     private jobPostingService: JobPostingService,
     private savedJobService: SavedJobService,
-    private jobNavigationService: JobNavigationService,
     private authService: AuthService,
     private router: Router,
     private route: ActivatedRoute
@@ -39,7 +37,7 @@ export class JobPortalSearchComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const restored = this.returningFromDetail ? this.jobNavigationService.getListState() : null;
+    const restored = this.returningFromDetail ? this.jobPostingService.getListState() : null;
     if (restored) {
       this.jobPostings = restored.jobPostings;
       this.totalRecords = restored.totalRecords;
@@ -95,7 +93,6 @@ export class JobPortalSearchComponent extends BaseComponent implements OnInit {
       next: (response) => {
         this.jobPostings = response?.page?.content || [];
         this.totalRecords = response?.page?.totalElements || 0;
-        this.jobNavigationService.remember(params, this.jobPostings.map(j => j.uuid), this.totalRecords);
         this.loading = false;
       },
       error: () => {
@@ -117,7 +114,6 @@ export class JobPortalSearchComponent extends BaseComponent implements OnInit {
         this.jobPostings = [...this.jobPostings, ...content];
         this.totalRecords = response?.page?.totalElements || 0;
         this.currentPage = page;
-        this.jobNavigationService.remember(params, content.map(j => j.uuid), this.totalRecords, true);
         this.loadingMore = false;
       },
       error: () => {
@@ -141,7 +137,7 @@ export class JobPortalSearchComponent extends BaseComponent implements OnInit {
   }
 
   viewJob(job: JobPosting): void {
-    this.jobNavigationService.saveListState({
+    this.jobPostingService.saveListState({
       jobPostings: this.jobPostings,
       totalRecords: this.totalRecords,
       currentPage: this.currentPage,

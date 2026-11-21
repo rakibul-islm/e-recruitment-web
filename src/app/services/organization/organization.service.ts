@@ -14,7 +14,7 @@ export class OrganizationService extends BaseService {
   }
 
   public searchOrganizations(paramsMap: Map<any, any>): Observable<any> {
-    return super.get(API_URLS.FILTER_ORGANIZATION, paramsMap);
+    return this.searchPage(API_URLS.FILTER_ORGANIZATION, paramsMap);
   }
 
   public createOrganization(body: any): Observable<any> {

@@ -69,7 +69,7 @@
             <td (click)="$event.stopPropagation()"><input type="checkbox" [checked]="isSelected(application)" (change)="toggleSelection(application)" /></td>
             <td>{{ application.jobTitle }}</td>
             <td>{{ application.candidateName }} ({{ application.candidateEmail }})</td>
-            <td>{{ application.appliedOn | date:'dd-MM-yyyy HH:mm' }}</td>
+            <td>{{ application.appliedOn | date:'dd-MM-yyyy hh:mm a' }}</td>
             <td><span class="tag">{{ application.status }}</span></td>
             <td>{{ application.matchScore !== null && application.matchScore !== undefined ? application.matchScore + '%' : ('common.notAvailable' | translate) }}</td>
           </tr>
@@ -92,12 +92,12 @@
       styleClass="w-full" [filter]="true" appendTo="body" [placeholder]="'applicationManagement.selectTest' | translate"></p-dropdown>
     <small class="text-color-secondary" *ngIf="!activeTestOptions.length">{{ 'applicationManagement.noActiveTests' | translate }}</small>
     <div>
-      <p-calendar formControlName="scheduledAt" [showTime]="true" dateFormat="dd-mm-yy" styleClass="w-full" [touchUI]="true"
+      <p-calendar formControlName="scheduledAt" [showTime]="true" hourFormat="12" dateFormat="dd-mm-yy" styleClass="w-full" [touchUI]="true"
         panelStyleClass="mcq-schedule-calendar" [placeholder]="'applicationManagement.mcqOpensAtOptional' | translate"></p-calendar>
       <small class="text-color-secondary">{{ 'applicationManagement.mcqOpensAtHint' | translate }}</small>
     </div>
     <div>
-      <p-calendar formControlName="scheduledEndAt" [showTime]="true" dateFormat="dd-mm-yy" styleClass="w-full" [touchUI]="true"
+      <p-calendar formControlName="scheduledEndAt" [showTime]="true" hourFormat="12" dateFormat="dd-mm-yy" styleClass="w-full" [touchUI]="true"
         panelStyleClass="mcq-schedule-calendar" [placeholder]="'applicationManagement.mcqClosesAtOptional' | translate"></p-calendar>
       <small class="text-color-secondary">{{ 'applicationManagement.mcqClosesAtHint' | translate }}</small>
     </div>

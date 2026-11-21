@@ -4,22 +4,24 @@
 
 <div class="p-3">
   <p-card>
-    <p-table [value]="applications" [loading]="loading" responsiveLayout="scroll" dataKey="id">
+    <p-table [value]="applications" [lazy]="true" (onLazyLoad)="fetchApplications($event)" [paginator]="true" [rows]="rows"
+      [totalRecords]="totalRecords" [loading]="loading" [rowsPerPageOptions]="[10, 20, 50]"
+      sortField="appliedOn" [sortOrder]="-1" responsiveLayout="scroll" dataKey="id">
       <ng-template pTemplate="header">
         <tr>
-          <th pSortableColumn="jobTitle">{{ 'candidateApplication.jobTitle' | translate }} <p-sortIcon field="jobTitle"></p-sortIcon></th>
           <th pSortableColumn="appliedOn">{{ 'candidateApplication.appliedOn' | translate }} <p-sortIcon field="appliedOn"></p-sortIcon></th>
-          <th pSortableColumn="status">{{ 'common.status' | translate }} <p-sortIcon field="status"></p-sortIcon></th>
+          <th pSortableColumn="jobTitle">{{ 'candidateApplication.jobTitle' | translate }} <p-sortIcon field="jobTitle"></p-sortIcon></th>
           <th pSortableColumn="statusUpdatedOn">{{ 'candidateApplication.lastUpdated' | translate }} <p-sortIcon field="statusUpdatedOn"></p-sortIcon></th>
+          <th pSortableColumn="status">{{ 'common.status' | translate }} <p-sortIcon field="status"></p-sortIcon></th>
           <th>{{ 'candidateApplication.cv' | translate }}</th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-application>
         <tr class="selectable-row" (click)="viewApplication(application)">
+          <td>{{ application.appliedOn | date:'dd-MM-yyyy hh:mm a' }}</td>
           <td>{{ application.jobTitle }}</td>
-          <td>{{ application.appliedOn | date:'dd-MM-yyyy HH:mm' }}</td>
+          <td>{{ application.statusUpdatedOn | date:'dd-MM-yyyy hh:mm a' }}</td>
           <td><span class="tag">{{ application.status }}</span></td>
-          <td>{{ application.statusUpdatedOn | date:'dd-MM-yyyy HH:mm' }}</td>
           <td>
             <p-button *ngIf="application.generatedCvId" icon="pi pi-download" styleClass="p-button-text p-button-sm" (onClick)="downloadCv(application); $event.stopPropagation()"></p-button>
           </td>

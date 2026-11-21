@@ -15,6 +15,7 @@ import { ProfileViewComponent } from './components/user/profile/view/profile.vie
 import { ProfileEditComponent } from './components/user/profile/edit/profile.edit.component';
 import { ChangePasswordComponent } from './components/user/password/change-password/change.password.component';
 import { PageHeaderComponent } from './components/shared/page-header/page.header.component';
+import { PageNavigationComponent } from './components/shared/page-navigation/page.navigation.component';
 import { RegistrationFormComponent } from './components/user/registration/registration.form.component';
 import { ForgotPasswordComponent } from './components/user/password/forgot-password/forgot.password.component';
 import { SetPasswordComponent } from './components/user/password/set-password/set.password.component';
@@ -151,6 +152,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
     ForgotPasswordComponent,
     SetPasswordComponent,
     PageHeaderComponent,
+    PageNavigationComponent,
     RoleSearchComponent,
     RoleFormComponent,
     RoleViewComponent,

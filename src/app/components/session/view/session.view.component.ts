@@ -17,15 +17,17 @@ export class SessionViewComponent extends BaseComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private sessionService: SessionService,
+    protected sessionService: SessionService,
     private commonConfirmDialogService: CommonConfirmDialogService
   ) {
     super();
   }
 
   ngOnInit(): void {
-    this.sessionId = Number(this.route.snapshot.paramMap.get('id'));
-    this.fetchSession();
+    this.subscribers.routeSub = this.route.paramMap.subscribe(params => {
+      this.sessionId = Number(params.get('id'));
+      this.fetchSession();
+    });
   }
 
   fetchSession(): void {

@@ -61,3 +61,11 @@ export class JobPostingRequest {
     category?: string;
     status?: string;
 }
+
+export interface JobListState {
+    jobPostings: JobPosting[];
+    totalRecords: number;
+    currentPage: number;
+    searchParams: Map<any, any> | null;
+    filterValue: any;
+}

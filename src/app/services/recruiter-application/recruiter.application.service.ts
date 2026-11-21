@@ -18,7 +18,7 @@ export class RecruiterApplicationService extends BaseService {
   }
 
   public searchApplications(paramsMap: Map<any, any>): Observable<any> {
-    return super.get(API_URLS.FILTER_RECRUITER_APPLICATION, paramsMap);
+    return this.searchPage(API_URLS.FILTER_RECRUITER_APPLICATION, paramsMap);
   }
 
   public findById(id: number): Observable<any> {

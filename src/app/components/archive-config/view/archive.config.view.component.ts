@@ -16,15 +16,17 @@ export class ArchiveConfigViewComponent extends BaseComponent implements OnInit 
   constructor(
     private route: ActivatedRoute,
     protected router: Router,
-    private archiveConfigService: ArchiveConfigService,
+    protected archiveConfigService: ArchiveConfigService,
     private commonConfirmDialogService: CommonConfirmDialogService
   ) {
     super();
   }
 
   ngOnInit(): void {
-    this.archiveConfigId = Number(this.route.snapshot.paramMap.get('id'));
-    this.fetchArchiveConfig();
+    this.subscribers.routeSub = this.route.paramMap.subscribe(params => {
+      this.archiveConfigId = Number(params.get('id'));
+      this.fetchArchiveConfig();
+    });
   }
 
   fetchArchiveConfig(): void {

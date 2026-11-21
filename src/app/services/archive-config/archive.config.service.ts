@@ -14,7 +14,7 @@ export class ArchiveConfigService extends BaseService {
   }
 
   public searchArchiveConfigs(paramsMap: Map<any, any>): Observable<any> {
-    return super.get(API_URLS.FILTER_ARCHIVE_CONFIG, paramsMap);
+    return this.searchPage(API_URLS.FILTER_ARCHIVE_CONFIG, paramsMap);
   }
 
   public createArchiveConfig(body: any): Observable<any> {

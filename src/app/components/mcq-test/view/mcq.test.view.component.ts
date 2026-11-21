@@ -19,7 +19,7 @@ export class McqTestViewComponent extends BaseComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     protected router: Router,
-    private mcqTestService: McqTestService,
+    protected mcqTestService: McqTestService,
     private mcqQuestionService: McqQuestionService,
     private commonConfirmDialogService: CommonConfirmDialogService
   ) {
@@ -27,8 +27,10 @@ export class McqTestViewComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.testId = Number(this.route.snapshot.paramMap.get('id'));
-    this.fetchTest();
+    this.subscribers.routeSub = this.route.paramMap.subscribe(params => {
+      this.testId = Number(params.get('id'));
+      this.fetchTest();
+    });
   }
 
   fetchTest(): void {

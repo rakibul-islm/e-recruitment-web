@@ -14,7 +14,7 @@ export class UserGroupService extends BaseService {
   }
 
   public searchUserGroups(paramsMap: Map<any, any>): Observable<any> {
-    return super.get(API_URLS.FILTER_USER_GROUP, paramsMap);
+    return this.searchPage(API_URLS.FILTER_USER_GROUP, paramsMap);
   }
 
   public createUserGroup(body: any): Observable<any> {

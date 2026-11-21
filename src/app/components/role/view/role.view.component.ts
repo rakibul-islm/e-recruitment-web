@@ -16,15 +16,17 @@ export class RoleViewComponent extends BaseComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     protected router: Router,
-    private roleService: RoleService,
+    protected roleService: RoleService,
     private commonConfirmDialogService: CommonConfirmDialogService
   ) {
     super();
   }
 
   ngOnInit(): void {
-    this.roleId = Number(this.route.snapshot.paramMap.get('id'));
-    this.fetchRole();
+    this.subscribers.routeSub = this.route.paramMap.subscribe(params => {
+      this.roleId = Number(params.get('id'));
+      this.fetchRole();
+    });
   }
 
   fetchRole(): void {

@@ -4,7 +4,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BaseComponent } from '../../base.component';
 import { JobPostingService } from '../../../services/job-posting/job.posting.service';
 import { ApplicationService } from '../../../services/application/application.service';
-import { JobNavigationService } from '../../../services/job-posting/job.navigation.service';
 import { AuthService } from '../../../services/utility/security/auth.service';
 import { JobPosting } from '../../../services/job-posting/domain/job.posting.domain';
 
@@ -27,9 +26,8 @@ export class JobPortalViewComponent extends BaseComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private jobPostingService: JobPostingService,
+    protected jobPostingService: JobPostingService,
     private applicationService: ApplicationService,
-    private jobNavigationService: JobNavigationService,
     private authService: AuthService,
     private formBuilder: FormBuilder
   ) {
@@ -50,30 +48,6 @@ export class JobPortalViewComponent extends BaseComponent implements OnInit {
       this.fetchJob();
     });
 
-  }
-
-  get canNavigate(): boolean {
-    return this.jobNavigationService.isNavigable(this.jobUuid);
-  }
-
-  get hasPrevious(): boolean {
-    return this.jobNavigationService.hasPrevious(this.jobUuid);
-  }
-
-  get hasNext(): boolean {
-    return this.jobNavigationService.hasNext(this.jobUuid);
-  }
-
-  goToPrevious(): void {
-    this.jobNavigationService.previous(this.jobUuid).subscribe(uuid => {
-      if (uuid) { this.router.navigate(['/jobs', uuid], { replaceUrl: true }); }
-    });
-  }
-
-  goToNext(): void {
-    this.jobNavigationService.next(this.jobUuid).subscribe(uuid => {
-      if (uuid) { this.router.navigate(['/jobs', uuid], { replaceUrl: true }); }
-    });
   }
 
   get applicationsClosed(): boolean {

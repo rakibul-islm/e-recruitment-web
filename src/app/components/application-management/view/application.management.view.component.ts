@@ -56,7 +56,7 @@ export class ApplicationManagementViewComponent extends BaseComponent implements
   constructor(
     private route: ActivatedRoute,
     protected router: Router,
-    private applicationService: ApplicationService,
+    protected applicationService: ApplicationService,
     private interviewService: InterviewService,
     private offerService: OfferService,
     private onboardingTaskService: OnboardingTaskService,
@@ -69,7 +69,6 @@ export class ApplicationManagementViewComponent extends BaseComponent implements
   }
 
   ngOnInit(): void {
-    this.applicationId = Number(this.route.snapshot.paramMap.get('id'));
     this.statusForm = this.formBuilder.group({ status: [''], note: [''] });
     this.interviewForm = this.formBuilder.group({
       title: [''], scheduledAt: [null], durationMinutes: [60], mode: ['VIDEO'], location: [''], interviewerUserIds: ['']
@@ -80,12 +79,15 @@ export class ApplicationManagementViewComponent extends BaseComponent implements
     this.taskForm = this.formBuilder.group({ title: [''], description: [''], dueDate: [null] });
     this.assignTestForm = this.formBuilder.group({ mcqTestId: [null, Validators.required], scheduledAt: [null], scheduledEndAt: [null] });
 
-    this.fetchApplication();
-    this.fetchHistory();
-    this.fetchInterviews();
-    this.fetchOffers();
-    this.fetchOnboardingTasks();
-    this.fetchMcqAssignments();
+    this.subscribers.routeSub = this.route.paramMap.subscribe(params => {
+      this.applicationId = Number(params.get('id'));
+      this.fetchApplication();
+      this.fetchHistory();
+      this.fetchInterviews();
+      this.fetchOffers();
+      this.fetchOnboardingTasks();
+      this.fetchMcqAssignments();
+    });
   }
 
   fetchApplication(): void {

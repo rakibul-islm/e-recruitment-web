@@ -32,7 +32,7 @@ export class CandidateApplicationDetailComponent extends BaseComponent implement
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private applicationService: ApplicationService,
+    protected applicationService: ApplicationService,
     private interviewService: InterviewService,
     private offerService: OfferService,
     private onboardingTaskService: OnboardingTaskService,
@@ -45,12 +45,14 @@ export class CandidateApplicationDetailComponent extends BaseComponent implement
 
   ngOnInit(): void {
     this.subscribers.accountProfileSub = this.authService.getProfileData().subscribe(profile => this.accountProfile = profile);
-    this.applicationId = Number(this.route.snapshot.paramMap.get('id'));
-    this.fetchApplication();
-    this.fetchInterviews();
-    this.fetchOffers();
-    this.fetchOnboardingTasks();
-    this.fetchMcqAssignments();
+    this.subscribers.routeSub = this.route.paramMap.subscribe(params => {
+      this.applicationId = Number(params.get('id'));
+      this.fetchApplication();
+      this.fetchInterviews();
+      this.fetchOffers();
+      this.fetchOnboardingTasks();
+      this.fetchMcqAssignments();
+    });
   }
 
   fetchMcqAssignments(): void {

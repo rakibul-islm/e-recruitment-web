@@ -109,10 +109,7 @@
   </div>
 </div>
 
-<nav class="job-view-nav" *ngIf="!loading && canNavigate">
-  <p-button [label]="'jobPortal.previousJob' | translate" icon="pi pi-chevron-left" styleClass="job-nav-btn job-nav-prev" [disabled]="!hasPrevious" (onClick)="goToPrevious()"></p-button>
-  <p-button [label]="'jobPortal.nextJob' | translate" icon="pi pi-chevron-right" iconPos="right" styleClass="job-nav-btn job-nav-next" [disabled]="!hasNext" (onClick)="goToNext()"></p-button>
-</nav>
+<app-page-navigation *ngIf="!loading" [service]="jobPostingService"></app-page-navigation>
 
 <p-dialog [header]="('jobPortal.applyDialogTitle' | translate) + ' ' + job.jobTitle" [(visible)]="applyDialogVisible" [modal]="true"
   [style]="{ width: '32rem' }" [breakpoints]="{ '575px': '95vw' }" styleClass="branded-dialog">

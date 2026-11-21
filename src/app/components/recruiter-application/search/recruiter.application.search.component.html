@@ -48,7 +48,7 @@
             <td>{{ application.organizationName }}</td>
             <td>{{ application.email }}</td>
             <td><span class="tag">{{ ('recruiterApplication.status' + application.status.charAt(0) + application.status.slice(1).toLowerCase()) | translate }}</span></td>
-            <td>{{ application.createdOn | date:'dd-MM-yyyy HH:mm' }}</td>
+            <td>{{ application.createdOn | date:'dd-MM-yyyy hh:mm a' }}</td>
           </tr>
         </ng-template>
         <ng-template pTemplate="emptymessage">

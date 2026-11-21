@@ -47,6 +47,8 @@
     "clear": "Clear",
     "save": "Save",
     "back": "Back",
+    "previous": "Previous",
+    "next": "Next",
     "cancel": "Cancel",
     "edit": "Edit",
     "delete": "Delete",

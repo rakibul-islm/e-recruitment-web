@@ -14,7 +14,7 @@ export class SystemConfigService extends BaseService {
   }
 
   public searchSystemConfigs(paramsMap: Map<any, any>): Observable<any> {
-    return super.get(API_URLS.FILTER_SYSTEM_CONFIG, paramsMap);
+    return this.searchPage(API_URLS.FILTER_SYSTEM_CONFIG, paramsMap);
   }
 
   public updateSystemConfig(body: any): Observable<any> {

@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { Table, TableLazyLoadEvent } from 'primeng/table';
 import { BaseComponent } from '../../base.component';
 import { JobPostingService } from '../../../services/job-posting/job.posting.service';
-import { JobNavigationService } from '../../../services/job-posting/job.navigation.service';
 import { JobPosting, JOB_STATUS_OPTIONS } from '../../../services/job-posting/domain/job.posting.domain';
 
 @Component({
@@ -21,7 +20,6 @@ export class JobPostingSearchComponent extends BaseComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private jobPostingService: JobPostingService,
-    private jobNavigationService: JobNavigationService,
     private router: Router
   ) {
     super();
@@ -48,7 +46,6 @@ export class JobPostingSearchComponent extends BaseComponent implements OnInit {
       next: (response) => {
         this.jobPostings = response?.page?.content || [];
         this.totalRecords = response?.page?.totalElements || 0;
-        this.jobNavigationService.remember(params, this.jobPostings.map(j => j.uuid), this.totalRecords);
         this.loading = false;
         this.activeTabIndex = 1;
       },
