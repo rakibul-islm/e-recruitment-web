@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { TableLazyLoadEvent } from 'primeng/table';
 import { BaseComponent } from '../../base.component';
 import { ApplicationService } from '../../../services/application/application.service';
 import { Application } from '../../../services/application/domain/application.domain';
@@ -25,14 +27,15 @@ export class CandidateApplicationsComponent extends BaseComponent implements OnI
 
   ngOnInit(): void {
     this.subscribers.accountProfileSub = this.authService.getProfileData().subscribe(profile => this.accountProfile = profile);
-    this.fetchApplications();
   }
 
-  fetchApplications(): void {
+  fetchApplications(event: TableLazyLoadEvent): void {
     this.loading = true;
-    this.subscribers.myApplicationsSub = this.applicationService.fetchMyApplications().subscribe({
+    const params = this.buildSearchParams(new FormGroup({}), event);
+    this.subscribers.myApplicationsSub = this.applicationService.searchMyApplications(params).subscribe({
       next: (response) => {
-        this.applications = response?.list || [];
+        this.applications = response?.page?.content || [];
+        this.totalRecords = response?.page?.totalElements || 0;
         this.loading = false;
       },
       error: () => { this.loading = false; }

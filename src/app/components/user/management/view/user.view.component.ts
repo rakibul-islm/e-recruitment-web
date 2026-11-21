@@ -18,7 +18,7 @@ export class UserViewComponent extends BaseComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     protected router: Router,
-    private userService: UserService,
+    protected userService: UserService,
     private userGroupService: UserGroupService,
     private commonConfirmDialogService: CommonConfirmDialogService
   ) {
@@ -26,8 +26,10 @@ export class UserViewComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userId = Number(this.route.snapshot.paramMap.get('id'));
-    this.fetchUser(this.userId);
+    this.subscribers.routeSub = this.route.paramMap.subscribe(params => {
+      this.userId = Number(params.get('id'));
+      this.fetchUser(this.userId);
+    });
   }
 
   fetchUser(userId: number): void {

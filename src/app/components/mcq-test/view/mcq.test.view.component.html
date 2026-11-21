@@ -53,3 +53,5 @@
     <div *ngIf="!questions.length" class="text-center text-color-secondary p-2">{{ 'mcqQuestion.noneFound' | translate }}</div>
   </p-card>
 </div>
+
+<app-page-navigation [service]="mcqTestService"></app-page-navigation>

@@ -64,7 +64,7 @@ export class UserService extends BaseService {
   }
 
   public searchUsers(paramsMap: Map<any, any>): Observable<any> {
-    return super.get(API_URLS.FILTER_USER, paramsMap);
+    return this.searchPage(API_URLS.FILTER_USER, paramsMap);
   }
 
   public createUser(body: any): Observable<any> {

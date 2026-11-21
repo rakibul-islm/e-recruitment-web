@@ -26,14 +26,16 @@ export class AuditLogViewComponent extends BaseComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private auditLogService: AuditLogService
+    protected auditLogService: AuditLogService
   ) {
     super();
   }
 
   ngOnInit(): void {
-    this.auditLogId = Number(this.route.snapshot.paramMap.get('id'));
-    this.fetchAuditLog();
+    this.subscribers.routeSub = this.route.paramMap.subscribe(params => {
+      this.auditLogId = Number(params.get('id'));
+      this.fetchAuditLog();
+    });
   }
 
   fetchAuditLog(): void {

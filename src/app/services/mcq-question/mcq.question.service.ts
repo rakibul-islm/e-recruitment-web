@@ -14,7 +14,7 @@ export class McqQuestionService extends BaseService {
   }
 
   public searchQuestions(paramsMap: Map<any, any>): Observable<any> {
-    return super.get(API_URLS.FILTER_MCQ_QUESTION, paramsMap);
+    return this.searchPage(API_URLS.FILTER_MCQ_QUESTION, paramsMap);
   }
 
   public createQuestion(body: any): Observable<any> {

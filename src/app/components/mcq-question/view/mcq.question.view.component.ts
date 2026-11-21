@@ -16,15 +16,17 @@ export class McqQuestionViewComponent extends BaseComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     protected router: Router,
-    private mcqQuestionService: McqQuestionService,
+    protected mcqQuestionService: McqQuestionService,
     private commonConfirmDialogService: CommonConfirmDialogService
   ) {
     super();
   }
 
   ngOnInit(): void {
-    this.questionId = Number(this.route.snapshot.paramMap.get('id'));
-    this.fetchQuestion();
+    this.subscribers.routeSub = this.route.paramMap.subscribe(params => {
+      this.questionId = Number(params.get('id'));
+      this.fetchQuestion();
+    });
   }
 
   fetchQuestion(): void {

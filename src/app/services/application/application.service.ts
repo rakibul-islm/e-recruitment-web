@@ -25,8 +25,12 @@ export class ApplicationService extends BaseService {
     return super.get(API_URLS.MY_APPLICATIONS);
   }
 
+  public searchMyApplications(paramsMap: Map<any, any>): Observable<any> {
+    return this.searchPage(API_URLS.MY_APPLICATIONS, paramsMap);
+  }
+
   public searchApplications(paramsMap: Map<any, any>): Observable<any> {
-    return super.get(API_URLS.FILTER_APPLICATIONS, paramsMap);
+    return this.searchPage(API_URLS.FILTER_APPLICATIONS, paramsMap);
   }
 
   public findApplicationById(id: number): Observable<any> {

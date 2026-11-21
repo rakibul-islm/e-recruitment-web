@@ -16,15 +16,17 @@ export class ExceptionLogViewComponent extends BaseComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private exceptionLogService: ExceptionLogService,
+    protected exceptionLogService: ExceptionLogService,
     private commonConfirmDialogService: CommonConfirmDialogService
   ) {
     super();
   }
 
   ngOnInit(): void {
-    this.exceptionLogId = Number(this.route.snapshot.paramMap.get('id'));
-    this.fetchExceptionLog();
+    this.subscribers.routeSub = this.route.paramMap.subscribe(params => {
+      this.exceptionLogId = Number(params.get('id'));
+      this.fetchExceptionLog();
+    });
   }
 
   fetchExceptionLog(): void {

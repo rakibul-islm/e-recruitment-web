@@ -14,7 +14,7 @@ export class McqTestService extends BaseService {
   }
 
   public searchTests(paramsMap: Map<any, any>): Observable<any> {
-    return super.get(API_URLS.FILTER_MCQ_TEST, paramsMap);
+    return this.searchPage(API_URLS.FILTER_MCQ_TEST, paramsMap);
   }
 
   public createTest(body: any): Observable<any> {

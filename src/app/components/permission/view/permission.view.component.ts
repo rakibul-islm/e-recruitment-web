@@ -16,15 +16,17 @@ export class PermissionViewComponent extends BaseComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     protected router: Router,
-    private permissionService: PermissionService,
+    protected permissionService: PermissionService,
     private commonConfirmDialogService: CommonConfirmDialogService
   ) {
     super();
   }
 
   ngOnInit(): void {
-    this.permissionId = Number(this.route.snapshot.paramMap.get('id'));
-    this.fetchPermission();
+    this.subscribers.routeSub = this.route.paramMap.subscribe(params => {
+      this.permissionId = Number(params.get('id'));
+      this.fetchPermission();
+    });
   }
 
   fetchPermission(): void {

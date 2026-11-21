@@ -20,7 +20,7 @@ export class PermissionService extends BaseService {
   }
 
   public searchPermissions(paramsMap: Map<any, any>): Observable<any> {
-    return super.get(API_URLS.FILTER_PERMISSION, paramsMap);
+    return this.searchPage(API_URLS.FILTER_PERMISSION, paramsMap);
   }
 
   get grantedRouteNames$(): Observable<Set<string>> {

@@ -14,7 +14,7 @@ export class ExceptionLogService extends BaseService {
   }
 
   public searchExceptionLogs(paramsMap: Map<any, any>): Observable<any> {
-    return super.get(API_URLS.FILTER_EXCEPTION_LOG, paramsMap);
+    return this.searchPage(API_URLS.FILTER_EXCEPTION_LOG, paramsMap);
   }
 
   public findExceptionLogById(id: number): Observable<any> {

@@ -13,7 +13,7 @@
           </tr>
           <tr>
             <td class="detail-label">{{ 'candidateApplication.appliedOn' | translate }}</td>
-            <td class="detail-value">{{ application.appliedOn | date:'dd-MM-yyyy HH:mm' }}</td>
+            <td class="detail-value">{{ application.appliedOn | date:'dd-MM-yyyy hh:mm a' }}</td>
           </tr>
           <tr>
             <td class="detail-label">{{ 'common.status' | translate }}</td>
@@ -55,7 +55,7 @@
               {{ 'candidateApplication.mcqDuration' | translate }}: {{ assignment.durationMinutesSnapshot }} {{ 'candidateApplication.minutes' | translate }}
             </div>
             <div class="text-color-secondary" *ngIf="!isOpenYet(assignment)">
-              {{ 'candidateApplication.examOpensAt' | translate }}: {{ assignment.scheduledAt | date:'dd-MM-yyyy HH:mm' }}
+              {{ 'candidateApplication.examOpensAt' | translate }}: {{ assignment.scheduledAt | date:'dd-MM-yyyy hh:mm a' }}
             </div>
             <div class="text-color-secondary" *ngIf="assignment.status === 'SUBMITTED'">
               {{ 'applicationManagement.mcqScore' | translate }}: {{ assignment.scorePercent }}%
@@ -76,7 +76,7 @@
         <div class="flex justify-content-between align-items-start flex-wrap gap-2">
           <div>
             <strong>{{ interview.title }}</strong>
-            <div class="text-color-secondary">{{ interview.scheduledAt | date:'dd-MM-yyyy HH:mm' }} &middot; {{ interview.mode }}</div>
+            <div class="text-color-secondary">{{ interview.scheduledAt | date:'dd-MM-yyyy hh:mm a' }} &middot; {{ interview.mode }}</div>
             <div *ngIf="interview.location" class="text-color-secondary">{{ interview.location }}</div>
           </div>
           <span class="tag">{{ interview.status }}</span>
@@ -97,3 +97,5 @@
     </p-card>
   </div>
 </div>
+
+<app-page-navigation [service]="applicationService"></app-page-navigation>

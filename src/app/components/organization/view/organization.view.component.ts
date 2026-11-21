@@ -22,7 +22,7 @@ export class OrganizationViewComponent extends BaseComponent implements OnInit {
     private route: ActivatedRoute,
     protected router: Router,
     private locationService: Location,
-    private organizationService: OrganizationService,
+    protected organizationService: OrganizationService,
     private authService: AuthService,
     private commonConfirmDialogService: CommonConfirmDialogService
   ) {
@@ -30,11 +30,14 @@ export class OrganizationViewComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.organizationId = Number(this.route.snapshot.paramMap.get('id'));
     this.subscribers.profileSub = this.authService.getProfileData().subscribe(profile => {
       this.isOrganizationScoped = !!profile?.organizationId;
     });
-    this.fetchOrganization();
+
+    this.subscribers.routeSub = this.route.paramMap.subscribe(params => {
+      this.organizationId = Number(params.get('id'));
+      this.fetchOrganization();
+    });
   }
 
   fetchOrganization(): void {

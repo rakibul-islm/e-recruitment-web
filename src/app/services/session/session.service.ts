@@ -17,7 +17,7 @@ export class SessionService extends BaseService {
   }
 
   public searchSessions(paramsMap: Map<any, any>): Observable<any> {
-    return super.get(API_URLS.FILTER_SESSION, paramsMap);
+    return this.searchPage(API_URLS.FILTER_SESSION, paramsMap);
   }
 
   public getSummary(): Observable<any> {

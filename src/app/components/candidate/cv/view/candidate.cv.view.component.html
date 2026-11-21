@@ -133,7 +133,7 @@
       <p-card class="page-card">
         <p class="cv-status-note" *ngIf="latestCv as cv; else noCvs">
           <i class="pi pi-check-circle"></i>
-          {{ 'candidateCv.generatedOn' | translate }} {{ cv.generatedOn | date:'dd-MM-yyyy HH:mm' }}
+          {{ 'candidateCv.generatedOn' | translate }} {{ cv.generatedOn | date:'dd-MM-yyyy hh:mm a' }}
         </p>
         <ng-template #noCvs>
           <p class="cv-status-note cv-status-note-muted"><i class="pi pi-info-circle"></i>{{ 'candidateCv.noCvsYet' | translate }}</p>

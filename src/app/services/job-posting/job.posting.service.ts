@@ -3,18 +3,29 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { BaseService } from '../base.service';
 import { API_URLS } from '../utility/constants/api.urls';
+import { JobListState } from './domain/job.posting.domain';
 
 @Injectable({
   providedIn: 'root'
 })
 export class JobPostingService extends BaseService {
+  private listState: JobListState | null = null;
 
   constructor(http: HttpClient) {
     super(http);
   }
 
+  // Lets the public job list restore itself (cards, page, filters) when the user comes back from a job.
+  public saveListState(state: JobListState): void {
+    this.listState = state;
+  }
+
+  public getListState(): JobListState | null {
+    return this.listState;
+  }
+
   public searchJobPostings(paramsMap: Map<any, any>): Observable<any> {
-    return super.get(API_URLS.FILTER_JOB_POSTING, paramsMap);
+    return this.searchPage(API_URLS.FILTER_JOB_POSTING, paramsMap);
   }
 
   public createJobPosting(body: any): Observable<any> {

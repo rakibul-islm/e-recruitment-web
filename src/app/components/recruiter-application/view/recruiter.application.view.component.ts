@@ -21,7 +21,7 @@ export class RecruiterApplicationViewComponent extends BaseComponent implements 
   constructor(
     private route: ActivatedRoute,
     protected router: Router,
-    private recruiterApplicationService: RecruiterApplicationService,
+    protected recruiterApplicationService: RecruiterApplicationService,
     private commonConfirmDialogService: CommonConfirmDialogService,
     private formBuilder: FormBuilder
   ) {
@@ -29,9 +29,12 @@ export class RecruiterApplicationViewComponent extends BaseComponent implements 
   }
 
   ngOnInit(): void {
-    this.applicationId = Number(this.route.snapshot.paramMap.get('id'));
     this.rejectForm = this.formBuilder.group({ note: [''] });
-    this.fetchApplication();
+
+    this.subscribers.routeSub = this.route.paramMap.subscribe(params => {
+      this.applicationId = Number(params.get('id'));
+      this.fetchApplication();
+    });
   }
 
   fetchApplication(): void {

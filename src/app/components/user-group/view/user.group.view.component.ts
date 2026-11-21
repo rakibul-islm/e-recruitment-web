@@ -16,15 +16,17 @@ export class UserGroupViewComponent extends BaseComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     protected router: Router,
-    private userGroupService: UserGroupService,
+    protected userGroupService: UserGroupService,
     private commonConfirmDialogService: CommonConfirmDialogService
   ) {
     super();
   }
 
   ngOnInit(): void {
-    this.userGroupId = Number(this.route.snapshot.paramMap.get('id'));
-    this.fetchUserGroup();
+    this.subscribers.routeSub = this.route.paramMap.subscribe(params => {
+      this.userGroupId = Number(params.get('id'));
+      this.fetchUserGroup();
+    });
   }
 
   fetchUserGroup(): void {

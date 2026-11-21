@@ -14,7 +14,7 @@ export class RoleService extends BaseService {
   }
 
   public searchRoles(paramsMap: Map<any, any>): Observable<any> {
-    return super.get(API_URLS.FILTER_ROLE, paramsMap);
+    return this.searchPage(API_URLS.FILTER_ROLE, paramsMap);
   }
 
   public createRole(body: any): Observable<any> {
